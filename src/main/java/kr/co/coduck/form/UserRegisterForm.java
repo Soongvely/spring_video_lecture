@@ -10,6 +10,7 @@ public class UserRegisterForm {
 	private String nickname;
 	private String selfInfo;
 	private String email;
+	private String bankNumber;
 	private MultipartFile imgfile;
 	
 	public UserRegisterForm() {}
@@ -68,5 +69,13 @@ public class UserRegisterForm {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getBanknumber() {
+		return bankNumber;
+	}
+
+	public void setBanknumber(String banknumber) {
+		this.bankNumber = banknumber;
 	}
 }

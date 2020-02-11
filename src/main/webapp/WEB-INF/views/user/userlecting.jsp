@@ -29,9 +29,9 @@
 				<p>내 결제</p>
 				<ul>
 					<li>위시리스트</li>
-					<li>장바구니</li>
+					<li><a href="/cart/userCartList.hta">장바구니</a></li>
 					<li>내 쿠폰함</li>
-					<li>구매내역</li>
+					<li><a href="/user/userbylist.hta">구매내역</a></li>
 				</ul>
 				<p>설정</p>
 				<ul>
@@ -50,20 +50,12 @@
 				<h4>수강중인 강의</h4>
 				<div class="row">
 					<div class="col-md-12">
-						<form action="" class="form-inline" method="post" enctype="multipart/form-data">
-							<div class="form-group" style="margin-right: 20px;">
+						<form action="" class="form-inline" method="post">
+							<div class="form-group" style="margin-right: 5px;">
 								<label>정렬기준</label>
 								<select class="form-control" name="">
 									<option>최근 공부한순</option>
 									<option>제목순</option>
-								</select>
-							</div>
-							<div class="form-group">
-								<label>진행률</label>
-								<select class="form-control" name="">
-									<option>학습중</option>
-									<option>완강</option>
-									<option>모두보기</option>
 								</select>
 							</div>
 							<div class="form-group">
@@ -72,39 +64,29 @@
 						</form>
 					</div>
 					<div class="row">
-						<div class="col-md-11" style="border: 1px solid red; margin-top: 20px; margin-left:13px; padding-left: 0px;">
-							<img alt="" src="https://s3.ap-northeast-2.amazonaws.com/grepp-cloudfront
-							/programmers_imgs/learn/thumb-course-phthon-basic.jpg" style="float: left; width: 300px; height: 300%; margin-right: 20px;">
-							<h3>파이썬 한달만에 끝내기 쌉가능</h3>
-							<p>진행도</p>
-							<progress value="20" max="100" style="width: 400px;"></progress>
-							<p>강의 기간 : 2022-00-00 ~ 2022-00-00</p>
-							<div class="text-right">
-								<button type="submit" class="btn btn-primary">이어서 학습하기</button>
+					<c:choose>
+						<c:when test="${empty userLectList }">
+							<div class="col-sm-12">
+								<div class="text-center">
+									<h3>구매좀 하세요 고객님</h3>
+								</div>
 							</div>
-						</div>
-						<div class="col-md-11" style="border: 1px solid red; margin-top: 20px; margin-left:13px; padding-left: 0px;">
-							<img alt="" src="https://s3.ap-northeast-2.amazonaws.com/grepp-cloudfront
-							/programmers_imgs/learn/thumb-course-phthon-basic.jpg" style="float: left; width: 300px; height: 300%; margin-right: 20px;">
-							<h3>파이썬 한달만에 끝내기 쌉가능</h3>
-							<p>진행도</p>
-							<progress value="20" max="100" style="width: 400px;"></progress>
-							<p>강의 기간 : 2022-00-00 ~ 2022-00-00</p>
-							<div class="text-right">
-								<button type="submit" class="btn btn-primary">이어서 학습하기</button>
-							</div>
-						</div>
-						<div class="col-md-11" style="border: 1px solid red; margin-top: 20px; margin-left:13px; padding-left: 0px;">
-							<img alt="" src="https://s3.ap-northeast-2.amazonaws.com/grepp-cloudfront
-							/programmers_imgs/learn/thumb-course-phthon-basic.jpg" style="float: left; width: 300px; height: 300%; margin-right: 20px;">
-							<h3>파이썬 한달만에 끝내기 쌉가능</h3>
-							<p>진행도</p>
-							<progress value="20" max="100" style="width: 400px;"></progress>
-							<p>강의 기간 : 2022-00-00 ~ 2022-00-00</p>
-							<div class="text-right">
-								<button type="submit" class="btn btn-primary">이어서 학습하기</button>
-							</div>
-						</div>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="userLect" items="${userLectList }" varStatus="loop">
+								<div class="col-md-11" style="border: 1px solid red; margin-top: 20px; margin-left:13px; padding-left: 0px;">
+									<img alt="" src="../../resources/images/lecture/${userLect.imagePath != null ? userLect.imagePath : '1212qwqw.GIF' }" style="float: left; width: 300px; height: 200px; margin-right: 20px;">
+									<h3>${userLect.lectTitle }</h3>
+									<p>진행도</p>
+									<progress value="${userLect.accumulateTime == 0 ? 0 : userLect.accumulateTime }" max="10" style="width: 400px;"></progress>
+									<p>구매일자 : <fmt:formatDate value="${userLect.lectCreateDate }" pattern="yyyy.MM.dd"></fmt:formatDate></p>
+									<div class="text-right">
+										<button type="submit" class="btn btn-primary">이어서 학습하기</button>
+									</div>
+								</div>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
 					</div>
 				</div>
 			</div>

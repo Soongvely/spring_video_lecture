@@ -7,9 +7,9 @@
 	
 	<insert id="insertUser" parameterType="User">
 		INSERT INTO USERS
-			(USER_NO, USER_NAME, USER_EMAIL, USER_PWD, USER_SELF_INTRODUCTION, USER_ID, USER_NICKNAME, USER_IMAGE_FILENAME)
+			(USER_NO, USER_NAME, USER_EMAIL, USER_PWD, USER_SELF_INTRODUCTION, USER_ID, USER_NICKNAME, USER_IMAGE_FILENAME, USER_BANKNUMBER)
 		values
-			(users_seq.nextval, #{name}, #{email}, #{password}, #{selfInfo}, #{id}, #{nickname}, #{imageFilename})
+			(users_seq.nextval, #{name}, #{email}, #{password}, #{selfInfo}, #{id}, #{nickname}, #{imageFilename}, #{bankNumber})
 	</insert>
 	
 	<select id="getUserById" parameterType="string" resultType="User">
@@ -21,6 +21,7 @@
 			USER_SELF_INTRODUCTION		as selfInfo,
 			USER_ID						as id,
 			USER_NICKNAME				as nickname,
+			USER_BANKNUMBER				as bankNumber,
 			USER_PWD					as password
 		from
 			USERS
@@ -37,6 +38,7 @@
 			USER_SELF_INTRODUCTION		as selfInfo,
 			USER_ID						as id,
 			USER_NICKNAME				as nickname,
+			USER_BANKNUMBER				as bankNumber,
 			USER_PWD					as password
 		from
 			USERS
@@ -53,6 +55,7 @@
 			USER_EMAIL = #{email},
 			USER_IMAGE_FILENAME = #{imageFilename},
 			USER_SELF_INTRODUCTION = #{selfInfo},
+			USER_BANKNUMBER = #{bankNumber},
 			USER_PWD = #{password}
 		where
 			USER_NO = #{no}

@@ -16,7 +16,7 @@
 <body>
 	<%@ include file="../common/header.jsp"%>
 	<%@ include file="../common/tag.jsp"%>
-	<div class="container">
+	<div class="container" style="font-size:17px; width:1440px;">
 		<div class="row">
 			<div class="col-sm-2" style="border: 1px solid red;">
 				<p>대시보드</p>
@@ -31,7 +31,7 @@
 					<li>위시리스트</li>
 					<li>장바구니</li>
 					<li>내 쿠폰함</li>
-					<li>구매내역</li>
+					<li><a href="/cart/userCartList.hta">구매내역</a></li>
 				</ul>
 				<p>설정</p>
 				<ul>

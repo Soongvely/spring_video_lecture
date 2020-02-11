@@ -7,7 +7,7 @@ public class Category {
 	
 	private int no;
 	private String name;
-	private int parentNo;
+	private Integer parentNo;
 	
 	public Category() {}
 
@@ -27,11 +27,11 @@ public class Category {
 		this.name = name;
 	}
 
-	public int getParentNo() {
+	public Integer getParentNo() {
 		return parentNo;
 	}
 
-	public void setParentNo(int parentNo) {
+	public void setParentNo(Integer parentNo) {
 		this.parentNo = parentNo;
 	}
 

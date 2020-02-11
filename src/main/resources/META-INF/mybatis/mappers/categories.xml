@@ -6,7 +6,7 @@
 <mapper namespace="kr.co.coduck.dao.CategoryDao">
 	
 	<!-- 시험에서 상위카테고리로 조회 -->
-	<select id="getCategoriesByParentCateNo" parameterType="int" resultType="Category">
+	<select id="getCatesByMainCateNo" parameterType="int" resultType="Category">
 		select 
 			cate_no			no,
 			cate_name		name,
@@ -17,6 +17,17 @@
 			main_cate_no = #{value}	
 		order 
 			by cate_no	
+	</select>
+	
+	<select id="getAllLectureCategories" resultType="Category">
+		select 
+		    cate_no				no
+		    , cate_name			name
+		    , main_cate_no		parentNo
+		from 
+			categories
+		where 
+			main_cate_no = 10000
 	</select>
 	
 </mapper>

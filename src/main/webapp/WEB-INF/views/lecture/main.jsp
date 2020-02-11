@@ -12,32 +12,31 @@
                                 <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" style="font-size: 18px;">IT 프로그래밍 
                                 <span class="caret"></span> </button>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">ALL</a></li>
-                                    <li><a href="#">HTML/CSS</a></li>
-                                    <li><a href="#">Java</a></li>
-                                    <li><a href="#">JavaScript</a></li>
-                                    <li><a href="#">JSP</a></li>
+                                	 <li><a href="main.hta">All</a></li>
+                                	 <c:forEach var="category" items="${categories }">
+	                                    <li><a href="main.hta?cateNo=${category.no }">${category.name }</a></li>
+                                     </c:forEach>
                                 </ul>
                             </div>
                             <div class="accordion-box">
                                 <button class="accordion accordion-title">난이도
                                     <i class="fas fa-angle-down"></i>
                                 </button>
-                                <div class="panel accordion-contents">
+                                <div class="panel accordion-contents" id="accordion">
                                     <div class="checkbox_accordion">
-                                        <input type="checkbox" date-type="catagory">
+                                        <input type="checkbox" name="grade" value="1">
                                         <label class="">입문</label>
                                     </div>
                                     <div class="checkbox_accordion">
-                                        <input type="checkbox" date-type="catagory">
+                                        <input type="checkbox" name="grade" value="2">
                                         <label class="">초급</label>
                                     </div>
                                     <div class="checkbox_accordion">
-                                        <input type="checkbox" date-type="catagory">
+                                        <input type="checkbox" name="grade" value="3">
                                         <label class="">중급</label>
                                     </div>
                                     <div class="checkbox_accordion">
-                                        <input type="checkbox" date-type="catagory">
+                                        <input type="checkbox" name="grade" value="4">
                                         <label class="">활용</label>
                                     </div>
                                 </div>
@@ -46,15 +45,15 @@
                                 </button>
                                 <div class="panel accordion-contents">
                                     <div class="checkbox_accordion">
-                                        <input type="checkbox" date-type="catagory">
+                                        <input type="checkbox">
                                         <label class="">무료</label>
                                     </div>
                                     <div class="checkbox_accordion">
-                                        <input type="checkbox" date-type="catagory">
+                                        <input type="checkbox">
                                         <label class="">유료</label>
                                     </div>
                                     <div class="checkbox_accordion">
-                                        <input type="checkbox" date-type="catagory">
+                                        <input type="checkbox">
                                         <label class="">할인중</label>
                                     </div>
                                 </div>
@@ -96,355 +95,55 @@
                             </div>                         
                             <div class="lesson-container">
                                 <div class="columns lesson-list-body">
+                                <c:forEach var="lecture" items="${lectures }">
                                     <div class="column lesson-tablet">
                                         <div class="lecutre lesson-item">
-                                            <a class="lecture-item-front">
-                                                <div class="item-image">
-                                                    <figure class="item-image-thumbnail">
-                                                        <img src="/resources/images/lecture/spring.jpg" class="">
-                                                        <div class="lesson-item-event-card">
-                                                            <i class=""></i>
-                                                            <span>20% 할인중</span>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                                <div class="item-contents">
-                                                    <div class="lecture-item-title">
-                                                        파이썬입문과 크롤링기초 쌉가능
-                                                    </div>
-                                                    <div class="lecture-item-info">
-                                                        <div class="rating column is-half">
-                                                            <div class="rating-star">
-                                                                <div class="star_yellow">
-                                                                    ★★★★★
-                                                                </div>
-                                                            </div>
-                                                        </div>  
-                                                        <div class="price column is-half">
-                                                            <del>₩10,000</del>
-                                                            <span class="discount_price">₩6,000</span>
-                                                        </div>
-                                                        <div class="item-info-bottom">
-                                                            <div class="student_num column is-half">50명</div>
-                                                            <div class="teacher_name">이숭숭</div>
-                                                        </div>  
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <!-- 강좌 start -->
-                                    <div class="column lesson-tablet">
-                                        <div class="lecutre lesson-item">
-                                            <a class="lecture-item-front">
-                                                <div class="item-image">
-                                                    <figure class="item-image-thumbnail">
-                                                        <img src="/resources/images/lecture/spring.jpg" class="">
-                                                        <div class="lesson-item-event-card">
-                                                            <i class=""></i>
-                                                            <span>20% 할인중</span>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                                <div class="item-contents">
-                                                    <div class="lecture-item-title">
-                                                        파이썬입문과 크롤링기초 쌉가능
-                                                    </div>
-                                                    <div class="lecture-item-info">
-                                                        <div class="rating column is-half">
-                                                            <div class="rating-star">
-                                                                <div class="star_yellow">
-                                                                    ★★★★★
-                                                                </div>
-                                                            </div>
-                                                        </div>  
-                                                        <div class="price column is-half">
-                                                            <del>₩10,000</del>
-                                                            <span class="discount_price">₩6,000</span>
-                                                        </div>
-                                                        <div class="item-info-bottom">
-                                                            <div class="student_num column is-half">50명</div>
-                                                            <div class="teacher_name">이숭숭</div>
-                                                        </div>  
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <!-- 강좌 썸네일 end -->
-                                    <!-- 강좌 start -->
-                                    <div class="column lesson-tablet">
-                                        <div class="lecutre lesson-item">
-                                            <a class="lecture-item-front">
-                                                <div class="item-image">
-                                                    <figure class="item-image-thumbnail">
-                                                        <img src="/resources/images/lecture/spring.jpg" class="">
-                                                        <div class="lesson-item-event-card">
-                                                            <i class=""></i>
-                                                            <span>20% 할인중</span>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                                <div class="item-contents">
-                                                    <div class="lecture-item-title">
-                                                        파이썬입문과 크롤링기초 쌉가능
-                                                    </div>
-                                                    <div class="lecture-item-info">
-                                                        <div class="rating column is-half">
-                                                            <div class="rating-star">
-                                                                <div class="star_yellow">
-                                                                    ★★★★★
-                                                                </div>
-                                                            </div>
-                                                        </div>  
-                                                        <div class="price column is-half">
-                                                            <del>₩10,000</del>
-                                                            <span class="discount_price">₩6,000</span>
-                                                        </div>
-                                                        <div class="item-info-bottom">
-                                                            <div class="student_num column is-half">50명</div>
-                                                            <div class="teacher_name">이숭숭</div>
-                                                        </div>  
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                     <!-- 강좌 썸네일 end -->
-                                     <!-- 강좌 start -->
-                                    <div class="column lesson-tablet">
-                                        <div class="lecutre lesson-item">
-                                            <a class="lecture-item-front">
-                                                <div class="item-image">
-                                                    <figure class="item-image-thumbnail">
-                                                        <img src="/resources/images/lecture/spring.jpg" class="">
-                                                        <div class="lesson-item-event-card">
-                                                            <i class=""></i>
-                                                            <span>20% 할인중</span>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                                <div class="item-contents">
-                                                    <div class="lecture-item-title">
-                                                        파이썬입문과 크롤링기초 쌉가능
-                                                    </div>
-                                                    <div class="lecture-item-info">
-                                                        <div class="rating column is-half">
-                                                            <div class="rating-star">
-                                                                <div class="star_yellow">
-                                                                    ★★★★★
-                                                                </div>
-                                                            </div>
-                                                        </div>  
-                                                        <div class="price column is-half">
-                                                            <del>₩10,000</del>
-                                                            <span class="discount_price">₩6,000</span>
-                                                        </div>
-                                                        <div class="item-info-bottom">
-                                                            <div class="student_num column is-half">50명</div>
-                                                            <div class="teacher_name">이숭숭</div>
-                                                        </div>  
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                     <!-- 강좌 썸네일 end -->
-                                     <!-- 강좌 start -->
-                                    <div class="column lesson-tablet">
-                                        <div class="lecutre lesson-item">
-                                            <a class="lecture-item-front">
-                                                <div class="item-image">
-                                                    <figure class="item-image-thumbnail">
-                                                        <img src="/resources/images/lecture/spring.jpg" class="">
-                                                        <div class="lesson-item-event-card">
-                                                            <i class=""></i>
-                                                            <span>20% 할인중</span>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                                <div class="item-contents">
-                                                    <div class="lecture-item-title">
-                                                        파이썬입문과 크롤링기초 쌉가능
-                                                    </div>
-                                                    <div class="lecture-item-info">
-                                                        <div class="rating column is-half">
-                                                            <div class="rating-star">
-                                                                <div class="star_yellow">
-                                                                    ★★★★★
-                                                                </div>
-                                                            </div>
-                                                        </div>  
-                                                        <div class="price column is-half">
-                                                            <del>₩10,000</del>
-                                                            <span class="discount_price">₩6,000</span>
-                                                        </div>
-                                                        <div class="item-info-bottom">
-                                                            <div class="student_num column is-half">50명</div>
-                                                            <div class="teacher_name">이숭숭</div>
-                                                        </div>  
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                     <!-- 강좌 썸네일 end -->
-                                     <!-- 강좌 start -->
-                                    <div class="column lesson-tablet">
-                                        <div class="lecutre lesson-item">
-                                            <a class="lecture-item-front">
-                                                <div class="item-image">
-                                                    <figure class="item-image-thumbnail">
-                                                        <img src="/resources/images/lecture/spring.jpg" class="">
-                                                        <div class="lesson-item-event-card">
-                                                            <i class=""></i>
-                                                            <span>20% 할인중</span>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                                <div class="item-contents">
-                                                    <div class="lecture-item-title">
-                                                        파이썬입문과 크롤링기초 쌉가능
-                                                    </div>
-                                                    <div class="lecture-item-info">
-                                                        <div class="rating column is-half">
-                                                            <div class="rating-star">
-                                                                <div class="star_yellow">
-                                                                    ★★★★★
-                                                                </div>
-                                                            </div>
-                                                        </div>  
-                                                        <div class="price column is-half">
-                                                            <del>₩10,000</del>
-                                                            <span class="discount_price">₩6,000</span>
-                                                        </div>
-                                                        <div class="item-info-bottom">
-                                                            <div class="student_num column is-half">50명</div>
-                                                            <div class="teacher_name">이숭숭</div>
-                                                        </div>  
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                     <!-- 강좌 썸네일 end -->
-                                     <!-- 강좌 start -->
-                                    <div class="column lesson-tablet">
-                                        <div class="lecutre lesson-item">
-                                            <a class="lecture-item-front">
-                                                <div class="item-image">
-                                                    <figure class="item-image-thumbnail">
-                                                        <img src="/resources/images/lecture/spring.jpg" class="">
-                                                        <div class="lesson-item-event-card">
-                                                            <i class=""></i>
-                                                            <span>20% 할인중</span>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                                <div class="item-contents">
-                                                    <div class="lecture-item-title">
-                                                        파이썬입문과 크롤링기초 쌉가능
-                                                    </div>
-                                                    <div class="lecture-item-info">
-                                                        <div class="rating column is-half">
-                                                            <div class="rating-star">
-                                                                <div class="star_yellow">
-                                                                    ★★★★★
-                                                                </div>
-                                                            </div>
-                                                        </div>  
-                                                        <div class="price column is-half">
-                                                            <del>₩10,000</del>
-                                                            <span class="discount_price">₩6,000</span>
-                                                        </div>
-                                                        <div class="item-info-bottom">
-                                                            <div class="student_num column is-half">50명</div>
-                                                            <div class="teacher_name">이숭숭</div>
-                                                        </div>  
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                     <!-- 강좌 썸네일 end -->
-                                     <!-- 강좌 start -->
-                                    <div class="column lesson-tablet">
-                                        <div class="lecutre lesson-item">
-                                            <a class="lecture-item-front">
-                                                <div class="item-image">
-                                                    <figure class="item-image-thumbnail">
-                                                        <img src="/resources/images/lecture/spring.jpg" class="">
-                                                        <div class="lesson-item-event-card">
-                                                            <i class=""></i>
-                                                            <span>20% 할인중</span>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                                <div class="item-contents">
-                                                    <div class="lecture-item-title">
-                                                        파이썬입문과 크롤링기초 쌉가능
-                                                    </div>
-                                                    <div class="lecture-item-info">
-                                                        <div class="rating column is-half">
-                                                            <div class="rating-star">
-                                                                <div class="star_yellow">
-                                                                    ★★★★★
-                                                                </div>
-                                                            </div>
-                                                        </div>  
-                                                        <div class="price column is-half">
-                                                            <del>₩10,000</del>
-                                                            <span class="discount_price">₩6,000</span>
-                                                        </div>
-                                                        <div class="item-info-bottom">
-                                                            <div class="student_num column is-half">50명</div>
-                                                            <div class="teacher_name">이숭숭</div>
-                                                        </div>  
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                     <!-- 강좌 썸네일 end -->
-                                     <!-- 강좌 start -->
-                                    <div class="column lesson-tablet">
-                                        <div class="lecutre lesson-item">
-                                            <a class="lecture-item-front">
-                                                <div class="item-image">
-                                                    <figure class="item-image-thumbnail">
-                                                        <img src="/resources/images/lecture/spring.jpg" class="">
-                                                        <div class="lesson-item-event-card">
-                                                            <i class=""></i>
-                                                            <span>20% 할인중</span>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                                <div class="item-contents">
-                                                    <div class="lecture-item-title">
-                                                        파이썬입문과 크롤링기초 쌉가능
-                                                    </div>
-                                                    <div class="lecture-item-info">
-                                                        <div class="rating column is-half">
-                                                            <div class="rating-star">
-                                                                <div class="star_yellow">
-                                                                    ★★★★★
-                                                                </div>
-                                                            </div>
-                                                        </div>  
-                                                        <div class="price column is-half">
-                                                            <del>₩10,000</del>
-                                                            <span class="discount_price">₩6,000</span>
-                                                        </div>
-                                                        <div class="item-info-bottom">
-                                                            <div class="student_num column is-half">50명</div>
-                                                            <div class="teacher_name">이숭숭</div>
-                                                        </div>  
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <!-- 강좌 썸네일 end -->
+	                                            <a href="detail/description.hta?lectureNo=${lecture.no }" class="lecture-item-front">
+	                                                <div class="item-image">
+	                                                    <figure class="item-image-thumbnail">
+	                                                        <img src="${lecture.imagePath}" class="">
+	                                                        <c:if test="${lecture.isFreed eq 'Y' }">
+		                                                        <div class="lesson-item-event-card">
+		                                                            <i class=""></i>
+		                                                            <span>${lecture.discountRate }% 할인중</span>
+		                                                        </div>
+	                                                        </c:if>
+	                                                        
+	                                                    </figure>
+	                                                </div>
+	                                                <div class="item-contents">
+	                                                    <div class="lecture-item-title">
+	                                                        ${lecture.title }
+	                                                    </div>
+	                                                    <div class="lecture-item-info">
+	                                                        <div class="rating column is-half">
+	                                                            <div class="rating-star">
+	                                                                <div class="star_yellow">
+	                                                                    ★★★★
+	                                                                </div>
+	                                                            </div>
+	                                                        </div>  
+	                                                        <div class="price column is-half">
+	                                                        <c:choose>
+	                                                        	<c:when test="${lecture.isFreed eq 'Y' }">
+		                                                            <del>￦<fmt:formatNumber value="${lecture.price }"></fmt:formatNumber></del>
+	                                                        	</c:when>
+	                                                        	<c:otherwise>
+	                                                        		<br>
+	                                                        	</c:otherwise>
+	                                                        </c:choose>                                                      	
+	                                                            <span class="discount_price">￦<fmt:formatNumber value="${lecture.discountPrice }"></fmt:formatNumber></span>
+	                                                        </div>
+	                                                        <div class="item-info-bottom">
+	                                                            <div class="student_num column is-half"></div>
+	                                                            <div class="teacher_name">${lecture.userName }</div>
+	                                                        </div>  
+	                                                    </div>
+	                                                </div>
+	                                            </a>
+	                                        </div>
+	                                    </div>
+                                    </c:forEach>
                                 </div> 
                                 <nav class="pagination sy-pagination" role="navagation" aria-label="pagination">
                                     <ul class="pagination">

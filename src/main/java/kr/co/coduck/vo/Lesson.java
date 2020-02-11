@@ -81,6 +81,12 @@ public class Lesson {
 	public void setLessonWatched(String lessonWatched) {
 		this.lessonWatched = lessonWatched;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Lesson [no=" + no + ", chapterNo=" + chapterNo + ", lessonTitle=" + lessonTitle + ", lessonSample="
+				+ lessonSample + ", totalTime=" + totalTime + ", accumulateTime=" + accumulateTime + ", lastTime="
+				+ lastTime + ", lessonWatched=" + lessonWatched + "]";
+	}
 	
 }

@@ -36,6 +36,9 @@ public class Chapter {
 	public void setChapterName(String chapterName) {
 		this.chapterName = chapterName;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Chapter [no=" + no + ", lectNo=" + lectNo + ", chapterName=" + chapterName + "]";
+	}
 }

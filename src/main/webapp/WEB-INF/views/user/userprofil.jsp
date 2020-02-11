@@ -26,9 +26,9 @@
 			<p>내 결제</p>
 			<ul>
 				<li>위시리스트</li>
-				<li>장바구니</li>
+				<li><a href="/cart/userCartList.hta">장바구니</a></li>
 				<li>내 쿠폰함</li>
-				<li>구매내역</li>
+				<li><a href="/user/userbylist.hta">구매내역</a></li>
 			</ul>
 			<p>설정</p>
 			<ul>
@@ -67,6 +67,10 @@
 					<div class="form-group">
 						<label>자기소개</label>
 						<textarea class="form-control" rows="" cols="5" name="selfInfo">${userProfil.selfInfo }</textarea>
+					</div>
+					<div class="form-group">
+						<label>계좌번호</label>
+						<input type="text" class="form-control" name="banknumber" value="${userProfil.bankNumber }" />
 					</div>
 					<div class="text-right">
 						<button type="submit" class="btn btn-primary btn-info">프로필 수정</button>

@@ -2,42 +2,153 @@
     pageEncoding="UTF-8"%>
 
 <%@ include file="../../common/header.jsp" %>
-<%@ include file="sub-bar.jsp"%>
+
+<script>
+$(function() {
+        $("#subNav li").on('click', function () {
+            const name = $(this).attr('class');
+            
+            if (name == 'questions' || name == 'dashboard') return;
+            // offset() 지정한 엘리먼트의 꼭다리 값 알려줌 
+            const scrollTop = $("#" + name).offset().top - 58;
+            // animate({name:value}, 속도ms); jquery에 애니메이션 기능 함수
+            $('html, body').animate({
+                scrollTop
+            }, 800);
+        });
+    });
+</script>
+    
+       <section class="lecture-header-container">
+            <div class="container">
+                <div class="col-sm-12 play-container">
+                    <div class="col-sm-9">
+                        <div class="col-sm-4 lecture-container">
+                            <div class="lecture-thumbnail">
+                                <img src="${lecture.imagePath }" alt="스프링프레임워크" />
+                            </div>
+                            <div class="lecture-play">
+                                <div class="icon_container has-icon">
+                                    <i class="fas fa-play"></i>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lecture-title">
+                            <div>
+                                <h1>${lecture.title }</h1>
+                                <div class="lecture-mata">
+                                    <span>
+                                        <div class="rating-star">
+                                            <div class="star-solid">
+                                                <span class="star" id="starScore" data-text="${counts.reviewStar }"></span>
+                                                <small>(${counts.reviewCnt }개의 수강평)</small>
+                                                <br>
+                                                <small class="student_cnt"> ${counts.studentCnt }명의 수강생</small>
+                                            </div>
+                                        </div>
+                                        <div class="lecture-progress">
+                                            <span>진도율 : 27강/27강 (100.00%) | 시간 : 695분/695분</span>
+                                            <br>
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-info" role="progressbar"
+                                                    aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
+                                                    style="width:30%">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="learning-btn-container">
+                            <a href="#" class="btn btn-default sy-btn-learning">학습하기</a>
+                        </div>
+                        <!-- floating btn start -->
+                        <div class="lecture-floating-btn">
+                            <div class="lecture-floating-top">
+                                <div class="lecture-price-cover">
+                                    <div class="lecture-price-section">
+                                        <div class="lecture-price">
+                                            <fmt:formatNumber value="${lecture.discountPrice }"></fmt:formatNumber>원 <del class="lecture-del-price"><fmt:formatNumber value="${lecture.price }"></fmt:formatNumber>원</del>
+                                        </div>
+                                        <div class="lecture-price-detail">(${lecture.discountRate }% 할인)</div>
+                                    </div>
+                                    <div class="lecture-btn-section">
+                                        <div class="lecture-btn-cover">
+                                            <a href="/order/insertOrderLect.hta" class="btn lecture-purchase-btn">구매하기</a>
+                                        </div>
+                                        <div class="lecture-sub-btn-cover">
+                                            <button class="btn sub-btn lecture-like-btn">
+                                                <i class="far fa-heart"></i> ${counts.likeCnt } 위시
+                                            </button>
+                                            <button href="/cart/insertCartLect.hta" class="btn sub-btn lecture-cart-btn">
+                                                <i class="fas fa-shopping-cart"></i> 수강 바구니
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lecture-floating-bottom">
+                                <div class="lecture-info-cover">
+                                    <div class="lecture-info-row">
+                                        <i class="fas fa-user-tie"></i> 지식공유자 !강사 이름!
+                                    </div>
+                                    <div class="lecture-info-row">
+                                        <i class="far fa-clock"></i> 평생 무제한 시청
+                                    </div>
+                                    <div class="lecture-info-row">
+                                        <i class="fas fa-stamp"></i> 수료증 발급 강의
+                                    </div>
+                                    <div class="lecture-info-row">
+                                       <i class="fas fa-signal"></i>수강 난이도 '활용'
+                                    </div>
+                                    <div class="lecture-info-row">
+                                       <i class="far fa-play-circle"></i>96회 수업ㆍ총 8시간 15분 수업
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- floating btn start -->
+                    </div>
+                </div>
+            </div>
+        </section>
+                
+		<!-- LectureDetail Menu start-->
+       	<section class="leature-description_container">
+	    <div class="container">
+	        <ul class="nav nav-pills" id="subNav">
+	            <li class="is-active dashboard"><a href="#">대시보드</a></li>
+	            <li class="is-active description"><a href="#">강의소개</a></li>
+	            <li class='curriculum'><a href="#">교육과정</a></li>
+	            <li class='reviews'><a href="#">수강후기</a></li class=''>
+	        <li class='questions'><a href="#">질문답변</a></li class=''>
+	        </ul>
+	    </div>
+	    <!-- LectureDetail Menu end-->
+	    
 		<!-- description start -->
         <div class="container">
             <div class="lecture-description-container">
                 <div class="col-sm-12">
                     <div class="col-sm-9">
                         <div class="contents">
-                            <!-- 강의소개 start-->
+                        <!-- 강의소개 start-->
                             <div class="lecture-description" id="description">
                                 <div class="can_do description_sub">
                                     <h3 class="sub-title has-icon">
                                         이런걸 배울 수 있어요
                                         <i class="far fa-smile-wink"></i>
                                     </h3>
-                                    <ul>
-                                        <li>
-                                            <i class="glyphicon glyphicon-ok"></i>
-                                            &nbsp 리엑트 개발
-                                        </li>
-                                        <li>
-                                            <i class="glyphicon glyphicon-ok"></i>
-                                            &nbsp 서브 사이드 렌더링
-                                        </li>
-                                        <li>
-                                            <i class="glyphicon glyphicon-ok"></i>
-                                            &nbsp 검색 엔진 최적화
-                                        </li>
-                                    </ul>
+                                    <ul id="lectureTag" data-tag=" ${lecture.tag }"></ul>
                                 </div>
                                 <div class="body">
-                                    <h3 class="body-title">제로초의 React로 배우는 20시간짜리(어마어마) 풀스택 강좌!</h3>
+                                    <h3 class="body-title">${lecture.infoTitle }</h3>
                                     <p class="body-contents">
-                                        트위터와 비슷한(이라고 쓰고 짝퉁이라 읽는다) 제로초의 시그니처 프로젝트 NodeBird SNS를 만들어보며,
-                                        Next.js(SSR) + React Hooks + Redux + Redux saga + Ant Design + Styled
-                                        Components + Node + Express + Sequelize(MySQL)를 배웁니다.
-                                        검색엔진 최적화와 AWS 배포(간단하게 EC2 + Lambda + S3 + Route53 사용)는 보너스!
+                                        ${lecture.info }
                                     </p>
                                 </div>
                                 <div class="lecture-instructor">
@@ -45,78 +156,81 @@
                                     <div class="teacher-profile">
                                         <div class="teacher-profile-image">
                                             <figure class="image">
-                                                <img src="/resources/images/logo/coduck.ico" width="70px" />
-                                                <span class="teacher-profile-name">이숭숭</span>
+                                                <img src="${lecture.userImagePath }" width="70px" />
+                                                <span class="teacher-profile-name">${lecture.userName }</span>
                                             </figure>
                                         </div>
                                         <ul>
-                                            <li>안녕하세요. 숭숭입니다.</li>
+                                            <li>${lecture.userIntroduction }</li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                             <!-- 교육과정 start-->
-                            <div class="lecture-curriculum" id="curriculum">
-                                <h3 class="sub-heading">교육과정</h3>
-                                <div class="curriculum-chapter-list">
-                                    <div class="curriculum-title">
-                                        <span class="curriculum_length">총 강의</span>
-                                        <span class="curriculum_runtime">총 시간</span>
-                                    </div>
-                                    <!-- chapter-cover start-->
-                                    <div class="chapter-cover">
-                                        <!-- chapter-header start-->
-                                        <div class="chapter-header">
-                                            <div class="chapter-header-left">
-                                                <span class="section_header_icon plus">
-                                                    <i class="glyphicon glyphicon-plus"></i>
-                                                </span>
-                                                <span class="section_header_icon minus">
-                                                    <i class="glyphicon glyphicon-minus"></i>
-                                                </span>
-                                                <span class="unit_title">섹션 0. Hello, Next.js</span>
-                                            </div>
-                                            <div class="chapter-header-right">
-                                                <span class="unit_length">7 강의</span>
-                                                <span class="unit_time"><i class="far fa-clock"></i>
-                                                    79 : 23</span>
-                                            </div>
-                                        </div>
-                                        <div class="chapter-header">
-                                            <div class="chapter-header-left">
-                                                <span class="section_header_icon plus">
-                                                    <i class="glyphicon glyphicon-plus"></i>
-                                                </span>
-                                                <span class="section_header_icon minus">
-                                                    <i class="glyphicon glyphicon-minus"></i>
-                                                </span>
-                                                <span class="unit_title">섹션 1. Hello, Next.js</span>
-                                            </div>
-                                            <div class="chapter-header-right">
-                                                <span class="unit_length">7 강의</span>
-                                                <span class="unit_time"><i class="far fa-clock"></i>
-                                                    79 : 23
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="lesson_cover">
-                                            <div class="unit_item">
-                                                <div class="col-sm-10 unit_item_left">
-                                                    <i class="far fa-play-circle"></i>
-                                                    <span class="unit_item-title">스프링의 기초</span>
-                                                </div>
-                                                <div class="unit_item_right">
-                                                    <span class="unit_time"><i class="far fa-clock"
-                                                            style="margin-right: 4px;"></i>
-                                                        17 : 27
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- chapter-cover end-->
-                                </div>
-                            </div>
+                            <c:forEach var="course" items="courses" varStatus="status">
+	                            <div class="lecture-curriculum" id="curriculum">
+	                           
+	                                <h3 class="sub-heading">교육과정</h3>
+	                                <div class="curriculum-chapter-list">
+	                                    <div class="curriculum-title">
+	                                        <span class="curriculum_length">총 강의</span>
+	                                        <span class="curriculum_runtime">총 시간</span>
+	                                    </div>
+	                                    <!-- chapter-cover start-->
+	                                    <div class="chapter-cover">
+	                                        <!-- chapter-header start-->
+	                                        <div class="chapter-header">
+	                                            <div class="chapter-header-left">
+	                                                <span class="section_header_icon plus">
+	                                                    <i class="glyphicon glyphicon-plus"></i>
+	                                                </span>
+	                                                <span class="section_header_icon minus">
+	                                                    <i class="glyphicon glyphicon-minus"></i>
+	                                                </span>
+	                                                <span class="unit_title">섹션 ${status.index }. Hello, Next.js</span>
+	                                            </div>
+	                                            <div class="chapter-header-right">
+	                                                <span class="unit_length">7 강의</span>
+	                                                <span class="unit_time"><i class="far fa-clock"></i>
+	                                                    79 : 23</span>
+	                                            </div>
+	                                        </div>
+	                                        <div class="chapter-header">
+	                                            <div class="chapter-header-left">
+	                                                <span class="section_header_icon plus">
+	                                                    <i class="glyphicon glyphicon-plus"></i>
+	                                                </span>
+	                                                <span class="section_header_icon minus">
+	                                                    <i class="glyphicon glyphicon-minus"></i>
+	                                                </span>
+	                                                <span class="unit_title">섹션 1. Hello, Next.js</span>
+	                                            </div>
+	                                            <div class="chapter-header-right">
+	                                                <span class="unit_length">7 강의</span>
+	                                                <span class="unit_time"><i class="far fa-clock"></i>
+	                                                    79 : 23
+	                                                </span>
+	                                            </div>
+	                                        </div>
+	                                        <div class="lesson_cover">
+	                                            <div class="unit_item">
+	                                                <div class="col-sm-10 unit_item_left">
+	                                                    <i class="far fa-play-circle"></i>
+	                                                    <span class="unit_item-title">스프링의 기초</span>
+	                                                </div>
+	                                                <div class="unit_item_right">
+	                                                    <span class="unit_time"><i class="far fa-clock"
+	                                                            style="margin-right: 4px;"></i>
+	                                                        17 : 27
+	                                                    </span>
+	                                                </div>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                    <!-- chapter-cover end-->
+	                                </div>
+	                            </div>
+                            </c:forEach>
                             <!-- 교육과정 end -->
 
                             <!-- 공개일자 -->
@@ -197,5 +311,32 @@
         </div>
         <!-- description end -->
     </section>
-    
+<script>
+
+	// starScore
+	var score = $("#starScore").data("text");
+	var star = "";
+	for(var i=1; i<=score; i++) {
+		star += '<i class="fas fa-star"></i>';
+	}
+	$("#starScore").html(star);
+	
+	var trim = 5 - score;
+	
+	var emptyStar = "";
+	for(var i=1; i<=trim; i++) {
+		emptyStar += '<i class="far fa-star"></i>';
+	}
+	$("#starScore").append(emptyStar);
+	
+	
+	// lectureTag split 
+	var str = $("#lectureTag").data("tag").split('#');
+	var html = "";
+	for (var i in str) {
+		html +="<li><i class='glyphicon glyphicon-ok'></i> " +  str[i] + "</li>";
+	}
+	$("#lectureTag").html(html);
+	$("#lectureTag li:first").remove();
+</script>    
 <%@ include file="../../common/footer.jsp" %>

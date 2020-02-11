@@ -7,7 +7,7 @@ public class LectCart {
 
 	private int no;
 	private int lectNo;
-	private int UserNo;
+	private int userNo;
 	
 	public LectCart() {
 		
@@ -30,11 +30,13 @@ public class LectCart {
 	}
 
 	public int getUserNo() {
-		return UserNo;
+		return userNo;
 	}
 
 	public void setUserNo(int userNo) {
-		UserNo = userNo;
+		this.userNo = userNo;
 	}
+
+
 	
 }

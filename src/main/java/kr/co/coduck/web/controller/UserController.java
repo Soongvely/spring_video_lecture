@@ -2,6 +2,7 @@ package kr.co.coduck.web.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.coduck.dto.UserByLectDto;
 import kr.co.coduck.form.UserRegisterForm;
+import kr.co.coduck.service.LectService;
 import kr.co.coduck.service.UserService;
+import kr.co.coduck.vo.Lect;
 import kr.co.coduck.vo.User;
 
 @Controller
@@ -24,11 +28,25 @@ import kr.co.coduck.vo.User;
 public class UserController {
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private LectService lectService;
 	
 	private final String photoSaveDirectory = "C:\\projects\\spring_workspace\\coduck\\src\\main\\webapp\\resources\\images\\userImageFilename";
 	
+	@GetMapping("/userbylist.hta")
+	public String userbylist(HttpSession session, Model model) {
+		User user = (User)session.getAttribute("LU");
+		List<UserByLectDto> userLectList = lectService.getLectListUserByNo(user.getNo());
+		model.addAttribute("userLectList", userLectList);
+		return "user/userbylist";
+	}
+	
 	@GetMapping("/userlecting.hta")
-	public String userlecting() {
+	public String userlecting(HttpSession session, Model model) {
+		User user = (User)session.getAttribute("LU");
+		List<UserByLectDto> userLectList = lectService.getLectListUserByNo(user.getNo());
+		model.addAttribute("userLectList", userLectList);
+		System.out.println(userLectList);
 		return "user/userlecting";
 	}
 	
@@ -74,6 +92,7 @@ public class UserController {
 		user.setEmail(registerForm.getEmail());
 		user.setNickname(registerForm.getNickname());
 		user.setSelfInfo(registerForm.getSelfInfo());
+		user.setBankNumber(registerForm.getBanknumber());
 		
 		MultipartFile imgfile = registerForm.getImgfile();
 		if(!imgfile.isEmpty()) {
@@ -99,6 +118,7 @@ public class UserController {
 		userProfilUpDate.setEmail(registerForm.getEmail());
 		userProfilUpDate.setSelfInfo(registerForm.getSelfInfo());
 		userProfilUpDate.setPassword(registerForm.getPwd());
+		userProfilUpDate.setBankNumber(registerForm.getBanknumber());
 		
 		
 		

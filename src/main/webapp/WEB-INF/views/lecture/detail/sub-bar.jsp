@@ -6,7 +6,6 @@
 $(function() {
         $("#subNav li").on('click', function () {
             const name = $(this).attr('class');
-            어디한번 바/군
             
             if (name == 'questions' || name == 'dashboard') return;
             // offset() 지정한 엘리먼트의 꼭다리 값 알려줌 

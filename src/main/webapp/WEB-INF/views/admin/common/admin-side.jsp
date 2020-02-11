@@ -4,7 +4,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" style="z-index: 1;">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin/home.hta">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -16,7 +16,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="/admin/home.hta">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>메인</span></a>
       </li>
@@ -38,16 +38,17 @@
            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">강좌 관리</h6>
-                <a class="collapse-item" href="buttons.html">동영상</a>
-                <a class="collapse-item" href="cards.html">모의고사</a>
+                <a class="collapse-item" href="/admin/lecture.hta">동영상</a>
+                <a class="collapse-item" href="/admin/test.hta">모의고사</a>
+                <a class="collapse-item" href="/admin/test.hta">모의고사 등록</a>
               </div>
          </div>
       </li>
 
       <li class="nav-item">
-         <a class="nav-link" href="charts.html">
+         <a class="nav-link" href="/admin/customer.hta">
                <i class="fas fa-user-friends"></i>
-            <span>고객 관리</span></a>
+            <span>회원 관리</span></a>
         </li>
 
       <!-- Divider -->
@@ -84,7 +85,7 @@
       </li>
         
         <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="/admin/coupon.hta">
           <i class="fas fa-fw fa-table"></i>
           <span>쿠폰 관리</span></a>
       </li>

@@ -15,4 +15,14 @@ public class AdminController {
 	public String lecture() {
 		return "admin/lecture";
 	}
+	
+	@GetMapping("/admin/test.hta")
+	public String test() {
+		return "admin/test";
+	}
+	
+	@GetMapping("/admin/customer.hta")
+	public String customer() {
+		return "admin/customer";
+	}
 }

@@ -18,6 +18,7 @@ public class User {
 	private int point;
 	private String nickname;
 	private String role;
+	private String bankNumber;
 	
 	public User() {
 		
@@ -117,6 +118,14 @@ public class User {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getBankNumber() {
+		return bankNumber;
+	}
+
+	public void setBankNumber(String bankNumber) {
+		this.bankNumber = bankNumber;
 	}
 	
 	

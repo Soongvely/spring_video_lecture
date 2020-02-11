@@ -12,6 +12,7 @@ public class Lect {
 	private int userNo;
 	private String lectTitle;
 	private String lectInfo;
+	private String lectInfoTitle;
 	private int price;
 	private int discountPrice;
 	private int discountRate;
@@ -56,6 +57,14 @@ public class Lect {
 
 	public void setLectInfo(String lectInfo) {
 		this.lectInfo = lectInfo;
+	}
+	
+	public String getLectInfoTitle() {
+		return lectInfoTitle;
+	}
+
+	public void setLectInfoTitle(String lectInfoTitle) {
+		this.lectInfoTitle = lectInfoTitle;
 	}
 
 	public int getPrice() {
@@ -141,10 +150,12 @@ public class Lect {
 	@Override
 	public String toString() {
 		return "Lect [no=" + no + ", cateNo=" + cateNo + ", userNo=" + userNo + ", lectTitle=" + lectTitle
-				+ ", lectInfo=" + lectInfo + ", price=" + price + ", discountPrice=" + discountPrice + ", discountRate="
-				+ discountRate + ", isFreed=" + isFreed + ", isDisplay=" + isDisplay + ", lectCreateDate="
-				+ lectCreateDate + ", imagePath=" + imagePath + ", tag=" + tag + ", grade=" + grade + "]";
+				+ ", lectInfo=" + lectInfo + ", lectInfoTitle=" + lectInfoTitle + ", price=" + price
+				+ ", discountPrice=" + discountPrice + ", discountRate=" + discountRate + ", isFreed=" + isFreed
+				+ ", isDisplay=" + isDisplay + ", lectCreateDate=" + lectCreateDate + ", imagePath=" + imagePath
+				+ ", tag=" + tag + ", grade=" + grade + "]";
 	}
+
 	
 	
 }

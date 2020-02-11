@@ -9,6 +9,7 @@ public class OrderLectInfo {
 	private int lectNo;
 	private int orderNo;
 	private int couponNo;
+	private String reviewEnabled;
 	
 	public OrderLectInfo() {
 		
@@ -44,6 +45,20 @@ public class OrderLectInfo {
 
 	public void setCouponNo(int couponNo) {
 		this.couponNo = couponNo;
+	}
+
+	public String getReviewEnabled() {
+		return reviewEnabled;
+	}
+
+	public void setReviewEnabled(String reviewEnabled) {
+		this.reviewEnabled = reviewEnabled;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderLectInfo [no=" + no + ", lectNo=" + lectNo + ", orderNo=" + orderNo + ", couponNo=" + couponNo
+				+ ", reviewEnabled=" + reviewEnabled + "]";
 	}
 	
 	

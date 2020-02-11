@@ -48,6 +48,10 @@
 					<label>자기소개</label>
 					<textarea class="form-control" rows="" cols="5" name="selfInfo"></textarea>
 				</div>
+				<div class="form-group">
+					<label>계좌번호</label>
+					<input type="text" class="form-control" name="banknumber"/>
+				</div>
 				<div class="text-right">
 					<button type="submit" class="btn btn-primary">회원등록</button>
 				</div>
