@@ -103,7 +103,7 @@
 		                	<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 				                <thead>
 				                	<tr>
-					                    <th>동영상명</th>
+					                    <th>강좌명</th>
 					                    <th>카테고리명</th>
 					                    <th>등급</th>
 					                    <th>유저명</th>
@@ -122,7 +122,7 @@
 					                    <th>유저명</th>
 					                    <th>가격</th>
 					                    <th>신청일</th>
-					                    <th>공개여부</th>
+					                    <th>승인여부</th>
 					                    <th></th>
 					                    <th></th>
 				                	</tr>				                   
@@ -161,26 +161,26 @@
 			</div>
 			<div class="modal-bady">
 				<table class="table" id="modal-lecture-detail-table">
+					<colgroup>
+						<col width="*%">
+						<col width="*%">
+						<col width="12%">
+						<col width="*%">
+					</colgroup>
 					<thead>
 						<tr>
-							<th>제목</th>
-							<th>카테고리명</th>
-							<th>등급</th>
-							<th>가격</th>
-							<th>할인가격</th>
-							<th>신청일</th>
-							<th>승인여부</th>
+							<th>챕터명</th>
+							<th>레슨명</th>
+							<th>재생시간</th>
+							<th>첨부파일</th>
 						</tr>
 					</thead>	
 					<tbody>
 						<tr>
 							<td>1</td>
 							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
+							<td>115:30</td>
+							<td>kimdaeilkingkingking.avi</td>
 						</tr>
 					</tbody>
 				</table>

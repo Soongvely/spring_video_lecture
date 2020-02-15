@@ -8,13 +8,17 @@ import org.springframework.stereotype.Service;
 import kr.co.coduck.dao.LectDao;
 import kr.co.coduck.dao.UserDao;
 import kr.co.coduck.dto.ChapterDto;
+import kr.co.coduck.dto.LectureCourseDto;
 import kr.co.coduck.dto.LectureDto;
 import kr.co.coduck.dto.UserByLectDto;
+import kr.co.coduck.vo.Category;
 import kr.co.coduck.vo.Lect;
+import kr.co.coduck.vo.LectureCriteria;
+import kr.co.coduck.vo.Lesson;
 import kr.co.coduck.vo.User;
 
 @Service
-public class LectServiceImpl implements LectService{
+public class LectServiceImpl implements LectService {
 
 	@Autowired
 	private LectDao lectDao;
@@ -56,6 +60,23 @@ public class LectServiceImpl implements LectService{
 	public List<ChapterDto> getChapterByLectureNo(int lectureNo) {
 		
 		return lectDao.getChapterByLectureNo(lectureNo);
+	}
+
+	@Override
+	public List<Lesson> getLessonByChpaterNo(int chapterNo) {
+		
+		return lectDao.getLessonByChpaterNo(chapterNo);
+	}
+
+	@Override
+	public List<LectureCourseDto> getLectureByCriteria(LectureCriteria cri) {
+		return lectDao.getLectureByCriteria(cri);
+	}
+	
+	@Override
+	public int getLectureCountByCriteria(LectureCriteria cri) {
+		
+		return lectDao.getLectureCountByCriteria(cri);
 	}
 
 }

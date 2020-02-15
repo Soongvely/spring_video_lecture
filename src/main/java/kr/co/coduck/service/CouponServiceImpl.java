@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import kr.co.coduck.dao.CouponDao;
 import kr.co.coduck.dao.UserDao;
 import kr.co.coduck.vo.Coupon;
+import kr.co.coduck.vo.CouponBox;
 import kr.co.coduck.vo.User;
 
 @Service
@@ -51,7 +52,33 @@ public class CouponServiceImpl implements CouponService {
 		couponDao.deleteCoupon(couponNo);
 	}
 
+	@Override
+	public void deleteCoupons(int[] couponNos) {
+		for (int couponNo : couponNos) {
+			couponDao.deleteCoupon(couponNo);
+		}
+	}
 
+	@Override
+	public void insertCouponByAdmin(int couponNo, int[] userNos) {
+		for (int userNo : userNos) {
+			CouponBox couponBox = new CouponBox();
+			couponBox.setCouponNo(couponNo);
+			couponBox.setUserNo(userNo);
+			
+			Coupon coupon = couponDao.getCouponByCouponNo(couponNo);
+			
+			if (coupon.getAmount() > 0 && coupon.getLimited().equals("Y")) {			
+				coupon.setAmount(coupon.getAmount() - 1);			
+				if (coupon.getAmount() == 0 && coupon.getLimited().equals("Y")) {
+					coupon.setEnabled("N");			
+				}
+			}
+			
+			couponDao.updateCouponByAdmin(coupon);
+			couponDao.insertCouponByAdmin(couponBox);
+		}
+	}
 	
 
 }

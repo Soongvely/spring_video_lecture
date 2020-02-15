@@ -3,9 +3,13 @@ package kr.co.coduck.dao;
 import java.util.List;
 
 import kr.co.coduck.vo.Coupon;
+import kr.co.coduck.vo.CouponBox;
 
 public interface CouponDao {
 
+	// 쿠폰 발송
+	void insertCouponByAdmin(CouponBox couponBox);
+	
 	// 쿠폰 추가
 	void addNewCoupon(Coupon coupon);
 	// 쿠폰 수정
@@ -18,5 +22,7 @@ public interface CouponDao {
 	void deleteCoupon(int couponNo);
 	
 	List<Coupon> getCouponsByUserNo(int userNo);
+	
+	void deleteCouponBoxByCouponNo(int couponNo);
 	
 }

@@ -3,6 +3,8 @@ package kr.co.coduck.vo;
 import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
+
+import kr.co.coduck.utils.DateUtils;
 @Alias("User")
 public class User {
 
@@ -19,6 +21,7 @@ public class User {
 	private String nickname;
 	private String role;
 	private String bankNumber;
+	private String enabled;
 	
 	public User() {
 		
@@ -127,6 +130,16 @@ public class User {
 	public void setBankNumber(String bankNumber) {
 		this.bankNumber = bankNumber;
 	}
-	
+
+	public String getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(String enabled) {
+		this.enabled = enabled;
+	}
+	public String getFmtCreateDate() {
+		return DateUtils.dateToString(createDate);
+	}
 	
 }

@@ -1,23 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ include file="../../common/head.jsp" %>
 <%@ include file="../../common/header.jsp" %>
-
-<script>
-$(function() {
-        $("#subNav li").on('click', function () {
-            const name = $(this).attr('class');
-            
-            if (name == 'questions' || name == 'dashboard') return;
-            // offset() 지정한 엘리먼트의 꼭다리 값 알려줌 
-            const scrollTop = $("#" + name).offset().top - 58;
-            // animate({name:value}, 속도ms); jquery에 애니메이션 기능 함수
-            $('html, body').animate({
-                scrollTop
-            }, 800);
-        });
-    });
-</script>
+<script src="/resources/js/lecture/details-common.js"></script>   
     
        <section class="lecture-header-container">
             <div class="container">

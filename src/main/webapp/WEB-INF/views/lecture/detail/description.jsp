@@ -1,24 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<%@ include file="../../common/header.jsp" %>
-
-<script>
-$(function() {
-        $("#subNav li").on('click', function () {
-            const name = $(this).attr('class');
-            
-            if (name == 'questions' || name == 'dashboard') return;
-            // offset() 지정한 엘리먼트의 꼭다리 값 알려줌 
-            const scrollTop = $("#" + name).offset().top - 58;
-            // animate({name:value}, 속도ms); jquery에 애니메이션 기능 함수
-            $('html, body').animate({
-                scrollTop
-            }, 800);
-        });
-    });
-</script>
-    
+<%@ include file="../../common/head.jsp" %>
+<%@ include file="../../common/header.jsp" %> 
+ 
        <section class="lecture-header-container">
             <div class="container">
                 <div class="col-sm-12 play-container">
@@ -36,7 +20,9 @@ $(function() {
                         </div>
                         <div class="lecture-title">
                             <div>
-                                <h1>${lecture.title }</h1>
+                            	<div class="lecture-title-header">
+	                                <h1>${lecture.title }</h1>
+                            	</div>
                                 <div class="lecture-mata">
                                     <span>
                                         <div class="rating-star">
@@ -167,7 +153,7 @@ $(function() {
                                 </div>
                             </div>
                             <!-- 교육과정 start-->
-                            <c:forEach var="course" items="courses" varStatus="status">
+                            
 	                            <div class="lecture-curriculum" id="curriculum">
 	                           
 	                                <h3 class="sub-heading">교육과정</h3>
@@ -178,102 +164,78 @@ $(function() {
 	                                    </div>
 	                                    <!-- chapter-cover start-->
 	                                    <div class="chapter-cover">
+        		                    <c:forEach var="chapterDto" items="${chapters}" varStatus="status">
 	                                        <!-- chapter-header start-->
 	                                        <div class="chapter-header">
 	                                            <div class="chapter-header-left">
 	                                                <span class="section_header_icon plus">
 	                                                    <i class="glyphicon glyphicon-plus"></i>
 	                                                </span>
-	                                                <span class="section_header_icon minus">
-	                                                    <i class="glyphicon glyphicon-minus"></i>
-	                                                </span>
-	                                                <span class="unit_title">섹션 ${status.index }. Hello, Next.js</span>
+	                                                <span class="unit_title">챕터 ${status.index }. ${chapterDto.chapter.chapterName }</span>
 	                                            </div>
 	                                            <div class="chapter-header-right">
-	                                                <span class="unit_length">7 강의</span>
+	                                                <span class="unit_length">${fn:length(chapterDto.lessons) } 강의</span>
 	                                                <span class="unit_time"><i class="far fa-clock"></i>
 	                                                    79 : 23</span>
 	                                            </div>
 	                                        </div>
-	                                        <div class="chapter-header">
-	                                            <div class="chapter-header-left">
-	                                                <span class="section_header_icon plus">
-	                                                    <i class="glyphicon glyphicon-plus"></i>
-	                                                </span>
-	                                                <span class="section_header_icon minus">
-	                                                    <i class="glyphicon glyphicon-minus"></i>
-	                                                </span>
-	                                                <span class="unit_title">섹션 1. Hello, Next.js</span>
-	                                            </div>
-	                                            <div class="chapter-header-right">
-	                                                <span class="unit_length">7 강의</span>
-	                                                <span class="unit_time"><i class="far fa-clock"></i>
-	                                                    79 : 23
-	                                                </span>
-	                                            </div>
-	                                        </div>
-	                                        <div class="lesson_cover">
-	                                            <div class="unit_item">
-	                                                <div class="col-sm-10 unit_item_left">
-	                                                    <i class="far fa-play-circle"></i>
-	                                                    <span class="unit_item-title">스프링의 기초</span>
-	                                                </div>
-	                                                <div class="unit_item_right">
-	                                                    <span class="unit_time"><i class="far fa-clock"
-	                                                            style="margin-right: 4px;"></i>
-	                                                        17 : 27
-	                                                    </span>
-	                                                </div>
-	                                            </div>
-	                                        </div>
+		                                        <div class="lesson_cover slide-hidden">
+	                                        	<c:forEach var="lesson" items="${chapterDto.lessons }">
+		                                            <div class="unit_item">
+		                                                <div class="col-sm-10 unit_item_left">
+		                                                    <i class="far fa-play-circle"></i>
+		                                                    <span class="unit_item-title">${lesson.lessonTitle }</span>
+		                                                </div>
+		                                                <div class="unit_item_right">
+		                                                    <span class="unit_time"><i class="far fa-clock"
+		                                                            style="margin-right: 4px;"></i>
+		                                                        ${lesson.totalTime }
+		                                                    </span>
+		                                                </div>
+		                                            </div>
+		                           				 </c:forEach>
+		                                        </div>
+	                                        </c:forEach>
 	                                    </div>
 	                                    <!-- chapter-cover end-->
 	                                </div>
 	                            </div>
-                            </c:forEach>
                             <!-- 교육과정 end -->
 
                             <!-- 공개일자 -->
                             <div class="lecture-date">
                                 <h3 class="sub-heading">공개 일자</h3>
-                                <div style="padding-left: 1rem;">2019년 11월 26일</div>
+                                <div style="padding-left: 1rem;"><fmt:formatDate value="${lecture.createDate }" pattern="yyyy년 MM월 dd일"/></div>
                             </div>
                             <!-- 수강후기 start -->
                             <div class="lecture-reviews" id="reviews">
                                 <h3>수강 후기</h3>
                                 <div class="review-box">
                                     <div class="average">
-                                        <span class="average_num">5.0</span>
+                                        <span class="average_num">${counts.reviewStar }</span>
                                         <span class="average_star">
                                             <div class="rating_star">
                                                 <div class="review-star-solid">
-                                                    <span class="star_yellow">★★★★★</span>
+                                                    <span class="star_yellow" data-text="${counts.reviewStar }"></span>
                                                 </div>
                                             </div>
                                         </span>
-                                        <h5 class="review_total">10개의 수강평</h5>
+                                        <h5 class="review_total">${counts.reviewCnt }개의 수강평</h5>
                                     </div>
                                     <div class="review-progress_bars">
-                                        <div class="review_counting">
-                                            <label>5점</label>
-                                            <progress class="progress is-link" max="10" value="10"></progress>
-                                        </div>
-                                        <div class="review_counting">
-                                            <label>4점</label>
-                                            <progress class="progress is-link" max="10" value=""></progress>
-                                        </div>
-                                        <div class="review_counting">
-                                            <label>3점</label>
-                                            <progress class="progress is-link" max="10" value=""></progress>
-                                        </div>
-                                        <div class="review_counting">
-                                            <label>2점</label>
-                                            <progress class="progress is-link" max="10" value=""></progress>
-                                        </div>
-                                        <div class="review_counting">
-                                            <label>1점</label>
-                                            <progress class="progress is-link" max="10" value=""></progress>
-                                        </div>
+                                    	<c:forEach var="review" items="${reviewStarAvgs }">
+		                                        <div class="review_counting">
+	                                            <label>${review.star }점</label>
+	                                            <c:choose>
+                                            		<c:when test="${review.avgStar > 0 }">
+	                                            		<progress class="progress is-link" max="100" value="${review.avgStar }"></progress>
+                                            		</c:when>
+                                            		<c:otherwise>
+	                                            		<progress class="progress is-link" max="100"></progress>
+                                            		</c:otherwise>
+	                                            </c:choose>
+		                                        </div>
+                                    	</c:forEach>
                                     </div>
                                 </div>
                                 <div class="review_list">
@@ -310,15 +272,35 @@ $(function() {
             </div>
         </div>
         <!-- description end -->
-    </section>
-<script>
+    </section>  
+    <script src="/resources/js/lecture/details-common.js"></script>  
+    <script>
+    
+    // 존재하지 않는 평점 그래프 append
+    //var html = '<progress class="progress is-link" max="100" value="0"></progress>';
+	//$(".review_counting:not(:has(progress))").append(html);
+    
+    // 교육과정 slideDown/slideUp
+    $(".chapter-header").click(function() {    	
 
-	// starScore
+	    $(this).next().slideDown();
+		$(this).find(".glyphicon").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+		
+		if ($(this).hasClass("up")) {
+	   		$(this).next().slideUp();
+		    
+	    	$(this).find(".glyphicon").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+		}
+		$(this).toggleClass("up");
+    });
+    
+ 	// starScore
 	var score = $("#starScore").data("text");
 	var star = "";
 	for(var i=1; i<=score; i++) {
 		star += '<i class="fas fa-star"></i>';
 	}
+	
 	$("#starScore").html(star);
 	
 	var trim = 5 - score;
@@ -327,8 +309,8 @@ $(function() {
 	for(var i=1; i<=trim; i++) {
 		emptyStar += '<i class="far fa-star"></i>';
 	}
-	$("#starScore").append(emptyStar);
 	
+	$("#starScore").append(emptyStar);
 	
 	// lectureTag split 
 	var str = $("#lectureTag").data("tag").split('#');
@@ -338,5 +320,13 @@ $(function() {
 	}
 	$("#lectureTag").html(html);
 	$("#lectureTag li:first").remove();
-</script>    
+    
+    // 별점에 소수점 붙이기
+    var score = $(".average_num").text();
+    
+    if(score.length == 1) {
+    	$(".average_num").append(".0");
+    }
+    
+    </script>
 <%@ include file="../../common/footer.jsp" %>

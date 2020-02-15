@@ -17,16 +17,37 @@
 			USER_NO						as no,
 			USER_NAME					as name,
 			USER_EMAIL					as email,
+			user_enabled				as enabled,
 			USER_IMAGE_FILENAME			as imageFilename,
 			USER_SELF_INTRODUCTION		as selfInfo,
 			USER_ID						as id,
 			USER_NICKNAME				as nickname,
 			USER_BANKNUMBER				as bankNumber,
+			USER_POINT					as point,
 			USER_PWD					as password
 		from
 			USERS
 		where
 			USER_ID = #{value}		
+	</select>
+	
+	<select id="getUserByUserNo" parameterType="int" resultType="User">
+		select
+			USER_NO						as no,
+			USER_NAME					as name,
+			USER_EMAIL					as email,
+			user_enabled				as enabled,
+			USER_IMAGE_FILENAME			as imageFilename,
+			USER_SELF_INTRODUCTION		as selfInfo,
+			USER_ID						as id,
+			USER_NICKNAME				as nickname,
+			USER_BANKNUMBER				as bankNumber,
+			USER_POINT					as point,
+			USER_PWD					as password
+		from
+			USERS
+		where
+			USER_no = #{value}		
 	</select>
 
 	<select id="getUserProfilByNo" parameterType="int" resultType="User">
@@ -39,6 +60,7 @@
 			USER_ID						as id,
 			USER_NICKNAME				as nickname,
 			USER_BANKNUMBER				as bankNumber,
+			USER_POINT					as point,
 			USER_PWD					as password
 		from
 			USERS
@@ -54,11 +76,34 @@
 			USER_NICKNAME = #{nickname},
 			USER_EMAIL = #{email},
 			USER_IMAGE_FILENAME = #{imageFilename},
+			user_enabled = #{enabled},
 			USER_SELF_INTRODUCTION = #{selfInfo},
 			USER_BANKNUMBER = #{bankNumber},
+			USER_POINT = #{point},
 			USER_PWD = #{password}
 		where
 			USER_NO = #{no}
 	</update>
+	
+	<!-- 유저 조회 (관리자) -->
+	<select id="selectAllUsersByAdmin" resultType="User">
+		select
+			user_no					as no,
+			user_name				as name,
+			user_email				as email,
+			user_image_filename		as imageFilename,
+			user_self_introduction	as selfInfo,
+			user_id					as id,
+			user_create_date		as createDate,
+			user_enabled			as enabled,
+			user_point				as point,
+			user_nickname			as nickname,
+			user_role				as role,
+			user_banknumber			as bankNumber
+		from 
+			users
+		where
+			user_role = 'U'
+	</select>
 	
 </mapper>

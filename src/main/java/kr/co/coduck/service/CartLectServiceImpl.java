@@ -32,6 +32,12 @@ public class CartLectServiceImpl implements CartLectService{
 		
 	}
 
+	@Override
+	public void deleteCartLect(int lectNo) {
+		lectCartDao.deleteCartLect(lectNo);
+		
+	}
+
 	
 	
 	

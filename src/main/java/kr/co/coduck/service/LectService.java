@@ -3,9 +3,12 @@ package kr.co.coduck.service;
 import java.util.List;
 
 import kr.co.coduck.dto.ChapterDto;
+import kr.co.coduck.dto.LectureCourseDto;
 import kr.co.coduck.dto.LectureDto;
 import kr.co.coduck.dto.UserByLectDto;
 import kr.co.coduck.vo.Lect;
+import kr.co.coduck.vo.LectureCriteria;
+import kr.co.coduck.vo.Lesson;
 
 public interface LectService {
 
@@ -16,5 +19,11 @@ public interface LectService {
 	LectureDto getLectureByLectureNo(int lectureNo);
 	
 	LectureDto getAllCountByLectureNo(int lectureNo);
+
 	List<ChapterDto> getChapterByLectureNo(int lectureNo);
+	List<Lesson> getLessonByChpaterNo(int chapterNo);
+
+	List<LectureCourseDto> getLectureByCriteria(LectureCriteria cri);
+	
+	int getLectureCountByCriteria(LectureCriteria cri);
 }

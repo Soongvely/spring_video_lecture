@@ -1,21 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
+<%@ include file="../common/tag.jsp" %>    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<title>내 정보</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CODUCK - 1등 온라인 강좌</title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   
+   <!-- sy.css -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+   <link rel="stylesheet" href="<c:url value='/resources/css/sy-style.css' />">    
+   <!-- sy.js -->
+   <script src="/resources/js/common.js"></script>
 </head>
 <body>
 	<%@ include file="../common/header.jsp"%>
-	<%@ include file="../common/tag.jsp"%>
 	<div class="container" style="font-size:17px; width:1440px;">
 		<div class="row">
 			<div class="col-sm-2" style="border: 1px solid red;">
@@ -28,7 +32,7 @@
 				</ul>
 				<p>내 결제</p>
 				<ul>
-					<li>위시리스트</li>
+					<li><a href="/like/likelectlist.hta">위시리스트</a></li>
 					<li><a href="/cart/userCartList.hta">장바구니</a></li>
 					<li>내 쿠폰함</li>
 					<li><a href="/user/userbylist.hta">구매내역</a></li>
@@ -95,9 +99,9 @@
 	<script type="text/javascript">
 		
 	</script>
-</body>
+
 <%@ include file="../common/footer.jsp"%>
-</html>
+
 
 
 

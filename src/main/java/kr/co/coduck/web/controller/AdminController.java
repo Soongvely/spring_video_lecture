@@ -21,8 +21,4 @@ public class AdminController {
 		return "admin/test";
 	}
 	
-	@GetMapping("/admin/customer.hta")
-	public String customer() {
-		return "admin/customer";
-	}
 }

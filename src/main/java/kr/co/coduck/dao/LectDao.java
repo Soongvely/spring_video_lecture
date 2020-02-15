@@ -9,7 +9,9 @@ import kr.co.coduck.dto.ChapterDto;
 import kr.co.coduck.dto.LectureCourseDto;
 import kr.co.coduck.dto.LectureDto;
 import kr.co.coduck.dto.UserByLectDto;
+import kr.co.coduck.vo.Category;
 import kr.co.coduck.vo.Lect;
+import kr.co.coduck.vo.LectureCriteria;
 import kr.co.coduck.vo.Lesson;
 
 public interface LectDao {
@@ -28,7 +30,7 @@ public interface LectDao {
 
 	List<Lesson> getLessonByChpaterNo(int lectureNo);
 	
-	@Select("select * from lects")
-	@ResultMap("lectureMap")
-	List<LectureCourseDto> getLectureCourseDto();
+	List<LectureCourseDto> getLectureByCriteria(LectureCriteria cri);
+
+	int getLectureCountByCriteria(LectureCriteria cri);
 }

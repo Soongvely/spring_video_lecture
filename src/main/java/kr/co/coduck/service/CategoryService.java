@@ -11,4 +11,5 @@ public interface CategoryService {
 
 	List<Category> getAllLectureCategories();
 	List<Category> getCatesByMainNo(int mainCateNo);
+	Category getCategoryByCategoryNo(int cateNo); 
 }

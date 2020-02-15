@@ -1,7 +1,6 @@
 package kr.co.coduck.web.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -20,7 +19,6 @@ import kr.co.coduck.dto.UserByLectDto;
 import kr.co.coduck.form.UserRegisterForm;
 import kr.co.coduck.service.LectService;
 import kr.co.coduck.service.UserService;
-import kr.co.coduck.vo.Lect;
 import kr.co.coduck.vo.User;
 
 @Controller
@@ -136,43 +134,5 @@ public class UserController {
 		
 		return "redirect:/home.hta";
 	}
-
+	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

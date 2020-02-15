@@ -1,43 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
 
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CODUCK - 1등 온라인 강좌</title>
-    
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
-	<link href="<c:url value="/resources/css/sy-style.css" />" rel="stylesheet">
-</head>
-<script>
-	$(function () {
-	
-	    $(window).on('scroll', function() {
-	        const scrollTop = $(this).scrollTop();
-	
-	        if (scrollTop < 150) {
-	            $('.sy-navbar').removeClass('navbar-fixed-top');
-	            $("#root").css("margin-top","0");
-	            $(".sy-navbar").css("background","white");
-	        } else {
-	            $('.sy-navbar').addClass('navbar-fixed-top');
-	            $("#root").css("margin-top","69px");
-	            $(".sy-navbar").css({background: "rgb(255, 236, 171)"});
-	            $(".sy-logo").css("color", "#f4b527");
-	        }
-	    });
-	});
+	<!-- sy.js -->
+	<script src="/resources/js/common.js"></script>
 
-</script>
-<body>
+<!-- sy.css -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+	<link href="<c:url value="/resources/css/sy-style.css" />" rel="stylesheet">    
+	<!-- sy.js -->
+	<script src="/resources/js/common.js"></script>
+
   <div id="root">
     <nav class="navbar sy-navbar">
         <div class="nav sy-nav-container">
@@ -85,7 +57,7 @@
 
             <ul class="nav navbar-nav navbar-right">
 	            <li><a href="/user/login.hta" class="t-gray"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-	            <li><a href="#" class="t-gray"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+	            <li><a href="/user/register.hta" class="t-gray"><i class="fas fa-user-plus"></i> Sign Up</a></li>
 	            <ul class="nav navbar-nav navbar-right hidden">
 	                <li><a href="#"><span class="glyphicon glyphicon-shopping-cart t-gray"></span></a></li>
 	                <li><a href="#"><span class="glyphicon glyphicon-heart-empty t-gray"></span></a></li>

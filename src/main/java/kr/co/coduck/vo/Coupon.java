@@ -9,7 +9,7 @@ import kr.co.coduck.utils.DateUtils;
 @Alias("Coupon")
 public class Coupon {
 
-	private int no;
+	private Integer no;
 	private String title;
 	private String detail;
 	private String enabled;
@@ -103,13 +103,14 @@ public class Coupon {
 		this.limited = limited;
 	}
 
-	public int getNo() {
+	public Integer getNo() {
 		return no;
 	}
 
-	public void setNo(int no) {
+	public void setNo(Integer no) {
 		this.no = no;
 	}
+	
 	public String getFmtStartDate() {
 		return DateUtils.dateToString(startDate);
 	}

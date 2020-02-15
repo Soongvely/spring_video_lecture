@@ -9,4 +9,5 @@ public interface CartLectService {
 
 	List<CartLectDto> getCartLectListByUserNo(int userNo);
 	CartChoiceLectListDto getCartChoiceLectListByCartChoiceLectNo(int cartLectNo);
+	void deleteCartLect(int lectNo);
 }

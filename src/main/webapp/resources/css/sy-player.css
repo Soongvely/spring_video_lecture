@@ -321,13 +321,12 @@
     .btn-question button {
         font-size: 16px;
     }
-        .opened {
+    .opened {
         right: -83%;
     }
     .closed {
         right: -100%;
     }
-
     .overlay {
         position: fixed;
         width: 100%;

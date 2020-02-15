@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<!--main content end-->
 <!--footer start-->    
 		<footer class="footer">
 	        <div class="wrapper">
@@ -78,5 +77,4 @@
 	    </footer>
     </div>
 </body>
-
 </html>

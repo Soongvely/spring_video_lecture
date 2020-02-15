@@ -11,4 +11,5 @@ public interface CategoryDao {
 
 	// 강의 카테고리 조회
 	List<Category> getAllLectureCategories();
+	Category getCategoryByCategoryNo(int cateNo);
 }

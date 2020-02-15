@@ -28,7 +28,7 @@
 		<div class="container-fluid">			
 			<div class="row">
 				<div class="col-sm-12">
-					<form class="form-horizontal" action="#" method="get">
+					<form class="form-horizontal" id="coupon-list-form" action="deletecheckcoupons.hta" method="get">
 						<div class="row">
 							<div class="col-sm-6"><h3>쿠폰 관리</h3></div>
 							<div class="col-sm-6">
@@ -37,10 +37,10 @@
 						</div>
 						<div class="row" style="margin-bottom: 10px;">
 							<div class="col-sm-6">
-								<button class="btn btn-primary couponsend-btn" id="couponSendBtn"><i class="far fa-paper-plane"></i> 쿠폰 발송</button>
+								<button type="button" class="btn btn-primary couponsend-btn" id="couponSendBtn" ><i class="far fa-paper-plane"></i> 쿠폰 발송</button>
 							</div>
 							<div class="col-sm-6 text-right">
-								<button class="btn btn-success couponadd-btn " id="couponAddBtn" ><i class="fas fa-plus-circle"></i> 쿠폰 추가</button>
+								<button type="button" class="btn btn-success couponadd-btn " id="couponAddBtn" ><i class="fas fa-plus-circle"></i> 쿠폰 추가</button>
 							</div>
 						</div>
 						
@@ -50,7 +50,7 @@
 									<thead>
 										<tr>
 											<th>
-												<input type="checkbox" value="">
+												<input type="checkbox" id="checkallcoupon">
 											</th>
 											<th>쿠폰명</th>
 											<th>쿠폰내용</th>
@@ -69,7 +69,7 @@
 										<c:otherwise>
 											<c:forEach var="coupon" items="${coupons }">
 												<tr>
-													<td><input type="checkbox" value=""></td>
+													<td><input type="checkbox" name="couponno" value="${coupon.no }"></td>
 													<td>${coupon.title }</td>
 													<td>${coupon.detail }</td>
 													<td>
@@ -79,8 +79,8 @@
 													</td>
 													<td>${coupon.limited eq 'N' ? '무제한' : coupon.amount }</td>
 													<td>
-														<button data-coupon-no="${coupon.no }"><i class="far fa-edit"></i>수정</button>
-														<button data-coupon-no="${coupon.no }"><i class="far fa-trash-alt"></i>삭제</button>
+														<button type="button" data-coupon-no="${coupon.no }"><i class="far fa-edit"></i>수정</button>
+														<button type="button" data-coupon-no="${coupon.no }"><i class="far fa-trash-alt"></i>삭제</button>
 													</td>									
 												</tr>
 											</c:forEach>
@@ -92,7 +92,9 @@
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
-								<button class="btn btn-danger" style="float: right;" id="couponDeleteBtn"><i class="far fa-trash-alt"></i>삭제</button>
+								<button type="button" class="btn btn-danger" style="float: right;" id="couponDeleteBtn">
+									<i class="far fa-trash-alt"></i>삭제
+								</button>
 							</div>
 						</div>
 					</form>
@@ -237,7 +239,7 @@
 	</div>
 </div>
 
-<!-- 쿠폰 삭제하기(모달) -->
+<!-- 쿠폰(아이콘) 삭제하기(모달) -->
 <div class="modal fade" id="modal-coupon-delete" role="dialog">
 	<div class="modal-dialog">
 		<form id="delete-coupon-form" class="well" method="get" action="deletecoupon.hta">
@@ -259,6 +261,26 @@
 	</div>
 </div>
 
+<!-- 쿠폰(체크) 삭제하기(모달) -->
+<div class="modal fade" id="modal-check-coupon-delete" role="dialog">
+	<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">쿠폰 삭제</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p>해당 쿠폰을 삭제하시겠습니까?</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" id="btn-check-coupon-delete">삭제하기</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
+				</div>
+			</div>
+	</div>
+</div>
+
+<!-- 쿠폰 발송하기(모달) -->
 <div class="modal fade" id="modal-coupon-send" role="dialog">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -269,81 +291,69 @@
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-sm-6">
-						<p>쿠폰 받을 회원을 선택하세요.</p>
-						<input type="text" class="form-control" placeholder="검색">
-						<ul class="list-group" style="max-height: 150px; overflow: auto; " id="user-all-list">
-							<li class="list-group-item">호날두(ronaldo)</li>
-							<li class="list-group-item">호날두(ronaldo)</li>
-							<li class="list-group-item">호날두(ronaldo)</li>
-							<li class="list-group-item">호날두(ronaldo)</li>
-							<li class="list-group-item">호날두(ronaldo)</li>
-							<li class="list-group-item">호날두(ronaldo)</li>
-							<li class="list-group-item">호날두(ronaldo)</li>
-							<li class="list-group-item">호날두(ronaldo)</li>
-						</ul>
-						<span style="vertical-align: -webkit-baseline-middle;"><i class="fas fa-users"></i>전체 회원수 10명</span>
-						<button class="btn btn-primary btn-xs" id="user-all-selected">전체</button>
-						<button class="btn btn-warning btn-xs">아래로</button>
-					</div>
-					<div class="col-sm-6">
+						<h4>쿠폰 리스트</h4>
 						<p>지급할 쿠폰을 선택하세요.</p>
-						<input type="text" class="form-control" placeholder="검색">
-						<ul class="list-group" style="max-height: 250px; overflow: auto; " id="coupon-all-list">
+						<input type="text" class="form-control" placeholder="검색" id="coupon-name-field">
+						<ul class="list-group" style="max-height: 150px; overflow: auto; " id="coupon-all-list">
 							<c:choose>
 								<c:when test="${empty coupons } ">
 									<li>등록된 쿠폰이 없습니다.</li>
 								</c:when>
 								<c:otherwise>
 									<c:forEach var="coupon" items="${coupons }">
-										<li class="list-group-item">${coupon.title }(${coupon.detail })</li>
+										<li class="list-group-item" data-coupon-no="${coupon.no }">${coupon.title }(${coupon.detail })</li>
 									</c:forEach>
 								</c:otherwise>
 							</c:choose>	
 						</ul>
 					</div>
+					<div class="col-sm-6">
+						<h4>회원 리스트</h4>
+						<p>쿠폰 받을 회원을 선택하세요.</p>
+						<input type="text" class="form-control" placeholder="검색" id="user-name-field">
+						<ul class="list-group" style="max-height: 150px; overflow: auto; " id="user-all-list">
+						</ul>
+						<span style="vertical-align: -webkit-baseline-middle;"><i class="fas fa-users"></i>전체 회원수 <strong id="total-user-size">0</strong>명</span>
+						<button type="button" class="btn btn-primary btn-xs" id="user-all-selected">전체</button>
+						<button type="button" class="btn btn-warning btn-xs" id="user-move-down">아래로</button>
+					</div>
 				</div>
+				<hr/>
 				<div class="row">
+					<div class="col-sm-6">
+						<p style="text-align:center; margin: 10px 0;">선택된 쿠폰 상세정보</p>
+						<table class="table" id="modal-coupon-detail-table">
+							<thead>
+								<tr>
+									<th class="text-center">발송할 쿠폰을 선택하세요.</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
 					<div class="col-sm-6">
 						<p>쿠폰 받을 대상자입니다.</p>
 						<ul class="list-group" style="max-height: 150px; overflow: auto; " id="user-select-list">
-							<li class="list-group-item">메시(messi)</li>
-							<li class="list-group-item">메시(messi)</li>
-							<li class="list-group-item">메시(messi)</li>
-							<li class="list-group-item">메시(messi)</li>
-							<li class="list-group-item">메시(messi)</li>
 						</ul>
-						<span style="vertical-align: -webkit-baseline-middle;"><i class="fas fa-users"></i>수신 회원수 10명</span>
-						<button class="btn btn-primary btn-xs" id="user-select-selected">전체</button>
-						<button class="btn btn-warning btn-xs">위로</button>
-					</div>
-					<div class="col-sm-6">
-						<p style="text-align:center; margin: 10px 0;">선택된 쿠폰 상세정보</p>
-						<table class="table">
-							<tr>
-								<th>쿠폰명</th>
-								<td>신규회원가입 쿠폰</td>
-							</tr>
-							<tr>
-								<th>쿠폰내용</th>
-								<td>5000원 할인</td>
-							</tr>
-							<tr>
-								<th>유효기간</th>
-								<td>2020-02-02 ~ 2022-01-01</td>
-							</tr>
-							<tr>	
-								<th>수량</th>
-								<td>100매(32매)</td>
-							</tr>
-						</table>
+						<span style="vertical-align: -webkit-baseline-middle;"><i class="fas fa-users"></i>수신 회원수 <strong id="received-user-size">0</strong>명</span>
+						<button type="button" class="btn btn-primary btn-xs" id="user-select-selected">전체</button>
+						<button type="button" class="btn btn-warning btn-xs" id="user-move-up">위로</button>
 					</div>
 				</div>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-info" data-dismiss="modal">발송하기</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-			</div>
-		</div>
+			
+			<form id="send-coupon-form" class="well" method="post" action="insertCouponByAdmin.hta">
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-info" id="send-coupon-btn">발송하기</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal" id="send-coupon-cancel">닫기</button>
+				</div>
+				<div id="selected-user-box">
+				
+				</div>
+				<div id="selected-coupon-box">
+					
+				</div>
+			</form>
+		</div>						
 	</div>
 </div>
 <!-- Bootstrap core JavaScript-->
@@ -359,7 +369,6 @@
 
 <script type="text/javascript">
 	
-
 	$("#addStartDate").change(function() {
 		var today = new Date();
 		var yesterday = new Date(today.getTime() + (1000*60*60*24* - 1));
@@ -422,6 +431,46 @@
 		
 	});
 	
+	// 쿠폰 리스트 (필터하기)
+	$("#coupon-name-field").keyup(function() {
+		var keyword = $("#coupon-name-field").val();
+		if (keyword == "") {
+			$("#coupon-all-list li").show();
+		} else {
+			$("#coupon-all-list li:contains("+keyword+")").show();
+			$("#coupon-all-list li:not(:contains("+keyword+"))").hide();
+		}
+	});
+	
+	// 회원 리스트 (필터하기)
+	$("#user-name-field").keyup(function() {
+		var keyword = $("#user-name-field").val();
+		if (keyword == "") {
+			$("#user-all-list li").show();
+		} else {
+			$("#user-all-list li:contains("+keyword+")").show();
+			$("#user-all-list li:not(:contains("+keyword+"))").hide();
+		}
+	});
+	
+	
+	// 쿠폰 발송(값을 입력하지 않았을 경우)
+	$("#send-coupon-form").submit(function() {
+		if ($("#selected-coupon-box input[name='couponno']").length == 0) {
+			alert("지급할 쿠폰을 선택하세요.");
+			return false;
+		}
+		
+		if ($("#selected-user-box input[name='userno']").length == 0) {
+			alert("쿠폰 받을 대상자를 선택하세요.");
+			return false;
+		}
+		
+		
+		return true;
+	})
+	
+	// 쿠폰 추가(값을 입력하지 않았을 경우)
 	$("#add-coupon-form").submit(function() {
 		if ($("#add-coupon-form :input[name=title]").val().trim() == "") {		
 			alert("쿠폰명을 입력해주세요.");
@@ -454,9 +503,6 @@
 		$("#modal-coupon-add").modal('show');
 	});
 	
-	$('#couponSendBtn').click(function(){
-		$("#modal-coupon-send").modal('show');
-	});
 	
 	// 수정하기
 	$('#coupon-table button:has(.fa-edit)').click(function(){
@@ -530,11 +576,30 @@
 		
 	});
 	
+	// 삭제하기(아이콘)
 	$('#coupon-table button:has(.fa-trash-alt)').click(function(){
 		
 		var couponNo = $(this).data("coupon-no");
 		$("#delete-coupon-form [name=couponno]").val(couponNo);
 		$("#modal-coupon-delete").modal('show');
+	});
+	
+	// 삭제하기(체크)
+	$("#couponDeleteBtn").click(function() {
+		
+		var couponNos = $("#coupon-table input[name=couponno]:checked");
+	
+		if (couponNos.length == 0) {
+			alert("삭제할 쿠폰을 체크해주세요.");
+			return;
+		}
+		
+		$("#modal-check-coupon-delete").modal('show');
+	});
+	
+	// 체크된 쿠폰 삭제하기
+	$("#btn-check-coupon-delete").click(function() {
+		$("#coupon-list-form").submit();
 	});
 	
 	$("#user-all-list").on('click', '.list-group-item', function() {
@@ -545,16 +610,142 @@
 		$("#user-all-list li").toggleClass('active');
 	});
 	
+	$("#user-all-selected").click(function() {
+		if ($("#user-all-list .list-group-item").hasClass("active")) {
+			$("#user-all-list .list-group-item").removeClass("active");
+			$("#user-all-list .list-group-item").addClass("active");	
+		} else {
+			$("#user-all-list .list-group-item").removeClass("active");
+		}
+	});
+	
 	$("#user-select-list").on('click', '.list-group-item', function() {
 		$(this).toggleClass('active');
 	})
-
+	
 	$("#user-select-selected").click(function() {
 		$("#user-select-list li").toggleClass('active');
 	});
 	
+	$("#user-select-selected").click(function() {
+		if ($("#user-select-list .list-group-item").hasClass("active")) {
+			$("#user-select-list .list-group-item").removeClass("active");
+			$("#user-select-list .list-group-item").addClass("active");	
+		} else {
+			$("#user-select-list .list-group-item").removeClass("active");
+		}
+	});
+	
+	// 아래로 버튼
+	$("#user-move-down").click(function() {
+		var couponQuota = parseInt($("#modal-coupon-detail-table tr:last td").text());		// 총 쿠폰수량
+		var couponLimit = $("#modal-coupon-detail-table tr:last td").text();
+		var currentUserLength = $("#selected-user-box > input").length;						// 현재 쿠폰 받을 대상자
+		var selectedUserLength = $("#user-all-list .active").length;						// 추가할 쿠폰 받을 대상자
+		
+		if (currentUserLength + selectedUserLength <= couponQuota || couponLimit == '무제한') {
+			$("#user-all-list .active").each(function(index, el) {
+				var userno = $(el).data("user-no");
+				$("#selected-user-box").append("<input type='hidden' name='userno' value='"+userno+"'>");
+			});
+			
+			$("#user-all-list .active").appendTo("#user-select-list");
+			
+		} else {
+			alert("쿠폰 받을 대상자 숫자가 현재 쿠폰 숫자를 초과합니다.");
+		}
+		
+		$("#received-user-size").text($("#user-select-list li").length);
+	});  
+
+	// 위로 버튼
+	$("#user-move-up").click(function() {
+		$("#user-select-list .active").each(function(index, el) {
+			$("#selected-user-box input[name='userno']").remove();
+		});
+		
+		$("#user-select-list .active").appendTo("#user-all-list");
+		$("#user-select-list .active").remove();
+
+		$("#received-user-size").text($("#user-select-list li").length);
+	});  
+	
+	// 닫기 (쿠폰 보내기 모달창)
+	$("#send-coupon-cancel").click(function() {
+		$("#selected-user-box").empty();	
+	});
+	
+	// 쿠폰 발송  
+	$("#couponSendBtn").click(function() {
+		
+		$("#modal-coupon-send").modal('show');
+		$("#user-select-list").empty();
+		
+		//(전체회원 조회하기)
+		var $list = $("#user-all-list").empty();
+		$.ajax({
+			url: "/admin/couponuserlist.hta",
+			type: "get",
+			data: {},
+			success: function(data) {
+				$.each(data, function(index, user) {
+					var li = '<li class="list-group-item" data-user-no="'+user.no+'">';
+					li += user.name+"("+user.id+")";
+					li += "</li>";
+					
+					$list.append(li);
+				})
+				
+				$("#total-user-size").text(data.length);
+			}
+		})
+	})
+	
+	// 쿠폰 리스트안에 쿠폰 클릭
 	$("#coupon-all-list").on('click', '.list-group-item', function() {
-		$(this).toggleClass('active');
+		$(this).addClass('active').siblings().removeClass("active");
+		$("#user-select-list li").appendTo("#user-all-list");
+		$("#received-user-size").text(0);
+		
+		// 쿠폰 발송안에 감싸진 폼 (input type="hidden")에 값을 부여하기
+		var couponno = $("#coupon-all-list .active").data("coupon-no");
+		if (!couponno) {
+			return;
+		}
+		$("#selected-coupon-box input[name='couponno']").remove();
+		$("#selected-coupon-box").append("<input type='hidden' name='couponno' value='"+couponno+"'>");
+		
+		var $table = $("#modal-coupon-detail-table").empty();
+		
+		$.ajax({
+			url: "/admin/couponDetail.hta",
+			type: "get",
+			data: {couponno:couponno},
+			success: function(result) {		 
+				var table = "<tr>";
+				table += "<th>쿠폰명</th>";
+				table += "<td>"+result.title+"</td>";
+				table += "</tr>";
+				table += "<tr>";
+				table += "<th>쿠폰내용</th>";
+				table += "<td>"+result.detail+"</td>";
+				table += "</tr>";
+				table += "<tr>";
+				table += "<th>유효기간</th>";
+				table += "<td>"+result.fmtStartDate+' ~ '+result.fmtEndDate+"</td>";		
+				table += "</tr>";
+				table += "<tr>";
+				table += "<th>수량</th>";
+				if (result.limited == 'Y') {
+					table += "<td>"+result.amount+"</td>";
+				} else  if (result.limited == 'N') {
+					table += "<td>무제한</td>";
+				}
+				table += "</tr>";			
+				
+				$table.append(table);
+			}
+		});
 	})
 		
 	$("#modal-coupon-add :input[name=discountRadio]").change(function() {	
@@ -613,7 +804,16 @@
 		$('#coupon-all-list li.active').removeClass('active');
 		$(this).addClass("active");	
 	});
-
+	
+	$('#checkallcoupon').click(function() {
+		if ($('#checkallcoupon').prop("checked")) {
+			$("input[name=couponno]").prop("checked", true);
+		} else {
+			$("input[name=couponno]").prop("checked", false);
+		} 
+	});
+	
+	
 </script>
 </body>
 </html>

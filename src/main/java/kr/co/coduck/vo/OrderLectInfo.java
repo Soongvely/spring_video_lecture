@@ -8,8 +8,9 @@ public class OrderLectInfo {
 	private int no;
 	private int lectNo;
 	private int orderNo;
-	private int couponNo;
+	private Integer couponNo;
 	private String reviewEnabled;
+	private int ordLectAmount;
 	
 	public OrderLectInfo() {
 		
@@ -39,11 +40,11 @@ public class OrderLectInfo {
 		this.orderNo = orderNo;
 	}
 
-	public int getCouponNo() {
+	public Integer getCouponNo() {
 		return couponNo;
 	}
 
-	public void setCouponNo(int couponNo) {
+	public void setCouponNo(Integer couponNo) {
 		this.couponNo = couponNo;
 	}
 
@@ -54,13 +55,19 @@ public class OrderLectInfo {
 	public void setReviewEnabled(String reviewEnabled) {
 		this.reviewEnabled = reviewEnabled;
 	}
+	public int getOrdLectAmount() {
+		return ordLectAmount;
+	}
+
+	public void setOrdLectAmount(int ordLectAmount) {
+		this.ordLectAmount = ordLectAmount;
+	}
 
 	@Override
 	public String toString() {
 		return "OrderLectInfo [no=" + no + ", lectNo=" + lectNo + ", orderNo=" + orderNo + ", couponNo=" + couponNo
 				+ ", reviewEnabled=" + reviewEnabled + "]";
 	}
-	
 	
 	
 }

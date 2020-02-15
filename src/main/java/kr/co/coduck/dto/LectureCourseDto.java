@@ -13,6 +13,7 @@ public class LectureCourseDto {
 	private Category category;
 	private Lect lecture;
 	private List<ChapterDto> chapters;
+	private LectureDto lectureDto;
 
 	public LectureCourseDto() {}
 	
@@ -38,6 +39,20 @@ public class LectureCourseDto {
 
 	public void setChapters(List<ChapterDto> chapters) {
 		this.chapters = chapters;
+	}
+
+	public LectureDto getLectureDto() {
+		return lectureDto;
+	}
+
+	public void setLectureDto(LectureDto lectureDto) {
+		this.lectureDto = lectureDto;
+	}
+
+	@Override
+	public String toString() {
+		return "LectureCourseDto [category=" + category + ", lecture=" + lecture + ", chapters=" + chapters
+				+ ", lectureDto=" + lectureDto + "]";
 	}
 
 }

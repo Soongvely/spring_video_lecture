@@ -6,18 +6,22 @@
 <mapper namespace="kr.co.coduck.dao.OrderLectDao">	
 
 	<insert id="insertOrderLect" parameterType="OrdLect">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			select ord_lects_seq.nextval from dual
+		</selectKey>
 		insert into ORD_LECTS
-		(ORD_NO, USER_NO, ORD_LECT_STATUS, ORD_LECT_STATUS, ORD_LECT_TOTAL_PRICE)
+		(ORD_NO, USER_NO, ORD_LECT_STATUS, ORD_LECT_TOTAL_PRICE)
 		values
-		(ord_lects_seq.nextval, #{userNo}, #{status}, #{totalPrice})		
+		(#{no}, #{userNo}, #{status}, #{totalPrice})		
 	</insert>	
 	
 	<insert id="insertOrderLectInfo" parameterType="OrderLectInfo">
-		insert into ORD_LECT_INFOS
-		(ORD_LECT_NO, LECT_NO, ORD_NO, COUPON_NO)
-		values
-		(ord_lect_infos_seq.nextval, #{lectNo}, #{orderNo}, #{couponNo})
-	</insert>
+      insert into ORD_LECT_INFOS
+      (ORD_LECT_NO, LECT_NO, ORD_NO, COUPON_NO, ORD_LECT_AMOUNT)
+      values
+      (ord_lect_infos_seq.nextval, #{lectNo}, #{orderNo}, #{couponNo}, #{ordLectAmount})
+   </insert>
+
 	
 	
 </mapper>

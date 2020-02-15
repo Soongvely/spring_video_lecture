@@ -24,4 +24,10 @@ public class CategoryServiceImpl implements CategoryService {
 	public List<Category> getCatesByMainNo(int mainCateNo) {
 		return categoryDao.getCatesByMainCateNo(mainCateNo);
 	}
+	
+	@Override
+	public Category getCategoryByCategoryNo(int cateNo) {
+
+		return categoryDao.getCategoryByCategoryNo(cateNo);
+	}
 }

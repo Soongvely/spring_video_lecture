@@ -19,6 +19,7 @@
 			by cate_no	
 	</select>
 	
+	<!-- 강좌 카테고리 조회 -->
 	<select id="getAllLectureCategories" resultType="Category">
 		select 
 		    cate_no				no
@@ -30,4 +31,15 @@
 			main_cate_no = 10000
 	</select>
 	
+	<!-- 카테고리 번호로 카테고리 조회 -->
+	<select id="getCategoryByCategoryNo" parameterType="int" resultType="Category">
+		select 
+			cate_no
+			,cate_name
+			,main_cate_no
+		from 
+			categories
+		where 
+			cate_no = #{value}
+	</select>
 </mapper>

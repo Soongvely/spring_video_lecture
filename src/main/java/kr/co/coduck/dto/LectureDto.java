@@ -28,7 +28,7 @@ public class LectureDto {
 	
 	private int reviewStar;
 	private int reviewCnt;
-	private int StudentCnt;
+	private int studentCnt;
 	private int likeCnt;
 	
 	public LectureDto() {}
@@ -195,11 +195,11 @@ public class LectureDto {
 	}
 
 	public int getStudentCnt() {
-		return StudentCnt;
+		return studentCnt;
 	}
 
 	public void setStudentCnt(int studentCnt) {
-		StudentCnt = studentCnt;
+		this.studentCnt = studentCnt;
 	}
 
 	public int getLikeCnt() {
@@ -208,6 +208,16 @@ public class LectureDto {
 
 	public void setLikeCnt(int likeCnt) {
 		this.likeCnt = likeCnt;
+	}
+
+	@Override
+	public String toString() {
+		return "LectureDto [no=" + no + ", cateNo=" + cateNo + ", title=" + title + ", info=" + info + ", infoTitle="
+				+ infoTitle + ", price=" + price + ", discountPrice=" + discountPrice + ", discountRate=" + discountRate
+				+ ", isFreed=" + isFreed + ", isDisplay=" + isDisplay + ", createDate=" + createDate + ", grade="
+				+ grade + ", tag=" + tag + ", imagePath=" + imagePath + ", userName=" + userName + ", userNo=" + userNo
+				+ ", userIntroduction=" + userIntroduction + ", userImagePath=" + userImagePath + ", reviewStar="
+				+ reviewStar + ", reviewCnt=" + reviewCnt + ", studentCnt=" + studentCnt + ", likeCnt=" + likeCnt + "]";
 	}
 
 	

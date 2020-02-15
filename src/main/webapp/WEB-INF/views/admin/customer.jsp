@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="../common/tag.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -36,15 +37,15 @@
 				<div class="col-sm-12">
 		            <form action="#" class="form-horizontal style-form" method="get">
 		                <div class="form-panel"
-		                   style="background: #fff; margin: 0px 50px; padding: 33px 17px;">               
+		                   style="background: #fff; margin-left:50px; margin-right:50px; padding-top:10px;">               
 		
 <!-- script - 참고 -->
 		                    <div class="form-group col-sm-10" style="display: inline-flex;">
 		                        <label class="control-label col-sm-1" style="margin-right:15px;">기간</label>
 		                        <div style="display:inline-block; float:left;">
-		                            <button type="button" class="btn btn-default btn-sm btn-date">오늘</button>
-		                            <button type="button" class="btn btn-default btn-sm btn-date">3일 이내</button>
-		                            <button type="button" class="btn btn-default btn-sm btn-date">7일 이내</button>
+		                            <button type="button" class="btn btn-default  btn-date">오늘</button>
+		                            <button type="button" class="btn btn-default  btn-date">3일 이내</button>
+		                            <button type="button" class="btn btn-default  btn-date">7일 이내</button>
 		                        </div>
 		                        <div class="col-md-5">
 		                            <div class="input-group input-large" data-date="2020-01-01" data-date-format="yyyy-MM-dd">
@@ -69,8 +70,8 @@
 		                                </label>
 		                            </div>                        
 		                        </div>                       
-			                    <div class="col-md-6">
-			                        <button type="button" class="btn btn-warning btn-sm" style="float: right; margin-right: 100px;">초기화</button>
+			                    <div class="col-md-6" style="left: 410px;">
+			                        <button type="button" class="btn btn-warning ">초기화</button>
 			                    </div>
 		                    </div>
 		                </div>
@@ -82,34 +83,40 @@
 				<div class="col-sm-12">
 		            <form action="#" class="form-horizontal style-form" method="get">
 		                <div class="form-panel"
-		                   style="background: #fff; margin: 0px 50px; padding: 33px 17px;">               
+		                   style="background: #fff; margin-left:50px; margin-right:50px; ">               
 		                    <div class="form-group col-sm-10">
-			                    <div class="row">			                    	
-			                    	<div class="col-sm-6">
-										<input type="text" placeholder="검색어를 입력하세요.">
-									</div>
-			                    	<div class="col-sm-6">
+		                    	<div class="row">
+									<div class="col-sm-2">
 			                    		<div>
-			                    			<select style="float: right;">
-			                    				<option value="10">10개</option>
-			                    				<option value="25">25개</option>
-			                    				<option value="50">50개</option>
-			                    				<option value="50">100개</option>
+			                    			<select class="form-control" style="width: 200px;">
+			                    				<option value="">가입일순</option>
+			                    				<option value="">아이디순</option>
+			                    				<option value="">이름순</option>
+			                    				<option value="">회원번호순</option>
 			                    			</select>
 			                    		</div>
+			                    	</div>			                    	
+			                    	<div class="col-sm-7">
+			             
 			                    	</div>
+		                    		<div class="col-sm-2">
+										<input type="text" class="form-control" style="width:200px;" placeholder="검색어를 입력하세요.">
+									</div>	                    	
+		                    		<div class="col-sm-1">
+										<button type="button" class="btn btn-default  btn-date">검색</button>
+									</div>	                    	
+		                    	</div>
+			                    <div class="row">			                    	
 			                    </div>
 			                    
-		                    	<div class="row">
+		                    	<div class="row" style="margin-top: 10px;">
 		                    		<div class="col-sm-12">
 			                        	<table class="table" id="customersInfoTable" style="text-align: center;">
 			                        		<colgroup>
 			                        			<col width="8%">
-			                        			<col width="7%">
-			                        			<col width="12">
+			                        			<col width="11%">
 			                        			<col width="12%">
 			                        			<col width="12%">
-			                        			<col width="10%">
 			                        			<col width="10%">
 			                        			<col width="8%">
 			                        			<col width="8%">
@@ -120,9 +127,7 @@
 													<th>회원번호</th>
 													<th>이름</th>
 													<th>아이디</th>
-													<th>연락처</th>
 													<th>이메일</th>
-													<th>생년월일</th>
 													<th>가입일</th>
 													<th>가입여부</th>
 													<th>탈퇴처리</th>
@@ -130,43 +135,42 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
-													<td>100001</td>
-													<td><a class="customer-username" id="username" data-toggle="modal" data-target="#myModal">호날두</a></td>												
-													<td>ronaldo</td>
-													<td>010-7777-7777</td>
-													<td>ronaldo@naver.com</td>
-													<td>1987-02-06</td>
-													<td>2020-02-06</td>
-													<td>가입</td>
-													<td><button class="btn btn-danger"><i class="far fa-minus-square"></i></button></td>
-													<td>
-														<div class="btn-group">
-														    <button type="button" class="btn btn-primary">쿠폰</button>
-														    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-														    	<span class="caret"></span>
-														    </button>
-														    <ul class="dropdown-menu coupon-btn" role="menu">
-															    <li><a class="coupon-add" id="couponadd" data-toggle="modal" data-target="#myModal">지급</a></li>
-															    <li><a class="coupon-add" id="coupondel" data-toggle="modal" data-target="#myModal">삭제</a></li>														 
-														    </ul>
-												    	</div>
-													</td>
-												</tr>
-											</tbody>									
-											<tbody>
-												<tr>
-													<td>100002</td>
-													<td>강소라</td>
-													<td>kangsora</td>
-													<td>010-6666-7777</td>
-													<td>kangsora@naver.com</td>
-													<td>1990-02-06</td>
-													<td>2020-02-04</td>
-													<td>탈퇴</td>
-													<td><button class="btn btn-danger"><i class="far fa-minus-square"></i></button></td>
-												</tr>
-											</tbody>									
+											<c:choose>
+												<c:when test="${empty users }">
+													<tr>
+														<td colspan="8" class="text-center">가입된 회원이 없습니다.</td>
+													</tr>
+												</c:when>
+												<c:otherwise>
+													<c:forEach var="user" items="${users }">
+														<tr>
+															<td>${user.no }</td>
+															<td><a class="customer-username" data-user-no="${user.no }" data-toggle="modal" data-targe="#myModal">
+																${user.name }
+																</a>
+															</td>
+															<td>${user.id }</td>
+															<td>${user.email }</td>
+															<td><span><fmt:formatDate value="${user.createDate }" pattern="yyyy-MM-dd"/></span></td>
+															<td>${user.enabled }</td>
+															<td><button type="button" class="btn btn-danger" data-user-no="${user.no }"><i class="far fa-minus-square"></i></button></td>
+															<td>
+																<div class="btn-group">
+																    <button type="button" class="btn btn-primary">쿠폰</button>
+																    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+																    	<span class="caret"></span>
+																    </button>
+																    <ul class="dropdown-menu coupon-btn" role="menu">
+																	    <li><a class="user-coupon-add" data-user-no="${user.no }"data-toggle="modal" data-target="#myModal">지급</a></li>
+																	    <li><a class="user-coupon-del" data-user-no="${user.no }" data-toggle="modal" data-target="#myModal">삭제</a></li>														 
+																    </ul>
+													    		</div>
+															</td>
+														</tr>
+													</c:forEach>
+												</c:otherwise>
+											</c:choose>
+											</tbody>		
 										</table>
 									</div>
 								</div>
@@ -174,7 +178,7 @@
 								<div class="row">									
 									<div class="col-sm-3">
 			                    		<div class="customers_length" id="customer_length" role="status" aria-live="polite">
-			                    		총 37건의 조회결과			       
+			                    		총 ${size }건의 조회결과			       
 			                    		</div>
 			                    	</div>
 									<div class="col-sm-9">
@@ -201,6 +205,7 @@
 	</div>
 </div>
 
+<!-- 이름을 클릭하였을때 나타나는 회원상세정보(모달) -->
 <div id="modal-customer-items" class="modal fade" role="dialog">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -219,14 +224,8 @@
 					<tr>
 						<th>아이디</th>
 						<td>lee</td>
-						<th>연락처</th>
-						<td>010-1234-5678</td>
-					</tr>
-					<tr>
 						<th>이메일</th>
 						<td>lee@gmail.com</td>
-						<th>생년월일</th>
-						<td>1979-01-01</td>
 					</tr>
 					<tr>
 						<th>가입일</th>
@@ -256,7 +255,7 @@
 							<th>할인가격</th>
 							<th>지급일</th>
 							<th>만료일</th>
-							<th>사용여부</th>
+							<th>가입여부</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -277,8 +276,31 @@
 	</div>
 </div>
 
+<!-- 회원을 탈퇴 처리시키는 모달화면 -->
+<div class="modal fade" id="modal-user-delete" role="dialog">
+	<div class="modal-dialog">
+		<form id="delete-user-form" class="well" method="get" action="deletecustomer.hta">
+			<input type="hidden" name="userno">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">회원 탈퇴</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p>해당 회원을 탈퇴시겠습니까?</p>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-danger" >탈퇴시키기</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<!-- 회원에게 쿠폰을 지급하는 모달화면 -->
 <div id="modal-coupon-add" class="modal fade" role="dialog">
-	<div class="modal-dialog modal-lg">
+	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title">쿠폰 지급</h4>
@@ -292,7 +314,7 @@
 	   			</select>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 			</div>
 		</div>
 	</div>	
@@ -312,7 +334,7 @@
 	   			</select>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 			</div>
 		</div>
 	</div>
@@ -331,18 +353,25 @@
 <script src="../../../resources/js/demo/datatables-demo.js"></script>
 
 <script type="text/javascript">
-	$('#customersInfoTable #username').click(function() {
+	$('#customersInfoTable .customer-username').click(function() {
 		$("#modal-customer-items").modal('show');
 	});
 	
-	$('.coupon-btn #couponadd').click(function() {
+	$('.coupon-btn .user-coupon-add').click(function() {
 		$('#modal-coupon-add').modal('show');
 	});
 	
-	$('.coupon-btn #coupondel').click(function() {
+	$('.coupon-btn .user-coupon-del').click(function() {
 		$('#modal-coupon-del').modal('show');
 	});
+	
+	// 회원 탈퇴처리하는 모달
+	$('#customersInfoTable button:has(.fa-minus-square)').click(function(){
+		
+		var userNo = $(this).data("user-no");
+		$("#delete-user-form [name=userno]").val(userNo);
+		$("#modal-user-delete").modal('show');
+	});
 </script>
-
 </body>
 </html>

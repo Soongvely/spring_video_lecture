@@ -1,15 +1,16 @@
 package kr.co.coduck.service;
 
+import java.util.List;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.coduck.dao.UserDao;
-import kr.co.coduck.form.UserRegisterForm;
 import kr.co.coduck.vo.User;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
@@ -53,5 +54,23 @@ public class UserServiceImpl implements UserService{
 		user.setPassword(shaPassword);
 		userDao.updateUser(user);
 		
+	}
+
+	@Override
+	public List<User> selectAllUsersByAdmin() {
+		List<User> users = userDao.selectAllUsersByAdmin();
+		return users;
+	}
+
+	@Override
+	public User getUserByUserNo(int userNo) {
+		return userDao.getUserByUserNo(userNo);
+	}
+
+	@Override
+	public void updateUserByAdmin(int userNo) {
+		User user = userDao.getUserByUserNo(userNo);
+		user.setEnabled("N");
+		userDao.updateUser(user);
 	}
 }

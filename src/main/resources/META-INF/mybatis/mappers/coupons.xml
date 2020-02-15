@@ -23,6 +23,7 @@
 		set
 			coupon_title = #{title},
 			coupon_detail = #{detail},
+			coupon_enabled = #{enabled},
 			coupon_start_date = #{startDate},
 			coupon_end_date = #{endDate},
 			coupon_amount = #{amount},
@@ -38,6 +39,7 @@
 			coupon_no				as no,
 			coupon_title			as title,
 			coupon_detail			as detail,
+			coupon_enabled			as enabled,
 			coupon_start_date		as startDate,
 			coupon_end_date			as endDate,
 			coupon_amount			as amount,
@@ -53,6 +55,7 @@
 			coupon_no				as no,
 			coupon_title			as title,
 			coupon_detail			as detail,
+			coupon_enabled			as enabled,
 			coupon_start_date		as startDate,
 			coupon_end_date			as endDate,
 			coupon_amount			as amount,
@@ -120,4 +123,19 @@
 		where
 			USER_NO = #{userNo}
 	</delete>
+	
+	<delete id="deleteCouponBoxByCouponNo" parameterType="CouponBox">
+		delete from
+			COUPON_BOX
+		where
+			COUPON_NO = #{couponNo}
+	</delete>
+	
+	<!-- 유저에게 쿠폰 발송하기 -->
+	<insert id="insertCouponByAdmin" parameterType="CouponBox">
+		insert into coupon_box
+		(coupon_no, user_no)
+		values
+		(#{couponNo}, #{userNo})
+	</insert>
 </mapper>

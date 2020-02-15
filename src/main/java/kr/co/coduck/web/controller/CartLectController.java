@@ -22,32 +22,37 @@ import kr.co.coduck.vo.User;
 @Controller
 @RequestMapping("/cart")
 public class CartLectController {
-	
-	@Autowired
-	private CartLectService cartLectService;
-	@Autowired
-	private UserService userService;
-	
-	@GetMapping("/userCartList.hta")
-	public String usercartlectlist(HttpSession session, Model model) {
-		User user = (User)session.getAttribute("LU");
-		List<CartLectDto> userCartLectLists = cartLectService.getCartLectListByUserNo(user.getNo());
-		model.addAttribute("userCartLectLists", userCartLectLists);
-		return "cart/userCartList";
-		
-	}
-	
-	@PostMapping("/orderlectform.hta")
-	public String cartorderlectlist(HttpSession session, Model model, @RequestParam("lectprice") int[] cartLectNos, @RequestParam("order-lect-total-price") int totalprice) {	
-		int cartLectNo = 0;
-		List<CartChoiceLectListDto> userChoiceLectList = new ArrayList<CartChoiceLectListDto>();
-		for(int i = 0; i<cartLectNos.length; i++) {
-			cartLectNo = cartLectNos[i];
-			CartChoiceLectListDto userChoiceLect = cartLectService.getCartChoiceLectListByCartChoiceLectNo(cartLectNo);
-			userChoiceLectList.add(userChoiceLect);
-			System.out.println(userChoiceLectList.get(i).getCartChoiceLectNo());
-		}
-		model.addAttribute("userChoiceLectList", userChoiceLectList);
-		return "order/orderlectform";
-	}
+   
+   @Autowired
+   private CartLectService cartLectService;
+   @Autowired
+   private UserService userService;
+   
+   @GetMapping("/userCartList.hta")
+   public String usercartlectlist(HttpSession session, Model model) {
+      User user = (User)session.getAttribute("LU");
+      List<CartLectDto> userCartLectLists = cartLectService.getCartLectListByUserNo(user.getNo());
+      model.addAttribute("userCartLectLists", userCartLectLists);
+      return "cart/userCartList";
+      
+   }
+   
+   @PostMapping("/orderlectform.hta")
+   public String cartorderlectlist(HttpSession session, Model model, @RequestParam("lectprice") int[] cartLectNos, @RequestParam("order-lect-total-price") int totalprice) {   
+      int lectNo = 0;
+      List<CartChoiceLectListDto> userChoiceLectList = new ArrayList<CartChoiceLectListDto>();
+      for(int i = 0; i<cartLectNos.length; i++) {
+    	  lectNo = cartLectNos[i];
+         CartChoiceLectListDto userChoiceLect = cartLectService.getCartChoiceLectListByCartChoiceLectNo(lectNo);
+         userChoiceLectList.add(userChoiceLect); 
+         //System.out.println(userChoiceLectList.get(i).getCartChoiceLectNo());
+      }
+      User user = (User)session.getAttribute("LU");
+      User userPoint = userService.getUserProfil(user.getNo());
+      //System.out.println(userPoint.getPoint());
+      //System.out.println(userPoint.getName());
+      model.addAttribute("userPoint", userPoint);
+      model.addAttribute("userChoiceLectList", userChoiceLectList);
+      return "order/orderlectform";
+   }
 }
