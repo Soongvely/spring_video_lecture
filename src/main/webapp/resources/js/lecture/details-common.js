@@ -5,7 +5,13 @@
 	// detail sub-navbar
 	$(function() {
 	    $("#subNav li").on('click', function () {
-	        const name = $(this).attr('class');
+	    	
+	    	var path = location.pathname.split("/")[3];
+	    	const name = $(this).attr('class');
+	    	
+	    	if(path != "description.hta")
+	    		location.href = "/lecture/detail/description.hta" + location.search + "&pg=" + name ;
+	    	
 	        
 	        if (name == 'questions' || name == 'dashboard') return;
 	        // offset() 지정한 엘리먼트의 꼭다리 값 알려줌 
@@ -13,7 +19,7 @@
 	        // animate({name:value}, 속도ms); jquery에 애니메이션 기능 함수
 	        $('html, body').animate({
 	            scrollTop
-	        }, 800);
+	        }, 600);
 	    });
 	    
 	    // 구매하기 창 fixed, scroll

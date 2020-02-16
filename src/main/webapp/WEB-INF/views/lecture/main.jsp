@@ -98,15 +98,7 @@
                             </div>                         
                             <div class="lesson-container">
                                 <div class="columns lesson-list-body"></div> 
-                                <nav class="pagination sy-pagination" role="navagation" aria-label="pagination">
-                                    <ul class="pagination" id="lecturePagenation">
-                                        <li><a href="#"><i class="fas fa-angle-left"></i></a></li>
-                                        <li class="active"><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#"><i class="fas fa-angle-right"></i></a></li>
-                                      </ul>
-                                </nav>
+                                <nav class="pagination sy-pagination" id="pagination" role="navagation" aria-label="pagination"></nav>
                             </div>
                         </div>
                     </div>
@@ -134,6 +126,9 @@
 				}
 			});
 		}
+		
+		var page = 1;
+		
 		// 사이드바 클릭
 		$(".accordion-box input[type=checkbox]").on("click",function() {
 			getSearchValues();
@@ -171,8 +166,16 @@
 
 			getSearchValues();
 		});
+	
+		// 강좌리스트 페이지네이션 실행
+		$("#pagination").on("click", '.pagination li a', function() {
+			var page = $(this).data("page");
+			console.log('page',page)
+			$("input[name=page]").val(page);
+			getSearchValues();
+		});
 		
-		// 조건별 검색
+		// 조건별 강좌 검색
 		function getSearchValues() {
 
 			var cateNo = $("input[name=cateNo]").val();
@@ -194,14 +197,22 @@
 						"page":page
 						};
 			
+			console.log(data);
+			
 			$.ajax({
 				url: "/lecture/api/searchLecture.hta",
 				type: 'post',
 			    contentType: "application/json",
                 data: JSON.stringify(data),
-				success: function(result) {
+				success: function(resultMap) {
+					
+					var result = resultMap.lectures;
+					var beginPage = resultMap.beginPage;
+					var endPage = resultMap.endPage;
+					var totalPage = resultMap.totalPage;
 					var html = '';
-
+					 
+					console.log("beginPage", beginPage, "endPage", endPage, "totalPage" , totalPage);
 					if(result.length) {					
 						result.forEach(function(item, i) {
 							
@@ -214,7 +225,7 @@
 							html += '<div class="item-image">';
 							html += '<figure class="item-image-thumbnail">';
 							html += '<img src="' + lecture.imagePath +'" class="">';
-							if (lecture.isFreed == "Y") {
+							if (lecture.discountRate > 0) {
 								html += '<div class="lesson-item-event-card">';
 								html += '<i class=""></i>';
 								html += '<span>' + lecture.discountRate + '% 할인중</span>';
@@ -232,7 +243,7 @@
 							html += '</div>';
 							html += '</div>';
 							html += '<div class="price column is-half">';
-							if (lecture.isFreed == "Y" ) {
+							if (lecture.discountRate > 0) {
 								html += '<del>￦' + lecture.price.toLocaleString() + '</del><br>';
 							} else {
 								html += '<br>';
@@ -247,16 +258,22 @@
 							html +=	'</div>';  
 							html += '</a>';
 							html +=	'</div>';  
-							html +=	'</div>';  
+							html +=	'</div>';
+							
+							$(document).scrollTop(0);
 						});
 							
 						var pageText = "";
+						
 						pageText += '<ul class="pagination">';
-						pageText += '<li><a href="#"><i class="fas fa-angle-left"></i></a></li>';
-						pageText += '<li class="active"><a href="#">1</a></li>';
-						pageText += '<li><a href="#">2</a></li>';
-						pageText += '<li><a href="#">3</a></li>';
-						pageText += '<li><a href="#"><i class="fas fa-angle-right"></i></a></li>';
+						if (beginPage > 3) {
+							pageText += '<li><a data-page="' + (beginPage - 1) + '"><i class="fas fa-angle-left"></i></a></li>';
+						}
+						
+						for (var i = beginPage; i <= endPage; i++) {
+							pageText += '<li><a data-page="' + i + '" style="'+ (page == i ? 'background:#66DDC6 ; color:white': '') + '">' + i + '</a></li>';
+						}
+						pageText += '<li><a data-page="' + (endPage + 1) + '" style="' + (totalPage == endPage ? 'display:none' : 'display:block') + '"><i class="fas fa-angle-right"></i></a></li>';
 						pageText += '</ul>';   
 						
 					} else {
@@ -265,9 +282,10 @@
 						html += '<h1>검색 결과가 없어요!</h1>';
 						html += '</div>';
 						
-						$(".sy-pagination").empty();
+						$("#pagination").empty();
 					}
 					
+					$("#pagination").html(pageText);
 					$(".columns.lesson-list-body").empty();
 					$(".columns.lesson-list-body").append(html);
 					drawingStar();
@@ -276,7 +294,7 @@
 			});
 		}
 	});
-
+	
 	function drawingStar() {
 		$(".star_yellow").each(function(index, el) {
 			var score = $(el).data("star-score");

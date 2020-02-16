@@ -5,6 +5,13 @@
   
 <mapper namespace="kr.co.coduck.dao.QuestionDao">
 	
+	<!-- 질문하기 -->
+	<!-- <insert id="insertQuestion" parameterType="">
+		insert into lect_questions
+		values (lect_questions_seq.nextval, #{user.no}, #{lesson.no}, #{contents}, #{isAnswered}, sysdate)
+	</insert> -->
+	
+	<!-- 조건별 질문 조회 -->
 	<select id="getQuestionByLectureNo" parameterType="LectureCriteria" resultType="Question">
 		select *
 		from
@@ -16,6 +23,7 @@
 			    , q.lect_question_no			no
 			    , q.lect_question_contents		contents
 			    , q.lect_question_create_date	createDate
+			    , q.lect_question_is_answered	isAnswered
 			from 
 				lect_questions q, lects l, chapters c, lessons s, users u
 			where
@@ -31,4 +39,22 @@
 	    		and rn <= #{endIndex}
 	    	]]> -->
 	</select>
+	
+	<!-- 질문에 대한 답글 조회 -->
+	<select id="getAnswerByQuestionNo" parameterType="int" resultType="Answer">
+		select 
+		    u.user_id					"user.id"
+		    , u.user_image_filename		"user.imageFilename"
+		    , a.lect_answer_no			no
+		    , a.lect_answer_contents	contents
+		    , a.lect_answer_date		createDate
+		    , a.lect_question_no		"question.no"
+		from 
+			lect_answers A,lects L, users u
+		where
+		    a.lect_no = l.lect_no
+		and u.user_no = l.user_no
+		and a.lect_question_no = #{value}
+	</select>
+	
 </mapper>

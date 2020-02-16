@@ -14,14 +14,14 @@
     <nav class="navbar sy-navbar">
         <div class="nav sy-nav-container">
           <div class="navbar-header">
-              <a class="navbar-logo" href="../home.hta"><img src="/resources/images/logo/coduck.ico"/></a>
-              <a class="sy-logo" href="../home.hta">CODUCK</a>
+              <a class="navbar-logo" href="/home.hta"><img src="/resources/images/logo/coduck.ico"/></a>
+              <a class="sy-logo" href="/home.hta">CODUCK</a>
           </div>
       
           <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
               <li class="dropdown">
-                <a class="dropdown-toggle t-gray" href="../lecture/main.hta" style="font-size: 17px;"> IT강좌</a>
+                <a class="dropdown-toggle t-gray" href="/lecture/main.hta" style="font-size: 17px;"> IT강좌</a>
               </li>
               <li class="dropdown">
                 <a class="dropdown-toggle t-gray" data-toggle="dropdown" href="#" style="font-size: 17px;"> 커뮤니티 <span class="caret"></span></a>
@@ -48,14 +48,18 @@
             </ul>  
 
             <ul class="nav navbar-nav navbar-right">
-	            <li><a href="/user/login.hta" class="t-gray"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-	            <li><a href="/user/register.hta" class="t-gray"><i class="fas fa-user-plus"></i> Sign Up</a></li>
-	            <ul class="nav navbar-nav navbar-right hidden">
+            <c:choose>
+            	<c:when test="${LU eq null }">
+		            <li><a href="/user/login.hta" class="t-gray"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+		            <li><a href="/user/register.hta" class="t-gray"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+	            </c:when>
+	            <c:otherwise>
 	                <li><a href="#"><span class="glyphicon glyphicon-shopping-cart t-gray"></span></a></li>
 	                <li><a href="#"><span class="glyphicon glyphicon-heart-empty t-gray"></span></a></li>
 	                <li><a href="#"><span class="glyphicon glyphicon-bullhorn t-gray"></span></a></li>
-	                <li><a href="#"><span class="glyphicon glyphicon-log-out t-gray"></span></a></li>
-	            </ul>
+	                <li><a href="/user/logout.hta"><span class="glyphicon glyphicon-log-out t-gray"></span></a></li>
+	            </c:otherwise>
+            </c:choose>
 	        </ul>  
           </div>
         </div>

@@ -213,5 +213,17 @@
     	$(".average_num").append(".0");
     }
     
+    $(function() {
+        
+        var pg = location.search.search('pg');
+        if(pg) {
+        	var name = location.search.substring(pg + 3);
+        	const scrollTop = $("#" + name).offset().top - 70;
+            // animate({name:value}, 속도ms); jquery에 애니메이션 기능 함수
+            $('html, body').animate({
+                scrollTop
+            }, 600);
+        }
+    });
     </script>
 <%@ include file="../../common/footer.jsp" %>

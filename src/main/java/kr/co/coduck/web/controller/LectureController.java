@@ -65,7 +65,10 @@ public class LectureController {
 	}
 
 	@RequestMapping("/detail/dashboard.hta")
-	public String dashboard() {
+	public String dashboard(@RequestParam("lectureNo") int lectureNo, Model model) {
+		
+		model.addAttribute("lecture", lectservice.getLectureByLectureNo(lectureNo));
+		
 		return "lecture/detail/dashboard";
 	}
 

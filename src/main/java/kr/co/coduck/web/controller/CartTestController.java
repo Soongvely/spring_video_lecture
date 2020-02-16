@@ -46,7 +46,7 @@ public class CartTestController {
 				TestCart testCart = new TestCart();
 				testCart.setTestNo(testNos.get(i));
 				testCart.setUserNo(10000);
-				cartTestService.insertCartTest(testCart);
+				//cartTestService.insertCartTest(testCart);
 			}
 			return "success";
 		} catch (Exception e) {
