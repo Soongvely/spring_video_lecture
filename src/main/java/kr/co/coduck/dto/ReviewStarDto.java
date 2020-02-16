@@ -1,5 +1,8 @@
 package kr.co.coduck.dto;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("ReviewStarDto")
 public class ReviewStarDto {
 
 	private int star;

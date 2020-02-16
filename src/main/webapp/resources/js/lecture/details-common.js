@@ -15,18 +15,17 @@
 	            scrollTop
 	        }, 800);
 	    });
+	    
+	    // 구매하기 창 fixed, scroll
+	    $(window).scroll(function() {
+	    	var scrollTop = $(this).scrollTop();
+	    	if(scrollTop > 300) {
+	    		$(".lecture-floating-btn").css("top",'260px');
+	    	} else {
+	    		$(".lecture-floating-btn").css("top",'176px');
+	    	}
+	    })
 	});  
 	
-	// 구매하기 창 fixed, scroll
-	$(function() {        
-	        $(window).scroll(function() {
-	            var scrollTop = $(this).scrollTop();
-	           if(scrollTop > 300) {
-	               $(".lecture-floating-btn").css("top",'260px');
-	           } else {
-	              $(".lecture-floating-btn").css("top",'176px');
-	           }
-	       })
-	    });
-	
+
 	

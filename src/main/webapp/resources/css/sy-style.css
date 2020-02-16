@@ -599,38 +599,54 @@ small {
 
 .review_item {
 	padding: 0;
-	margin-bottom: 18px;
-}
-
-.review_image {
-	
+	margin: 50px 0;
 }
 
 .star_yellow {
 	color: #fdcc11;
-	font-size: 22px;
+	font-size: 19px;
 }
 
 .review-image-container {
 	display: inline;
 	float: left;
-	margin-right: 28px;
+	margin-right: 20px;
 }
-
+.review-contents .review_header > *{
+	margin: 0 3px;
+}
 .review_body {
 	white-space: pre-line;
 	margin-left: 11.3%;
-	margin-top: -20px;
 }
 
 #reivew_user_id {
-	font-size: 20px;
+	margin-left: 3px;
+	font-size: 23px;
 }
 
-.review_update_date {
-	font-size: 13px;
+.review_container .update_date {
+	font-size: 16px;
 	color: gray;
 	margin-left: 10px;
+}
+
+.answer_container {
+	margin-left: 11.3%;
+}
+.review-answer-item {
+	padding: 12px 12px 8px 12px;
+}
+.review-answer-box {
+	margin-left: 59px;
+}
+
+.answer_user_id {
+	font-size: 19px;
+}
+
+.review_answer_body {
+	padding: 0 20px 0 0;
 }
 
 .btn-show-more-review {

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="kr.co.coduck.dao.QuestionDao">
+	
+	<select id="getQuestionByLectureNo" parameterType="LectureCriteria" resultType="Question">
+		select *
+		from
+			(select 
+				row_number() over (order by  q.lect_question_create_date desc) as rn
+				, s.lesson_title				"lesson.title"
+			    , u.user_id						"user.id"
+			    , u.user_image_filename  		"user.imageFilename"
+			    , q.lect_question_no			no
+			    , q.lect_question_contents		contents
+			    , q.lect_question_create_date	createDate
+			from 
+				lect_questions q, lects l, chapters c, lessons s, users u
+			where
+			    q.lesson_no = s.lesson_no
+			and c.chapter_no = s.chapter_no
+		    and c.lect_no = l.lect_no
+		    and u.user_no = l.user_no
+		    and l.lect_no = #{no}
+	    	and  q.lect_question_contents like '%' || #{keyword} || '%'
+	    	)
+	    	<!-- <![CDATA[
+	    		where rn >= #{beginIndex}
+	    		and rn <= #{endIndex}
+	    	]]> -->
+	</select>
+</mapper>

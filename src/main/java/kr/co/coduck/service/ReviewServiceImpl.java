@@ -20,4 +20,10 @@ public class ReviewServiceImpl implements ReviewService {
 
 		return reviewDao.getAllReivewStarAvg(lectureNo);
 	}
+	
+	@Override
+	public List<Review> getReviewByLectureNo(int lectureNo) {
+		
+		return reviewDao.getReviewByLectureNo(lectureNo);
+	}
 }

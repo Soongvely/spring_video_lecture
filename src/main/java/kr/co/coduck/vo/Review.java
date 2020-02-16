@@ -13,6 +13,7 @@ public class Review {
 	private String contents;
 	private Date createDate;
 	private OrderLectInfo orderLectInfo;
+	private User user;
 	
 	public Review () {}
 
@@ -64,12 +65,19 @@ public class Review {
 		this.orderLectInfo = orderLectInfo;
 	}
 
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@Override
 	public String toString() {
 		return "Review [no=" + no + ", star=" + star + ", title=" + title + ", contents=" + contents + ", createDate="
-				+ createDate + ", orderLectInfo=" + orderLectInfo + "]";
+				+ createDate + ", orderLectInfo=" + orderLectInfo + ", user=" + user + "]";
 	}
-	
-	
-	
+
 }

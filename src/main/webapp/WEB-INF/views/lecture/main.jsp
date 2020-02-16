@@ -259,7 +259,6 @@
 						pageText += '<li><a href="#"><i class="fas fa-angle-right"></i></a></li>';
 						pageText += '</ul>';   
 						
-						drawingStar();
 					} else {
 						html += '<div class="lecutre lesson-no-item col-sm-12">';
 						html += '<img src="/resources/images/logo/siba.png" />'
@@ -271,6 +270,7 @@
 					
 					$(".columns.lesson-list-body").empty();
 					$(".columns.lesson-list-body").append(html);
+					drawingStar();
 				},
 				error: function(e){ console.log(e)}
 			});

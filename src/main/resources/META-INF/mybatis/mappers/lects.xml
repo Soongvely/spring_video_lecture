@@ -167,8 +167,8 @@
              </if>
             )
             <![CDATA[
-				where rn > #{beginIndex} 
-				and rn < #{endIndex}    
+				where rn >= #{beginIndex} 
+				and rn <= #{endIndex}    
             ]]>
 	</select>
 	
@@ -237,7 +237,7 @@
 			and A.lect_no = #{value}
 	</select>
 	
-	<!-- LECTURE 마스터 ResultMap -->
+	<!-- All Lecture ResultMap -->
 	<resultMap type="LectureCourseDto" id="lectureMap">
 		<association property="lecture">
 			<result column="lect_no" property="no"/>
@@ -257,6 +257,7 @@
 			<result column="lect_grade" property="grade"/>
 		</association>
 		<collection column="lect_no" property="chapters" select="getChapterByLectureNo"/>
+		<collection column="lect_no" property="reviews" select="kr.co.coduck.dao.ReviewDao.getReviewByLectureNo"/>
 	</resultMap>
 
 	<resultMap type="ChapterDto" id="chapterMap">

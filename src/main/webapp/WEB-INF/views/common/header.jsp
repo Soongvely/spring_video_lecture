@@ -14,22 +14,14 @@
     <nav class="navbar sy-navbar">
         <div class="nav sy-nav-container">
           <div class="navbar-header">
-              <a class="navbar-logo" href="#"><img src="/resources/images/logo/coduck.ico"/></a>
-              <a class="sy-logo" href="#">CODUCK</a>
+              <a class="navbar-logo" href="../home.hta"><img src="/resources/images/logo/coduck.ico"/></a>
+              <a class="sy-logo" href="../home.hta">CODUCK</a>
           </div>
       
           <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
               <li class="dropdown">
-                <a class="dropdown-toggle t-gray" data-toggle="dropdown" href="#" style="font-size: 17px;"> IT강좌 <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">html/css</a></li>
-                  <li><a href="#">Java</a></li>
-                  <li><a href="#">Database</a></li>
-                  <li><a href="#">Spring</a></li>
-                  <li><a href="#">Back End</a></li>
-                  <li><a href="#">Front End</a></li>
-                </ul>
+                <a class="dropdown-toggle t-gray" href="../lecture/main.hta" style="font-size: 17px;"> IT강좌</a>
               </li>
               <li class="dropdown">
                 <a class="dropdown-toggle t-gray" data-toggle="dropdown" href="#" style="font-size: 17px;"> 커뮤니티 <span class="caret"></span></a>

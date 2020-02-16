@@ -15,10 +15,12 @@ import kr.co.coduck.dto.LectureDto;
 import kr.co.coduck.dto.ReviewStarDto;
 import kr.co.coduck.service.CategoryService;
 import kr.co.coduck.service.LectService;
+import kr.co.coduck.service.QuestionService;
 import kr.co.coduck.service.ReviewService;
 import kr.co.coduck.vo.Category;
 import kr.co.coduck.vo.LectureCriteria;
 import kr.co.coduck.vo.Lesson;
+import kr.co.coduck.vo.Review;
 
 @Controller
 @RequestMapping("/lecture")
@@ -34,7 +36,7 @@ public class LectureController {
 
 	@Autowired
 	private CategoryService categoryService;
-
+	
 	@RequestMapping("/main.hta")
 	public String mainByCateNo(LectureCriteria cri, Model model) {
 
@@ -48,16 +50,41 @@ public class LectureController {
 	@RequestMapping("/detail/description.hta")
 	public String description(@RequestParam("lectureNo") int lectureNo, Model model) {
 
-		LectureDto lecture = lectservice.getLectureByLectureNo(lectureNo);
-		LectureDto counts = lectservice.getAllCountByLectureNo(lectureNo);
-
 		List<ChapterDto> chapters = lectservice.getChapterByLectureNo(lectureNo);
-		for (ChapterDto chapter : chapters) {
-			List<Lesson> lessons = lectservice.getLessonByChpaterNo(chapter.getChapter().getNo());
-			chapter.setLessons(lessons);
-		}
+		chapters.forEach(c -> c.setLessons(lectservice.getLessonByChpaterNo(c.getChapter().getNo())));
 
 		List<ReviewStarDto> reviewStarAvgs = reviewService.getAllReivewStarAvg(lectureNo);
+		
+		model.addAttribute("lecture", lectservice.getLectureByLectureNo(lectureNo));
+		model.addAttribute("chapters", chapters);
+		model.addAttribute("counts", lectservice.getAllCountByLectureNo(lectureNo));
+		model.addAttribute("reviews", reviewService.getReviewByLectureNo(lectureNo));
+		model.addAttribute("reviewStarAvgs", setReviewStarAverage(reviewStarAvgs));
+
+		return "lecture/detail/description";
+	}
+
+	@RequestMapping("/detail/dashboard.hta")
+	public String dashboard() {
+		return "lecture/detail/dashboard";
+	}
+
+	@RequestMapping("/detail/question.hta")
+	public String question(@RequestParam("lectureNo") int lectureNo, Model model) {
+		
+		model.addAttribute("lecture", lectservice.getLectureByLectureNo(lectureNo));
+		
+		return "lecture/detail/question";
+	}
+
+	@RequestMapping("/player/player.hta")
+	public String player() {
+
+		return "lecture/player/player";
+	}
+	
+	// 리뷰 평균평점 계산
+	private List<ReviewStarDto> setReviewStarAverage(List<ReviewStarDto> reviewStarAvgs) {
 
 		int[] tempStar = new int[5];
 
@@ -69,28 +96,7 @@ public class LectureController {
 		}
 
 		reviewStarAvgs.sort((o1, o2) -> o1.getStar() > o2.getStar() ? -1 : 1);
-
-		model.addAttribute("reviewStarAvgs", reviewStarAvgs);
-		model.addAttribute("lecture", lecture);
-		model.addAttribute("counts", counts);
-		model.addAttribute("chapters", chapters);
-
-		return "lecture/detail/description";
-	}
-
-	@RequestMapping("/detail/dashboard.hta")
-	public String dashboard() {
-		return "lecture/detail/dashboard";
-	}
-
-	@RequestMapping("/detail/question.hta")
-	public String question() {
-		return "lecture/detail/question";
-	}
-
-	@RequestMapping("/player/player.hta")
-	public String player() {
-
-		return "lecture/player/player";
+		
+		return reviewStarAvgs;
 	}
 }

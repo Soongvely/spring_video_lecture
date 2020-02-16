@@ -6,6 +6,7 @@ import org.apache.ibatis.type.Alias;
 
 import kr.co.coduck.vo.Category;
 import kr.co.coduck.vo.Lect;
+import kr.co.coduck.vo.Review;
 
 @Alias("LectureCourseDto")
 public class LectureCourseDto {
@@ -14,9 +15,24 @@ public class LectureCourseDto {
 	private Lect lecture;
 	private List<ChapterDto> chapters;
 	private LectureDto lectureDto;
+	private List<Review> reviews;
 
 	public LectureCourseDto() {}
 	
+	
+	
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
+
+
+
 	public Category getCategory() {
 		return category;
 	}
