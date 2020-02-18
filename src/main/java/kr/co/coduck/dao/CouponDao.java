@@ -2,6 +2,7 @@ package kr.co.coduck.dao;
 
 import java.util.List;
 
+import kr.co.coduck.dto.UserCouponBoxDto;
 import kr.co.coduck.vo.Coupon;
 import kr.co.coduck.vo.CouponBox;
 
@@ -25,4 +26,12 @@ public interface CouponDao {
 	
 	void deleteCouponBoxByCouponNo(int couponNo);
 	
+	// 사용가능한 쿠폰만 조회하기
+	List<Coupon> getEnabledCouponsByAdmin();
+	
+	// 회원이 가지고 있는 쿠폰 조회하기
+	List<UserCouponBoxDto> getUserCouponboxByAdmin(int userNo);
+	
+	void deleteCouponByAdmin(CouponBox couponBox);
+
 }

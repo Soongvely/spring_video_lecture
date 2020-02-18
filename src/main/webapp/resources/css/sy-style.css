@@ -29,7 +29,7 @@ html, body {
 
 .t-gray {
 	color: gray;
-	font-size: 17px;
+	font-size: 19px;
 }
 
 .navbar-header {
@@ -45,6 +45,17 @@ html, body {
 	height: 54px;
 }
 
+.navbar-user{
+	margin-left: 20px
+}
+.navbar-my {
+	margin-left: 60px;
+	font-size: 20px
+}
+.navbar-user li > a {
+	font-size: 17px;
+	color: gray;
+}
 .sy-logo {
 	line-height: 57px;
 	color: rgb(241, 196, 15);
@@ -75,7 +86,7 @@ html, body {
 }
 
 .navbar-form {
-	margin-left: 24%;
+	margin-left: 17%;
 }
 
 .hidden {
@@ -120,8 +131,8 @@ html, body {
 	color: rgb(241, 196, 15);
 }
 
-.dropdown-toggle {
-	font-size: 14px;
+.main-menu > a {
+	font-size: 17px;
 }
 
 /********************************  footer.css ***************************************/
@@ -568,9 +579,10 @@ small {
 	color: #363636;
 	font-size: 20px;
 	font-weight: 900;
-	margin: 0;
 }
-
+.review-box .star_yellow {
+	font-size: 16px;
+}
 .review-progress_bars {
 	width: 360px;
 }
@@ -778,6 +790,7 @@ small {
 /* lecture-detail-dashboard.css */
 .dashboard.container {
 	max-width: 1440px;
+	min-height: 1000px;
 	margin: 0 auto;
 	margin-top: 15px;
 }

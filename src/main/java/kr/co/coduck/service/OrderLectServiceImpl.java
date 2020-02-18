@@ -1,6 +1,8 @@
 package kr.co.coduck.service;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +11,8 @@ import kr.co.coduck.dao.LectCartDao;
 import kr.co.coduck.dao.LectDao;
 import kr.co.coduck.dao.OrderLectDao;
 import kr.co.coduck.dao.UserDao;
+import kr.co.coduck.dto.OrderLectDetailListDto;
+import kr.co.coduck.dto.OrderLectListDto;
 import kr.co.coduck.vo.OrdLect;
 import kr.co.coduck.vo.OrderLectInfo;
 import kr.co.coduck.vo.User;
@@ -77,6 +81,20 @@ public class OrderLectServiceImpl implements OrderLectService{
       userDao.updateUser(user);
       
    }
+
+	@Override
+	public List<OrderLectListDto> getOrderLectListByUserNo(int userNo) {
+		User user = userDao.getUserProfilByNo(userNo);
+		List<OrderLectListDto> userOrderList = orderLectDao.getOrderLectListByUserNo(user.getNo());
+		return userOrderList;
+	}
+
+	@Override
+	public List<OrderLectDetailListDto> getOrderLectInfoByOrderNo(int orderNo) {
+		return orderLectDao.getOrderLectInfoByOrderNo(orderNo);
+	}
+	
+	
 }
 
 

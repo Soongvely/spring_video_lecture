@@ -1,11 +1,14 @@
 package kr.co.coduck.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.co.coduck.dto.ChapterDto;
 import kr.co.coduck.dto.LectureCourseDto;
 import kr.co.coduck.dto.LectureDto;
+import kr.co.coduck.dto.LessonDto;
 import kr.co.coduck.dto.UserByLectDto;
+import kr.co.coduck.dto.UserLessonDto;
 import kr.co.coduck.vo.Lect;
 import kr.co.coduck.vo.LectureCriteria;
 import kr.co.coduck.vo.Lesson;
@@ -26,4 +29,9 @@ public interface LectService {
 	List<LectureCourseDto> getLectureByCriteria(LectureCriteria cri);
 	
 	int getLectureCountByCriteria(LectureCriteria cri);
+	
+	List<Lesson> getLessonByRecent(Map<String, Object> map);
+	LessonDto getLessonCountAndLength(int lectureNo);
+	int getCountByWatchedLesson(Map<String, Object> map);
+	int getAccumulateTimeByLesson(Map<String, Object> map);
 }

@@ -46,8 +46,8 @@ public class LectRestController {
 		int totalCount = lectService.getLectureCountByCriteria(cri);
 
 		Pagination pagination = new Pagination(cri.getPage(), totalCount, 16, 3);
-		log.info("Pagination >> " + pagination);
-
+		log.info("Pagination" + pagination);
+		
 		cri.setBeginIndex(pagination.getBeginIndex());
 		cri.setEndIndex(pagination.getEndIndex());
 		
@@ -79,7 +79,6 @@ public class LectRestController {
 	@GetMapping("/getAnswer")
 	public Answer getAnswerByQuestionNo(@RequestParam("questionNo") int questionNo) {
 		
-		log.info("답변 >> " + questionService.getAnswerByQuestionNo(questionNo));
 		return questionService.getAnswerByQuestionNo(questionNo);
 	}
 	

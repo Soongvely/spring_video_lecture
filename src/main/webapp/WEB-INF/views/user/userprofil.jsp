@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="../common/tag.jsp" %>    
+<%@ include file="../common/header.jsp"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -19,7 +19,6 @@
    <script src="/resources/js/common.js"></script>
 </head>
 <body>
-	<%@ include file="../common/header.jsp"%>
 <div class="container" style="font-size:17px; width:1440px;">
 	<div class="row">
 		<div class="col-sm-2" style="border: 1px solid red;">
@@ -35,7 +34,7 @@
 				<li><a href="/like/likelectlist.hta">위시리스트</a></li>
 				<li><a href="/cart/userCartList.hta">장바구니</a></li>
 				<li>내 쿠폰함</li>
-				<li><a href="/user/userbylist.hta">구매내역</a></li>
+				<li><a href="/order/userorderlectlist.hta">구매내역</a></li>
 			</ul>
 			<p>설정</p>
 			<ul>

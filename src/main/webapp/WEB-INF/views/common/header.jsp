@@ -1,14 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="../common/tag.jsp" %>
 
 	<!-- sy.js -->
 	<script src="/resources/js/common.js"></script>
 
-<!-- sy.css -->
+	<!-- sy.css -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 	<link href="<c:url value="/resources/css/sy-style.css" />" rel="stylesheet">    
-	<!-- sy.js -->
-	<script src="/resources/js/common.js"></script>
 
   <div id="root">
     <nav class="navbar sy-navbar">
@@ -20,15 +19,14 @@
       
           <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-              <li class="dropdown">
-                <a class="dropdown-toggle t-gray" href="/lecture/main.hta" style="font-size: 17px;"> IT강좌</a>
+              <li class="main-menu">
+                <a class="t-gray" href="/lecture/main.hta"> IT강좌</a>
               </li>
-              <li class="dropdown">
-                <a class="dropdown-toggle t-gray" data-toggle="dropdown" href="#" style="font-size: 17px;"> 커뮤니티 <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">게시판</a></li>
-                  <li><a href="#">공지사항</a></li>
-                </ul>
+              <li class="main-menu">
+                <a class="t-gray" href="/test/test-list.hta"> 모의시험</span></a>
+              </li>
+              <li class="main-menu">
+                <a class="t-gray" href="#"> 게시판</span></a>
               </li>
             </ul>
 
@@ -43,24 +41,30 @@
               </div>
             </form>    
 
-            <ul class="nav navbar-nav">
-              <li><a href="/user/userprofil.hta" class="t-gray" style="font-size: 16px;">수강생</a></li>
-            </ul>  
-
-            <ul class="nav navbar-nav navbar-right">
+			<c:if test="${not empty LU }">
+	            	<ul class="nav navbar-nav navbar-user">
+	            		<li id="student"><a href="/lecture/main.hta">수강생</a></li>
+	            		<li id="teacher"><a href="/teacher/main.hta">강사</a></li>
+	            	</ul>
+            </c:if>  
             <c:choose>
-            	<c:when test="${LU eq null }">
-		            <li><a href="/user/login.hta" class="t-gray"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-		            <li><a href="/user/register.hta" class="t-gray"><i class="fas fa-user-plus"></i> Sign Up</a></li>
-	            </c:when>
-	            <c:otherwise>
-	                <li><a href="#"><span class="glyphicon glyphicon-shopping-cart t-gray"></span></a></li>
-	                <li><a href="#"><span class="glyphicon glyphicon-heart-empty t-gray"></span></a></li>
-	                <li><a href="#"><span class="glyphicon glyphicon-bullhorn t-gray"></span></a></li>
-	                <li><a href="/user/logout.hta"><span class="glyphicon glyphicon-log-out t-gray"></span></a></li>
-	            </c:otherwise>
-            </c:choose>
-	        </ul>  
+				<c:when test="${empty LU }">
+		            <ul class="nav navbar-nav navbar-right">
+			            <li><a href="/user/login.hta" class="t-gray"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+			            <li><a href="/user/register.hta" class="t-gray"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+			        </ul>
+		        </c:when>
+		        <c:otherwise>
+				    <ul class="nav navbar-nav navbar-my">
+					    <li><a href="/cart/userCartList.hta"><span class="glyphicon glyphicon-shopping-cart t-gray"></span></a></li>
+					    <li><a href="/like/likelectlist.hta"><span class="glyphicon glyphicon-heart-empty t-gray"></span></a></li>
+					    <li><a href="/user/userprofil.hta"><span class="far fa-user-circle t-gray"></span></a></li>
+				    </ul>
+				    <ul class="nav navbar-nav navbar-right">
+					    <li><a href="/user/logout.hta" class="t-gray"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
+				    </ul>
+		        </c:otherwise>
+	         </c:choose>
           </div>
         </div>
       </nav>

@@ -8,7 +8,7 @@ public class OrdTestInfo {
 	private int no;
 	private int testNo;
 	private int orderNo;
-	private int couponNo;
+	private Integer couponNo;
 	
 	public OrdTestInfo() {
 		
@@ -38,12 +38,11 @@ public class OrdTestInfo {
 		this.orderNo = orderNo;
 	}
 
-	public int getCouponNo() {
+	public Integer getCouponNo() {
 		return couponNo;
 	}
 
-	public void setCouponNo(int couponNo) {
+	public void setCouponNo(Integer couponNo) {
 		this.couponNo = couponNo;
 	}
-	
 }

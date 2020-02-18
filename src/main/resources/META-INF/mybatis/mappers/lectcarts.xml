@@ -7,11 +7,12 @@
    
    <select id="getCartLectListByUserNo" parameterType="int" resultType="CartLectDto">
       SELECT
-         A.CART_LECT_NO    as cartLectNo,
-         B.USER_NO         as userNo,
-         C.LECT_TITLE      as lectTitle,
-         C.LECT_NO         as lectNo,
-         C.LECT_PRICE      as lectPrice
+         A.CART_LECT_NO    		as cartLectNo,
+         B.USER_NO         		as userNo,
+         C.LECT_TITLE      		as lectTitle,
+         C.LECT_NO         		as lectNo,
+         C.LECT_PRICE      		as lectPrice,
+         C.LECT_DISCOUNT_PRICE	as discountPrice
       FROM
          lect_Carts A, Users B, lects C
       WHERE
@@ -24,18 +25,22 @@
          B.USER_NO = #{value}
    </select>
    
-   <select id="getCartChoiceLectListByCartChoiceLectNo" parameterType="int" resultType="CartChoiceLectListDto">
+   <select id="getCartChoiceLecttByCartChoiceLectNo" parameterType="map" resultType="CartChoiceLectListDto">
      select
 			B.lect_no				as lectNo,
 			B.lect_title			as lectTitle,
 			B.lect_price			as lectPrice,
 			B.LECT_DISCOUNT_PRICE	as lectDiscountPrice
 		from
-			lect_carts A, lects B
+			lect_carts A, lects B, USERS C
 		where
 			A.lect_no = B.lect_no
+		AND
+			C.USER_NO = A.USER_NO
 		and
-			B.LECT_NO = #{value}
+			B.LECT_NO = #{lectNo}
+		AND
+			C.USER_NO = #{userNo}
    </select>
    
    <delete id="deleteCartLect" parameterType="LectCart">

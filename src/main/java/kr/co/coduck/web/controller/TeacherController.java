@@ -17,4 +17,10 @@ public class TeacherController {
 	public String revenue() {
 		return "teacher/statistics/revenue";
 	}
+	
+	@GetMapping("/community/question.hta")
+	public String question() {
+		return "teacher/community/question";
+	}
+
 }

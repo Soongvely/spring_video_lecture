@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.co.coduck.dto.UserCriteria;
 import kr.co.coduck.vo.User;
 @Transactional
 public interface UserService {
@@ -18,4 +19,7 @@ public interface UserService {
 	
 	// 유저 탈퇴처리
 	void updateUserByAdmin(int userNo);
+	
+	List<User> getUserByCriteria(UserCriteria userCriteria);
+	int getUserCntByCriteria(UserCriteria userCriteria);
 }

@@ -33,9 +33,9 @@
             <p>내 결제</p>
             <ul>
                <li>위시리스트</li>
-               <li><a href="/cart/userCartLectList.hta">장바구니</a></li>
+               <li><a href="/cart/userCartList.hta">장바구니</a></li>
                <li>내 쿠폰함</li>
-               <li><a href="/user/userbylist.hta">구매내역</a></li>
+               <li><a href="/order/userorderlectlist.hta">구매내역</a></li>
             </ul>
             <p>설정</p>
             <ul>
@@ -62,6 +62,7 @@
                         <th>순번</th>
                         <th>제목</th>
                         <th>가격</th>
+                        <th>할인가격</th>
                         <th>삭제하기</th>
                      </tr>
                   </thead>
@@ -79,6 +80,7 @@
                               <td>${loop.count }</td>
                               <td>${userCartLect.lectTitle }</td>
                               <td>${userCartLect.lectPrice }</td>
+                              <td>${userCartLect.discountPrice }</td>
                               <td><a href="" class="btn btn-primary btn-xs">삭제하기</a></td>
                            </tr>
                         </c:forEach>
@@ -94,47 +96,52 @@
                </form>
             </div>
          </div>
-         
          <div class="col-sm-10">
-               <h4>모의고사 장바구니</h4>
-               <div class="row">
-                  <table class="table" id="test-table">
-                     <thead>
+            <p>장바구니는 최근에 추가했던 순서로 표시됩니다.</p>
+            <span>내 결제 / 장바구니</span>
+            <h4>시험 장바구니</h4>
+            <div class="row">
+            <form action="ordertestform.hta" method="post">
+               <table class="table" id="test-table">
+                  <thead id="test-thead">
+                     <tr>
+                        <th>전체선택<input type="checkbox" id="test-all-checkbox" name="test-all-price"/></th>
+                        <th>순번</th>
+                        <th>제목</th>
+                        <th>가격</th>
+                        <th>삭제하기</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                  <c:choose>
+                     <c:when test="${empty userCartTestLists }">
                         <tr>
-                           <th>전체선택<input type="checkbox" id="test-all-checkbox" name="test-all-price"/></th>
-                           <th>순번</th>
-                           <th>제목</th>
-                           <th>가격</th>
-                           <th>구매하기</th>
+                           <td colspan="5" class="text-center">고객님 추가좀 하세요</td>
                         </tr>
-                     </thead>
-                     <tbody>
-                        <c:choose>
-                        <c:when test="${empty userCartTestLists }">
+                     </c:when>
+                     <c:otherwise>
+                        <c:forEach var="userCartTest" items="${userCartTestLists }" varStatus="loop">
                            <tr>
-                              <td colspan="5" class="text-center">고객님 추가좀 하세요</td>
+                              <td><input type="checkbox"  name="testprice" value="${userCartTest.testNo }"/>${userCartTest.testNo }</td>
+                              <td>${loop.count }</td>
+                              <td>${userCartTest.testTitle }</td>
+                              <td>${userCartTest.testPrice }</td>
+                              <td><a href="" class="btn btn-primary btn-xs">삭제하기</a></td>
                            </tr>
-                        </c:when>
-                        <c:otherwise>
-                           <c:forEach var="userCartTest" items="${userCartTestLists }" varStatus="loop">
-                              <tr>
-                                 <td><input type="checkbox"  name="testprice" value="${userCartTest.testLectNo }"/></td>
-                                 <td>${loop.count }</td>
-                                 <td>${userCartTest.testTitle }</td>
-                                 <td>${userCartTest.testPrice }</td>
-                                 <td><a href="" class="btn btn-primary btn-xs">구매하기</a></td>
-                              </tr>
-                           </c:forEach>
-                        </c:otherwise>
-                     </c:choose>
-                     </tbody>
-                  </table>
-                  <div class="text-right">
-                     <p>총 가격 : <span id="test-summary-price">0</span>원</p>
-                     <a href="" class="btn btn-primary">구매하기</a>
-                  </div>
+                        </c:forEach>
+                     </c:otherwise>
+                  </c:choose>
+                  </tbody>
+               </table>
+               <div class="form-group">
+                  <input type="hidden" id="test-total" name="order-test-total-price"/>
+                  <p>총 가격 : <span id="test-summary-price">0</span>원</p>
+                  <button type="submit" class="btn btn-primary">구매하기</button>
                </div>
+               </form>
             </div>
+         </div>
+         
          </div>
       </div>
    <script type="text/javascript">
@@ -142,7 +149,7 @@
          
          var totalPrice = 0;
          $("#lecture-table tbody :checkbox[name=lectprice]:checked").parents("tr").each(function(index, tr) {
-            var price = parseInt($(tr).find('td:eq(3)').text());
+            var price = parseInt($(tr).find('td:eq(4)').text());
             totalPrice += price;
             $("#lect-total").val(totalPrice);
          });
@@ -156,7 +163,7 @@
          if($(this).is(":checked")){
             $("#lecture-table tbody :checkbox[name=lectprice]").prop("checked", true);
             $("#lecture-table tbody :checkbox[name=lectprice]:checked").parents("tr").each(function(index, tr) {
-               var price = parseInt($(tr).find('td:eq(3)').text());
+               var price = parseInt($(tr).find('td:eq(4)').text());
                totalPrice += price;
             });
             $("#lect-total").val(totalPrice);
@@ -175,7 +182,8 @@
       $("#test-table tbody :checkbox[name=testprice]:checked").parents("tr").each(function(index, tr) {
          var price = parseInt($(tr).find('td:eq(3)').text());
          totalPrice += price;
-      });         
+      });
+      $("#test-total").val(totalPrice);
       $("#test-summary-price").text(totalPrice);
    });
    
@@ -196,6 +204,7 @@
       
    })
    </script>
+
 
 <%@ include file="../common/footer.jsp"%>
 

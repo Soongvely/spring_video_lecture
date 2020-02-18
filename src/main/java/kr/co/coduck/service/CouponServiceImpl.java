@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.coduck.dao.CouponDao;
 import kr.co.coduck.dao.UserDao;
+import kr.co.coduck.dto.UserCouponBoxDto;
 import kr.co.coduck.vo.Coupon;
 import kr.co.coduck.vo.CouponBox;
 import kr.co.coduck.vo.User;
@@ -79,6 +80,43 @@ public class CouponServiceImpl implements CouponService {
 			couponDao.insertCouponByAdmin(couponBox);
 		}
 	}
-	
+
+	@Override
+	public List<Coupon> getEnabledCouponsByAdmin() {
+		return couponDao.getEnabledCouponsByAdmin();
+	}
+
+	@Override
+	public void insertCoupon(int couponNo, int userNo) {
+		CouponBox couponBox = new CouponBox();
+		couponBox.setCouponNo(couponNo);
+		couponBox.setUserNo(userNo);
+		
+		Coupon coupon = couponDao.getCouponByCouponNo(couponNo);
+		
+		if (coupon.getAmount() > 0 && coupon.getLimited().equals("Y")) {			
+			coupon.setAmount(coupon.getAmount() - 1);			
+			if (coupon.getAmount() == 0 && coupon.getLimited().equals("Y")) {
+				coupon.setEnabled("N");			
+			}
+		}
+		
+		couponDao.updateCouponByAdmin(coupon);
+		couponDao.insertCouponByAdmin(couponBox);	
+	}
+
+	@Override
+	public List<UserCouponBoxDto> getUserCouponboxByAdmin(int userNo) {
+		return couponDao.getUserCouponboxByAdmin(userNo);
+	}
+
+	@Override
+	public void deleteCouponByAdmin(int couponNo, int userNo) {
+		CouponBox couponBox = new CouponBox();
+		couponBox.setUserNo(userNo);
+		couponBox.setCouponNo(couponNo);
+		
+		couponDao.deleteCouponByAdmin(couponBox);
+	}
 
 }

@@ -5,6 +5,14 @@
   <!-- namespace 필수 설정! -->
 	<mapper namespace="kr.co.coduck.dao.LikeLectDao">
 	
+	<insert id="insertLikeLect" parameterType="Likelect">
+		insert into Like_lects
+		(LIKE_NO, USER_NO, LECT_NO)
+		values
+		(like_lects_seq.nextval, #{userNo}, #{lectNo})
+	</insert>
+	
+	
 	<select id="getLikeLectsByUserNo" parameterType="int" resultType="LikeLectListDto">
 		SELECT
 			C.USER_NO				as likeLectUserNo,

@@ -1,15 +1,14 @@
 package kr.co.coduck.dao;
 
 import java.util.List;
-
-import org.apache.ibatis.annotations.ResultMap;
-import org.apache.ibatis.annotations.Select;
+import java.util.Map;
 
 import kr.co.coduck.dto.ChapterDto;
 import kr.co.coduck.dto.LectureCourseDto;
 import kr.co.coduck.dto.LectureDto;
+import kr.co.coduck.dto.LessonDto;
 import kr.co.coduck.dto.UserByLectDto;
-import kr.co.coduck.vo.Category;
+import kr.co.coduck.dto.UserLessonDto;
 import kr.co.coduck.vo.Lect;
 import kr.co.coduck.vo.LectureCriteria;
 import kr.co.coduck.vo.Lesson;
@@ -33,4 +32,12 @@ public interface LectDao {
 	List<LectureCourseDto> getLectureByCriteria(LectureCriteria cri);
 
 	int getLectureCountByCriteria(LectureCriteria cri);
+	
+	List<Lesson> getLessonByRecent(Map<String, Object> map);
+	LessonDto getLessonCountAndLength(int lectureNo);
+	int getCountByWatchedLesson(Map<String, Object> map);
+	int getAccumulateTimeByLesson(Map<String, Object> map);
+	
+	
+	
 }

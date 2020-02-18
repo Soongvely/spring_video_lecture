@@ -43,7 +43,6 @@
 	                            <!-- 교육과정 start-->
 	                            
 		                            <div class="lecture-curriculum" id="curriculum">
-		                           
 		                                <h3 class="sub-heading">교육과정</h3>
 		                                <div class="curriculum-chapter-list">
 		                                    <div class="curriculum-title">
@@ -104,7 +103,7 @@
 	                                        <span class="average_star">
 	                                            <div class="rating_star">
 	                                                <div class="review-star-solid">
-	                                                    <span class="star_yellow" data-text="${counts.reviewStar }"></span>
+	                                                    <span class="star_yellow starScore" data-text="${counts.reviewStar }" style="font-size: 16px;"></span>
 	                                                </div>
 	                                            </div>
 	                                        </span>
@@ -158,7 +157,6 @@
 	            </div>
         <!-- description end -->
     	</section>  
-    <script src="/resources/js/lecture/details-common.js"></script>  
     <script>
     
     // 존재하지 않는 평점 그래프 append
@@ -213,7 +211,7 @@
     	$(".average_num").append(".0");
     }
     
-    $(function() {
+   /*  $(function() {
         
         var pg = location.search.search('pg');
         if(pg) {
@@ -224,6 +222,6 @@
                 scrollTop
             }, 600);
         }
-    });
+    }); */
     </script>
 <%@ include file="../../common/footer.jsp" %>

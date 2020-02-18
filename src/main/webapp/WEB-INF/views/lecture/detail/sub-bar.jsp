@@ -58,13 +58,18 @@
                                 <div class="lecture-price-cover">
                                     <div class="lecture-price-section">
                                         <div class="lecture-price">
-                                            <fmt:formatNumber value="${lecture.discountPrice }"></fmt:formatNumber>원 <del class="lecture-del-price"><fmt:formatNumber value="${lecture.price }"></fmt:formatNumber>원</del>
+                                            <fmt:formatNumber value="${lecture.discountPrice }"></fmt:formatNumber>원 
+                                        	<c:if test="${lecture.discountRate > 0}">
+                                            	<del class="lecture-del-price"><fmt:formatNumber value="${lecture.price }"></fmt:formatNumber>원</del>
+                                        	</c:if>
                                         </div>
-                                        <div class="lecture-price-detail">(${lecture.discountRate }% 할인)</div>
+                                        <c:if test="${lecture.discountRate > 0}">
+	                                        <div class="lecture-price-detail">(${lecture.discountRate }% 할인)</div>
+                                        </c:if>
                                     </div>
                                     <div class="lecture-btn-section">
                                         <div class="lecture-btn-cover">
-                                            <a href="/order/insertOrderLect.hta" class="btn lecture-purchase-btn">구매하기</a>
+                                            <a href="/order/insertOrderLect.hta" class="btn lecture-purchase-btn">수강신청</a>
                                         </div>
                                         <div class="lecture-sub-btn-cover">
                                             <button class="btn sub-btn lecture-like-btn">

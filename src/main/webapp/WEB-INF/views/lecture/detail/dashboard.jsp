@@ -13,28 +13,26 @@
 	                    <div class="lecture-board box recent-question">
 	                        <span class="board-box-title">최근 질문</span>
 	                        <div class="lecture-question item-container">
-	                            <a href="" class="list-item">
+	                        <c:forEach var="question" items="${questions }">
+	                            <a href="question.hta?lectureNo=${lecture.no }" class="list-item">
 	                                <fiqure class="user-profile-image">
-	                                    <img src="/resources/images/logo/coduck.ico" width="40px" class="is-rounded" alt="작성자 프로필">
+	                                    <img src="${question.user.imageFilename }" width="40px" class="is-rounded" alt="작성자 프로필">
 	                                </fiqure>
-	                                <div class="item-title">STS하면 안되나요?</div>
-	                                <div class="item-date">5일 전</div>
+	                                
+	                                <div class="item-title">
+	                                <c:choose>
+	                                	<c:when test="${fn:length(question.contents) > 24}">
+	                                		<c:out value="${fn:substring(question.contents, 0, 23)}" /> ...
+	                                	</c:when>
+	                                	<c:otherwise>
+	                                		<c:out value="${question.contents }"></c:out>
+	                                	</c:otherwise>
+	                                </c:choose>
+	                                </div>
+	                                
+	                                <div class="item-date"><fmt:formatDate value="${question.createDate }" pattern="yyyy-MM-dd"/></div>
 	                            </a>
-	                            <a href="" class="list-item">
-	                                <fiqure class="user-profile-image">
-	                                    <img src="/resources/images/logo/coduck.ico" width="40px" class="is-rounded" alt="작성자 프로필">
-	                                </fiqure>
-	                                <div class="item-title">STS하면 안되나요?</div>
-	                                <div class="item-date">5일 전</div>
-	                            </a>
-	                            <a href="" class="list-item">
-	                                <fiqure class="user-profile-image">
-	                                    <img src="/resources/images/logo/coduck.ico" width="40px" class="is-rounded" alt="작성자 프로필">
-	                                </fiqure>
-	                                <div class="item-title">STS하면 안되나요?</div>
-	                                <div class="item-date">5일 전</div>
-	                            </a>
-	
+	                        </c:forEach>
 	                        </div>
 	                    </div>
 	                </div>
@@ -43,32 +41,23 @@
 	                        <span class="board-box-title">최근 본 강의</span>
 	                        <div class="lecture-lesson item-container">
 	                            <!-- 최근 본 강의 목록 start -->
-	                            <div class="recent-view lesson_cover">
-	                                <div class="unit_item">
-	                                    <div class="col-sm-8 unit_item_left">
-	                                        <i class="far fa-play-circle"></i>
-	                                        <span class="unit_item-title">스프링의 기초</span>
-	                                    </div>
-	                                    <div class="unit_item_right">
-	                                        <span class="unit_time"><i class="far fa-clock" style="margin-right: 4px;"></i>
-	                                            17 : 27
-	                                        </span>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="recent-view lesson_cover">
-	                                <div class="unit_item">
-	                                    <div class="col-sm-8 unit_item_left">
-	                                        <i class="far fa-play-circle"></i>
-	                                        <span class="unit_item-title">스프링의 기초</span>
-	                                    </div>
-	                                    <div class="unit_item_right">
-	                                        <span class="unit_time"><i class="far fa-clock" style="margin-right: 4px;"></i>
-	                                            17 : 27
-	                                        </span>
-	                                    </div>
-	                                </div>
-	                            </div>
+	                            <c:forEach var="lesson" items="${lessons }">
+		                            <div class="recent-view lesson_cover">
+		                                <div class="unit_item">
+		                                    <div class="col-sm-8 unit_item_left">
+		                                        <i class="far fa-play-circle"></i>
+		                                        <span class="unit_item-title">${lesson.lessonTitle }</span>
+		                                    </div>
+		                                    <div class="unit_item_right">
+		                                        <span class="unit_time">
+		                                        	<i class="far fa-clock" style="margin-right: 4px;"></i>
+		                                        	${lesson.totalTime }
+		                                        </span>
+		                                    </div>
+		                                </div>
+		                            </div>
+	                            </c:forEach>
+
 	                            <!-- 최근 본 강의 목록 end -->
 	                        </div>
 	                    </div>

@@ -10,6 +10,7 @@ public class CartLectDto {
    private int userNo;
    private String lectTitle;
    private int lectPrice;
+   private int discountPrice;
    
    public CartLectDto() {
       
@@ -54,6 +55,14 @@ public class CartLectDto {
    public void setLectNo(int lectNo) {
       this.lectNo = lectNo;
    }
+
+public int getDiscountPrice() {
+	return discountPrice;
+}
+
+public void setDiscountPrice(int discountPrice) {
+	this.discountPrice = discountPrice;
+}
    
    
 }

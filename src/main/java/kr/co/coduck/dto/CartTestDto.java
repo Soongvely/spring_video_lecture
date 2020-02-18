@@ -5,7 +5,7 @@ import org.apache.ibatis.type.Alias;
 @Alias("CartTestDto")
 public class CartTestDto {
 
-	private int cartTestNo;
+	private int testNo;
 	private int userNo;
 	private String	testTitle;
 	private int testPrice;
@@ -13,14 +13,8 @@ public class CartTestDto {
 	public CartTestDto() {
 		
 	}
-
-	public int getCartTestNo() {
-		return cartTestNo;
-	}
-
-	public void setCartTestNo(int cartTestNo) {
-		this.cartTestNo = cartTestNo;
-	}
+	
+	
 
 	public int getUserNo() {
 		return userNo;
@@ -44,6 +38,18 @@ public class CartTestDto {
 
 	public void setTestPrice(int testPrice) {
 		this.testPrice = testPrice;
+	}
+
+
+
+	public int getTestNo() {
+		return testNo;
+	}
+
+
+
+	public void setTestNo(int testNo) {
+		this.testNo = testNo;
 	}
 	
 	

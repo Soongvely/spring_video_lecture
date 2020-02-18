@@ -2,6 +2,7 @@ package kr.co.coduck.dao;
 
 import java.util.List;
 
+import kr.co.coduck.dto.UserCriteria;
 import kr.co.coduck.vo.User;
 
 public interface UserDao {
@@ -13,4 +14,7 @@ public interface UserDao {
 	List<User> selectAllUsersByAdmin();
 	List<User> getUsersByUserNo(int userNo);
 	User getUserByUserNo(int userNo);
+		
+	List<User> getUserByCriteria(UserCriteria userCriteria);
+	int getUserCntByCriteria(UserCriteria userCriteria);
 }

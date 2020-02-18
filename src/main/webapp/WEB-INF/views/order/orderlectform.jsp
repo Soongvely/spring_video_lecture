@@ -33,9 +33,9 @@
             <p>내 결제</p>
             <ul>
                <li><a href="/like/likelectlist.hta">위시리스트</a></li>
-               <li><a href="/cart/userCartLectList.hta">장바구니</a></li>
+               <li><a href="/cart/userCartList.hta">장바구니</a></li>
                <li>내 쿠폰함</li>
-               <li><a href="/user/userbylist.hta">구매내역</a></li>
+               <li><a href="/order/userorderlectlist.hta">구매내역</a></li>
             </ul>
             <p>설정</p>
             <ul>
@@ -49,7 +49,17 @@
             </ul>
          </div>
 
-         <div class="col-sm-10">
+			<c:if test="${param.error eq 'fail' }">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="alert alert-danger">
+							<strong>구매 실패 </strong> 계좌번호나 입력오류 이거나 이미 구매하신 강의입니다
+						</div>
+					</div>
+				</div>
+			</c:if>
+
+			<div class="col-sm-10">
             <div class="row">
                <div class="col-sm-12">
                   <h3>구매할 강의 정보</h3>
@@ -103,13 +113,13 @@
                            <input type="text" class="form-control" name="bankno" />
                         </div>
                      </div>
-                     <div class="form-group">
+                     <%-- <div class="form-group">
                         <label class="control-label col-sm-2">포인트</label>
                         <div class="col-sm-3" id="">
                            <input type="number" class="form-control" name="userpoint" id="user-point" value="${userPoint.point }"/>
                         </div>
                         <button type="button" class="btn btn-success" id="usepoint">포인트 사용하기</button>
-                     </div>
+                     </div> --%>
                      <div class="form-group">
                         <label class="control-label col-sm-2">결재금액</label>
                         <div class="col-sm-3">

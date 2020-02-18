@@ -33,4 +33,10 @@ public class QuestionServiceImpl implements QuestionService {
 		questionDao.insertQuestion(question);
 		
 	}
+	
+	@Override
+	public List<Question> getQuestionByRecent(int lectureNo) {
+		
+		return questionDao.getQuestionByRecent(lectureNo);
+	}
 }

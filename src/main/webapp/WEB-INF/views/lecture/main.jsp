@@ -18,7 +18,6 @@
                                 	 <li><a data-cate-no="0">All</a></li>
                                 	 <c:forEach var="category" items="${categories }">
 	                                    <li><a data-cate-no="${category.no}">${category.name }</a></li>
-	                                    <%-- href="main.hta?cateNo=${category.no }" --%>
                                      </c:forEach>
                                 </ul>
                             </div>
@@ -49,16 +48,16 @@
                                 </button>
                                 <div class="panel accordion-contents">
                                     <div class="checkbox_accordion">
-                                        <input id="optionFree" type="checkbox" name="option" value="free" />
+                                        <input id="optionFree" type="checkbox" name="option" value="Y" />
                                         <label for="optionFree">무료</label>
                                     </div>
                                     <div class="checkbox_accordion">
-                                        <input type="checkbox" name="option" value="paid" />
-                                        <label class="">유료</label>
+                                        <input id="optionPaid" type="checkbox" name="option" value="N" />
+                                        <label for="optionPaid">유료</label>
                                     </div>
                                     <div class="checkbox_accordion">
-                                        <input type="checkbox" name="option" value="discount"/>
-                                        <label class="">할인중</label>
+                                        <input id="optionDiscount" type="checkbox" name="discount" value="-1"/>
+                                        <label for="optionDiscount">할인중</label>
                                     </div>
                                 </div>
                             </div>
@@ -139,7 +138,7 @@
 			getSearchValues();
 		});
 		
-		// 인풋 엔터 입력
+		// input엘리먼트 엔터 입력
 		$("#search").on("keyup",function(e) {
 			console.log(e.keyCode);
 			if(e.keyCode == 13) 
@@ -151,15 +150,14 @@
 			getSearchValues();
 		});
 		
-		// 카테고리 클릭 시 조건 검색 실행
-		$("#lecturePagenation").on("click","li a", function() {
+		/* $("#pagination").on("click","li a", function() {
 			var page = $(this).text();
-			console.log(page);
-			
 			$("input[name=page]").val(page);
+			
 			getSearchValues();
-		});
+		}); */
 		
+		// 카테고리 클릭 시 조건 검색 실행
 		$("#categoryList").on("click","li",function(){
 			var cateNo = $(this).children().data("cate-no");
 			$("input[name=cateNo]").val(cateNo);
@@ -172,6 +170,7 @@
 			var page = $(this).data("page");
 			console.log('page',page)
 			$("input[name=page]").val(page);
+			
 			getSearchValues();
 		});
 		
@@ -182,11 +181,18 @@
 			var keyword = $(".search-input").val();
 			var sort = $("select[name=sort]").val();
 			var $grades = $("input[name=grade]:checked");
+			var $options = $("input[name=option]:checked");
+			var discount = $("input[name=discount]:checked").val();
 			var page = $("input[name=page]").val() || 1;
 			
 			var grades = [];
 			$grades.each(function(i,grade) {
 				grades.push(parseInt(grade.value));
+			});
+			
+			var options = [];
+			$options.each(function(i,option) {
+				options.push(option.value);
 			});
 
 			var data = {
@@ -194,9 +200,10 @@
 						"keyword":keyword,
 						"sort":sort,
 						"grades":grades,
+						"options":options,
+						"discount":discount,
 						"page":page
 						};
-			
 			console.log(data);
 			
 			$.ajax({
@@ -212,7 +219,6 @@
 					var totalPage = resultMap.totalPage;
 					var html = '';
 					 
-					console.log("beginPage", beginPage, "endPage", endPage, "totalPage" , totalPage);
 					if(result.length) {					
 						result.forEach(function(item, i) {
 							
@@ -239,7 +245,7 @@
 							html += '<div class="rating column is-half">';
 							html += '<div class="rating-star">';
 							
-							html += '<div class="star_yellow"  data-star-score="'+ count.reviewStar +'"></div>';
+							html += '<div class="star_yellow" data-star-score="'+ count.reviewStar +'"></div>';
 							html += '</div>';
 							html += '</div>';
 							html += '<div class="price column is-half">';
@@ -251,7 +257,7 @@
 							html += '<span class="discount_price">￦' + lecture.discountPrice.toLocaleString() +'</span>';
 							html += '</div>'
 							html += '<div class="item-info-bottom">';
-							html += '<div class="wish"><i class="far fa-heart"></i>' + count.likeCnt +'</div>';
+							html += '<div class="wish"><a href="/like/addlikelectlist.hta?lectureno=' + lecture.no + '"><i class="far fa-heart"></i></a>' + count.likeCnt +'</div>';
 							html += '<div class="teacher_name">' + count.userName + '</div>';
 							html +=	'</div>';  
 							html +=	'</div>'; 

@@ -13,6 +13,7 @@ public class LectureCriteria {
 	private String keyword;
 	private String sort;
 	private String[] options;
+	private int discount;
 	private int page;
 	private int beginIndex;
 	private int endIndex;
@@ -93,10 +94,19 @@ public class LectureCriteria {
 		this.sort = sort;
 	}
 
+	public int getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(int discount) {
+		this.discount = discount;
+	}
+
 	@Override
 	public String toString() {
 		return "LectureCriteria [cateNo=" + cateNo + ", no=" + no + ", grades=" + Arrays.toString(grades) + ", keyword="
-				+ keyword + ", sort=" + sort + ", page=" + page + ", options=" + Arrays.toString(options) + "]";
+				+ keyword + ", sort=" + sort + ", options=" + Arrays.toString(options) + ", discount=" + discount
+				+ ", page=" + page + ", beginIndex=" + beginIndex + ", endIndex=" + endIndex + "]";
 	}
 
 }

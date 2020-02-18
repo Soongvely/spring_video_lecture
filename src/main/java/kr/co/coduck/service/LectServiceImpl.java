@@ -1,6 +1,8 @@
 package kr.co.coduck.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +12,9 @@ import kr.co.coduck.dao.UserDao;
 import kr.co.coduck.dto.ChapterDto;
 import kr.co.coduck.dto.LectureCourseDto;
 import kr.co.coduck.dto.LectureDto;
+import kr.co.coduck.dto.LessonDto;
 import kr.co.coduck.dto.UserByLectDto;
+import kr.co.coduck.dto.UserLessonDto;
 import kr.co.coduck.vo.Category;
 import kr.co.coduck.vo.Lect;
 import kr.co.coduck.vo.LectureCriteria;
@@ -77,6 +81,30 @@ public class LectServiceImpl implements LectService {
 	public int getLectureCountByCriteria(LectureCriteria cri) {
 		
 		return lectDao.getLectureCountByCriteria(cri);
+	}
+	
+	@Override
+	public List<Lesson> getLessonByRecent(Map<String, Object> map) {
+		
+		return lectDao.getLessonByRecent(map);
+	}
+	
+	@Override
+	public int getAccumulateTimeByLesson(Map<String, Object> map) {
+		
+		return lectDao.getAccumulateTimeByLesson(map);
+	}
+	
+	@Override
+	public int getCountByWatchedLesson(Map<String, Object> map) {
+
+		return lectDao.getCountByWatchedLesson(map);
+	}
+	
+	@Override
+	public LessonDto getLessonCountAndLength(int lectureNo) {
+
+		return lectDao.getLessonCountAndLength(lectureNo);
 	}
 
 }

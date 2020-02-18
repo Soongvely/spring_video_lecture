@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.coduck.dao.UserDao;
+import kr.co.coduck.dto.UserCriteria;
 import kr.co.coduck.vo.User;
 
 @Service
@@ -73,4 +74,15 @@ public class UserServiceImpl implements UserService {
 		user.setEnabled("N");
 		userDao.updateUser(user);
 	}
+
+	@Override
+	public List<User> getUserByCriteria(UserCriteria userCriteria) {		
+		return userDao.getUserByCriteria(userCriteria);
+	}
+
+	@Override
+	public int getUserCntByCriteria(UserCriteria userCriteria) {	
+		return userDao.getUserCntByCriteria(userCriteria);
+	}
+
 }

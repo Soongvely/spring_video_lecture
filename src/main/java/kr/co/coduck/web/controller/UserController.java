@@ -53,6 +53,12 @@ public class UserController {
 		return "user/loginform";
 	}
 	
+	@RequestMapping("/logout.hta")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/home.hta";
+	}
+	
 	@GetMapping("/userprofil.hta")
 	public String userprofil(HttpSession session, Model model) {
 		User user = (User)session.getAttribute("LU");

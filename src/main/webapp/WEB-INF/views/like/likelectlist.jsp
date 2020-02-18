@@ -28,7 +28,7 @@
 				<li><a href="/like/likelectlist.hta">위시리스트</a></li>
 				<li><a href="/cart/userCartList.hta">장바구니</a></li>
 				<li>내 쿠폰함</li>
-				<li><a href="/user/userbylist.hta">구매내역</a></li>
+				<li><a href="/order/userorderlectlist.hta">구매내역</a></li>
 			</ul>
 			<p>설정</p>
 			<ul>
@@ -70,7 +70,7 @@
 							    <p>할인가격 : ${userLikeLect.likeLectDiscountPrice }</p>
 							</div>
 						    <div class="text-right">
-						        <a style="margin-top: 20px;" class="btn btn-primary">강의 정보</a>
+						        <a href="/lecture/detail/description.hta?lectureNo=${userLikeLect.lectNo }" style="margin-top: 20px;" class="btn btn-primary">강의 정보</a>
 						    </div>
 						</div>
 					</c:forEach>

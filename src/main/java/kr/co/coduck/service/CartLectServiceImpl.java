@@ -1,6 +1,7 @@
 package kr.co.coduck.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,19 +28,16 @@ public class CartLectServiceImpl implements CartLectService{
 	}
 
 	@Override
-	public CartChoiceLectListDto getCartChoiceLectListByCartChoiceLectNo(int cartLectNo) {
-		return lectCartDao.getCartChoiceLectListByCartChoiceLectNo(cartLectNo);
-		
-	}
-
-	@Override
 	public void deleteCartLect(int lectNo) {
 		lectCartDao.deleteCartLect(lectNo);
 		
 	}
 
-	
-	
+	@Override
+	public CartChoiceLectListDto getCartChoiceLecttByCartChoiceLectNo(Map<String, Object> criteria) {
+		
+		return lectCartDao.getCartChoiceLecttByCartChoiceLectNo(criteria);
+	}
 	
 	
 }

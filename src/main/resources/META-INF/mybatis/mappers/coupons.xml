@@ -50,6 +50,26 @@
 			coupons
 	</select>
 	
+	<select id="getEnabledCouponsByAdmin" resultType="Coupon">
+		select
+			coupon_no				as no,
+			coupon_title			as title,
+			coupon_detail			as detail,
+			coupon_enabled			as enabled,
+			coupon_start_date		as startDate,
+			coupon_end_date			as endDate,
+			coupon_amount			as amount,
+			coupon_limited			as limited,
+			coupon_discount_price	as discountPrice,
+			coupon_discount_rate	as discountRate
+		from
+			coupons
+		where 
+			coupon_enabled = 'Y'
+		order by 
+			coupon_no desc
+	</select>
+	
 	<select id="getCouponByCouponNo" parameterType="int" resultType="Coupon">
 		select
 			coupon_no				as no,
@@ -138,4 +158,37 @@
 		values
 		(#{couponNo}, #{userNo})
 	</insert>
+	
+	<!-- 유저에게 쿠폰 삭제하기 -->
+	<delete id="deleteCouponByAdmin" parameterType="CouponBox">
+		delete from coupon_box
+		where coupon_no = #{couponNo} 
+		and user_no = #{userNo}
+	</delete>
+	
+	<!-- 유저가 가지고 있는 쿠폰 조회하기 -->
+	<select id="getUserCouponboxByAdmin" parameterType="int" resultType="UserCouponBoxDto">
+		select
+			A.user_no					as no,
+			A.user_name					as name,
+			B.coupon_no					as couponNo,
+			B.coupon_title				as title,
+			B.coupon_detail				as detail,
+			B.coupon_enabled			as enabled,
+			B.coupon_start_date			as startDate,
+			B.coupon_end_date			as endDate,
+			B.coupon_discount_price		as discountPrice,
+			B.coupon_discount_rate		as discountRate,
+			B.coupon_limited			as limited,
+			B.coupon_amount				as amount
+		from
+			users A, coupons B, coupon_box C
+		where
+			A.user_no = C.user_no 
+			and B.coupon_no = C.coupon_no
+			and A.user_no = #{value}
+	</select>
+	
+	
+	
 </mapper>

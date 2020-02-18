@@ -7,33 +7,33 @@
 	
 	<!-- 유저 번호로 유저가 구매한 수강리스트 조회 -->
 	<select id="getLectListUserByNo" parameterType="map" resultType="UserByLectDto">
-		SELECT
-			A.USER_NO					as no,
-			A.USER_NAME					as name,
-			B.ORD_LECT_CREATE_DATE		as lectCreateDate,
-			F.ACCUMULATE_TIME			as accumulateTime,
-			D.LECT_IMAGE_PATH			as imagePath,
-			B.ORD_LECT_TOTAL_PRICE		as totalPrice,
-			D.LECT_PRICE				as lectPrice,
-			D.LECT_TITLE				as lectTitle
-		FROM
-			USERS A, Ord_lects B, Ord_lect_infos C, lects D, chapters E, lessons F
-		WHERE
-			A.USER_NO = B.USER_NO
-		AND
-			B.ORD_NO = C.ORD_NO
-		AND
-			C.LECT_NO = D.LECT_NO
-		AND
-			D.LECT_NO = E.LECT_NO
-		AND
-			E.CHAPTER_NO = F.CHAPTER_NO
-		AND
-			F.CHAPTER_NO = E.CHAPTER_NO
-		AND
-			A.USER_NO = #{value}
-		order BY
-			B.ORD_LECT_CREATE_DATE DESC
+		select
+			a.user_no					as no,
+			a.user_name					as name,
+			b.ord_lect_create_date		as lectCreateDate,
+			b.ord_lect_total_price		as totalPrice,
+			d.lect_image_path			as imagePath,
+			d.lect_price				as lectPrice,
+			d.lect_title				as lectTitle
+			f.accumulate_time			as accumulateTime,
+		from
+			users a, ord_lects b, ord_lect_infos c, lects d, chapters e, lessons f
+		where
+			a.user_no = b.user_no
+		and
+			b.ord_no = c.ord_no
+		and
+			c.lect_no = d.lect_no
+		and
+			d.lect_no = e.lect_no
+		and
+			e.chapter_no = f.chapter_no
+		and
+			f.chapter_no = e.chapter_no
+		and
+			a.user_no = #{value}
+		order by
+			b.ord_lect_create_date desc
 	</select>
 	
 	<select id="getLectByNo" parameterType="int" resultType="Lect">
@@ -104,102 +104,120 @@
 			u.user_name					userName,
 			u.user_image_filename		userImagePath,
 			u.user_self_introduction	userIntroduction
-			
 		from
 			lects L, users U
 		where
 			l.user_no = u.user_no
-			and l.lect_no = #{value}		
+			and l.lect_is_display = 'Y'	
+			and l.lect_no = #{value}	
 	</select>
 	
 	<!-- 조건별(필터)강좌 조회 -->
 	<select id="getLectureByCriteria" parameterType="LectureCriteria" resultMap="lectureMap">
 	 	select *
 			from (
-			select
-			<choose>
-				<when test="sort eq 'like'">
-					ROW_NUMBER() over (order by NVL(likes,0) desc) rn,
-				</when>
-				<when test="sort eq 'price'">
-					ROW_NUMBER() over (order by l.lect_price desc) rn,
-				</when>
-				<otherwise>
-					ROW_NUMBER() over (order by l.lect_create_date desc) rn,
-				</otherwise>
-			</choose>
-				l.lect_no					
-				, l.cate_no				 	
-				, l.user_no
-				, l.lect_title				
-				, l.lect_info					
-				, l.lect_price				
-				, l.lect_discount_price	
-				, l.lect_discount_rate		
-				, l.lect_is_freed				
-				, l.lect_is_display			
-				, l.lect_create_date			
-				, l.lect_grade			
-				, l.lect_tag					
-				, l.lect_image_path			
-				, u.user_name					
-	            , NVL(likes,0) as "like"
-			from
-				lects L, users U, (select 
-									 lect_no
-									 , COUNT(*) as likes 
-								  from 
-								  	like_lects 
-								  group by 
-								 	lect_no) H
-			where
-				l.user_no = u.user_no
-	         	and l.lect_no = h.lect_no(+)
-	         and l.lect_title like '%' || #{keyword} || '%'
-	         <if test="cateNo neq 0">
-	         	and l.cate_no = #{cateNo}
-	         </if>
-             <if test="grades != null and grades.length > 0">
-            	and l.lect_grade in 
-	            <foreach collection="grades" item="grade" open="(" close=")" separator=",">
-	            	#{grade}
-	            </foreach>
-             </if>
-            )
-            <![CDATA[
-				where rn >= #{beginIndex} 
-				and rn <= #{endIndex}    
-            ]]>
-	</select>
-	
-	<!-- 조건별(필터)강좌 조회 -->
-	<select id="getLectureCountByCriteria" parameterType="LectureCriteria" resultType="int">
-		select count(*)
-			from
-				lects L, users U, (select 
-									 lect_no
-									 , COUNT(*) as likes 
-								  from 
-								  	like_lects 
-								  group by 
-								 	lect_no) H
-			where
-				l.user_no = u.user_no
-	         	and l.lect_no = h.lect_no(+)
-	         <if test="cateNo neq 0">
-	         	and l.cate_no = #{cateNo}
-	         </if>
-	         and l.lect_title like '%' || #{keyword} || '%'
-            <if test="grades != null and grades.length > 0">
-            	and l.lect_grade in 
-	            <foreach collection="grades" item="grade" open="(" close=")" separator=",">
-	            	#{grade}
-	            </foreach>
-            </if>
+				select
+				<choose>
+					<when test="sort eq 'like'">
+						ROW_NUMBER() over (order by NVL(likes,0) desc) rn,
+					</when>
+					<when test="sort eq 'price'">
+						ROW_NUMBER() over (order by l.lect_price desc) rn,
+					</when>
+					<otherwise>
+						ROW_NUMBER() over (order by l.lect_create_date desc) rn,
+					</otherwise>
+				</choose>
+					l.lect_no					
+					, l.cate_no				 	
+					, l.user_no
+					, l.lect_title				
+					, l.lect_info					
+					, l.lect_price				
+					, l.lect_discount_price	
+					, l.lect_discount_rate		
+					, l.lect_is_freed				
+					, l.lect_is_display			
+					, l.lect_create_date			
+					, l.lect_grade			
+					, l.lect_tag					
+					, l.lect_image_path			
+					, u.user_name					
+		            , NVL(likes,0) as "like"
+				from
+					lects L, users U, (select 
+										 lect_no
+										 , COUNT(*) as likes 
+									  from 
+									  	like_lects 
+									  group by 
+									 	lect_no) H
+				where
+					l.user_no = u.user_no
+		         	and l.lect_no = h.lect_no(+)
+		         	and l.lect_is_display = 'Y'
+		         	and l.lect_title like '%' || #{keyword} || '%'
+		         <if test="cateNo neq 0">
+		         	and l.cate_no = #{cateNo}
+		         </if>
+	             <if test="grades != null and grades.length > 0">
+	            	and l.lect_grade in 
+		            <foreach collection="grades" item="grade" open="(" close=")" separator=",">
+		            	#{grade}
+		            </foreach>
+	             </if>
+	             <if test="options != null and options.length > 0">
+	             	and l.lect_is_freed	in
+	             	<foreach collection="options" item="option" open="(" close=")" separator=",">
+	             		#{option}
+	             	</foreach>
+	             </if>
+	       		<if test="discount == -1">
+	           		and l.lect_discount_rate > 0
+	            </if> 
+	            )
+        <![CDATA[
+		where rn >= #{beginIndex} 
+		and rn <= #{endIndex}    
+        ]]>
 	</select>
 	
 	<!-- 조건별(필터)강좌 카운트 조회 -->
-	
+	<select id="getLectureCountByCriteria" parameterType="LectureCriteria" resultType="int">
+		select 
+			count(*)
+		from
+			lects L, users U, (select 
+								 lect_no
+								 , COUNT(*) as likes 
+							  from 
+							  	like_lects 
+							  group by 
+							 	lect_no) H
+		where
+			l.user_no = u.user_no
+         	and l.lect_no = h.lect_no(+)
+         	and l.lect_is_display = 'Y'
+	        <if test="cateNo neq 0">
+	        	and l.cate_no = #{cateNo}
+	        </if>
+	        and l.lect_title like '%' || #{keyword} || '%'
+            <if test="grades != null and grades.length > 0">
+           	and l.lect_grade in 
+            <foreach collection="grades" item="grade" open="(" close=")" separator=",">
+            	#{grade}
+            </foreach>
+            </if>
+            <if test="options != null and options.length > 0">
+            	and l.lect_is_freed	in
+            	<foreach collection="options" item="option" open="(" close=")" separator=",">
+            		#{option}
+            	</foreach>
+            </if>
+            <if test="discount == -1">
+          		and l.lect_discount_rate > 0
+            </if> 
+	</select>
 	
 	<!-- 강좌별 모든 count 조회 -->
  	<select id="getAllCountByLectureNo" parameterType="int" resultType="LectureDto">
@@ -209,7 +227,8 @@
 		    	count(*) 
 		   	 from 
 		   	 	ord_lect_infos B 
-		   	 where B.lect_no = A.lect_no) studentCnt,
+		   	 where 
+		   	 	B.lect_no = A.lect_no) studentCnt,
 		    (select 
 		    	trunc(nvl(avg(review_star), 0)) 
 		    from 
@@ -237,6 +256,77 @@
 			and A.lect_no = #{value}
 	</select>
 	
+	<!-- 유저가 최근 시청한 레슨명 + 총 레슨 시간  rn: 시청 날짜순-->
+	<select id="getLessonByRecent" parameterType="map" resultType="Lesson">
+		select *
+		from
+	    	(select 
+		        s.lesson_title		
+		       , s.total_time	
+		       , ROW_NUMBER() over (order by s.lesson_watched_date desc) rn
+		    from 
+		        users u, lects l, chapters c, lessons s, ord_lects o, ord_lect_infos ol
+		    where
+		        u.user_no = o.user_no
+		    and o.ord_no = ol.ord_no
+		    and l.lect_no = ol.lect_no
+		    and l.lect_no = c.lect_no
+		    and c.chapter_no = s.chapter_no
+		    and s.last_time > 0
+		    and u.user_id = #{userId}
+		    and l.lect_no = #{lectureNo})
+		where 
+			rn &lt; 10
+	</select>
+	
+	<!-- 강좌별 레슨 총 개수, 총 시간 조회 -->
+ 	<select id="getLessonCountAndLength" parameterType="int" resultType="LessonDto">
+	    select 
+		    count(*)			lessonCount	
+		    , sum(s.total_time) totalTime
+		from 
+			lects l, chapters c, lessons s
+		where  
+	        l.lect_no = c.lect_no
+	        and c.chapter_no = s.chapter_no
+	        and l.lect_no = #{value} 
+	</select>
+	 
+	<!-- 유저가 완료한 레슨의 총 개수 -->
+	<select id="getCountByWatchedLesson" parameterType="map" resultType="int">
+		select 
+  	 		count(*)  completedCount
+		from 
+		    users u, lects l, chapters c, lessons s, ord_lects o, ord_lect_infos ol
+		where
+		    u.user_no = o.user_no
+		and o.ord_no = ol.ord_no
+		and l.lect_no = ol.lect_no
+		and l.lect_no = c.lect_no
+		and c.chapter_no = s.chapter_no
+		
+		and s.lesson_watched = 'Y'
+		
+		and u.user_no = #{userNo}
+		and l.lect_no = #{lectureNo}
+	</select>
+	
+	<!-- 유저의 누적 진도 시간 -->
+	<select id="getAccumulateTimeByLesson" parameterType="map" resultType="int">
+		select 
+    		sum(s.accumulate_time) 
+		from 
+		    users u, lects l, chapters c, lessons s, ord_lects o, ord_lect_infos ol
+		where
+		    u.user_no = o.user_no
+		and o.ord_no = ol.ord_no
+		and l.lect_no = ol.lect_no
+		and l.lect_no = c.lect_no
+		and c.chapter_no = s.chapter_no
+		and u.user_id = #{userNo}
+		and l.lect_no = ${lectureNo}
+	</select>
+	
 	<!-- All Lecture ResultMap -->
 	<resultMap type="LectureCourseDto" id="lectureMap">
 		<association property="lecture">
@@ -257,7 +347,6 @@
 			<result column="lect_grade" property="grade"/>
 		</association>
 		<collection column="lect_no" property="chapters" select="getChapterByLectureNo"/>
-		<collection column="lect_no" property="reviews" select="kr.co.coduck.dao.ReviewDao.getReviewByLectureNo"/>
 	</resultMap>
 
 	<resultMap type="ChapterDto" id="chapterMap">
@@ -279,6 +368,20 @@
 		<result column="last_time" property="lastTime" />
 		<result column="lesson_watched" property="lessonWatched" />
 	</resultMap>
+	
+	<!-- 강좌번호로 챕터 조회 -->
+	<select id="getChapterByLectureNo" parameterType="int" resultMap="chapterMap">
+		select 
+			chapter_no
+			, lect_no
+			, chapter_name
+		from 
+			chapters
+		where
+			lect_no = #{value}
+		order 
+			by chapter_no asc	
+	</select>
 
 	<!-- 챕터번호로 레슨 조회 -->		
 	<select id="getLessonByChpaterNo" parameterType="int" resultMap="lessonMap">
@@ -297,20 +400,6 @@
     		chapter_no = #{value}	
     	order by
     		lesson_no asc		
-	</select>
-	
-	<!-- 강좌번호로 챕터 조회 -->
-	<select id="getChapterByLectureNo" parameterType="int" resultMap="chapterMap">
-		select 
-			chapter_no
-			, lect_no
-			, chapter_name
-		from 
-			chapters
-		where
-			lect_no = #{value}
-		order 
-			by chapter_no asc	
 	</select>
 	
 </mapper>

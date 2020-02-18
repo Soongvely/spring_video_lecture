@@ -9,7 +9,6 @@
 	<!-- Spring MVC 관련 빈 설정 -->
 	
 	<mvc:annotation-driven/>
-	<mvc:annotation-driven/>
 	
 	<mvc:resources mapping="/resources/**" location="/resources/css/" />
 	

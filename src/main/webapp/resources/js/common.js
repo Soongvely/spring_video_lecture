@@ -19,5 +19,16 @@
 	            $(".sy-logo").css("color", "#f4b527");
 	        }
 	    });
+	    
+	    // 조건에 따른 수강생, 강사 링크 표시
+    	var url = window.location.pathname.split('/')[1];
+    	
+    	if (url == 'teacher') {
+    		$(".navbar-user #student").css('display', 'block');
+    		$(".navbar-user #teacher").css('display', 'none');
+    	} else {
+    		$(".navbar-user #teacher").css('display', 'block');
+    		$(".navbar-user #student").css('display', 'none');
+    	}
 	});
 

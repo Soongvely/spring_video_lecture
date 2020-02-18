@@ -11,4 +11,5 @@ public interface QuestionService {
 	List<Question> getQuestionByLectureNo(LectureCriteria cri);
 	Answer getAnswerByQuestionNo(int questionNo);
 	void insertQuestion(Question question);
+	List<Question> getQuestionByRecent(int lectureNo);
 }
