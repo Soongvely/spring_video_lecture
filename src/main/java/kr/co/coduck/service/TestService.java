@@ -18,7 +18,7 @@ import kr.co.coduck.vo.ViewCk;
 
 public interface TestService {
 	
-	SearchTestDto searchTest(SearchTestForm form);
+	SearchTestDto searchTest(SearchTestForm form, int userNo);
 	
 	void insertTest(Test test);
 	

@@ -49,12 +49,15 @@
 			A.SUBJ_RESULT_ISPASSED			isPassed,
 			A.SUBJ_RESULT_ANS_CNT			ansCnt,
 			B.SUBJ_QT_CNT					subjQtCnt,
-			B.TEST_SUBJS_LEVEL				subJLv
-		
+			B.TEST_SUBJS_LEVEL				subJLv,
+			C.TEST_RESULT_ISPASSED			finalPassed,
+			C.TEST_RESULT_PASSEDTIME		passedTime
 		from 
-			TEST_SUBJ_RESULTS A, TEST_SUBJS B
+			TEST_SUBJ_RESULTS A, TEST_SUBJS B, TEST_RESULTS C
 		WHERE
 			A.SUBJ_NO = B.SUBJ_NO
+			and A.USER_NO = C.USER_NO
+			and A.TEST_NO = C.TEST_NO
 			and A.USER_NO = #{userNo}
 			and A.TEST_NO = #{testNo}
 		order by 
@@ -123,7 +126,7 @@
 	</insert>
 	
 	<!-- 내가 체크한 답 저장  -->
-	<select id="insertViewCk" parameterType="ViewCk">
+	<insert id="insertViewCk" parameterType="ViewCk">
 		insert into view_cks(
 			view_ck_no,
 			test_qt_no,
@@ -139,7 +142,7 @@
 			#{isTrue}
 		)
 		
-	</select>
+	</insert>
 	
 	<!-- 시험과목 조회하기  -->
 	<select id="getTestSubjsByTestNo" parameterType="int" resultType="TestSubj">
@@ -258,6 +261,8 @@
 			tests
 		where 
 			cate_no = #{value}
+		order by 
+			2
 	</select>
 	
 	<!-- 여러 시험 조회 -->
@@ -272,8 +277,8 @@
 			X.test_name				testName, 
 			X.test_qt_cnt			testQtCnt,
 			X.test_price			testPrice,
-			(select distinct Y.test_is_done from test_results Y where Y.test_no = X.test_no and Y.user_no = 1) testDone,
-			(select max(Y.test_result_avg) from test_results Y where Y.test_no = X.test_no and Y.user_no = 1 ) testAvg  
+			(select distinct Y.test_is_done from test_results Y where Y.test_no = X.test_no and Y.user_no = #{userNo}) testDone,
+			(select max(Y.test_result_avg) from test_results Y where Y.test_no = X.test_no and Y.user_no = #{userNo} ) testAvg  
 		from (
 				select B.test_no, D.cate_no main_cate_no, D.cate_name main_cate_name, C.cate_no sub_cate_no, C.cate_name sub_cate_name, 
 						B.test_ep, B.test_name , B.test_qt_cnt, B.test_price
@@ -294,6 +299,7 @@
 				and X.test_no = #{testNo}
 			</if>
 		</where>	
+		order by 1
 			
 	</select>
 	

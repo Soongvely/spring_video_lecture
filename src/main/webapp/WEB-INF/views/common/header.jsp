@@ -4,7 +4,6 @@
 
 	<!-- sy.js -->
 	<script src="/resources/js/common.js"></script>
-
 	<!-- sy.css -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 	<link href="<c:url value="/resources/css/sy-style.css" />" rel="stylesheet">    

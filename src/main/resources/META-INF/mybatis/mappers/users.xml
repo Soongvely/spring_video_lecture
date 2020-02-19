@@ -108,7 +108,19 @@
 	</select>
 	
 	<select id="getUserByCriteria" parameterType="UserCriteria" resultType="User">
-	 	select *
+	 	select 
+	 		user_no					as no,
+			user_name				as name,
+			user_email				as email,
+			user_image_filename		as imageFilename,
+			user_id					as id,
+			user_create_date		as createDate,
+			user_enabled			as enabled,
+			user_point				as point,
+			user_nickname			as nickname,
+			user_role				as role,
+			user_banknumber			as bankNumber
+			
 			from (
 					select
 					<choose>
@@ -137,7 +149,7 @@
 						users 
 					where 
 						user_role = 'U'
-						<if test="keyword != ''">
+						<if test="keyword != null and keyword != ''">
 			          		and (user_no like '%' || #{keyword} || '%'
 					        or user_name like '%' || #{keyword} || '%'
 					        or user_email like '%' || #{keyword} || '%'
@@ -145,13 +157,13 @@
 					        or user_nickname like '%' || #{keyword} || '%'
 					        or user_enabled like '%' || #{keyword} || '%')
 						</if>
-						<if test="startDate != ''">
-							and to_char(user_create_date, 'yyyy-MM-dd') &lt;= #{startDate}
+						<if test="startDate != null and startDate != ''">
+							and to_char(user_create_date, 'yyyy-MM-dd') >= #{startDate}
 						</if>
-						<if test="endDate != ''">
-							and to_char(user_create_date, 'yyyy-MM-dd') >= #{endDate}
+						<if test="endDate != null and endDate != ''">
+							and to_char(user_create_date, 'yyyy-MM-dd') &lt;= #{endDate}
 						</if>
-						<if test='!enabled.equals("A")'>
+						<if test='enabled != null and !enabled.equals("A")'>
 							and user_enabled = #{enabled}
 						</if>			
 			)
@@ -164,7 +176,7 @@
 				users 
 			where 
 				user_role = 'U'
-				<if test="keyword != ''">
+				<if test="keyword != null and keyword != ''">
 	          		and (user_no like '%' || #{keyword} || '%'
 			        or user_name like '%' || #{keyword} || '%'
 			        or user_email like '%' || #{keyword} || '%'
@@ -172,13 +184,13 @@
 			        or user_nickname like '%' || #{keyword} || '%'
 			        or user_enabled like '%' || #{keyword} || '%')
 				</if>
-				<if test="startDate != ''">
+				<if test="startDate != null and startDate != ''">
 					and to_char(user_create_date, 'yyyy-MM-dd') >= #{startDate}
 				</if>
-				<if test="endDate != ''">
+				<if test="endDate != null and endDate != ''">
 					and to_char(user_create_date, 'yyyy-MM-dd') &lt;= #{endDate}
 				</if>
-				<if test='!enabled.equals("A")'>
+				<if test='enabled != null and !enabled.equals("A")'>
 					and user_enabled = #{enabled}
 				</if>			
 	</select>

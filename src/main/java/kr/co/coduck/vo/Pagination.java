@@ -110,6 +110,22 @@ public class Pagination {
 		return (pageNo * rowsPerPage);
 	}
 
+	public int getPageNo() {
+		return pageNo;
+	}
+	
+	public int getRowsPerPage() {
+		return rowsPerPage;
+	}
+	
+	public int getPagesPerPage() {
+		return pagesPerPage;
+	}
+	
+	public int getTotalRows() {
+		return totalRows;
+	}
+	
 	@Override
 	public String toString() {
 		return "Pagination [rowsPerPage=" + rowsPerPage + ", pagesPerPage=" + pagesPerPage + ", pageNo=" + pageNo

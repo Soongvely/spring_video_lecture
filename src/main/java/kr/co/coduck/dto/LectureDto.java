@@ -21,6 +21,7 @@ public class LectureDto {
 	private int grade;
 	private String tag;
 	private String imagePath;
+	private String samplePath;
 	private String userName;
 	private int userNo;
 	private String userIntroduction;
@@ -145,6 +146,14 @@ public class LectureDto {
 		this.imagePath = imagePath;
 	}
 
+	public String getSamplePath() {
+		return samplePath;
+	}
+
+	public void setSamplePath(String samplePath) {
+		this.samplePath = samplePath;
+	}
+
 	public String getUserName() {
 		return userName;
 	}
@@ -215,10 +224,10 @@ public class LectureDto {
 		return "LectureDto [no=" + no + ", cateNo=" + cateNo + ", title=" + title + ", info=" + info + ", infoTitle="
 				+ infoTitle + ", price=" + price + ", discountPrice=" + discountPrice + ", discountRate=" + discountRate
 				+ ", isFreed=" + isFreed + ", isDisplay=" + isDisplay + ", createDate=" + createDate + ", grade="
-				+ grade + ", tag=" + tag + ", imagePath=" + imagePath + ", userName=" + userName + ", userNo=" + userNo
-				+ ", userIntroduction=" + userIntroduction + ", userImagePath=" + userImagePath + ", reviewStar="
-				+ reviewStar + ", reviewCnt=" + reviewCnt + ", studentCnt=" + studentCnt + ", likeCnt=" + likeCnt + "]";
+				+ grade + ", tag=" + tag + ", imagePath=" + imagePath + ", samplePath=" + samplePath + ", userName="
+				+ userName + ", userNo=" + userNo + ", userIntroduction=" + userIntroduction + ", userImagePath="
+				+ userImagePath + ", reviewStar=" + reviewStar + ", reviewCnt=" + reviewCnt + ", studentCnt="
+				+ studentCnt + ", likeCnt=" + likeCnt + "]";
 	}
 
-	
 }

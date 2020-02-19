@@ -34,6 +34,16 @@
 	<!--  
 		인터셉터 관련 설정
 	-->
+	<mvc:interceptors>
+		<!-- 순서대로 첫번째 실행 -->
+		<mvc:interceptor>
+			<!-- 현재 프로젝트의 모든 url -->
+			<mvc:mapping path="/**"/>
+			<!-- 빈 객체로 등록 -->
+			<bean class="kr.co.coduck.web.interceptor.LoginCheckInterceptor"></bean>
+		</mvc:interceptor>
+		<!-- 두번째로 실행 -->
+	</mvc:interceptors>
 	
 	<!-- 
 		<context:property-placeholder location="classpath:/META-INF/config/application-config.properties"/>

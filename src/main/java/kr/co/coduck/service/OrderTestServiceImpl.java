@@ -1,5 +1,8 @@
 package kr.co.coduck.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,6 +10,7 @@ import kr.co.coduck.dao.CouponDao;
 import kr.co.coduck.dao.OrderTestDao;
 import kr.co.coduck.dao.TestCartDao;
 import kr.co.coduck.dao.UserDao;
+import kr.co.coduck.dto.OrderTestDetailListDto;
 import kr.co.coduck.vo.OrdTest;
 import kr.co.coduck.vo.OrdTestInfo;
 import kr.co.coduck.vo.User;
@@ -67,6 +71,18 @@ public class OrderTestServiceImpl implements OrderTestService{
 	public void insertOrderTestInfo(OrdTestInfo ordTestInfo) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<OrderTestDetailListDto> getOrderTestInfoByOrderNo(int userNo) {
+		User user = userDao.getUserProfilByNo(userNo);
+		List<OrderTestDetailListDto> userOrderList = orderTestDao.getOrderTestInfoByOrderNo(user.getNo());
+		return userOrderList;
+	}
+
+	@Override
+	public OrdTest getOrdTestByTestNoNUserNo(Map<String, Integer> map) {
+		return orderTestDao.getOrdTestByTestNoNUserNo(map);
 	}
 
 }

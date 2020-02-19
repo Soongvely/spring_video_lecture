@@ -81,7 +81,8 @@
                               <td>${userCartLect.lectTitle }</td>
                               <td>${userCartLect.lectPrice }</td>
                               <td>${userCartLect.discountPrice }</td>
-                              <td><a href="" class="btn btn-primary btn-xs">삭제하기</a></td>
+							  <td><a href="/cart/cartlectdel.hta?lectno=${userCartLect.lectNo }" class="btn btn-primary btn-xs" id="del-lect-cart" data-lect-no="${userCartLect.lectNo }">삭제하기</a></td> 
+                               <%-- <td><button type="button" class="btn btn-primary btn-xs" id="del-lect-cart" data-lect-no="${userCartLect.lectNo }">삭제하기</button></td> --%>
                            </tr>
                         </c:forEach>
                      </c:otherwise>
@@ -203,11 +204,18 @@
       }
       
    })
+   
+   /*  $("#del-lect-cart").click(function() {
+	   var no = $(this).data("lect-no");
+		$.get("/cart/cartlectdel.hta", {lectno:no}, function(result) {
+			alert("데이터삭제");
+			reload();
+		})
+   })  */
    </script>
 
 
 <%@ include file="../common/footer.jsp"%>
-
 
 
 

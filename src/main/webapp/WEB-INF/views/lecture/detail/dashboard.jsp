@@ -41,23 +41,22 @@
 	                        <span class="board-box-title">최근 본 강의</span>
 	                        <div class="lecture-lesson item-container">
 	                            <!-- 최근 본 강의 목록 start -->
-	                            <c:forEach var="lesson" items="${lessons }">
+	                            <c:forEach var="recent" items="${recentList }">
 		                            <div class="recent-view lesson_cover">
 		                                <div class="unit_item">
 		                                    <div class="col-sm-8 unit_item_left">
 		                                        <i class="far fa-play-circle"></i>
-		                                        <span class="unit_item-title">${lesson.lessonTitle }</span>
+		                                        <span class="unit_item-title">${recent.lessonTitle }</span>
 		                                    </div>
 		                                    <div class="unit_item_right">
 		                                        <span class="unit_time">
 		                                        	<i class="far fa-clock" style="margin-right: 4px;"></i>
-		                                        	${lesson.totalTime }
+		                                        	 ${recent.newTotalTime }
 		                                        </span>
 		                                    </div>
 		                                </div>
 		                            </div>
 	                            </c:forEach>
-
 	                            <!-- 최근 본 강의 목록 end -->
 	                        </div>
 	                    </div>
@@ -67,22 +66,24 @@
 	                            <div class="item-status">
 	                                <div class="col-sm-4">
 	                                    <div class="status_value complete_unit_cnt">
-	                                        <span>27/27</span>
+	                                        <span>${lessonDto.viewCount }/${lessonDto.totalCount }</span>
 	                                    </div>
 	                                    <div class="status_label">완료 수업</div>
 	                                </div>
 	                                <div class="col-sm-4 stayed_time">
 	                                    <div class="status_value">
-	                                        <span>59<small>h</small> 29<small>m</small></span>
+	                                        <span>${lessonDto.hourByTotalAccumulate }<small>h</small> ${lessonDto.minutesTotalAccumulate }<small>m</small></span>
 	                                    </div>
 	                                    <div class="status_label">총 학습 시간</div>
 	                                </div>
-	                                <div class="col-sm-4 certificate">
-	                                    <div class="certificate-container">
-	                                        <img src="/resources/images/lecture/certificate.PNG" width="85px" />
-	                                        <p>수료증</p>
-	                                    </div>
-	                                </div>
+	                                <c:if test="${lessonDto.viewCount eq lessonDto.totalCount}">
+		                                <div class="col-sm-4 certificate">
+		                                    <div class="certificate-container">
+		                                        <img src="/resources/images/lecture/certificate.PNG" width="85px" />
+		                                        <p>수료증</p>
+		                                    </div>
+		                                </div>
+	                                </c:if>
 	                            </div>
 	                        </div>
 	                    </div>

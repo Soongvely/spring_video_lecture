@@ -78,16 +78,18 @@
 						</c:when>
 						<c:otherwise>
 							<c:forEach var="userLect" items="${userLectList }" varStatus="loop">
+							<c:forEach var="userLectProcessivity" items="${userLectProcessivity }">
 								<div class="col-md-11" style="border: 1px solid red; margin-top: 20px; margin-left:13px; padding-left: 0px;">
 									<img alt="" src="../../resources/images/lecture/${userLect.imagePath != null ? userLect.imagePath : '1212qwqw.GIF' }" style="float: left; width: 300px; height: 200px; margin-right: 20px;">
 									<h3>${userLect.lectTitle }</h3>
 									<p>진행도</p>
-									<progress value="${userLect.accumulateTime == 0 ? 0 : userLect.accumulateTime }" max="10" style="width: 400px;"></progress>
+									<progress value="${userLectProcessivity.totalAccumulate }" max="${userLectProcessivity.totalTime }" style="width: 400px;"></progress>
 									<p>구매일자 : <fmt:formatDate value="${userLect.lectCreateDate }" pattern="yyyy.MM.dd"></fmt:formatDate></p>
 									<div class="text-right">
 										<button type="submit" class="btn btn-primary">이어서 학습하기</button>
 									</div>
 								</div>
+							</c:forEach>
 							</c:forEach>
 						</c:otherwise>
 					</c:choose>

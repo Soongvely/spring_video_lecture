@@ -5,35 +5,80 @@
   <!-- namespace 필수 설정! -->
 	<mapper namespace="kr.co.coduck.dao.LectDao">
 	
-	<!-- 유저 번호로 유저가 구매한 수강리스트 조회 -->
-	<select id="getLectListUserByNo" parameterType="map" resultType="UserByLectDto">
+	<!-- 유저번호로 유저가 등록한 강의 조회 -->
+	<select id="getFindLectByUserNo" parameterType="int" resultType="Lect">
 		select
-			a.user_no					as no,
-			a.user_name					as name,
-			b.ord_lect_create_date		as lectCreateDate,
-			b.ord_lect_total_price		as totalPrice,
-			d.lect_image_path			as imagePath,
-			d.lect_price				as lectPrice,
-			d.lect_title				as lectTitle
-			f.accumulate_time			as accumulateTime,
+			lect_no						as no,
+			cate_no						as cateNo,
+			user_no						as userNo,
+			lect_title					as lectTitle,
+			lect_info					as lectInfo,
+			lect_price					as price,
+			lect_discount_price			as discountPrice,
+			lect_discount_rate			as discountRate,
+			lect_is_freed				as isFreed,
+			lect_is_display				as isDisplay,
+			lect_create_date			as lectCreateDate,
+			lect_grade					as grade,
+			lect_tag					as tag,
+			lect_image_path				as imagePath
 		from
-			users a, ord_lects b, ord_lect_infos c, lects d, chapters e, lessons f
+			lects
 		where
-			a.user_no = b.user_no
-		and
-			b.ord_no = c.ord_no
-		and
-			c.lect_no = d.lect_no
-		and
-			d.lect_no = e.lect_no
-		and
-			e.chapter_no = f.chapter_no
-		and
-			f.chapter_no = e.chapter_no
-		and
-			a.user_no = #{value}
-		order by
-			b.ord_lect_create_date desc
+			user_no = #{value}
+			
+	</select>
+	
+	<!-- 유저가 구매한 모든 강좌에들 중 각각의 진행률 등을 계산한 쿼리  -->
+	<select id="getLectProcessivityByUserNo" parameterType="int" resultType="LessonDto">
+		select 
+			lect_no					 lectNo
+			, round(nvl(viewCount /  decode(totalCount,0,null,totalCount),0)  * 100) percent
+			, totalTime
+			, totalAccumulate
+			, totalCount
+			, viewCount
+		from 
+			(select 
+	        	lect_no                 			<!-- 강의 번호 -->
+		        , count(*) 			 totalCount     <!-- 총 레슨 개수 -->
+		        , sum(total_time) 	 totalTime 		<!-- 총 레슨 시간 -->
+		    from 
+		    	lects
+		    natural join chapters
+	        natural join lessons
+	        group by lect_no) A 						 	<!-- 강의의 레슨 개수와 전체 레슨 시간조회 쿼리 -->
+		natural join 
+			(select 
+				lect_no              				<!-- 강의 번호 -->
+		    	, count(*) 				 viewCount  <!-- 수강생이 본 레슨 개수 -->
+		    	, sum(accumulate_time)   totalAccumulate   <!-- 수강생이 본 레슨들의 누적 시간 -->
+		    from 
+		    	lesson_histories 
+		    where 
+		    	user_no = #{value} 
+		    and is_watched = 'Y'      
+		    
+		    group by lect_no) B 					<!-- 봤던 레슨의 이력 테이블 -->
+	</select>
+	
+	<!-- 유저 번호로 유저가 구매한 수강리스트 조회 -->
+	<select id="getLectListUserByNo" parameterType="int" resultType="UserByLectDto">
+		SELECT
+			A.USER_NO				userNo,
+			D.LECT_TITLE			lectTitle,
+			B.ORD_LECT_CREATE_DATE	lectCreateDate,
+			D.LECT_NO				lectNo
+		FROM
+			Users A, Ord_lects B, Ord_lect_infos C, lects D
+		WHERE
+			A.USER_NO = B.USER_NO
+		AND
+			B.ORD_NO = C.ORD_NO
+		AND
+			C.LECT_NO = D.LECT_NO
+		AND
+			A.USER_NO = #{value}
 	</select>
 	
 	<select id="getLectByNo" parameterType="int" resultType="Lect">
@@ -75,6 +120,7 @@
 			l.lect_grade				grade,
 			l.lect_tag					tag,
 			l.lect_image_path			imagePath,
+			l.lect_sample_path			samplePath,
 			u.user_name					userName
 		from
 			lects L, users U
@@ -101,6 +147,7 @@
 			l.lect_grade				grade,
 			l.lect_tag					tag,
 			l.lect_image_path			imagePath,
+			l.lect_sample_path			samplePath,
 			u.user_name					userName,
 			u.user_image_filename		userImagePath,
 			u.user_self_introduction	userIntroduction
@@ -111,6 +158,55 @@
 			and l.lect_is_display = 'Y'	
 			and l.lect_no = #{value}	
 	</select>
+	
+	<!-- 레슨의 총 개수, 총 시간, 수강생의 진도률 조회 -->
+	<select id="getProgressPercentInDashboard" parameterType="map" resultType="LessonDto">
+		select 
+			round(nvl(viewCount /  decode(totalCount,0,null,totalCount),0)  * 100) percent
+			, totalTime
+			, totalCount
+			, totalAccumulate
+			, viewCount
+		from 
+			(select 
+		        count(*) 			 totalCount  <!-- 레슨 개수 -->
+		        , sum(total_time) 	 totalTime   <!-- 레슨 통합 시간 -->
+		    from 
+		     	lects
+	    	natural join chapters
+	        natural join lessons
+	        where 
+	        	lect_no = #{lectureNo}) A 		 <!-- 강의의 레슨 개수와 전체 레슨 시간 -->
+		natural join 
+			(select 
+			    count(*) 				viewCount 	 <!-- 내가 본 레슨 개수 -->
+			    , sum(accumulate_time)  totalAccumulate
+		    from 
+		    	lesson_histories 
+		    where 
+		    	user_no = #{userNo} 
+	    	and is_watched = 'Y'
+	   		and lect_no = #{lectureNo}) B
+	</select>
+	
+	 <!-- 유저가 최근 시청한 레슨명 + 총 레슨 시간  rn: 시청 날짜순-->
+	 <select id="getLessonByRecent" parameterType="map" resultType="Lesson">		   
+		select *
+		from
+		    (select 
+		        ROW_NUMBER() over (order by create_date desc) rn   
+		       , lesson_no		no
+		       , lesson_title	lessonTitle
+		       , total_time 	totalTime
+		    from lessons
+		    natural join lesson_histories
+		    where 
+		        user_no = #{userNo}
+		    and lect_no = #{lectureNo}
+		    and last_time > 0)
+		where 
+		    rn &lt; 10
+	 </select>
 	
 	<!-- 조건별(필터)강좌 조회 -->
 	<select id="getLectureByCriteria" parameterType="LectureCriteria" resultMap="lectureMap">
@@ -255,77 +351,21 @@
 			A.user_no = U.user_no
 			and A.lect_no = #{value}
 	</select>
-	
-	<!-- 유저가 최근 시청한 레슨명 + 총 레슨 시간  rn: 시청 날짜순-->
-	<select id="getLessonByRecent" parameterType="map" resultType="Lesson">
-		select *
-		from
-	    	(select 
-		        s.lesson_title		
-		       , s.total_time	
-		       , ROW_NUMBER() over (order by s.lesson_watched_date desc) rn
-		    from 
-		        users u, lects l, chapters c, lessons s, ord_lects o, ord_lect_infos ol
-		    where
-		        u.user_no = o.user_no
-		    and o.ord_no = ol.ord_no
-		    and l.lect_no = ol.lect_no
-		    and l.lect_no = c.lect_no
-		    and c.chapter_no = s.chapter_no
-		    and s.last_time > 0
-		    and u.user_id = #{userId}
-		    and l.lect_no = #{lectureNo})
-		where 
-			rn &lt; 10
-	</select>
-	
-	<!-- 강좌별 레슨 총 개수, 총 시간 조회 -->
+	   
+	<!--
+	강좌별 레슨 총 개수, 총 시간 조회
  	<select id="getLessonCountAndLength" parameterType="int" resultType="LessonDto">
 	    select 
-		    count(*)			lessonCount	
-		    , sum(s.total_time) totalTime
-		from 
-			lects l, chapters c, lessons s
-		where  
-	        l.lect_no = c.lect_no
-	        and c.chapter_no = s.chapter_no
-	        and l.lect_no = #{value} 
+	    	count(*) cnt_total    
+	        , sum(TOTAL_TIME) as total_time 
+	    from 
+	    	lects
+        natural join chapters
+        natural join lessons
+        where 
+        	lect_no = 10000
 	</select>
-	 
-	<!-- 유저가 완료한 레슨의 총 개수 -->
-	<select id="getCountByWatchedLesson" parameterType="map" resultType="int">
-		select 
-  	 		count(*)  completedCount
-		from 
-		    users u, lects l, chapters c, lessons s, ord_lects o, ord_lect_infos ol
-		where
-		    u.user_no = o.user_no
-		and o.ord_no = ol.ord_no
-		and l.lect_no = ol.lect_no
-		and l.lect_no = c.lect_no
-		and c.chapter_no = s.chapter_no
-		
-		and s.lesson_watched = 'Y'
-		
-		and u.user_no = #{userNo}
-		and l.lect_no = #{lectureNo}
-	</select>
-	
-	<!-- 유저의 누적 진도 시간 -->
-	<select id="getAccumulateTimeByLesson" parameterType="map" resultType="int">
-		select 
-    		sum(s.accumulate_time) 
-		from 
-		    users u, lects l, chapters c, lessons s, ord_lects o, ord_lect_infos ol
-		where
-		    u.user_no = o.user_no
-		and o.ord_no = ol.ord_no
-		and l.lect_no = ol.lect_no
-		and l.lect_no = c.lect_no
-		and c.chapter_no = s.chapter_no
-		and u.user_id = #{userNo}
-		and l.lect_no = ${lectureNo}
-	</select>
+	-->
 	
 	<!-- All Lecture ResultMap -->
 	<resultMap type="LectureCourseDto" id="lectureMap">
@@ -343,6 +383,7 @@
 			<result column="lect_is_display" property="isDisplay"/>
 			<result column="lect_create_date" property="lectCreateDate"/>
 			<result column="lect_image_path" property="imagePath"/>
+			<result column="lect_sample_path" property="samplePath"/>
 			<result column="lect_tag" property="tag"/>
 			<result column="lect_grade" property="grade"/>
 		</association>
@@ -362,11 +403,8 @@
 		<result column="lesson_no" property="no" />
 		<result column="chapter_no" property="chapterNo" />
 		<result column="lesson_title" property="lessonTitle" />
-		<result column="lesson_sample" property="lessonSample" />
+		<result column="lesson_video_path" property="videoPath" />
 		<result column="total_time" property="totalTime" />
-		<result column="accumulate_time" property="accumulateTime" />
-		<result column="last_time" property="lastTime" />
-		<result column="lesson_watched" property="lessonWatched" />
 	</resultMap>
 	
 	<!-- 강좌번호로 챕터 조회 -->
@@ -389,11 +427,8 @@
 			lesson_no
 			, chapter_no
 			, lesson_title
-			, lesson_sample
-			, total_time
-			, accumulate_time
-			, last_time
-			, lesson_watched	
+			, lesson_video_path
+			, total_time	
 		from 
 			 lessons  
 		where

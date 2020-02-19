@@ -111,7 +111,7 @@
 	                                    </div>
 	                                    <div class="review-progress_bars">
 	                                    	<c:forEach var="review" items="${reviewStarAvgs }">
-			                                        <div class="review_counting">
+			                                    <div class="review_counting">
 		                                            <label>${review.star }점</label>
 		                                            <c:choose>
 	                                            		<c:when test="${review.avgStar > 0 }">

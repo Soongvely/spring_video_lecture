@@ -1,6 +1,5 @@
 package kr.co.coduck.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,8 +13,6 @@ import kr.co.coduck.dto.LectureCourseDto;
 import kr.co.coduck.dto.LectureDto;
 import kr.co.coduck.dto.LessonDto;
 import kr.co.coduck.dto.UserByLectDto;
-import kr.co.coduck.dto.UserLessonDto;
-import kr.co.coduck.vo.Category;
 import kr.co.coduck.vo.Lect;
 import kr.co.coduck.vo.LectureCriteria;
 import kr.co.coduck.vo.Lesson;
@@ -84,27 +81,28 @@ public class LectServiceImpl implements LectService {
 	}
 	
 	@Override
+	public LessonDto getProgressPercentInDashboard(Map<String, Object> map) {
+	   
+		return lectDao.getProgressPercentInDashboard(map);
+	}
+	
+	@Override
 	public List<Lesson> getLessonByRecent(Map<String, Object> map) {
 		
-		return lectDao.getLessonByRecent(map);
-	}
-	
-	@Override
-	public int getAccumulateTimeByLesson(Map<String, Object> map) {
-		
-		return lectDao.getAccumulateTimeByLesson(map);
-	}
-	
-	@Override
-	public int getCountByWatchedLesson(Map<String, Object> map) {
-
-		return lectDao.getCountByWatchedLesson(map);
-	}
-	
-	@Override
-	public LessonDto getLessonCountAndLength(int lectureNo) {
-
-		return lectDao.getLessonCountAndLength(lectureNo);
+		return lectDao. getLessonByRecent(map);
 	}
 
+	@Override
+	public List<LessonDto> getLectProcessivityByUserNo(int userNo) {
+		User user = userDao.getUserProfilByNo(userNo);
+		List<LessonDto> userLectProcessivity = lectDao.getLectProcessivityByUserNo(user.getNo());
+		return userLectProcessivity;
+	}
+
+	@Override
+	public List<Lect> getFindLectByUserNo(int userNo) {
+		User user = userDao.getUserProfilByNo(userNo);
+		List<Lect> userFindLectByUserNo = lectDao.getFindLectByUserNo(user.getNo());
+		return userFindLectByUserNo;
+	}
 }

@@ -36,14 +36,13 @@ public class CustomerController {
 		return users;
 	} 
 	
-	@GetMapping("/customer.hta")
-	public String coupon(Model model) throws Exception {
-		List<User> users = userService.selectAllUsersByAdmin();
-		model.addAttribute("users", users);
-		model.addAttribute("size", users.size());
-		
-		return "admin/customer";
-	}
+	/*
+	 * @GetMapping("/customer.hta") public String coupon(Model model) throws
+	 * Exception { List<User> users = userService.selectAllUsersByAdmin();
+	 * model.addAttribute("users", users); model.addAttribute("size", users.size());
+	 * 
+	 * return "admin/customer"; }
+	 */
 	
 	@GetMapping("/deletecustomer.hta")
 	public String deletecustomer(@RequestParam("userno") int userNo) throws Exception {
@@ -85,7 +84,7 @@ public class CustomerController {
 		couponService.deleteCouponByAdmin(couponNo, userNo);
 	}
 		
-	@GetMapping("/search.hta")
+	@GetMapping("/customer.hta")
 	public String search(UserCriteria criteria, @RequestParam(value="pageno", required = false, defaultValue = "1") int pageNo, Model model) {
 		
 		int totalCnt = userService.getUserCntByCriteria(criteria);
@@ -93,8 +92,9 @@ public class CustomerController {
 		
 		criteria.setBeginIndex(pagination.getBeginIndex());
 		criteria.setEndIndex(pagination.getEndIndex());
-		List<User> userCriteria = userService.getUserByCriteria(criteria);
-		model.addAttribute("criteria", userCriteria );
+		List<User> userList = userService.getUserByCriteria(criteria);
+		
+		model.addAttribute("userList", userList );
 		model.addAttribute("pagination", pagination);
 		
 		return "admin/customer";

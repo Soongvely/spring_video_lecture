@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,14 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.co.coduck.dto.ChapterDto;
 import kr.co.coduck.dto.LessonDto;
 import kr.co.coduck.dto.ReviewStarDto;
-import kr.co.coduck.dto.UserLessonDto;
 import kr.co.coduck.service.CategoryService;
 import kr.co.coduck.service.LectService;
 import kr.co.coduck.service.QuestionService;
 import kr.co.coduck.service.ReviewService;
 import kr.co.coduck.vo.Category;
 import kr.co.coduck.vo.LectureCriteria;
-import kr.co.coduck.vo.Lesson;
 import kr.co.coduck.vo.User;
 
 @Controller
@@ -76,28 +73,16 @@ public class LectureController {
 	public String dashboard(@RequestParam("lectureNo") int lectureNo, Model model, HttpSession session) {
 
 		User user = (User) session.getAttribute("LU");
-		 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("userId", user.getId());		
+	
+		Map<String, Object> map = new HashMap<String, Object>(); 
+		map.put("userNo", user.getNo()); 
 		map.put("lectureNo", lectureNo);
-	
-		List<Lesson> lesson = lectservice.getLessonByRecent(map);
-		int completedCount = lectservice.getCountByWatchedLesson(map);
-		int totalAccumulcate = lectservice.getAccumulateTimeByLesson(map);
-		LessonDto lessonDto = lectservice.getLessonCountAndLength(lectureNo);
-	
-		UserLessonDto userLessonDto = new UserLessonDto();
-		userLessonDto.setLesson(lesson);
-		userLessonDto.setCompletedCount(completedCount);
-		userLessonDto.setTotalAccumulcate(totalAccumulcate);
-		userLessonDto.setLessonDto(lessonDto);
-		
-		log.info("userLessonDto" + userLessonDto);
-		
+		log.info("최근" + lectservice. getLessonByRecent(map));
 		model.addAttribute("lecture", lectservice.getLectureByLectureNo(lectureNo));
 		model.addAttribute("counts", lectservice.getAllCountByLectureNo(lectureNo));
 		model.addAttribute("questions", questionService.getQuestionByRecent(lectureNo));
-		model.addAttribute("userLessonDto", userLessonDto);
+		model.addAttribute("lessonDto", lectservice.getProgressPercentInDashboard(map));
+		model.addAttribute("recentList", lectservice. getLessonByRecent(map));
 
 		return "lecture/detail/dashboard";
 	}
@@ -112,8 +97,19 @@ public class LectureController {
 	}
 
 	@RequestMapping("/player/player.hta")
-	public String player() {
+	public String player(@RequestParam("lectureNo") int lectureNo, Model model, HttpSession session) {
 
+		User user = (User) session.getAttribute("LU");
+	
+		Map<String, Object> map = new HashMap<String, Object>(); 
+		map.put("userNo", user.getNo()); 
+		map.put("lectureNo", lectureNo);
+		
+		model.addAttribute("lecture", lectservice.getLectureByLectureNo(lectureNo));
+		model.addAttribute("counts", lectservice.getAllCountByLectureNo(lectureNo));
+		model.addAttribute("questions", questionService.getQuestionByRecent(lectureNo));
+		model.addAttribute("lessonDto", lectservice.getProgressPercentInDashboard(map));
+		
 		return "lecture/player/player";
 	}
 

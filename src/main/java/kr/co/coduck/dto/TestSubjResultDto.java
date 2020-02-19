@@ -16,6 +16,8 @@ public class TestSubjResultDto {
 	private int ansCnt;
 	private int subjQtCnt;
 	private int subJLv;
+	private String finalPassed;
+	private int passedTime;
 	
 	public TestSubjResultDto() {}
 
@@ -107,10 +109,28 @@ public class TestSubjResultDto {
 		this.name = name;
 	}
 
+	public String getFinalPassed() {
+		return finalPassed;
+	}
+
+	public void setFinalPassed(String finalPassed) {
+		this.finalPassed = finalPassed;
+	}
+
+	public int getPassedTime() {
+		return passedTime;
+	}
+
+	public void setPassedTime(int passedTime) {
+		this.passedTime = passedTime;
+	}
+
 	@Override
 	public String toString() {
 		return "TestSubjResultDto [no=" + no + ", name=" + name + ", userNo=" + userNo + ", testNo=" + testNo
 				+ ", sujNo=" + sujNo + ", score=" + score + ", passGrade=" + passGrade + ", isPassed=" + isPassed
-				+ ", ansCnt=" + ansCnt + ", subjQtCnt=" + subjQtCnt + ", subJLv=" + subJLv + "]";
+				+ ", ansCnt=" + ansCnt + ", subjQtCnt=" + subjQtCnt + ", subJLv=" + subJLv + ", finalPassed="
+				+ finalPassed + ", passedTime=" + passedTime + "]";
 	}
+	
 }

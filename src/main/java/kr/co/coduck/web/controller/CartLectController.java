@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.coduck.dto.CartChoiceLectListDto;
 import kr.co.coduck.dto.CartLectDto;
@@ -67,4 +68,19 @@ public class CartLectController {
       return "order/orderlectform";
    }
    
+	
+	@GetMapping("/cartlectdel.hta") public String
+	userCartLectDel(@RequestParam("lectno") int lectNo) {
+		cartLectService.deleteCartLect(lectNo); 
+		return "redirect:/cart/userCartList.hta"; 
+	}
+	
+	
+	/*
+	 * @GetMapping("/cartlectdel.hta")
+	 * 
+	 * @ResponseBody public String userCartLectDel(@RequestParam("lectno") int
+	 * lectNo) { cartLectService.deleteCartLect(lectNo); return "success"; }
+	 */
+	   
 }

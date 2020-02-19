@@ -301,8 +301,10 @@ footer::after {
 	margin-bottom: 10px;
 	margin-top: 10px;
 }
-.lecture-mata .lecture-progress {
+.lecture-mata .rating-star .star-solid > small, .lecture-mata .lecture-progress span {
+	font-size: 16px;
 }
+
 .star {
 	font-size: 20px;
 	color: rgb(102, 221, 198);
@@ -421,6 +423,7 @@ small {
 	margin-left: 12px;
 	margin-bottom: 5px;
 	margin-top: 5px;
+	color: #fff;
 }
 
 .description_sub ul {
@@ -847,11 +850,12 @@ small {
 }
 
 .status_value {
-	margin-top: 9px;
+	margin-top: 2px;
+	margin-left: 3px;
 }
 
 .status_value span {
-	font-size: 41px;
+	font-size: 45px;
 	font-weight: 200;
 }
 
@@ -1431,6 +1435,10 @@ small {
 }
 
 /************************ teacher ***********************/
+#teacher > .container {
+	width: 1440px;
+}
+
 /* teacher-main.css */
 #teacher .nav.nav-pills a {
 	font-size: 20px;

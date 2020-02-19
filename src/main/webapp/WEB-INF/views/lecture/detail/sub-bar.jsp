@@ -13,7 +13,9 @@
                             </div>
                             <div class="lecture-play">
                                 <div class="icon_container has-icon">
-                                    <i class="fas fa-play"></i>
+                                    <a href="${lecture.samplePath }">
+                                    	<i class="fas fa-play"></i>
+                                    </a>
                                     <br>
                                 </div>
                             </div>
@@ -34,12 +36,12 @@
                                             </div>
                                         </div>
                                         <div class="lecture-progress">
-                                            <span>진도율 : 27강/27강 (100.00%) | 시간 : 695분/695분</span>
+                                            <span>진도율 : ${lessonDto.viewCount }강/${lessonDto.totalCount }강 (${lessonDto.percent }%) | 시간 : ${lessonDto.totalAccumulate }분/${lessonDto.totalTime }분</span>
                                             <br>
                                             <div class="progress">
                                                 <div class="progress-bar progress-bar-info" role="progressbar"
                                                     aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
-                                                    style="width:30%">
+                                                    style="width:${lessonDto.percent}%">
                                                 </div>
                                             </div>
                                         </div>
@@ -50,7 +52,7 @@
                     </div>
                     <div class="col-sm-3">
                         <div class="learning-btn-container">
-                            <a href="#" class="btn btn-default sy-btn-learning">학습하기</a>
+                            <a href="/player/player.hta?lectureNo=${lecture.no }" class="btn btn-default sy-btn-learning">학습하기</a>
                         </div>
                         <!-- floating btn start -->
                         <div class="lecture-floating-btn">

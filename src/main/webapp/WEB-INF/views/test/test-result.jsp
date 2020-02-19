@@ -76,10 +76,10 @@
 	</table>
 	
 	<h4>경과 시간 : <span id="span-time"></span></h4>
-	<c:if test="${testResult.isPassed eq 'Y' }">
+	<c:if test="${subjResults[0].finalPassed eq 'Y' }">
 		<h4>판정 : <span style="color: red;">합격</span></h4>
 	</c:if>
-	<c:if test="${testResult.isPassed eq 'N' }">
+	<c:if test="${subjResults[0].finalPassed eq 'N' }">
 		<h4>판정 : <span style="color: red;">불합격</span></h4>
 	</c:if>
 	<br>
@@ -145,14 +145,14 @@
 <script type="text/javascript">
 
 	var cnt = 0;
-	changeTimeToString(${testResult.passedTime});
+	changeTimeToString(${subjResults[0].passedTime});
 	
 	function changeTimeToString(time){
 		var hour = parseInt(time/3600);
 		var min = parseInt((time%3600)/60);
 		var sec = time%60;
 		
-		$("#span-time	").text(hour + "시간 " + min +  "분 " + sec + "초");
+		$("#span-time").text(hour + "시간 " + min +  "분 " + sec + "초");
 	}
 	
 	$(".ans-hide").click(function(){

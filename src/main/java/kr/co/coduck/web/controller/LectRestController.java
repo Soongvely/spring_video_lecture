@@ -22,6 +22,7 @@ import kr.co.coduck.service.QuestionService;
 import kr.co.coduck.vo.Answer;
 import kr.co.coduck.vo.Category;
 import kr.co.coduck.vo.LectureCriteria;
+import kr.co.coduck.vo.Lesson;
 import kr.co.coduck.vo.Pagination;
 import kr.co.coduck.vo.Question;
 
@@ -38,7 +39,7 @@ public class LectRestController {
 	private QuestionService questionService;
 	// @RequestMapping(name = "/lecture",method = RequestMethod.GET)
 
-	// 카테고리별, 조건별 강좌 조회
+	// 카테고리 및 조건별 강좌 조회
 	@PostMapping("/searchLecture")
 	public Map<String, Object> mainByCateNo(@RequestBody LectureCriteria cri) {	// @RequestBody :폼으로 전송하고 Post 방식으로 받을 때
 
@@ -68,6 +69,7 @@ public class LectRestController {
 		return model;
 	}
 	
+	// 질문 검색 
 	@GetMapping("/searchQuestion") 
 	public List<Question> questionByLectureNo(LectureCriteria cri) {
 		
@@ -82,5 +84,10 @@ public class LectRestController {
 		return questionService.getAnswerByQuestionNo(questionNo);
 	}
 	
+	@GetMapping("/lessonPlayer")
+	public List<Lesson> lessonBylessonNo() {
+		
+		return null;
+	}
 
 }

@@ -8,7 +8,6 @@ import kr.co.coduck.dto.LectureCourseDto;
 import kr.co.coduck.dto.LectureDto;
 import kr.co.coduck.dto.LessonDto;
 import kr.co.coduck.dto.UserByLectDto;
-import kr.co.coduck.dto.UserLessonDto;
 import kr.co.coduck.vo.Lect;
 import kr.co.coduck.vo.LectureCriteria;
 import kr.co.coduck.vo.Lesson;
@@ -33,11 +32,12 @@ public interface LectDao {
 
 	int getLectureCountByCriteria(LectureCriteria cri);
 	
-	List<Lesson> getLessonByRecent(Map<String, Object> map);
-	LessonDto getLessonCountAndLength(int lectureNo);
-	int getCountByWatchedLesson(Map<String, Object> map);
-	int getAccumulateTimeByLesson(Map<String, Object> map);
+	LessonDto getProgressPercentInDashboard(Map<String, Object> map);
 	
+	List<LessonDto> getLectProcessivityByUserNo(int userNo);
+	List<Lesson> getLessonByRecent(Map<String, Object> map);
+	
+	List<Lect> getFindLectByUserNo(int userNo);
 	
 	
 }

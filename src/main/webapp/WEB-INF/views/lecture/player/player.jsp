@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>    
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="../../common/tag.jsp" %>
 <%@ include file="../../common/head.jsp" %>
+
+<!-- sy.css -->
+<link href="<c:url value="/resources/css/sy-player.css" />" rel="stylesheet">   
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 
     <div id="root">
         <main id="main">
@@ -9,12 +13,12 @@
                 <a class="toggle-left is-hidden-tablet"></a>
                     <aside class="lecture-nav lecture-nav-left">
                         <div class="lecture-nav-left-header">
-                            <h5>스프링 기초</h5>
+                            <h5>${lecture.title }</h5>
                             <p>
                                 <span>기간:무제한</span>
                             </p>
                             <div class="lecture-progress">
-                                <label>진도율 : 27강/27강 (100.00%) | 시간 : 695분/695분</label>
+                                <label>진도율 : ${lessonDto.viewCount }강/${lessonDto.totalCount }강 (${lessonDto.percent }%) | 시간 : ${lessonDto.totalAccumulate }분/${lessonDto.totalTime }분</label>
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-info" role="progressbar"aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"style="width:30%">
                                     </div>
@@ -26,7 +30,7 @@
                                 <li class="list unit unit-chapter">
                                     <span class="list-item unit-title">스프링의 기초란?</span>
                                     <ul class="list unit unit-lesson">
-                                        <li class="list-item unit-lesson">
+                                        <li class="list-item unit-lesson" data-lesson-no="${lesson.no }">
                                             <span class="list-item lesson-title">레슨1 </span>
                                             <span class="unit-checked-icon">
                                                 <i class="fas fa-check-circle"></i>  
@@ -203,6 +207,8 @@
     </div>
 </body>
 <script>
+
+	// 레슨명 클릭 시 active 효과
     $(".list.unit.unit-lesson li").click(function() {
         if ($(this).hasClass(".active")) return;
         $(".unit-lesson").removeClass("active");
@@ -210,7 +216,7 @@
 
     })
 
-// 왼쪽 사이드바 슬라이드 
+	// 강좌 코스 사이드바 슬라이드 
     var $sidebar = $(".lecture-nav-left");
     var $sidebarBtn = $(".toggle-btn-nav-left");
 
@@ -229,7 +235,7 @@
         }
     }); 
 
-// 오른쪽 사이드바 슬라이드
+	// 질문하기 사이드바 슬라이드
     $questionbar = $(".lecture-nav-right");
 
     $(".toggle-right").click(function() {
@@ -238,6 +244,17 @@
 
     $(".toggle-btn-closed").on("click", function() {
         $questionbar.removeClass("opened").addClass("closed");
-    });      
+    }); 
+    
+    // 강의영상 에이작스
+    $(".list-item.unit-lesson").on("click", function () {
+    	
+    	var lessonNo = $(this).data("lesson-no");
+    	
+    	$.ajax({
+    		url: "",
+    	});
+    });
+    
 </script> 
 </html>

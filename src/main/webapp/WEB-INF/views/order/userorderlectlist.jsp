@@ -116,20 +116,20 @@
                        </thead>
                        <tbody>
                        <c:choose>
-                         <c:when test="${empty userOrderLists }">
+                         <c:when test="${empty userOrderTestLists }">
                          	<tr>
                          		<td colspan="6" class="text-center">고객님 돈좀 쓰세요...</td>
                          	</tr>
                          </c:when>
                          <c:otherwise>
-                         	<c:forEach var="userOrderList" items="${userOrderLists }" varStatus="loop">
+                         	<c:forEach var="userOrderTestList" items="${userOrderTestLists }" varStatus="loop">
 		                         <tr>
-					                 <td></td>
-					                 <td></td>
-					                 <td></td>
-					                 <td></td>
-					                 <td><fmt:formatDate value="${userOrderList.lectCreateDate }" pattern="yyyy-MM-dd"/></td>
-					                 <td><button class="btn btn-info btn-xs" id="btn-open-detail-modal" data-order-no="${userOrderList.orderNo }">상세보기</button></td>
+					                 <td>${loop.count }</td>
+					                 <td>${userOrderTestList.orderNo }</td>
+					                 <td>${userOrderTestList.testTitle }</td>
+					                 <td>${userOrderTestList.testprice }</td>
+					                 <td><fmt:formatDate value="${userOrderTestList.testCreateDate }" pattern="yyyy-MM-dd"/></td>
+					                 <td><button class="btn btn-info btn-xs" data-order-no="${userOrderTestList.testNo }">응시하기</button></td>
 			                     </tr>
                          	</c:forEach>
                          </c:otherwise>
@@ -180,7 +180,7 @@
 			$.each(result, function(index, detail){
 				var row = "<tr>";
 				row += "<td>" + detail.orderNo + "</td>";
-				row += '<td><a href="/lecture/detail/description.hta?lectureNo=' + detail.lectNo + '">' + detail.lectTitle + '</a></td>';
+				row += '<td><a href="/lecture/detail/dashboard.hta?lectureNo=' + detail.lectNo + '">' + detail.lectTitle + '</a></td>';
 				row += "<td>" + detail.lectprice + "</td>";
 				row += "</tr>";
 				

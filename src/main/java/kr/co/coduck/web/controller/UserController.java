@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.coduck.dto.LessonDto;
 import kr.co.coduck.dto.UserByLectDto;
 import kr.co.coduck.form.UserRegisterForm;
 import kr.co.coduck.service.LectService;
@@ -31,18 +32,13 @@ public class UserController {
 	
 	private final String photoSaveDirectory = "C:\\projects\\spring_workspace\\coduck\\src\\main\\webapp\\resources\\images\\userImageFilename";
 	
-	@GetMapping("/userbylist.hta")
-	public String userbylist(HttpSession session, Model model) {
-		User user = (User)session.getAttribute("LU");
-		List<UserByLectDto> userLectList = lectService.getLectListUserByNo(user.getNo());
-		model.addAttribute("userLectList", userLectList);
-		return "user/userbylist";
-	}
-	
+
 	@GetMapping("/userlecting.hta")
 	public String userlecting(HttpSession session, Model model) {
 		User user = (User)session.getAttribute("LU");
 		List<UserByLectDto> userLectList = lectService.getLectListUserByNo(user.getNo());
+		List<LessonDto> userLectProcessivity = lectService.getLectProcessivityByUserNo(user.getNo());
+		model.addAttribute("userLectProcessivity", userLectProcessivity);
 		model.addAttribute("userLectList", userLectList);
 		System.out.println(userLectList);
 		return "user/userlecting";

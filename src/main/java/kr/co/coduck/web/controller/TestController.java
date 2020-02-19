@@ -52,11 +52,19 @@ public class TestController {
 	@Autowired
 	private CategoryService categoryService;
 	
+	//시험목록에서 자세히보기
+	@GetMapping("/clickShowDetailTest.hta")
+	@ResponseBody
+	public List<TestSubjResultDto> clickShowDetailTest(@RequestParam("testNo") int testNo, HttpSession session){
+		User user = (User)session.getAttribute("LU");
+		return testService.getTestSubjResultDtosByTestNoNUserNo(testNo, user.getNo());
+	}
+	
+	//시험결과
 	@GetMapping("/test-result.hta")
 	public String showTestResult(@RequestParam("testNo") int testNo,  Model model, HttpSession session) {
 		User user = (User)session.getAttribute("LU");
 		Test test = testService.getTestByNo(testNo);
-		TestResult testResult = testService.getTestResultByTestNoNUserNo(testNo, user.getNo());
 		List<TestSubjResultDto> subjResults = testService.getTestSubjResultDtosByTestNoNUserNo(testNo, user.getNo());
 		List<TestSubj> subjs = testService.getTestSubjsByTestNo(testNo);
 		
@@ -68,11 +76,8 @@ public class TestController {
 
 		map.put("isTrue", "Y");
 		List<TestResultDto> trueQts = testService.getTestResultDtosByTestNoNUserNo(map);
-		System.out.println("============================");
-		System.out.println("testResult : " + testResult);
 		
 		model.addAttribute("test", test);
-		model.addAttribute("testResult", testResult);
 		model.addAttribute("subjResults", subjResults);
 		model.addAttribute("trueQts", trueQts);
 		model.addAttribute("falseQts", falseQts);
@@ -94,6 +99,7 @@ public class TestController {
 		return "redirect:/test/test-result.hta?testNo=" + form.getTestNo();
 	}
 	
+	//시험 문제지 창
 	@GetMapping("/takeaTest.hta")
 	public String takeaTest(@RequestParam("testNo") int testNo, Model model) {
 		Test test = testService.getTestByNo(testNo);
@@ -112,6 +118,7 @@ public class TestController {
 		return "/test/test-qt";
 	}
 	
+	//엑셀로 시험 추가
 	@PostMapping("/addTestByExcel.hta")
 	public String addTest(AddTestFormByExcel form) throws Exception {
 		
@@ -182,6 +189,15 @@ public class TestController {
 		return "redirect:/test/test-manage.hta";
 	}
 	
+	//셀의 값을 문자열로 읽어오기
+	private String getCellValue(Cell cell) {
+		if (cell.getCellType() == CellType.STRING) {
+			return cell.getStringCellValue();
+		}
+		return String.valueOf(cell.getNumericCellValue());
+	}
+	
+	//시험 관리 창
 	@RequestMapping("/test-manage.hta")
 	public String manageTest(Model model) {
 		List<Category> testMainCates = categoryService.getCatesByMainNo(20000);
@@ -196,27 +212,20 @@ public class TestController {
 		return categoryService.getCatesByMainNo(mainCateNo);
 	}
 	
-	@RequestMapping("/test-list.hta")
-	public String searchPage() {
-		return "test/test-list";
-	}
-	
 	@GetMapping("/getTestData.hta")
 	@ResponseBody
-	public SearchTestDto searchTest(SearchTestForm form) {
+	public SearchTestDto searchTest(SearchTestForm form, HttpSession session) {
 		System.out.println("--------------------------form?" + form);
-		SearchTestDto sTDto = testService.searchTest(form);
+		User user = (User)session.getAttribute("LU");
+		SearchTestDto sTDto = testService.searchTest(form, user.getNo());
 		System.out.println("sTDto : " + sTDto);
 		
 		return sTDto;
 	}
 	
-	//셀의 값을 문자열로 읽어오기
-	private String getCellValue(Cell cell) {
-		if (cell.getCellType() == CellType.STRING) {
-			return cell.getStringCellValue();
-		}
-		return String.valueOf(cell.getNumericCellValue());
+	@RequestMapping("/test-list.hta")
+	public String searchPage() {
+		return "test/test-list";
 	}
 	
 	/* Converts empty strings into null when a form is submitted */  
@@ -224,7 +233,6 @@ public class TestController {
 	 * @InitBinder public void initBinder(WebDataBinder binder) {
 	 * binder.registerCustomEditor(String.class, new StringTrimmerEditor(true)); }
 	 */
-	
 	@InitBinder
 	public void stringToDateBinding(WebDataBinder binder) {
 		SimpleDateFormat simpeDateFormat = new SimpleDateFormat("yyyy-MM-dd");

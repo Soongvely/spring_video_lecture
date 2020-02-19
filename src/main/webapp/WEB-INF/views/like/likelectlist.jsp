@@ -14,6 +14,16 @@
 <%@ include file="../common/header.jsp" %>
 <%@ include file="../common/tag.jsp" %>
 <div class="container" style="font-size:17px; width:1440px;">
+		<c:if test="${param.error eq 'fail' }">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="alert alert-danger">
+						<strong> 위시리스트 추가 불가 </strong> 이미 추가하신 강좌입니다.
+					</div>
+				</div>
+			</div>
+		</c:if>
+
 	<div class="row">
 		<div class="col-sm-2" style="border: 1px solid red;">
 			<p>대시보드</p>

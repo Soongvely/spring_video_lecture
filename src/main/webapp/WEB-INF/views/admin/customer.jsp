@@ -25,6 +25,15 @@
 	#customersInfoTable .customer-username {cursor: pointer;}
 	.coupon-btn {min-width: 60px;}
 	.coupon-btn li {font-size: 20px; text-align: center;}
+	
+	button.page-link {
+	display: inline-block;
+	}
+	button.page-link {
+	    font-size: 20px;
+	    color: #29b3ed;
+	    font-weight: 500;
+	}
 	</style>
 </head>
 <body id="page-top">
@@ -34,8 +43,8 @@
 	<%@include file="common/admin-nav.jsp" %>
 		<div class="container-fluid">			
 			
-            <form action="search.hta"  id="search-user-form" class="form-horizontal style-form" method="get">
-            <input type="hidden" name="pageno">
+            <form action="customer.hta"  id="search-user-form" class="form-horizontal style-form" method="get">
+            <input type="hidden" name="pageno" id="page-no" value="${pageNo }">
 			<div class="row" id="admin-lecture">
 				<h3 style="margin-left: 60px;">회원 관리</h3>
 				<div class="col-sm-12">
@@ -51,9 +60,9 @@
 	                            <button type="button" class="btn btn-default btn-date" >7일 이내</button>
 	                        </div>
 	                        <div class="col-md-5">
-	                            <div class="input-group input-large" data-date="2020-01-01" data-date-format="yyyy-MM-dd">
-	                                <input type="date" class="form-control date1" name="startDate" placeholder="시작일" style="text-align:center;">
-	                                <input type="date" class="form-control date2" name="endDate" placeholder="종료일" style="text-align:center;">
+	                            <div class="input-group input-large" id="date-search" data-date-format="yyyy-MM-dd">
+	                                <input type="date" class="form-control date1" value="${param.startDate }" name="startDate" placeholder="시작일" style="text-align:center;">
+	                                <input type="date" class="form-control date2"  value="${param.endDate }" name="endDate" placeholder="종료일" style="text-align:center;">
 	                            </div>
 	                        </div>
 	                    </div>
@@ -61,20 +70,20 @@
 	                    <div class="form-group col-sm-10" style="display: inline-flex;">
 	                        <label class="control-label col-md-1">가입 여부</label>
 	                        <div class="col-md-6">
-	                            <div class="radio-dk">
+	                            <div class="radio-dk" id="enabled-search">
 	                                <label>
-	                                    <input type="radio" id="optionsRadios1" name="enabled" value="A" checked="checked"> 전체
+	                                    <input type="radio" id="optionsRadios1" name="enabled" value="A" ${empty param.enabled || param.enabled eq 'A' ? 'checked' :'' }> 전체
 	                                </label>
 	                                <label>
-	                                    <input type="radio" id="optionsRadios2" name="enabled" value="Y"> 가입
+	                                    <input type="radio" id="optionsRadios2" name="enabled" value="Y" ${param.enabled eq 'Y' ? 'checked' :'' }> 가입
 	                                </label>
 	                                <label>
-	                                    <input type="radio" id="optionsRadios3" name="enabled" value="N"> 탈퇴
+	                                    <input type="radio" id="optionsRadios3" name="enabled" value="N" ${param.enabled eq 'N' ? 'checked' :'' }> 탈퇴
 	                                </label>
 	                            </div>                        
 	                        </div>                       
 		                    <div class="col-md-6" style="left: 410px;">
-		                        <button type="button" class="btn btn-warning ">초기화</button>
+		                        <a href="/admin/customer.hta" class="btn btn-warning ">초기화</a>
 		                    </div>
 	                    </div>
 	                </div>
@@ -88,16 +97,16 @@
 	                    	<div class="row">
 								<div class="col-sm-2">
 		                    		<div>
-		                    			<select class="form-control" style="width: 200px;" name="sort">
-		                    				<option value="date">가입일순</option>
-		                    				<option value="id">아이디순</option>
-		                    				<option value="name">이름순</option>
+		                    			<select class="form-control" style="width: 200px;" name="sort" id="sort-search">
+		                    				<option value="date" ${param.sort eq 'date' ? 'selected' : '' }>가입일순</option>
+		                    				<option value="id" ${param.sort eq 'id' ? 'selected' : '' }>아이디순</option>
+		                    				<option value="name" ${param.sort eq 'name' ? 'selected' : '' }>이름순</option>
 		                    			</select>
 		                    		</div>
 		                    	</div>
 		                    	<div class="col-sm-7"></div>			                    	
 	                    		<div class="col-sm-2">
-									<input type="text" class="form-control" style="width:200px;" name="keyword" placeholder="검색어를 입력하세요.">
+									<input type="text" class="form-control" style="width:200px;" name="keyword"  value="${param.keyword }" id="keyword-search" placeholder="검색어를 입력하세요.">
 								</div>	                    	
 	                    		<div class="col-sm-1">
 									<button type="button" class="btn btn-default" id="find-user-btn"><i class="fas fa-search"></i></button>
@@ -140,13 +149,13 @@
 										</thead>
 										<tbody>
 											<c:choose>
-												<c:when test="${empty users }">
+												<c:when test="${empty userList }">
 													<tr>
 														<td colspan="8" class="text-center">가입된 회원이 없습니다.</td>
 													</tr>
 												</c:when>
 												<c:otherwise>
-													<c:forEach var="user" items="${users }">
+													<c:forEach var="user" items="${userList }">
 														<tr>
 															<td>${user.no }</td>
 															<td>
@@ -192,14 +201,32 @@
 								<div class="row">									
 									<div class="col-sm-3">
 			                    		<div class="customers_length" id="customer_length" role="status" aria-live="polite">
-			                    		총 ${size }건의 조회결과			       
+			                    		총 ${pagination.totalRows }건의 조회결과			       
 			                    		</div>
 			                    	</div>
 									<div class="col-sm-9">
-			                    		<div>
+			                    		<div class="text-center">
 			      							<!-- 페이지네이션 -->
+			      							<ul class="pagination">		
 			      							
-			      						
+			      								<c:if test="${pagination.pageNo > 1 }">
+			      									<li class="page-item">
+			      									<button type="button" class="page-link" onclick="fn_prev('${pagination.pageNo -1}')" data-page-no="${no }">이전</button>
+			      									</li>
+			      								</c:if>
+			      								
+		      									<c:forEach var="no" begin="${pagination.beginPage }" end="${pagination.endPage }">
+		      										<li>
+		      										<button type="button" class="page-link" onclick="fn_pagination('${no}')" data-page-no="${no }">${no }</button>
+		      										</li>
+		      									</c:forEach>
+			      								
+			      								<c:if test="${pagination.pageNo < pagination.totalPagesCount }">
+			      									<li>
+		      										<button type="button" class="page-link" onclick="fn_next('${pagination.pageNo +1}')" data-page-no="${no }">다음</button>
+		      										</li>
+			      								</c:if>			      								
+			      							</ul>	
 			                    		</div>
 				                	</div>
 								</div>
@@ -482,6 +509,48 @@
 	$("#find-user-btn").click(function() {
 		$("#search-user-form").submit();		
 	});
+	
+	// 페이징 처리하기
+	function fn_pagination(no) {
+		
+		var url = "";
+		url += "?pageno=" + no;
+		url += "&startDate=" + $("#date-search [name=startDate]").val()
+		url += "&endDate=" + $("#date-search [name=endDate]").val()
+		url += "&enabled=" + $("#enabled-search :checked").val()
+		url += "&sort=" + $("#sort-search :selected").val();
+		url += "&keyword=" + $("#keyword-search").val();
+		
+		location.href = url;
+	}
+	
+	
+	function fn_next(no) {
+		
+		var url = "";
+		url += "?pageno=" + no;
+		url += "&startDate=" + $("#date-search [name=startDate]").val()
+		url += "&endDate=" + $("#date-search [name=endDate]").val()
+		url += "&enabled=" + $("#enabled-search :checked").val()
+		url += "&sort=" + $("#sort-search :selected").val();
+		url += "&keyword=" + $("#keyword-search").val();
+		
+		location.href = url;
+	};
+	
+	function fn_prev(no) {
+		
+		var url = "";
+		url += "?pageno=" + no;
+		url += "&startDate=" + $("#date-search [name=startDate]").val()
+		url += "&endDate=" + $("#date-search [name=endDate]").val()
+		url += "&enabled=" + $("#enabled-search :checked").val()
+		url += "&sort=" + $("#sort-search :selected").val();
+		url += "&keyword=" + $("#keyword-search").val();
+		
+		location.href = url;
+	};
+	
 	
 </script>
 </body>

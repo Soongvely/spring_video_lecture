@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.coduck.dto.OrderLectDetailListDto;
 import kr.co.coduck.dto.OrderLectListDto;
+import kr.co.coduck.dto.OrderTestDetailListDto;
 import kr.co.coduck.service.CartLectService;
 import kr.co.coduck.service.LectService;
 import kr.co.coduck.service.OrderLectService;
+import kr.co.coduck.service.OrderTestService;
 import kr.co.coduck.service.UserService;
 import kr.co.coduck.vo.User;
 
@@ -34,6 +36,8 @@ public class OrderLectController {
 	private UserService userService;
 	@Autowired
 	private OrderLectService orderLectService;
+	@Autowired
+	private OrderTestService orderTestService;
 	
 	@PostMapping("/orderlects.hta")
 	public String orderLect(@RequestParam(value = "choicecouponno", required = false, defaultValue = "0") Integer couponNo, HttpSession session,
@@ -60,6 +64,8 @@ public class OrderLectController {
 	public String userOrderLectList(HttpSession session, Model model) {
 		User user = (User)session.getAttribute("LU");
 		List<OrderLectListDto> userOrderLists = orderLectService.getOrderLectListByUserNo(user.getNo());
+		List<OrderTestDetailListDto> userOrderTestLists = orderTestService.getOrderTestInfoByOrderNo(user.getNo());
+		model.addAttribute("userOrderTestLists",userOrderTestLists);
 		model.addAttribute("userOrderLists", userOrderLists);
 		return "order/userorderlectlist";
 	}

@@ -34,6 +34,24 @@ public class CartTestController {
 	@Autowired
 	private UserService userService;
 	
+	@GetMapping("/addOneTestInCart.hta")
+	@ResponseBody
+	public String addOneTestInCart(HttpSession session, @RequestParam("testNo") int testNo) {
+		User user = (User)session.getAttribute("LU");
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("testNo", testNo);
+		map.put("userNo", user.getNo());
+		TestCart findTestCart = cartTestService.getCartTestByTestNoNUserNo(map);
+		if(findTestCart != null) {
+			return "fail";
+		}
+		TestCart testCart =  new TestCart();
+		testCart.setTestNo(testNo);
+		testCart.setUserNo(user.getNo());
+		cartTestService.insertOneCartTest(testCart);
+		return "success";
+	}
+	
 	@PostMapping("/userCartLectList.hta")
 	public String usercartlectlist(HttpSession session, Model model) {
 		User user = (User)session.getAttribute("LU");
@@ -42,22 +60,15 @@ public class CartTestController {
 		return "cart/userCartList";
 	}
 	
+	//여러개 장바구니 담기
 	@GetMapping("/addTestsInCart.hta")
 	@ResponseBody
-	public String addTestsInCart(HttpSession session ,@RequestParam("testNo") List<Integer> testNos) {
+	public Map<String, Object> addTestsInCart(HttpSession session ,@RequestParam("testNo") List<Integer> testNos) {
+		System.out.println("========================");
+		System.out.println("testNo? " + testNos);
+		User user = (User)session.getAttribute("LU");
 		
-		try {
-			for(int i=0; i<testNos.size(); i++) {
-				TestCart testCart = new TestCart();
-				testCart.setTestNo(testNos.get(i));
-				testCart.setUserNo(10000);
-				//cartTestService.insertCartTest(testCart);
-			}
-			return "success";
-		} catch (Exception e) {
-			return "fail";
-		}
-		
+		return cartTestService.insertCartTest(testNos, user.getNo());
 	}
 	
 	@PostMapping("/ordertestform.hta")

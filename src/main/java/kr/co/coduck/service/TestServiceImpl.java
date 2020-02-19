@@ -34,7 +34,7 @@ public class TestServiceImpl implements TestService{
 	private CategoryDao categoryDao;
 	
 	@Override
-	public SearchTestDto searchTest(SearchTestForm form) {
+	public SearchTestDto searchTest(SearchTestForm form, int userNo) {
 		SearchTestDto dto = new SearchTestDto();
 		System.out.println("form? " + form);
 		int upCateNo = form.getUpCateNo();
@@ -42,6 +42,7 @@ public class TestServiceImpl implements TestService{
 		int testNo = form.getTestNo();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userNo", userNo);
 		
 		//시험 카테고리에 속하는 상위카테고리 조회(기사, 기능사)
 		List<Category> upCategories = categoryDao.getCatesByMainCateNo(20000);

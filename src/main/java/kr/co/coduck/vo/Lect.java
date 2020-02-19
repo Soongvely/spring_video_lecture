@@ -20,6 +20,7 @@ public class Lect {
 	private String isDisplay;
 	private Date lectCreateDate;
 	private String imagePath;
+	private String samplePath;
 	private String tag;
 	private String grade;
 	
@@ -131,6 +132,14 @@ public class Lect {
 		this.imagePath = imagePath;
 	}
 
+	public String getSamplePath() {
+		return samplePath;
+	}
+
+	public void setSamplePath(String samplePath) {
+		this.samplePath = samplePath;
+	}
+
 	public String getTag() {
 		return tag;
 	}
@@ -153,9 +162,10 @@ public class Lect {
 				+ ", lectInfo=" + lectInfo + ", lectInfoTitle=" + lectInfoTitle + ", price=" + price
 				+ ", discountPrice=" + discountPrice + ", discountRate=" + discountRate + ", isFreed=" + isFreed
 				+ ", isDisplay=" + isDisplay + ", lectCreateDate=" + lectCreateDate + ", imagePath=" + imagePath
-				+ ", tag=" + tag + ", grade=" + grade + "]";
+				+ ", samplePath=" + samplePath + ", tag=" + tag + ", grade=" + grade + "]";
 	}
 
+	
 	
 	
 }

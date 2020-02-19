@@ -1,5 +1,7 @@
 package kr.co.coduck.vo;
 
+import java.util.concurrent.TimeUnit;
+
 import org.apache.ibatis.type.Alias;
 
 @Alias("Lesson")
@@ -8,11 +10,8 @@ public class Lesson {
 	private int no;
 	private int chapterNo;
 	private String lessonTitle;
-	private String lessonSample;
+	private String videoPath;
 	private int totalTime;
-	private int accumulateTime;
-	private int lastTime;
-	private String lessonWatched;
 	
 	public Lesson() {
 		
@@ -42,12 +41,12 @@ public class Lesson {
 		this.lessonTitle = lessonTitle;
 	}
 
-	public String getLessonSample() {
-		return lessonSample;
+	public String getVideoPath() {
+		return videoPath;
 	}
 
-	public void setLessonSample(String lessonSample) {
-		this.lessonSample = lessonSample;
+	public void setVideoPath(String videoPath) {
+		this.videoPath = videoPath;
 	}
 
 	public int getTotalTime() {
@@ -58,35 +57,19 @@ public class Lesson {
 		this.totalTime = totalTime;
 	}
 
-	public int getAccumulateTime() {
-		return accumulateTime;
-	}
+	public String getNewTotalTime() {
 
-	public void setAccumulateTime(int accumulateTime) {
-		this.accumulateTime = accumulateTime;
-	}
-
-	public int getLastTime() {
-		return lastTime;
-	}
-
-	public void setLastTime(int lastTime) {
-		this.lastTime = lastTime;
-	}
-
-	public String getLessonWatched() {
-		return lessonWatched;
-	}
-
-	public void setLessonWatched(String lessonWatched) {
-		this.lessonWatched = lessonWatched;
-	}
-
-	@Override
-	public String toString() {
-		return "Lesson [no=" + no + ", chapterNo=" + chapterNo + ", lessonTitle=" + lessonTitle + ", lessonSample="
-				+ lessonSample + ", totalTime=" + totalTime + ", accumulateTime=" + accumulateTime + ", lastTime="
-				+ lastTime + ", lessonWatched=" + lessonWatched + "]";
+		int needMinutes = totalTime;
+		long hour = TimeUnit.MINUTES.toHours(needMinutes); 
+		long minutes = TimeUnit.MINUTES.toMinutes(needMinutes) - TimeUnit.HOURS.toMinutes(hour); 
+		
+		return hour + ":" + minutes;
 	}
 	
+	@Override
+	public String toString() {
+		return "Lesson [no=" + no + ", chapterNo=" + chapterNo + ", lessonTitle=" + lessonTitle + ", videoPath="
+				+ videoPath + ", totalTime=" + totalTime + "]";
+	}
+
 }
