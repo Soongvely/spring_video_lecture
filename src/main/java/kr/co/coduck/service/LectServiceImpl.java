@@ -50,7 +50,25 @@ public class LectServiceImpl implements LectService {
 		
 		return lectDao.getLectureByLectureNo(lectureNo);
 	}
+	
+	@Override
+	public List<LectureDto> getLectureListByCriteria(LectureCriteria cri) {
+		
+		return lectDao.getLectureListByCriteria(cri);
+	}
+	
+	@Override
+	public int getTeachersLectureCountByCriteria(LectureCriteria cri) {
 
+		return lectDao.getTeachersLectureCountByCriteria(cri);
+	}
+	
+	@Override
+	public LessonDto getLessonCountAndLengthByLectureNo(int lectureNo) {
+		
+		return lectDao.getLessonCountAndLengthByLectureNo(lectureNo);
+	}
+	
 	@Override
 	public LectureDto getAllCountByLectureNo(int lectureNo) {
 		

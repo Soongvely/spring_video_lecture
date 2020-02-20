@@ -20,6 +20,10 @@ public interface LectService {
 	List<LectureDto> getLectureByCategoryNo(int cateNo);
 	LectureDto getLectureByLectureNo(int lectureNo);
 	
+	List<LectureDto> getLectureListByCriteria(LectureCriteria cri);
+	int getTeachersLectureCountByCriteria(LectureCriteria cri);
+	LessonDto getLessonCountAndLengthByLectureNo(int lectureNo);
+	
 	LectureDto getAllCountByLectureNo(int lectureNo);
 
 	List<ChapterDto> getChapterByLectureNo(int lectureNo);

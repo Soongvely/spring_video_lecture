@@ -17,6 +17,7 @@ public class TestQt {
 	private int trueRate;
 	private String img;
 	private int subjNo;
+	private int testNo;
 	
 	public TestQt() {}
 
@@ -116,11 +117,23 @@ public class TestQt {
 		this.subjNo = subjNo;
 	}
 
+	public int getTestNo() {
+		return testNo;
+	}
+
+	public void setTestNo(int testNo) {
+		this.testNo = testNo;
+	}
+
 	@Override
 	public String toString() {
-		return "TestSubjQt [no=" + no + ", num=" + num + ", content=" + content + ", score=" + score + ", v1=" + v1
+		return "TestQt [no=" + no + ", num=" + num + ", content=" + content + ", score=" + score + ", v1=" + v1
 				+ ", v2=" + v2 + ", v3=" + v3 + ", v4=" + v4 + ", ans=" + ans + ", trueRate=" + trueRate + ", img="
-				+ img + ", subjNo=" + subjNo + "]";
+				+ img + ", subjNo=" + subjNo + ", testNo=" + testNo + ", getNo()=" + getNo() + ", getNum()=" + getNum()
+				+ ", getContent()=" + getContent() + ", getScore()=" + getScore() + ", getV1()=" + getV1()
+				+ ", getV2()=" + getV2() + ", getV3()=" + getV3() + ", getV4()=" + getV4() + ", getAns()=" + getAns()
+				+ ", getTrueRate()=" + getTrueRate() + ", getImg()=" + getImg() + ", getSubjNo()=" + getSubjNo()
+				+ ", getTestNo()=" + getTestNo() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
-	
 }

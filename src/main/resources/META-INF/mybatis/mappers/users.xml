@@ -24,7 +24,8 @@
 			USER_NICKNAME				as nickname,
 			USER_BANKNUMBER				as bankNumber,
 			USER_POINT					as point,
-			USER_PWD					as password
+			USER_PWD					as password,
+			user_role					as role
 		from
 			USERS
 		where
@@ -44,7 +45,8 @@
 			USER_NICKNAME				as nickname,
 			USER_BANKNUMBER				as bankNumber,
 			USER_POINT					as point,
-			USER_PWD					as password
+			USER_PWD					as password,
+			user_role					as role
 		from
 			USERS
 		where
@@ -62,7 +64,8 @@
 			USER_NICKNAME				as nickname,
 			USER_BANKNUMBER				as bankNumber,
 			USER_POINT					as point,
-			USER_PWD					as password
+			USER_PWD					as password,
+			user_role					as role
 		from
 			USERS
 		where

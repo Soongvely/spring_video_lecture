@@ -141,5 +141,14 @@ public class User {
 	public String getFmtCreateDate() {
 		return DateUtils.dateToString(createDate);
 	}
+
+	@Override
+	public String toString() {
+		return "User [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password + ", imageFilename="
+				+ imageFilename + ", selfInfo=" + selfInfo + ", id=" + id + ", createDate=" + createDate + ", grade="
+				+ grade + ", point=" + point + ", nickname=" + nickname + ", role=" + role + ", bankNumber="
+				+ bankNumber + ", enabled=" + enabled + "]";
+	}
+	
 	
 }

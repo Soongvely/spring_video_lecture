@@ -19,23 +19,24 @@ public interface LectDao {
 	Lect getLectByNo(int lectNo);
 
 	List<LectureDto> getLectureByCategoryNo(int cateNo);
-
 	LectureDto getLectureByLectureNo(int lectureNo);
-
+	
+	List<LectureDto> getLectureListByCriteria(LectureCriteria cri);
+	int getTeachersLectureCountByCriteria(LectureCriteria cri);
+	LessonDto getLessonCountAndLengthByLectureNo(int lectureNo);
+	
 	LectureDto getAllCountByLectureNo(int lectureNo);
 
-	List<ChapterDto> getChapterByLectureNo(int lectureNo);
-
-	List<Lesson> getLessonByChpaterNo(int lectureNo);
-	
 	List<LectureCourseDto> getLectureByCriteria(LectureCriteria cri);
-
+	List<ChapterDto> getChapterByLectureNo(int lectureNo);
+	List<Lesson> getLessonByChpaterNo(int lectureNo);	
 	int getLectureCountByCriteria(LectureCriteria cri);
 	
 	LessonDto getProgressPercentInDashboard(Map<String, Object> map);
 	
 	List<LessonDto> getLectProcessivityByUserNo(int userNo);
 	List<Lesson> getLessonByRecent(Map<String, Object> map);
+	
 	
 	List<Lect> getFindLectByUserNo(int userNo);
 	

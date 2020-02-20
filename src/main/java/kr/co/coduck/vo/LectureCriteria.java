@@ -8,6 +8,7 @@ import org.apache.ibatis.type.Alias;
 public class LectureCriteria {
 
 	private int cateNo;
+	private int userNo;
 	private int no;
 	private int[] grades;
 	private String keyword;
@@ -64,6 +65,14 @@ public class LectureCriteria {
 
 	public void setNo(int no) {
 		this.no = no;
+	}
+
+	public int getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
 	}
 
 	public void setCateNo(int cateNo) {

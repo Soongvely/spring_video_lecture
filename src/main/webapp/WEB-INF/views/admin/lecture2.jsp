@@ -16,6 +16,7 @@
 	<link href="../../../resources/css/sb-admin-2.min.css" rel="stylesheet">	
 	<!-- Custom styles for this page -->
     <link href="../../../resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
 	<style type="text/css">
 	.btn-date {border: 1px solid #cbc4c4;}
 	#admin-lecture .form-group {height: 50px;}
@@ -28,7 +29,7 @@
 	<%@include file="common/admin-nav.jsp" %>
 		<div class="container-fluid">			
 			<div class="row" id="admin-lecture">
-				<h3 style="margin-left: 60px;">모의고사 관리</h3>
+				<h3 style="margin-left: 60px;">동영상 관리</h3>
 				<div class="col-sm-12">
 		            <form action="#" class="form-horizontal style-form" method="get">
 		                <div class="form-panel"
@@ -85,7 +86,7 @@
 		                        </div>                       
 		                    </div>
 		                    <div>
-		                        <a href="/admin/test.hta" class="btn btn-warning">초기화</a>
+		                        <button type="button" class="btn btn-warning btn-sm" style="float: right;">초기화</button>
 		                    </div>
 		                </div>
 		            </form>
@@ -93,88 +94,100 @@
 			</div>
 			
 			<div class="row">
-				<div class="col-sm-12">
-	                <div class="form-panel" style="background: #fff; margin-left:50px; margin-right:50px; ">               
-	           			<div class="form-group col-sm-10">   
-		                	<div class="row" style="margin-top: 10px;">
-		                   		<div class="col-sm-12">
-			                     	<table class="table" id="customersInfoTable" style="text-align: center;">
-		                        		<colgroup>
-		                        			<col width="8%">
-		                        			<col width="11%">
-		                        			<col width="12%">
-		                        			<col width="12%">
-		                        			<col width="10%">
-		                        			<col width="8%">
-		                        			<col width="8%">
-		                        			<col width="10%">
-		                        			<col width="10%">
-		                        		</colgroup>
-										<thead>
-											<tr>
-												<th>강좌명</th>
-							                    <th>카테고리명</th>
-							                    <th>등급</th>
-							                    <th>유저명</th>
-							                    <th>가격</th>
-							                    <th>신청일</th>
-							                    <th>공개여부</th>
-							                    <th></th>
-							                    <th></th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-						                    	<td>자바의 신</td>
-						                    	<td>JAVA</td>
-						                    	<td>고급</td>
-						                    	<td>호날두</td>
-						                    	<td>100000</td>
-						                    	<td>2020/02/05</td>
-						                    	<td>N</td>
-						                    	<td><button class="btn btn-success">승락</button>
-						                    		<button class="btn btn-danger ">거절</button>
-						                    	</td>
-						                    	<td><button class="btn btn-info">상세정보</button></td>
-						                    </tr>
-										</tbody>		
-									</table>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				<div class="card col-sm-12">
+		            <div class="card-header py-3">
+		            	<h6 class="m-0 font-weight-bold text-primary">동영상</h6>
+		            </div>
+		            <div class="card-body">
+		            	<div class="table-responsive">
+		                	<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+				                <thead>
+				                	<tr>
+					                    <th>강좌명</th>
+					                    <th>카테고리명</th>
+					                    <th>등급</th>
+					                    <th>유저명</th>
+					                    <th>가격</th>
+					                    <th>신청일</th>
+					                    <th>공개여부</th>
+					                    <th></th>
+					                    <th></th>
+				                	</tr>
+				                </thead>
+				                <tfoot>
+				                	<tr>
+					                    <th>동영상명</th>
+					                    <th>카테고리명</th>
+					                    <th>등급</th>
+					                    <th>유저명</th>
+					                    <th>가격</th>
+					                    <th>신청일</th>
+					                    <th>승인여부</th>
+					                    <th></th>
+					                    <th></th>
+				                	</tr>				                   
+				                </tfoot>
+				                <tbody>
+				                	<tr>
+				                    	<td>자바의 신</td>
+				                    	<td>JAVA</td>
+				                    	<td>고급</td>
+				                    	<td>호날두</td>
+				                    	<td>100000</td>
+				                    	<td>2020/02/05</td>
+				                    	<td>N</td>
+				                    	<td><button class="btn btn-success">승락</button>
+				                    		<button class="btn btn-danger ">거절</button>
+				                    	</td>
+				                    	<td><button class="btn btn-info">상세정보</button></td>
+				                    </tr>
+				               
+				               	</tbody>
+	                		</table>
+	              		</div>
+	            	</div>
+	        	</div>		
+	        </div>
+		</div>
+	</div>
+</div>
+
+<div id="modal-lecture-items" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">동영상 상세정보</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
-				
-			<div class="row">
-				<div class="col-sm-12">
-	                <div class="form-panel" style="background: #fff; margin-left:50px; margin-right:50px; ">               
-	           			<div class="form-group col-sm-10">  
-							<div class="row">									
-								<div class="col-sm-3">
-		                    		<div class="customers_length" id="customer_length" role="status" aria-live="polite">
-		                    		총 건의 조회결과			       
-		                    		</div>
-		                    	</div>
-								<div class="col-sm-9">
-		                    		<div class="text-center">
-		      							<!-- 페이지네이션 -->
-		      							<ul class="pagination">		
-		      							      								
-		      							</ul>	
-		                    		</div>
-			                	</div>
-							</div>
-		                </div>
-			           	<div class="row">
-		           			<div class="col-sm-12" style="text-align: right; right: 275px;">
-		           				<button class="btn btn-success">엑셀</button>
-		           			</div>
-			        	</div>
-		        	</div>		                
-		   		</div>
+			<div class="modal-bady">
+				<table class="table" id="modal-lecture-detail-table">
+					<colgroup>
+						<col width="*%">
+						<col width="*%">
+						<col width="12%">
+						<col width="*%">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>챕터명</th>
+							<th>레슨명</th>
+							<th>재생시간</th>
+							<th>첨부파일</th>
+						</tr>
+					</thead>	
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>1</td>
+							<td>115:30</td>
+							<td>kimdaeilkingkingking.avi</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
-			
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+			</div>
 		</div>
 	</div>
 </div>
@@ -192,7 +205,10 @@
 <script src="../../../resources/js/demo/datatables-demo.js"></script>
 
 <script type="text/javascript">
-	$("input[name='from']").val();
+	$('#dataTable button.btn-info').click(function() {
+		$("#modal-lecture-items").modal('show');
+	});
 </script>
+
 </body>
 </html>

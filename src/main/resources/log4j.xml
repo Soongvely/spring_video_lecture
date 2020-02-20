@@ -10,13 +10,13 @@
 		</layout>
 	</appender>
 	
-	<!-- Application Loggers -->
+		<!-- Application Loggers -->
 	<logger name="kr.co.coduck">
 		<level value="info" />
 	</logger>
 	
 	<logger name="kr.co.coduck.dao">
-		<level value="trace" />
+		<level value="info" />
 	</logger>
 
 <!-- 	<logger name="kr.co.coduck.dao">

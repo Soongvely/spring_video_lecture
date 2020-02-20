@@ -25,6 +25,7 @@ table thead tr td {
 }
 
 
+
 </style>
 </head>
 <body>
@@ -54,18 +55,19 @@ table thead tr td {
 	
 	<br>
 	
-	<div class="row" id="div-test-list" style="display: none;">
+	<div class="row" id="div-test-list" >
 		<form action="/cart/addTestsInCart.hta" method="get" id="form-addCart">
-			<div class="col-sm-12">
+			<div class="col-sm-12" style="padding: 0px;">
 				<table class="table table-bordered">
 					<colgroup>
+					    <col style=width:3%;>
 					    <col style=width:5%;>
-					    <col style=width:6%;>
-					    <col style=width:32%;>
+					    <col style=width:*;>
 					    <col style=width:10%;>
 					    <col style=width:7%;>
-					    <col style=width:10%;>
-					    <col style=width:10%;>
+					    <col style=width:8%;>
+					    <col style=width:9%;>
+					    <col style=width:9%;>
 					    <col style=width:20%;>
 					</colgroup>
 					<thead>
@@ -76,6 +78,7 @@ table thead tr td {
 							<th>시험회차</th>
 							<th>문항수</th>
 							<th>가격</th>
+							<th>구매여부</th>
 							<th>응시여부</th>
 							<th></th>
 						</tr>
@@ -98,7 +101,7 @@ table thead tr td {
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal">&times;</button>
-	        <h4 class="modal-title">시험 결과</h4>
+	        <h4 class="modal-title text-center">시험 결과</h4>
 	      </div>
 	      <div class="modal-body">
 	        <table class="table">
@@ -114,7 +117,7 @@ table thead tr td {
 	        	</tbody>
 	        </table>
 	      </div>
-	        <p style="text-align: right; margin-right: 20px; margin-bottom: 20px;"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></p>
+	        <p style="text-align: right; margin-right: 20px; margin-bottom: 20px;"><button type="button" class="btn btn-default" data-dismiss="modal">닫기</button></p>
 	    </div>
 	    
 	  </div>
@@ -123,6 +126,13 @@ table thead tr td {
 
 
 <script type="text/javascript">
+
+	$.getJSON("/test/getTestData.hta", {testNo:0}, function(result){
+		$("tbody").empty();
+		
+		var tests = result.searchTestDetailDtos;
+		addRow(tests);
+	})
 	
 	//개별 장바구니 버튼 눌렀을 때
 	$("tbody").on("click", ".btn-warning", function(){
@@ -260,14 +270,31 @@ table thead tr td {
 			row += "<td>" + item.testEp + "</td>";
 			row += "<td>" + item.testQtCnt + "</td>";
 			row += "<td>" + item.testPrice.toLocaleString() + "원</td>";
+			var orderYN = item.orderYN;
 			var done = item.testDone;
-			if(done == 'Y'){
+			if(orderYN == "Y"){
+				if(done == "Y"){
+					row += "<td>구매완료</td>";
+					row += "<td>응시완료</td>";
+					row += "<td><button type='button' class='btn btn-default' id='btn-detail'>자세히보기</button></td>";
+				} else {
+					row += "<td>구매완료</td>";
+					row += "<td>미응시</td>";
+					row += "<td><a href='/test/takeaTest.hta?testNo=" + item.testNo + "' class='btn btn-default'>응시하기</a></td>";
+				}
+			} else {
+				row += "<td>미구매</td>";
+				row += "<td>미응시</td>";
+				row += "<td><a href='/order/ordertestcartno.hta?testno=" + item.testNo + "' class='btn btn-primary'>바로구매</a> <button type='button' class='btn btn-warning' name='testNo' value='" + item.testNo + "'>장바구니담기</button></td>";
+			}
+			
+			/* if(done == 'Y'){
 				row += "<td>응시완료</td>";
 				row += "<td><button type='button' class='btn btn-default' id='btn-detail'>자세히보기</button></td>";
 			} else {
 				row += "<td>미응시</td>";
-				row += "<td><a href='' class='btn btn-primary'>바로구매</a> <button type='button' class='btn btn-warning' name='testNo' value='" + item.testNo + "'>장바구니담기</button></td>";
-			}
+				row += "<td><a href='/order/ordertests.hta?testno= " + item.testNo + "&testtotalprices= " + item.testPrice + "' class='btn btn-primary'>바로구매</a> <button type='button' class='btn btn-warning' name='testNo' value='" + item.testNo + "'>장바구니담기</button></td>";
+			} */
 			row += "</tr>";
 		})
 		$("tbody").append(row);

@@ -16,7 +16,6 @@
 <body>
 <%@ include file="../common/tag.jsp" %>
 	<div class="container">
-		<h2>Modal Example</h2>
 
 		<button type="button" class="btn btn-info btn" data-toggle="modal"
 			data-target="#myModal">시험 등록</button>

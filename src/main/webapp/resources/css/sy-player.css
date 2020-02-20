@@ -119,7 +119,7 @@
         border-color: #fff;
         color: #fff;
     }
-    .right-buttons button {
+    .right-buttons button, .right-buttons a {
         font-weight: 500;
         font-size: 17px;
         border: 1px solid #fff;
@@ -216,12 +216,21 @@
         width: 1310px;
         height: 100%;
     }
-    .footer-nav-item button {
+    .footer-nav-item > button {
         border: 0;
         padding: 5px 50px;
         font-size: 18px;
     }
 
+ 	.footer-nav-item > button:hover {
+ 		background: none;
+ 		color: #fff;
+ 	}
+ 	.footer-nav-item > button:focus, .footer-nav-item > button:active {
+ 		border: none;
+ 		background: none;
+ 		color: #fff;
+ 	}
     .lecture-nav.lecture-nav-right {
         position: relative;
         overflow-y: scroll;

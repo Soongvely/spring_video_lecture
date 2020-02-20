@@ -204,7 +204,6 @@
 						"discount":discount,
 						"page":page
 						};
-			console.log(data);
 			
 			$.ajax({
 				url: "/lecture/api/searchLecture.hta",

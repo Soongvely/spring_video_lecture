@@ -30,4 +30,14 @@ public class CategoryServiceImpl implements CategoryService {
 
 		return categoryDao.getCategoryByCategoryNo(cateNo);
 	}
+
+	@Override
+	public List<Category> getLectureCategoryByAdmin() {
+		return categoryDao.getLectureCategoryByAdmin();
+	}
+
+	@Override
+	public List<Category> getTestCategoryByAdmin() {
+		return categoryDao.getTestCategoryByAdmin();
+	}
 }

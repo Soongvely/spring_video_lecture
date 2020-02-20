@@ -43,6 +43,10 @@
 			<bean class="kr.co.coduck.web.interceptor.LoginCheckInterceptor"></bean>
 		</mvc:interceptor>
 		<!-- 두번째로 실행 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="kr.co.coduck.web.interceptor.GradeCheckInterceptor"></bean>
+		</mvc:interceptor>
 	</mvc:interceptors>
 	
 	<!-- 

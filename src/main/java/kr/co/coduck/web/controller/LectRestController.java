@@ -47,12 +47,10 @@ public class LectRestController {
 		int totalCount = lectService.getLectureCountByCriteria(cri);
 
 		Pagination pagination = new Pagination(cri.getPage(), totalCount, 16, 3);
-		log.info("Pagination" + pagination);
 		
 		cri.setBeginIndex(pagination.getBeginIndex());
 		cri.setEndIndex(pagination.getEndIndex());
 		
-
 		List<LectureCourseDto> lectures = lectService.getLectureByCriteria(cri);
 
 		lectures.forEach(lecture -> {
@@ -74,10 +72,11 @@ public class LectRestController {
 	public List<Question> questionByLectureNo(LectureCriteria cri) {
 		
 		List<Question> questions = questionService.getQuestionByLectureNo(cri);
-		
+		log.info("질문들" + questions);
 		return questions;
 	}
 	
+	// 질문에 대한 답변
 	@GetMapping("/getAnswer")
 	public Answer getAnswerByQuestionNo(@RequestParam("questionNo") int questionNo) {
 		

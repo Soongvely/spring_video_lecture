@@ -16,6 +16,7 @@ public class SearchTestDetailDto {
 	private int testPrice;
 	private String testDone;
 	private Double testAvg;
+	private String orderYN;
 	
 	public SearchTestDetailDto() {}
 
@@ -107,12 +108,19 @@ public class SearchTestDetailDto {
 		this.testPrice = testPrice;
 	}
 
+	public String getOrderYN() {
+		return orderYN;
+	}
+
+	public void setOrderYN(String orderYN) {
+		this.orderYN = orderYN;
+	}
+
 	@Override
 	public String toString() {
 		return "SearchTestDetailDto [testNo=" + testNo + ", mainCateNo=" + mainCateNo + ", mainCateName=" + mainCateName
 				+ ", subCateNo=" + subCateNo + ", subCateName=" + subCateName + ", testEp=" + testEp + ", testName="
 				+ testName + ", testQtCnt=" + testQtCnt + ", testPrice=" + testPrice + ", testDone=" + testDone
-				+ ", testAvg=" + testAvg + "]";
+				+ ", testAvg=" + testAvg + ", orderYN=" + orderYN + "]";
 	}
-	
 }

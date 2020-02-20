@@ -77,7 +77,7 @@ public class LectureController {
 		Map<String, Object> map = new HashMap<String, Object>(); 
 		map.put("userNo", user.getNo()); 
 		map.put("lectureNo", lectureNo);
-		log.info("최근" + lectservice. getLessonByRecent(map));
+		
 		model.addAttribute("lecture", lectservice.getLectureByLectureNo(lectureNo));
 		model.addAttribute("counts", lectservice.getAllCountByLectureNo(lectureNo));
 		model.addAttribute("questions", questionService.getQuestionByRecent(lectureNo));
@@ -112,7 +112,7 @@ public class LectureController {
 		
 		return "lecture/player/player";
 	}
-
+	
 	// 리뷰 평균평점 계산
 	private List<ReviewStarDto> setReviewStarAverage(List<ReviewStarDto> reviewStarAvgs) {
 

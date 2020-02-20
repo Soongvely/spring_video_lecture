@@ -42,4 +42,33 @@
 		where 
 			cate_no = #{value}
 	</select>
+	
+	<!-- 동영상 카테고리만 조회하기 -->
+	<select id="getLectureCategoryByAdmin" resultType="Category">
+		select 
+			cate_no			as no,
+			cate_name		as name,
+			main_cate_no	as parentNo
+		from
+			categories
+		where
+			cate_no between 10001 and 19999
+		order by
+			cate_name asc
+	</select>
+	
+	<!-- 시험 카테고리만 조회하기 -->
+	<select id="getTestCategoryByAdmin" resultType="Category">
+		select 
+			cate_no			as no,
+			cate_name		as name,
+			main_cate_no	as parentNo
+		from
+			categories
+		where
+			cate_no between 20001 and 29999
+		order by
+			cate_name asc
+	</select>
+	
 </mapper>

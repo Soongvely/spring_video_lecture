@@ -8,7 +8,9 @@
 	font-family: 'AppleSDGothicEB';
 	src: url(../font/AppleSDGothicNeoEB.ttf) format('truetype');
 }
-
+#root .container {
+	width: 1440px;
+}
 html, body {
 	height: 100%;
 }
@@ -411,6 +413,7 @@ small {
 
 .icon_container.has-icon {
 	margin: auto;
+	margin-right: 138px;
 	background-color: rgba(0, 0, 0, .5);
 	padding: 30px;
 	border-radius: 100%;
@@ -1248,6 +1251,8 @@ small {
 	color: #fff;
 	margin-left: -12px;
 }
+
+
 .lesson-no-item  {
 	text-align: center;
 }
@@ -1434,18 +1439,18 @@ small {
 	border: 1px solid lightgray;
 }
 
-/************************ teacher ***********************/
-#teacher > .container {
+/*  teacher-main.css */
+
+#teacher .container {
 	width: 1440px;
 }
 
-/* teacher-main.css */
 #teacher .nav.nav-pills a {
 	font-size: 20px;
 }
 
 #teacher .body-contents {
-	margin: 60px 18px;
+	margin: 60px 18px 140px 18px;
 }
 
 #teacher .container:first-child {
@@ -1457,8 +1462,7 @@ small {
 }
 
 .contenets-menu {
-	border: 1px solid lightgray;
-	border-radius: 5px;
+    border-radius: 5px;
 	top: 100px;
 	font-size: 20px;
 	font-family: 'AppleSDGothicL', sans-serif;
@@ -1517,28 +1521,54 @@ small {
 	background: rgb(250, 160, 150);
 }
 
+.main-body .search-form .btn-search {
+	margin-bottom: 4px;
+	height: 47px;
+	padding: 0 18px;
+	background:rgb(246, 149, 138);
+	font-size: 18px;
+	font-weight: 600;
+	border: 0;
+	border-radius: 0;
+	color: #fff;
+}
+.main-body .search-form {
+	margin-left: 45px;
+	margin-bottom: -10px;
+}
+.main-body .dropdown {
+	margin-right: 50px;
+    margin-top: 20px;
+}
 .teaching-box {
 	border: 1px solid lightgrey;
 	display: inline-flex;
-	margin: 13px 5px;
+    margin: 13px 5px;
+    width: 93%;
+    height: 175px;
+    margin-left: 10px;
 }
 
 .teaching-body {
 	display: inline-block;
-	max-width: 75%;
+	width: 75%;
 	margin-left: 2%;
 }
 
 .contenets-menu.my-lecture {
-	padding: 10px;
+	padding: 10px; 
 }
 
 .teaching-details {
-	top: 28%;
+    display: inline-block;
+    margin-top: 50px;
 }
 
-.teaching-details .detail-title h3 {
-	font-size: 22px;
+.teaching-details, .detail-title {
+    display: inline-block;
+}
+.detail-title h3 {
+    font-size: 23px;
 }
 
 .my-lecture.teaching-box>a {
@@ -1547,11 +1577,12 @@ small {
 
 .my-lecture-thumbnail {
 	width: 20%;
-	height: 150px;
+	height: 100%;
 }
 
 .teaching-box .label {
-	top: 42%;
+    float: right;
+    margin-top: 73px;
 }
 
 .teaching-box .label>label {
@@ -1564,8 +1595,8 @@ small {
 
 .badge.waiting {
 	padding: 5px 18px;
-	border: 1px solid rgb(241, 196, 15);
-	background: rgb(241, 196, 15);
+	border: 1px solid #9E9E9E;
+	background: #9E9E9E;
 }
 
 .badge.incomplete {
@@ -1581,7 +1612,28 @@ a:hover {
 a {
 	color: #595959;
 }
-
+.info-box {
+    float: right;
+    margin-top: 23px;
+    text-align: end;
+}
+.info-price {
+    margin-bottom: 28px;
+}
+.info-price .discount {
+    font-size: 22px;
+}
+.info-price .rate, .info-student {
+    font-size: 18px;
+}
+.info-star {
+    font-size: 18px;
+    color: #fdcc11;
+}
+.info-wish i {
+    color: #f98173;
+}
+/******************** teaher question ********************/
 .my-lecture.question-box {
 	display: inline-flex;
 	width: 100%;
@@ -1613,6 +1665,7 @@ a {
 	font-size: 14px;
 	margin-left: 10px;
 }
+
 /* teacher-statistics.css */
 .statistics-container {
 	display: -webkit-inline-box;

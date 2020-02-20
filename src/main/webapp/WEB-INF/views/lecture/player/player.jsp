@@ -11,7 +11,7 @@
         <main id="main">
             <section class="lecture-container">
                 <a class="toggle-left is-hidden-tablet"></a>
-                    <aside class="lecture-nav lecture-nav-left">
+                    <aside class="lecture-nav lecture-nav-left" id="coursebarApp">
                         <div class="lecture-nav-left-header">
                             <h5>${lecture.title }</h5>
                             <p>
@@ -67,11 +67,11 @@
                                 <h3>스프링 프로젝트 생성</h3>
                             </div>
                             <div class="right-buttons">
-                                <button class="btn go-out-lecture is-outlined">
+                                <a href="../detail/dashboard.hta?lectureNo=${lecture.no }" class="btn go-out-lecture is-outlined">
                                     <span>
                                         <i class="glyphicon glyphicon-new-window"></i> 나가기
                                     </span>
-                                </button>
+                                </a>
                                 <button class="btn toggle-right is-outlined">
                                     <span>
                                         <i class="far fa-question-circle"></i> 질문하기
@@ -106,7 +106,7 @@
                             </div>
                         </footer>
                     </div>
-                    <div class="lecture-nav lecture-nav-right closed">
+                    <div class="lecture-nav lecture-nav-right closed" id="quesionApp">
                         <div class="right-header">
                             <a class="toggle-btn-closed">
                                 <i class="fas fa-times"></i>
@@ -146,54 +146,6 @@
                                                 <div class="comments">
                                                     <i class="fas fa-comment"></i>
                                                     <span class="answer-count">0</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </li>
-                                <li class="list-item-box">
-                                    <article class="list-item-question">
-                                        <figure class="left-image is-rounded">
-                                            <img class="is-rounded" src="/resources/images/logo/coduck.ico" width="49px">
-                                        </figure>
-                                        <div class="item-title">
-                                            <strong class="contents-title">연습자료 </strong>
-                                            <span class="writer"> sungsil kim</span>
-                                        </div>
-                                        <div class="item-contents">
-                                            <div class="contents">
-                                                <p>
-                                                    연습자료는 어디서 받나요? 강의를 잘 들었지만, 연습을 해 볼 수가 없어 다 잊어버린 듯 합니다.
-                                                </p>
-                                            </div>
-                                            <div class="question-comment">
-                                                <div class="comments" fxd-data="{&quot;count&quot;:0}">
-                                                    <svg aria-hidden="true" data-prefix="fas" width="16" data-icon="comment" class="svg-inline--fa fa-comment fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"></svg>
-                                                    <span class="number">0</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </li>
-                                <li class="list-item-box">
-                                    <article class="list-item-question">
-                                        <figure class="left-image is-rounded">
-                                            <img class="is-rounded" src="/resources/images/logo/coduck.ico" width="49px">
-                                        </figure>
-                                        <div class="item-title">
-                                            <strong class="contents-title">연습자료 </strong>
-                                            <span class="writer"> sungsil kim</span>
-                                        </div>
-                                        <div class="item-contents">
-                                            <div class="contents">
-                                                <p>
-                                                    연습자료는 어디서 받나요? 강의를 잘 들었지만, 연습을 해 볼 수가 없어 다 잊어버린 듯 합니다.
-                                                </p>
-                                            </div>
-                                            <div class="question-comment">
-                                                <div class="comments">
-                                                    <svg aria-hidden="true" data-prefix="fas" width="16" data-icon="comment" class="svg-inline--fa fa-comment fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"></svg>
-                                                    <span class="number">0</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -255,6 +207,15 @@
     		url: "",
     	});
     });
+    
+    // 버튼 효과 제어
+    $(".btn-default").mousedown(function() {
+    	$(this).css({background:"none", color:"white"});
+	});
+    $(".btn-default").mouseup(function() {
+    	$(this).css({background:"none", color:"white"});
+	});
+    
     
 </script> 
 </html>

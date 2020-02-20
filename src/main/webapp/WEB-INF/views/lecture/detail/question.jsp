@@ -16,7 +16,7 @@
                         <div class="question search-form">
                             <label class="label search-label" for="search">
                               <span class="visually-hidden">질문 검색</span>
-                              <input id="search" v-model="keyword" @keyup.enter="searchQuestion"  class="question search-input" type="text" placeholder="질문을 검색해보세요" value="">
+                              <input id="search" v-model="keyword" @keyup.enter="searchQuestion"  class="question search-input" type="text" placeholder="질문을 검색해보세요" autocomplete="off">
                             </label>
                             <button class="btn btn-search" @click="searchQuestion">검색</button>
                         </div>
@@ -112,7 +112,7 @@
 		methods: {
 			searchQuestion: function() {
 				const keyword = this.keyword;
-				$.getJSON("/lecture/api/searchQuestion.hta",{no:lectureNo,keyword}, function(result) {
+				$.getJSON("/lecture/api/searchQuestion.hta",{no:lectureNo, keyword}, function(result) {
 					console.log(app.questions,result);
 					app.questions = result;
 				})

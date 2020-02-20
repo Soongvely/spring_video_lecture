@@ -185,60 +185,60 @@
 													</c:forEach>
 												</c:otherwise>
 											</c:choose>
-											</tbody>		
-										</table>
-									</div>
+										</tbody>		
+									</table>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+			</div>
 				
-				<div class="row">
-					<div class="col-sm-12">
-		                <div class="form-panel" style="background: #fff; margin-left:50px; margin-right:50px; ">               
-		           			<div class="form-group col-sm-10">  
-								<div class="row">									
-									<div class="col-sm-3">
-			                    		<div class="customers_length" id="customer_length" role="status" aria-live="polite">
-			                    		총 ${pagination.totalRows }건의 조회결과			       
-			                    		</div>
-			                    	</div>
-									<div class="col-sm-9">
-			                    		<div class="text-center">
-			      							<!-- 페이지네이션 -->
-			      							<ul class="pagination">		
-			      							
-			      								<c:if test="${pagination.pageNo > 1 }">
-			      									<li class="page-item">
-			      									<button type="button" class="page-link" onclick="fn_prev('${pagination.pageNo -1}')" data-page-no="${no }">이전</button>
-			      									</li>
-			      								</c:if>
-			      								
-		      									<c:forEach var="no" begin="${pagination.beginPage }" end="${pagination.endPage }">
-		      										<li>
-		      										<button type="button" class="page-link" onclick="fn_pagination('${no}')" data-page-no="${no }">${no }</button>
-		      										</li>
-		      									</c:forEach>
-			      								
-			      								<c:if test="${pagination.pageNo < pagination.totalPagesCount }">
-			      									<li>
-		      										<button type="button" class="page-link" onclick="fn_next('${pagination.pageNo +1}')" data-page-no="${no }">다음</button>
-		      										</li>
-			      								</c:if>			      								
-			      							</ul>	
-			                    		</div>
-				                	</div>
-								</div>
-			                </div>
-				           	<div class="row">
-			           			<div class="col-sm-12" style="text-align: right; right: 275px;">
-			           				<button class="btn btn-success">엑셀</button>
-			           			</div>
-				        	</div>
-			        	</div>		                
-			   		</div>
-				</div>
+			<div class="row">
+				<div class="col-sm-12">
+	                <div class="form-panel" style="background: #fff; margin-left:50px; margin-right:50px; ">               
+	           			<div class="form-group col-sm-10">  
+							<div class="row">									
+								<div class="col-sm-3">
+		                    		<div class="customers_length" id="customer_length" role="status" aria-live="polite">
+		                    		총 ${pagination.totalRows }건의 조회결과			       
+		                    		</div>
+		                    	</div>
+								<div class="col-sm-9">
+		                    		<div class="text-center">
+		      							<!-- 페이지네이션 -->
+		      							<ul class="pagination">		
+		      							
+		      								<c:if test="${pagination.pageNo > 1 }">
+		      									<li class="page-item">
+		      									<button type="button" class="page-link" onclick="fn_prev('${pagination.pageNo -1}')" data-page-no="${no }">이전</button>
+		      									</li>
+		      								</c:if>
+		      								
+	      									<c:forEach var="no" begin="${pagination.beginPage }" end="${pagination.endPage }">
+	      										<li>
+	      										<button type="button" class="page-link" onclick="fn_pagination('${no}')" data-page-no="${no }">${no }</button>
+	      										</li>
+	      									</c:forEach>
+		      								
+		      								<c:if test="${pagination.pageNo < pagination.totalPagesCount }">
+		      									<li>
+	      										<button type="button" class="page-link" onclick="fn_next('${pagination.pageNo +1}')" data-page-no="${no }">다음</button>
+	      										</li>
+		      								</c:if>			      								
+		      							</ul>	
+		                    		</div>
+			                	</div>
+							</div>
+		                </div>
+			           	<div class="row">
+		           			<div class="col-sm-12" style="text-align: right; right: 275px;">
+		           				<button class="btn btn-success">엑셀</button>
+		           			</div>
+			        	</div>
+		        	</div>		                
+		   		</div>
+			</div>
 		</div>
 	</div>
 </div>

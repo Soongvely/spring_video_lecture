@@ -52,7 +52,7 @@
                     </div>
                     <div class="col-sm-3">
                         <div class="learning-btn-container">
-                            <a href="/player/player.hta?lectureNo=${lecture.no }" class="btn btn-default sy-btn-learning">학습하기</a>
+                            <a href="../player/player.hta?lectureNo=${lecture.no }" class="btn btn-default sy-btn-learning">학습하기</a>
                         </div>
                         <!-- floating btn start -->
                         <div class="lecture-floating-btn">

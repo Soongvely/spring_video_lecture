@@ -12,4 +12,8 @@ public interface CategoryDao {
 	// 강의 카테고리 조회
 	List<Category> getAllLectureCategories();
 	Category getCategoryByCategoryNo(int cateNo);
+	
+	// 동영상 또는 시험 카테고리 조회하기
+	List<Category> getLectureCategoryByAdmin();
+	List<Category> getTestCategoryByAdmin();
 }

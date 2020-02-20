@@ -109,7 +109,7 @@ public class TestController {
 		System.out.println("===========================");
 		System.out.println(test);
 		System.out.println(subjs);
-		System.out.println(testQtDtos);
+		System.out.println("testQtDtos" + testQtDtos);
 		
 		model.addAttribute("test", test);
 		model.addAttribute("subjs", subjs);
@@ -182,6 +182,11 @@ public class TestController {
 			qt.setTrueRate(trueRate);
 			qt.setImg(img);
 			qt.setSubjNo(subjNo);
+			qt.setTestNo(test.getNo());
+			
+			System.out.println("===================================");
+			System.out.println("TestQt : " + qt);
+			
 			
 			testService.insertTestQt(qt);
 		}
