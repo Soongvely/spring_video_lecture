@@ -4,7 +4,6 @@ import java.util.List;
 
 import kr.co.coduck.vo.Category;
 import kr.co.coduck.vo.Ep;
-import kr.co.coduck.vo.Test;
 
 public class SearchTestDto {
 	

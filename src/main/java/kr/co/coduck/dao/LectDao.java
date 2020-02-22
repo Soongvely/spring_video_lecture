@@ -4,17 +4,17 @@ import java.util.List;
 import java.util.Map;
 
 import kr.co.coduck.dto.ChapterDto;
+import kr.co.coduck.dto.IncomeDto;
 import kr.co.coduck.dto.LectureCourseDto;
 import kr.co.coduck.dto.LectureDto;
 import kr.co.coduck.dto.LessonDto;
-import kr.co.coduck.dto.UserByLectDto;
 import kr.co.coduck.vo.Lect;
 import kr.co.coduck.vo.LectureCriteria;
 import kr.co.coduck.vo.Lesson;
 
 public interface LectDao {
 
-	List<UserByLectDto> getLectListUserByNo(int userNo);
+	List<LessonDto> getLectListUserByNo(int userNo);
 
 	Lect getLectByNo(int lectNo);
 
@@ -37,6 +37,9 @@ public interface LectDao {
 	List<LessonDto> getLectProcessivityByUserNo(int userNo);
 	List<Lesson> getLessonByRecent(Map<String, Object> map);
 	
+	List<IncomeDto> getTeacherIncomeByCriteria(LectureCriteria cri);
+	IncomeDto getTeacherIncomeStatistics(int userNo);
+	double getTeacherAvgScore(int userNo);
 	
 	List<Lect> getFindLectByUserNo(int userNo);
 	

@@ -83,7 +83,7 @@
 	                            </div>                        
 	                        </div>                       
 		                    <div class="col-md-6" style="left: 410px;">
-		                        <a href="/admin/customer.hta" class="btn btn-warning ">초기화</a>
+		                        <a href="/admin/customer.hta" class="btn btn-warning " style="margin-left: 75px;">초기화</a>
 		                    </div>
 	                    </div>
 	                </div>
@@ -106,7 +106,7 @@
 		                    	</div>
 		                    	<div class="col-sm-7"></div>			                    	
 	                    		<div class="col-sm-2">
-									<input type="text" class="form-control" style="width:200px;" name="keyword"  value="${param.keyword }" id="keyword-search" placeholder="검색어를 입력하세요.">
+									<input type="text" class="form-control" style="width:275px;" name="keyword"  value="${param.keyword }" id="keyword-search" placeholder="검색어를 입력하세요.">
 								</div>	                    	
 	                    		<div class="col-sm-1">
 									<button type="button" class="btn btn-default" id="find-user-btn"><i class="fas fa-search"></i></button>

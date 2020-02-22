@@ -22,4 +22,6 @@ public interface UserService {
 	
 	List<User> getUserByCriteria(UserCriteria userCriteria);
 	int getUserCntByCriteria(UserCriteria userCriteria);
+	
+	User adminLogin(String userId, String userPassword);
 }

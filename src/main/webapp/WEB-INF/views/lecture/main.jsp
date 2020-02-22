@@ -168,7 +168,7 @@
 		// 강좌리스트 페이지네이션 실행
 		$("#pagination").on("click", '.pagination li a', function() {
 			var page = $(this).data("page");
-			console.log('page',page)
+
 			$("input[name=page]").val(page);
 			
 			getSearchValues();
@@ -295,7 +295,7 @@
 					$(".columns.lesson-list-body").append(html);
 					drawingStar();
 				},
-				error: function(e){ console.log(e)}
+				error: function(e){console.log(e)}
 			});
 		}
 	});

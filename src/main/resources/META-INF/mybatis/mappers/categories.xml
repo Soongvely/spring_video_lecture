@@ -4,6 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="kr.co.coduck.dao.CategoryDao">
+
+	
 	
 	<!-- 시험에서 상위카테고리로 조회 -->
 	<select id="getCatesByMainCateNo" parameterType="int" resultType="Category">
@@ -63,12 +65,12 @@
 			cate_no			as no,
 			cate_name		as name,
 			main_cate_no	as parentNo
-		from
-			categories
-		where
-			cate_no between 20001 and 29999
-		order by
-			cate_name asc
+		from 
+			CATEGORIES
+		where 
+			MAIN_CATE_NO in (select CATE_NO
+							from CATEGORIES
+							where MAIN_CATE_NO = 20000)
 	</select>
 	
 </mapper>

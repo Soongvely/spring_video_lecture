@@ -8,12 +8,12 @@ import org.apache.ibatis.type.Alias;
 public class UserByLectDto {
 
 	private int userNo;
-	private String userName;		// 안씀
+	private String userName;
 	private int accumulateTime;
 	private String lectTitle;
 	private String imagePath;
-	private int lectPrice;			// 안씀
-	private int totalPrice; 		// 안씀
+	private int lectPrice;
+	private int totalPrice;
 	private Date lectCreateDate;
 	private int lectNo;
 	

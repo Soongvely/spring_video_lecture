@@ -47,7 +47,7 @@ public class CartLectController {
    }
    
    @PostMapping("/orderlectform.hta")
-   public String cartorderlectlist(HttpSession session, Model model, @RequestParam("lectprice") int[] cartLectNos, @RequestParam("order-lect-total-price") int totalprice) {   
+   public String cartorderlectlist(HttpSession session, Model model, @RequestParam("lectnos") int[] cartLectNos, @RequestParam("order-lect-total-price") int totalprice) {   
 	   User user = (User)session.getAttribute("LU");
 	   int lectNo = 0;
       List<CartChoiceLectListDto> results = new ArrayList<CartChoiceLectListDto>();

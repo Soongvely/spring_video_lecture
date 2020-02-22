@@ -29,10 +29,11 @@
 	<!-- 유저번호로 시험 장바구니 리스트 조회 -->
 	<select id="getCartTestListUserByNo" parameterType="int" resultType="CartTestDto">
 		SELECT
-			A.TEST_NO 		as testNo,
+			A.TEST_NO 		as no,
 			B.USER_NO 		as userNo,
-			C.TEST_NAME 	as testTitle,
-			C.TEST_PRICE	as testPrice
+			C.TEST_NAME 	as name,
+			C.TEST_PRICE	as price,
+			C.TEST_EP		as ep
 		FROM
 			Test_Carts A, Users B, tests C
 		WHERE
@@ -47,9 +48,9 @@
 	
 	<select id="getCartChoiceTestListByCartChoiceTestNo" parameterType="map" resultType="CartChoiceTestListDto">
      	select
-			B.test_no				as testNo,
-			B.TEST_NAME				as testTitle,
-			B.test_price			as testPrice
+			B.test_no				as no,
+			B.TEST_NAME				as name,
+			B.test_price			as price
 		from
 			test_carts A, tests B, USERS C
 		where

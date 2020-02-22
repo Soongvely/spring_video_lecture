@@ -12,10 +12,8 @@
                                 <img src="${lecture.imagePath }" alt="스프링프레임워크" />
                             </div>
                             <div class="lecture-play">
-                                <div class="icon_container has-icon">
-                                    <a href="${lecture.samplePath }">
-                                    	<i class="fas fa-play"></i>
-                                    </a>
+                                <div class="icon_container has-icon" data-sample-video="${lecture.samplePath }">
+                                   	<i class="fas fa-play"></i>  
                                     <br>
                                 </div>
                             </div>
@@ -109,6 +107,41 @@
                 </div>
             </div>
         </section>
+         <!-- 샘플영상 모달화면 -->
+			<div class="modal fade" id="modal-sample" role="dialog">
+			   <div class="modal-dialog modal-lg">
+			      <div class="modal-content" id="modal-sample-content">
+			      <input type="hidden" name="lectNo" value="${lecture.no }"/>
+			         <div class="modal-header">
+			            <h4 class="modal-title"></h4>
+			            <button type="button" class="close" data-dismiss="modal">&times;</button>
+			         </div>
+			         <div class="modal-body" id="video-body">
+			            
+			         </div>
+			       
+			      </div>
+			   </div>
+			</div>		
+        
+       <%--      <!-- Modal -->
+          <div class="modal fade question-madal" id="myModal" role="dialog">
+          <form action="insertQuestion.hta" method="post">
+          	<input type="hidden" name="lectureNo" value="${param.lectureNo }">
+              <div class="modal-dialog">
+               <div class="modal-content">
+                   <div class="modal-body">
+                   <p style="font-size: 18px; font-weight: 600; color: darkblue;">질문 작성 <i class="fas fa-pencil-alt"></i></p>
+                       <textarea class="modal-text" placeholder="내용을 입력해주세요."></textarea>
+                   </div>
+                   <div class="modal-footer">
+                       <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                       <button type="submit" class="btn btn-info" data-dismiss="modal">등록</button>
+                   </div>
+               </div>
+              </div>
+          </form>
+          </div>  --%>
                 
 		<!-- LectureDetail Menu start-->
        	<section class="leature-description_container">
@@ -124,3 +157,7 @@
 	        	</ul>
 	    	</div>
 		    <!-- LectureDetail Menu end-->
+		      <script>
+       // 샘플영상
+     
+          </script>

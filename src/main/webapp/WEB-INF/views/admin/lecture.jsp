@@ -22,6 +22,8 @@
 	<style type="text/css">
 	.btn-date {border: 1px solid #cbc4c4;}
 	#admin-lecture .form-group {height: 50px;}
+	#lectsInfoTable .sample-video {cursor: pointer;}
+	
 	
 	button.page-link {
 	display: inline-block;
@@ -40,7 +42,7 @@
 	<%@include file="common/admin-nav.jsp" %>
 		<div class="container-fluid">			
 			<div class="row" id="admin-lecture">
-				<h3 style="margin-left: 60px;">동영상 관리</h3>
+				<h3 style="margin-left: 60px;">강좌 관리</h3>
 				<div class="col-sm-12">
 				
 		            <form action="lecture.hta" id="search-lect-form" class="form-horizontal style-form" method="get">
@@ -53,12 +55,12 @@
 		                            <select class="form-control" id="range-search" name="range" style="width: 150px;">
 		                                <option value="0">전체</option>
 		                                 <c:forEach var="category" items="${categories }">
-		                                	<option value="${category.no}" ${param.range eq '${category.no }' ? 'selected' : '' }>${category.name }</option>
+		                                	<option value="${category.no}" ${param.range eq category.no ? 'selected' : '' }>${category.name }</option>
 		                                </c:forEach>
 		                            </select>
 		                        </div>                            
-		                    </div>               
-		
+		                    </div>              
+		                     
 		                    <div class="form-group col-sm-10" style="display: inline-flex;">
 		                        <label class="col-sm-1 control-label">검색</label>
 		                        <div class="col-sm-3">
@@ -74,9 +76,9 @@
 		                    <div class="form-group col-sm-10" style="display: inline-flex;">
 		                        <label class="control-label col-sm-1" style="margin-right:15px;">기간</label>
 		                        <div style="display:inline-block; float:left;">
-		                            <button type="button" class="btn btn-default btn-sm btn-date">오늘</button>
-		                            <button type="button" class="btn btn-default btn-sm btn-date">3일 이내</button>
-		                            <button type="button" class="btn btn-default btn-sm btn-date">7일 이내</button>
+		                            <button type="button" class="btn btn-default btn-date">오늘</button>
+		                            <button type="button" class="btn btn-default btn-date">3일 이내</button>
+		                            <button type="button" class="btn btn-default btn-date">7일 이내</button>
 		                        </div>
 		                        <div class="col-md-5">
 		                            <div class="input-group input-large" id="date-search" data-date-format="yyyy-MM-dd">
@@ -94,10 +96,13 @@
 		                                    <input type="radio" id="optionsRadios1" name="isDisplay" value="A" ${empty param.isDisplay || param.isDisplay eq 'A' ? 'checked' :'' }> 전체
 		                                </label>
 		                                <label>
-		                                    <input type="radio" id="optionsRadios2" name="isDisplay" value="Y" ${param.isDisplay eq 'Y' ? 'checked' :'' }> 예
+		                                    <input type="radio" id="optionsRadios2" name="isDisplay" value="Y" ${param.isDisplay eq 'Y' ? 'checked' :'' }> 승인
 		                                </label>
 		                                <label>
-		                                    <input type="radio" id="optionsRadios3" name="isDisplay" value="N" ${param.isDisplay eq 'N' ? 'checked' :'' }> 아니오
+		                                    <input type="radio" id="optionsRadios3" name="isDisplay" value="D" ${param.isDisplay eq 'D' ? 'checked' :'' }> 거절
+		                                </label>
+		                                <label>
+		                                    <input type="radio" id="optionsRadios4" name="isDisplay" value="N" ${param.isDisplay eq 'N' ? 'checked' :'' }> 대기중
 		                                </label>
 		                            </div>
 		                            
@@ -133,12 +138,13 @@
 		                   		<div class="col-sm-12">
 			                     	<table class="table" id="lectsInfoTable" style="text-align: center;">
 		                        		<colgroup>
-		                        			<col width="14%">
+		                        			<col width="15%">
 		                        			<col width="6%">
+		                        			<col width="5%">
 		                        			<col width="5%">
 		                        			<col width="6%">
 		                        			<col width="6%">
-		                        			<col width="6%">
+		                        			<col width="4%">
 		                        			<col width="4%">
 		                        			<col width="6%">
 		                        			<col width="5%">
@@ -148,10 +154,11 @@
 												<th>강좌명</th>
 							                    <th>카테고리명</th>
 							                    <th>등급</th>
-							                    <th>유저명</th>
+							                    <th>회원명</th>
 							                    <th>가격</th>
 							                    <th>신청일</th>
-							                    <th>공개여부</th>
+							                    <th>승인여부</th>
+							                    <th>샘플영상</th>
 							                    <th></th>
 							                    <th></th>
 											</tr>
@@ -166,7 +173,7 @@
 												<c:otherwise>
 													<c:forEach var="lect" items="${lectList }">
 														<tr>
-									                    	<td>${lect.title }</td>
+									                    	<td><strong>${lect.title }</strong></td>
 									                    	<td>${lect.cateName }</td>
 									                    	<td>
 									                    		<c:choose>
@@ -177,13 +184,20 @@
 									                    		</c:choose>
 									                    	</td>
 									                    	<td>${lect.userName }(${lect.userId })</td>
-									                    	<td>${lect.price }(${lect.discountPrice })</td>
+									                    	<td>${lect.price }<strong>(${lect.discountPrice })</strong></td>
 									                    	<td><span><fmt:formatDate value="${lect.createDate }" pattern="yyyy-MM-dd"/></span></td>
-									                    	<td>${lect.isDisplay }</td>
+									                    	<td>
+									                    		<c:choose>
+											                    	<c:when test="${lect.isDisplay == 'Y'}"><h5><span class="badge badge-success">승인</span></h5></c:when>
+											                    	<c:when test="${lect.isDisplay == 'D'}"><h5><span class="badge badge-danger">거절</span></h5></c:when>
+											                    	<c:when test="${lect.isDisplay == 'N'}"><h5><span class="badge badge-warning">대기중</span></h5></c:when>
+									                    		</c:choose>
+									                    	</td>
+									                    	<td><a class="sample-video" data-lect-no="${lect.no }" data-video-link="${lect.samplePath }"><i class="fas fa-tv"></i></a></td>
 									                    	<td>
 									                    		<c:choose>
 										                    		<c:when test="${lect.isDisplay == 'N' }">
-											                    		<button class="btn btn-success" data-lect-no="${lect.no }" >승락</button>
+											                    		<button class="btn btn-success" data-lect-no="${lect.no }" >승인</button>
 											                    		<button class="btn btn-danger" data-lect-no="${lect.no }" >거절</button>
 										                    		</c:when>
 									                    		</c:choose>
@@ -247,15 +261,16 @@
 	</div>
 </div>
 
-<!-- 동영상 상세정보 (모달) -->
+<!-- 강좌 상세정보 (모달) -->
 <div id="modal-lecture-items" class="modal fade" role="dialog">
 	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
+		<div class="modal-content" id="modal-lecture-detail-content">
+			<input type="hidden" name="lectNo">
 			<div class="modal-header">
-				<h4 class="modal-title">동영상 상세정보</h4>
+				<h4 class="modal-title">강좌 상세정보</h4>
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
-			<div class="modal-bady">
+			<div class="modal-body">
 				<table class="table" id="modal-lecture-detail-table">
 					<colgroup>
 						<col width="*%">
@@ -268,16 +283,10 @@
 							<th>챕터명</th>
 							<th>레슨명</th>
 							<th>재생시간</th>
-							<th>첨부파일</th>
+							<th>재생하기</th>
 						</tr>
 					</thead>	
-					<tbody>
-						<tr>
-							<td>1</td>
-							<td>1</td>
-							<td>115:30</td>
-							<td>kimdaeilkingkingking.avi</td>
-						</tr>
+					<tbody class="lecture-detail-tbody">
 					</tbody>
 				</table>
 			</div>
@@ -288,17 +297,17 @@
 	</div>
 </div>
 
-<!-- 동영상을 승인 하는 모달화면 -->
+<!-- 강좌를 승인 하는 모달화면 -->
 <div class="modal fade" id="modal-lect-confirm" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content" id="modal-lect-confirm-content">
 			<input type="hidden" name="lectNo">
 			<div class="modal-header">
-				<h4 class="modal-title">동영상 승인</h4>
+				<h4 class="modal-title">강좌 승인</h4>
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 			<div class="modal-body">
-				<p>해당 동영상을 승인하시겠습니까?</p>
+				<p>해당 강좌를 승인하시겠습니까?</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" id="confirm-lect-btn">승인하기</button>
@@ -308,21 +317,40 @@
 	</div>
 </div>
 
-<!-- 동영상을 거절 하는 모달화면 -->
+<!-- 강좌를 거절 하는 모달화면 -->
 <div class="modal fade" id="modal-lect-deny" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content" id="modal-lect-deny-content">
 		<input type="hidden" name="lectNo">
 			<div class="modal-header">
-				<h4 class="modal-title">동영상 거절</h4>
+				<h4 class="modal-title">강좌 거절</h4>
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 			<div class="modal-body">
-				<p>해당 동영상을 거절하시겠습니까?</p>
+				<p>해당 강좌를 거절하시겠습니까?</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger" id="deny-lect-btn">거절하기</button>
 				<button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 샘플영상 모달화면 -->
+<div class="modal fade" id="modal-sample" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content" id="modal-sample-content">
+		<input type="hidden" name="lectNo">
+			<div class="modal-header">
+				<h4 class="modal-title">샘플영상</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body" id="video-body">
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
 			</div>
 		</div>
 	</div>
@@ -341,8 +369,52 @@
 <script src="../../../resources/js/demo/datatables-demo.js"></script>
 
 <script type="text/javascript">
+	// 샘플영상
+	$("#lectsInfoTable .sample-video").click(function() {
+		
+		var lectNo = $(this).data("lect-no");
+		var lectSamplePath = $(this).data("video-link");
+	
+		var videoTag = "<video autoplay><source src='"+lectSamplePath+"' type='video/mp4'/></video>";
+		$("#video-body").html(videoTag);
+		
+		$("#modal-sample").modal('show');
+		
+	})
+	
+	// 강좌 상세정보
 	$('#lectsInfoTable button.btn-info').click(function() {
+		var lectNo = $(this).data("lect-no");
+		$("#modal-lecture-detail-content [name=lectNo]").val(lectNo);
+		
 		$("#modal-lecture-items").modal('show');
+		
+		var $list = $(".lecture-detail-tbody").empty();
+	
+		$.ajax({
+			url: "/admin/lectdetail.hta",
+			type: "get",
+			data: {lectNo:lectNo},
+			success: function(result) {
+				result.forEach(function(item, i) {
+					var tbody = "<tr>"
+					tbody += "<td>"+item.chapterName+"</td>";
+					tbody += "<td><strong>"+item.lessonTitle+"</strong></td>";
+					tbody += "<td>"+item.totalTime+" 분</td>";
+					
+					if (item.lessonVideoPath != null) {
+						tbody += "<td><a href=''><i class='fas fa-play'></i></a></td>";
+					} else {
+						tbody += "<td>준비중</td>";
+					}
+					
+					tbody += "</tr>"
+					
+					$list.append(tbody);
+					
+				})
+			}
+		})
 	});
 	
 /* 	var categoryApp = new Vue({
@@ -405,7 +477,7 @@
 		location.href = url;
 	};
 	
-	// 동영상 승인하는 모달
+	// 강좌 승인하는 모달
 	$("#lectsInfoTable button.btn-success").click(function() {		
 		var lectNo = $(this).data("lect-no");
 		$("#modal-lect-confirm-content  [name=lectNo]").val(lectNo);
@@ -413,7 +485,7 @@
 		$("#modal-lect-confirm").modal('show');
 	})
 	
-	// 동영상 거절하는 모달 
+	// 강좌 거절하는 모달 
 	$("#lectsInfoTable button.btn-danger").click(function() {
 		var lectNo = $(this).data("lect-no");
 		$("#modal-lect-deny-content [name=lectNo]").val(lectNo);
@@ -421,7 +493,7 @@
 		$("#modal-lect-deny").modal('show');
 	})
 	
-	// 동영상 승인
+	// 강좌 승인
 	$("#confirm-lect-btn").click(function() {
 		var lectNo = $("#modal-lect-confirm-content input[name=lectNo]").val();
 		
@@ -430,7 +502,7 @@
 			type: "post",
 			data : {lectNo:lectNo},
 			success : function(result) {
-				alert("승락하였습니다.");
+				alert("승인하였습니다.");
 				$('#modal-lect-confirm').modal('hide');
 				
 				location.href = "http://localhost/admin/lecture.hta";
@@ -438,7 +510,7 @@
 		})
 	})
 	
-	// 동영상 거절
+	// 강좌 거절
 	$("#deny-lect-btn").click(function() {
 		var lectNo = $("#modal-lect-deny-content input[name=lectNo]").val();
 		

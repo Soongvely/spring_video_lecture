@@ -21,45 +21,38 @@
 <body>
 <div class="container" style="font-size:17px; width:1440px;">
 	<div class="row">
-		<div class="col-sm-2" style="border: 1px solid red;">
-			<p>대시보드</p>
-			<p>내 학습</p>
-			<ul>
-				<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
-				<li><a href="/question/userqueston.hta">내 질문</a></li>
-				<li>내 모의고사</li>
-			</ul>
-			<p>내 결제</p>
-			<ul>
-				<li><a href="/like/likelectlist.hta">위시리스트</a></li>
-				<li><a href="/cart/userCartList.hta">장바구니</a></li>
-				<li>내 쿠폰함</li>
-				<li><a href="/order/userorderlectlist.hta">구매내역</a></li>
-			</ul>
-			<p>설정</p>
-			<ul>
-				<li>프로필 설정</li>
-				<li>알림 설정</li>
-			</ul>
-			<p>내 강의/모의고사</p>
-			<ul>
-				<li>내 강의</li>
-				<li>내 모의고사</li>
-			</ul>
-		</div>
+		<div class="col-sm-2">
+				<p>내 학습</p>
+				<ul style="list-style:none;">
+					<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
+					<li><a href="/test/test-list.hta">모의고사</a></li>
+					<li><a href="/question/userqueston.hta">내 질문</a></li>
+				</ul>
+				<p>내 결제</p>
+				<ul style="list-style:none;">
+					<li><a href="/like/likelectlist.hta">위시리스트</a></li>
+					<li><a href="/cart/userCartList.hta">장바구니</a></li>
+					<li><a href="/user/mycouponlist.hta">내 쿠폰함</a></li>
+					<li><a href="/order/userorderlectlist.hta">구매내역</a></li>
+				</ul>
+				<p>내 강의</p>
+				<ul style="list-style:none;">
+					<li id="teacher"><a href="/teacher/main.hta">내 강의</a></li>
+				</ul>
+			</div>
 		
-		<div class="col-sm-10" style="border: 1px solid blue;">
+		<div class="col-sm-10">
 			<span>설정 / 프로필 설정</span>
 			<h4>프로필 설정</h4>
 			<div class="row">
-				<form action="userupdate.hta" class="well" method="post" enctype="multipart/form-data">
+				<form id="reg-form" action="userupdate.hta" class="well" method="post" enctype="multipart/form-data">
 					<div class="form-group">
 						<label>닉네임</label>
 						<input type="text" class="form-control" name="nickname" value="${userProfil.nickname }"/>
 					</div>
 					<div class="form-group text-center">
 						<h4>프로필 사진</h4>
-						<img src="../../resources/images/userImageFilename/${userProfil.imageFilename }" style="width: 100px; height: 100px; margin-bottom: 20px;"/>
+						<img src="../../resources/images/userImageFilename/${userProfil.imageFilename != null ? userProfil.imageFilename : 'skrwl.GIF' }" style="width: 100px; height: 100px; margin-bottom: 20px;"/>
 						<input type="file" class="form-control" name="imgfile"/>
 					</div>
 					<div class="form-group">
@@ -68,7 +61,7 @@
 					</div>
 					<div class="form-group">
 						<label>비밀번호</label>
-						<input type="password" class="form-control" name="pwd" />
+						<input type="password" class="form-control" name="pwd" id="user-pwd" />
 					</div>
 					<div class="form-group">
 						<label>자기소개</label>
@@ -76,10 +69,10 @@
 					</div>
 					<div class="form-group">
 						<label>계좌번호</label>
-						<input type="text" class="form-control" name="banknumber" value="${userProfil.bankNumber }" />
+						<input type="text" class="form-control" name="banknumber" value="${userProfil.bankNumber }"  id="user-bankno"/>
 					</div>
 					<div class="text-right">
-						<button type="submit" class="btn btn-primary btn-info">프로필 수정</button>
+						<input type="submit" class="btn btn-primary" onclick="checkform(event)"  value="프로필수정" />
 					</div>
 				</form>
 			</div>
@@ -87,7 +80,36 @@
 	</div>
 </div>
 <script type="text/javascript">
+function checkform(e) {
+	e.preventDefault(); 	// 일단 제출이 안되게 해놈
 	
+	// 비밀번호 체크 : 8 ~ 12글자
+	var userPwd = document.getElementById("user-pwd").value.trim();
+	if(userPwd.length == 0){
+		alert("비밀번호를 입력하세요");
+		return;
+	}
+	if(userPwd.length < 8 || userPwd.length > 12){
+		alert("비밀번호는 8 ~ 12글자 이내로 입력하세요");
+		return;
+	}
+	
+	// 비밀번호 체크 : 8 ~ 12글자
+	var userPwd = document.getElementById("user-pwd").value.trim();
+	if(userPwd.length == 0){
+		alert("비밀번호를 입력하세요");
+		return;
+	}
+	
+	// 비밀번호 체크 : 8 ~ 12글자
+	var userBankNo = document.getElementById("user-bankno").value.trim();
+	if(userBankNo.length == 0){
+		alert("계좌번호를 입력하세요");
+		return;
+	}
+	
+	document.getElementById("reg-form").submit();
+}
 </script>
 
 <%@ include file="../common/footer.jsp" %>

@@ -1,19 +1,26 @@
 package kr.co.coduck.dto;
 
+import java.util.Date;
+
 import org.apache.ibatis.type.Alias;
 
 @Alias("SearchTestDetailDto")
 public class SearchTestDetailDto {
 	
 	private int testNo;
-	private int mainCateNo;
+	//private int mainCateNo;
 	private String mainCateName;
-	private int subCateNo;
-	private String subCateName;
+	//private int subCateNo;
+	//private String subCateName;
+	private int lectNo;
 	private String testEp;
 	private String testName;
 	private int testQtCnt;
 	private int testPrice;
+	private int passScore;
+	private Date testDate;
+	private int testLtdTime;
+	private String isDisplay;
 	private String testDone;
 	private Double testAvg;
 	private String orderYN;
@@ -28,13 +35,13 @@ public class SearchTestDetailDto {
 		this.testNo = testNo;
 	}
 
-	public int getMainCateNo() {
-		return mainCateNo;
-	}
-
-	public void setMainCateNo(int mainCateNo) {
-		this.mainCateNo = mainCateNo;
-	}
+//	public int getMainCateNo() {
+//		return mainCateNo;
+//	}
+//
+//	public void setMainCateNo(int mainCateNo) {
+//		this.mainCateNo = mainCateNo;
+//	}
 
 	public String getMainCateName() {
 		return mainCateName;
@@ -44,21 +51,21 @@ public class SearchTestDetailDto {
 		this.mainCateName = mainCateName;
 	}
 
-	public int getSubCateNo() {
-		return subCateNo;
-	}
+//	public int getSubCateNo() {
+//		return subCateNo;
+//	}
+//
+//	public void setSubCateNo(int subCateNo) {
+//		this.subCateNo = subCateNo;
+//	}
 
-	public void setSubCateNo(int subCateNo) {
-		this.subCateNo = subCateNo;
-	}
-
-	public String getSubCateName() {
-		return subCateName;
-	}
-
-	public void setSubCateName(String subCateName) {
-		this.subCateName = subCateName;
-	}
+//	public String getSubCateName() {
+//		return subCateName;
+//	}
+//
+//	public void setSubCateName(String subCateName) {
+//		this.subCateName = subCateName;
+//	}
 
 	public String getTestEp() {
 		return testEp;
@@ -116,11 +123,60 @@ public class SearchTestDetailDto {
 		this.orderYN = orderYN;
 	}
 
+	public String getIsDisplay() {
+		return isDisplay;
+	}
+
+	public void setIsDisplay(String isDisplay) {
+		this.isDisplay = isDisplay;
+	}
+
+	public int getTestLtdTime() {
+		return testLtdTime;
+	}
+
+	public void setTestLtdTime(int testLtdTime) {
+		this.testLtdTime = testLtdTime;
+	}
+
+	public Date getTestDate() {
+		return testDate;
+	}
+
+	public void setTestDate(Date testDate) {
+		this.testDate = testDate;
+	}
+
+	public int getPassScore() {
+		return passScore;
+	}
+
+	public void setPassScore(int passScore) {
+		this.passScore = passScore;
+	}
+
+	public int getLectNo() {
+		return lectNo;
+	}
+
+	public void setLectNo(int lectNo) {
+		this.lectNo = lectNo;
+	}
+
 	@Override
 	public String toString() {
-		return "SearchTestDetailDto [testNo=" + testNo + ", mainCateNo=" + mainCateNo + ", mainCateName=" + mainCateName
-				+ ", subCateNo=" + subCateNo + ", subCateName=" + subCateName + ", testEp=" + testEp + ", testName="
-				+ testName + ", testQtCnt=" + testQtCnt + ", testPrice=" + testPrice + ", testDone=" + testDone
-				+ ", testAvg=" + testAvg + ", orderYN=" + orderYN + "]";
+		return "SearchTestDetailDto [testNo=" + testNo + ", mainCateName=" + mainCateName + ", lectNo=" + lectNo
+				+ ", testEp=" + testEp + ", testName=" + testName + ", testQtCnt=" + testQtCnt + ", testPrice="
+				+ testPrice + ", passScore=" + passScore + ", testDate=" + testDate + ", testLtdTime=" + testLtdTime
+				+ ", isDisplay=" + isDisplay + ", testDone=" + testDone + ", testAvg=" + testAvg + ", orderYN="
+				+ orderYN + "]";
 	}
+
+//	@Override
+//	public String toString() {
+//		return "SearchTestDetailDto [testNo=" + testNo + ", mainCateNo=" + mainCateNo + ", mainCateName=" + mainCateName
+//				+ ", subCateNo=" + subCateNo + ", subCateName=" + subCateName + ", testEp=" + testEp + ", testName="
+//				+ testName + ", testQtCnt=" + testQtCnt + ", testPrice=" + testPrice + ", isDisplay=" + isDisplay
+//				+ ", testDone=" + testDone + ", testAvg=" + testAvg + ", orderYN=" + orderYN + "]";
+//	}
 }

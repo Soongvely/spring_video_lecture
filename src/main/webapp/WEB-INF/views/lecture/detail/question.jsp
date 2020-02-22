@@ -76,29 +76,9 @@
                     </div>
                 </div>
             </div>
-			<%-- 	            
-                <!-- Modal -->
-                <div class="modal fade question-madal" id="myModal" role="dialog">
-                <form action="insertQuestion.hta" method="post">
-                	<input type="hidden" name="lectureNo" value="${param.lectureNo }">
-                    <div class="modal-dialog">
-	                    <div class="modal-content">
-	                        <div class="modal-body">
-	                        <p style="font-size: 18px; font-weight: 600; color: darkblue;">질문 작성 <i class="fas fa-pencil-alt"></i></p>
-	                            <textarea class="modal-text" placeholder="내용을 입력해주세요."></textarea>
-	                        </div>
-	                        <div class="modal-footer">
-	                            <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-	                            <button type="submit" class="btn btn-info" data-dismiss="modal">등록</button>
-	                        </div>
-	                    </div>
-                    </div>
-                </form>
-                </div> 
-            --%>
-	        </div>
-	    </div>
-		<!-- question end -->
+        </div>
+    </div>
+	<!-- question end -->
 
 <script>
 	var lectureNo = ${param.lectureNo} || 0;

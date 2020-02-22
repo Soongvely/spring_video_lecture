@@ -6,25 +6,17 @@ import org.apache.ibatis.type.Alias;
 public class CartChoiceLectListDto {
 
    private int cartChoiceLectNo;
-   private int lectNo;
+   private int no;
    private int userNo;
    private String lectTitle;
-   private int lectPrice;
+   private int price;
+   private int discountPrice;
    private int couponNo;
    
    public CartChoiceLectListDto() {
       
    }
-
    
-   public int getLectNo() {
-      return lectNo;
-   }
-
-   public void setLectNo(int lectNo) {
-      this.lectNo = lectNo;
-   }
-
    public int getUserNo() {
       return userNo;
    }
@@ -40,15 +32,6 @@ public class CartChoiceLectListDto {
    public void setLectTitle(String lectTitle) {
       this.lectTitle = lectTitle;
    }
-
-   public int getLectPrice() {
-      return lectPrice;
-   }
-
-   public void setLectPrice(int lectPrice) {
-      this.lectPrice = lectPrice;
-   }
-
 
    public int getCartChoiceLectNo() {
       return cartChoiceLectNo;
@@ -68,5 +51,29 @@ public class CartChoiceLectListDto {
    public void setCouponNo(int couponNo) {
       this.couponNo = couponNo;
    }
+
+public int getNo() {
+	return no;
+}
+
+public void setNo(int no) {
+	this.no = no;
+}
+
+public int getPrice() {
+	return price;
+}
+
+public void setPrice(int price) {
+	this.price = price;
+}
+
+public int getDiscountPrice() {
+	return discountPrice;
+}
+
+public void setDiscountPrice(int discountPrice) {
+	this.discountPrice = discountPrice;
+}
    
 }

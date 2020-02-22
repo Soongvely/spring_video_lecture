@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.co.coduck.dto.AdminLectCriteria;
 import kr.co.coduck.dto.AdminLectDto;
+import kr.co.coduck.dto.AdminLessonDto;
 import kr.co.coduck.vo.Lect;
 
 public interface AdminLectDao {
@@ -13,4 +14,6 @@ public interface AdminLectDao {
 	void updateLect(Lect lect);
 	
 	Lect getLectByLectNo(int lectNo);
+	
+	List<AdminLessonDto> getLessonsByLectNo(int lectNo); 
 }

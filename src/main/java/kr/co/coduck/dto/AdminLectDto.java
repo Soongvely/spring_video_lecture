@@ -28,11 +28,13 @@ public class AdminLectDto {
 	private int userNo;
 	private String userIntroduction;
 	private String userImagePath;
+	private String samplePath;
 	
 	private int reviewStar;
 	private int reviewCnt;
 	private int studentCnt;
 	private int likeCnt;
+	
 	public int getNo() {
 		return no;
 	}
@@ -176,6 +178,12 @@ public class AdminLectDto {
 	}
 	public void setLikeCnt(int likeCnt) {
 		this.likeCnt = likeCnt;
+	}
+	public String getSamplePath() {
+		return samplePath;
+	}
+	public void setSamplePath(String samplePath) {
+		this.samplePath = samplePath;
 	}
 	
 

@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.co.coduck.dto.CartChoiceLectListDto;
 import kr.co.coduck.dto.CartChoiceTestListDto;
 import kr.co.coduck.dto.CartTestDto;
+import kr.co.coduck.dto.OrderTestDetailListDto;
 import kr.co.coduck.service.CartTestService;
+import kr.co.coduck.service.OrderTestService;
 import kr.co.coduck.service.UserService;
 import kr.co.coduck.vo.TestCart;
 import kr.co.coduck.vo.User;
@@ -33,6 +35,9 @@ public class CartTestController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private OrderTestService orderTestService;
 	
 	@GetMapping("/addOneTestInCart.hta")
 	@ResponseBody
@@ -72,7 +77,7 @@ public class CartTestController {
 	}
 	
 	@PostMapping("/ordertestform.hta")
-	public String cartordertestlist(HttpSession session, Model model, @RequestParam("testprice") int[] cartTestNos, @RequestParam("order-test-total-price") int totalprice) {   
+	public String cartordertestlist(HttpSession session, Model model, @RequestParam("testnos") int[] cartTestNos) {   
 		User user = (User)session.getAttribute("LU");
 		int testNo = 0;
 		List<CartChoiceTestListDto> results = new ArrayList<CartChoiceTestListDto>();
@@ -81,11 +86,23 @@ public class CartTestController {
 			testNo = cartTestNos[i];
 			userChoiceTestList.put("userNo", user.getNo());
 			userChoiceTestList.put("testNo", testNo);
+			//System.out.println("===============");
+			//System.out.println("testNo : " + testNo);
 			CartChoiceTestListDto userChoiceTest = cartTestService.getCartChoiceTestListByCartChoiceTestNo(userChoiceTestList);
+			//System.out.println("userChoiceTest : " + userChoiceTest);
 			results.add(userChoiceTest); 
 		}
+		
+		//System.out.println("=============");
+		//System.out.println("results : " + results);
 		model.addAttribute("userChoiceTestList", results);
 		return "order/ordertestform";
+	}
+	
+	@GetMapping("/carttestdel.hta") public String
+	userCartTestDel(@RequestParam("testno") int testNo) {
+		cartTestService.deleteCartTest(testNo);
+		return "redirect:/cart/userCartList.hta"; 
 	}
 
 }

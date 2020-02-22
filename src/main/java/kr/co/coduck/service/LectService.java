@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.co.coduck.dto.ChapterDto;
+import kr.co.coduck.dto.IncomeDto;
 import kr.co.coduck.dto.LectureCourseDto;
 import kr.co.coduck.dto.LectureDto;
 import kr.co.coduck.dto.LessonDto;
@@ -14,30 +15,40 @@ import kr.co.coduck.vo.Lesson;
 
 public interface LectService {
 
-	List<UserByLectDto> getLectListUserByNo(int userNo);
+	List<LessonDto> getLectListUserByNo(int userNo);
+
 	Lect getLectByNo(int lectNo);
-	
+
 	List<LectureDto> getLectureByCategoryNo(int cateNo);
+
 	LectureDto getLectureByLectureNo(int lectureNo);
-	
+
 	List<LectureDto> getLectureListByCriteria(LectureCriteria cri);
+
 	int getTeachersLectureCountByCriteria(LectureCriteria cri);
+
 	LessonDto getLessonCountAndLengthByLectureNo(int lectureNo);
-	
+
 	LectureDto getAllCountByLectureNo(int lectureNo);
 
 	List<ChapterDto> getChapterByLectureNo(int lectureNo);
+
 	List<Lesson> getLessonByChpaterNo(int chapterNo);
 
 	List<LectureCourseDto> getLectureByCriteria(LectureCriteria cri);
-	
+
 	int getLectureCountByCriteria(LectureCriteria cri);
-	
+
 	LessonDto getProgressPercentInDashboard(Map<String, Object> map);
 
-	
 	List<LessonDto> getLectProcessivityByUserNo(int userNo);
+
 	List<Lesson> getLessonByRecent(Map<String, Object> map);
+
+
+	List<IncomeDto> getTeacherIncomeByCriteria(LectureCriteria cri);
+	IncomeDto getTeacherIncomeStatistics(int userNo);
+	double getTeacherAvgScore(int userNo);
 	
 	List<Lect> getFindLectByUserNo(int userNo);
 

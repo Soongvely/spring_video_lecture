@@ -55,6 +55,7 @@ table thead tr td {
 	
 	<br>
 	
+	
 	<div class="row" id="div-test-list" >
 		<form action="/cart/addTestsInCart.hta" method="get" id="form-addCart">
 			<div class="col-sm-12" style="padding: 0px;">
@@ -180,8 +181,7 @@ table thead tr td {
 					//문자열은 불변
 					var str2 = str.slice(0,-2);//자른 새 문자열 반환(원본 문자열은 보존)
 					alert("장바구니에 담긴 시험이 존재합니다. 다시 선택해주세요.\n"
-							+ str2);
-					
+							+ str2);					
 				}
 			},
 			error:function(){
@@ -260,13 +260,14 @@ table thead tr td {
 		
 	})
 
+	
 	var addRow = function(tests){
 		var row = "";
 		$.each(tests, function(index, item){
 			row += "<tr>";
 			row += "<td><input style='height: 15px; width: 15px;' type='checkbox' name='testNo' value='" + item.testNo + "'/></td>";
 			row += "<td>" + (index+1) + "</td>";
-			row += "<td style='text-align: left;'>" + item.mainCateName + " > " + item.subCateName + "</td>";
+			row += "<td style='text-align: left;'>" + item.mainCateName + " > " + item.testName + "</td>";
 			row += "<td>" + item.testEp + "</td>";
 			row += "<td>" + item.testQtCnt + "</td>";
 			row += "<td>" + item.testPrice.toLocaleString() + "원</td>";
@@ -285,7 +286,7 @@ table thead tr td {
 			} else {
 				row += "<td>미구매</td>";
 				row += "<td>미응시</td>";
-				row += "<td><a href='/order/ordertestcartno.hta?testno=" + item.testNo + "' class='btn btn-primary'>바로구매</a> <button type='button' class='btn btn-warning' name='testNo' value='" + item.testNo + "'>장바구니담기</button></td>";
+				row += "<td><a href='/buynow/ordernowtestform.hta?testno=" + item.testNo + "' class='btn btn-primary'>바로구매</a> <button type='button' class='btn btn-warning' name='testNo' value='" + item.testNo + "'>장바구니담기</button></td>";
 			}
 			
 			/* if(done == 'Y'){

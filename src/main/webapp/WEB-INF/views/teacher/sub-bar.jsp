@@ -10,9 +10,9 @@
 	                <!-- teacher navbar start -->
 	                <div class="container">
 	                    <ul class="nav nav-pills" id="subNav">
-	                        <li class="is-active home"><a href="#">홈</a></li>
-	                        <li class="questions"><a href="#">강좌관리</a></li>
-	                        <li class="questions"><a href="#">질문답변</a></li>
-	                        <li class="revenue"><a href="#">수익관리</a></li>
+	                        <li class="is-active home"><a href="#">강좌</a></li>
+	                        <li class="review"><a href="#">수강후기</a></li>
+	                        <li class="questions"><a href="/teacher/question.hta">질문답변</a></li>
+	                        <li class="income"><a href="/teacher/income.hta">수익관리</a></li>
 	                    </ul>
 	                </div>

@@ -23,6 +23,7 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter{
 		System.out.println("요청 URI " + uri);
 		UrlInfo urlInfo = urlDao.getUrlInfo(uri);
 		System.out.println("urlInfo : " + urlInfo);
+		
 		//로그인이 필요 없으면
 		if("N".equals(urlInfo.getRequiredLogin())) {
 			return true;
@@ -30,10 +31,11 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter{
 		
 		//로그인이 필요하면
 		HttpSession session = request.getSession();
+
 		if(session.getAttribute("LU") == null) {
 			response.sendRedirect("/user/login.hta?error=required");
 			return false;
-		}
+		} 
 		
 		return true;
 	}

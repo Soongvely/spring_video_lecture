@@ -5,22 +5,14 @@ import org.apache.ibatis.type.Alias;
 @Alias("CartChoiceTestListDto")
 public class CartChoiceTestListDto {
 
-	private int testNo;
+	private int no;
 	private int userNo;
-	private String testTitle;
-	private int testPrice;
+	private String name;
+	private int price;
 	private int couponNo;
 	
 	public CartChoiceTestListDto() {
 		
-	}
-
-	public int getTestNo() {
-		return testNo;
-	}
-
-	public void setTestNo(int testNo) {
-		this.testNo = testNo;
 	}
 
 	public int getUserNo() {
@@ -31,22 +23,6 @@ public class CartChoiceTestListDto {
 		this.userNo = userNo;
 	}
 
-	public String getTestTitle() {
-		return testTitle;
-	}
-
-	public void setTestTitle(String testTitle) {
-		this.testTitle = testTitle;
-	}
-
-	public int getTestPrice() {
-		return testPrice;
-	}
-
-	public void setTestPrice(int testPrice) {
-		this.testPrice = testPrice;
-	}
-
 	public int getCouponNo() {
 		return couponNo;
 	}
@@ -54,5 +30,36 @@ public class CartChoiceTestListDto {
 	public void setCouponNo(int couponNo) {
 		this.couponNo = couponNo;
 	}
+
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	@Override
+	public String toString() {
+		return "CartChoiceTestListDto [no=" + no + ", userNo=" + userNo + ", name=" + name + ", price=" + price
+				+ ", couponNo=" + couponNo + "]";
+	}
+	
 	
 }

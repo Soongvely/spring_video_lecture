@@ -22,32 +22,25 @@
 	<%@ include file="../common/header.jsp"%>
    <div class="container" style="font-size:17px; width:1440px;">
       <div class="row">
-         <div class="col-sm-2" style="border: 1px solid red;">
-            <p>대시보드</p>
-            <p>내 학습</p>
-            <ul>
-               <li><a href="/user/userlecting.hta">수강중인 강의</a></li>
-               <li><a href="/question/userqueston.hta">내 질문</a></li>
-               <li>내 모의고사</li>
-            </ul>
-            <p>내 결제</p>
-            <ul>
-               <li>위시리스트</li>
-               <li><a href="/cart/userCartList.hta">장바구니</a></li>
-               <li>내 쿠폰함</li>
-               <li><a href="/order/userorderlectlist.hta">구매내역</a></li>
-            </ul>
-            <p>설정</p>
-            <ul>
-               <li>프로필 설정</li>
-               <li>알림 설정</li>
-            </ul>
-            <p>내 강의/모의고사</p>
-            <ul>
-               <li>내 강의</li>
-               <li>내 모의고사</li>
-            </ul>
-         </div>
+         <div class="col-sm-2">
+				<p>내 학습</p>
+				<ul style="list-style:none;">
+					<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
+					<li><a href="/test/test-list.hta">모의고사</a></li>
+					<li><a href="/question/userqueston.hta">내 질문</a></li>
+				</ul>
+				<p>내 결제</p>
+				<ul style="list-style:none;">
+					<li><a href="/like/likelectlist.hta">위시리스트</a></li>
+					<li><a href="/cart/userCartList.hta">장바구니</a></li>
+					<li><a href="/user/mycouponlist.hta">내 쿠폰함</a></li>
+					<li><a href="/order/userorderlectlist.hta">구매내역</a></li>
+				</ul>
+				<p>내 강의</p>
+				<ul style="list-style:none;">
+					<li id="teacher"><a href="/teacher/main.hta">내 강의</a></li>
+				</ul>
+			</div>
 
          <div class="col-sm-10">
             <p>장바구니는 최근에 추가했던 순서로 표시됩니다.</p>
@@ -70,13 +63,13 @@
                   <c:choose>
                      <c:when test="${empty userCartLectLists }">
                         <tr>
-                           <td colspan="5" class="text-center">고객님 추가좀 하세요</td>
+                           <td colspan="5" class="text-center">없습니다</td>
                         </tr>
                      </c:when>
                      <c:otherwise>
                         <c:forEach var="userCartLect" items="${userCartLectLists }" varStatus="loop">
                            <tr>
-                              <td><input type="checkbox"  name="lectprice" value="${userCartLect.lectNo }"/>${userCartLect.lectNo }</td>
+                              <td><input type="checkbox"  name="lectnos" value="${userCartLect.lectNo }"/>${userCartLect.lectNo }</td>
                               <td>${loop.count }</td>
                               <td>${userCartLect.lectTitle }</td>
                               <td>${userCartLect.lectPrice }</td>
@@ -117,17 +110,17 @@
                   <c:choose>
                      <c:when test="${empty userCartTestLists }">
                         <tr>
-                           <td colspan="5" class="text-center">고객님 추가좀 하세요</td>
+                           <td colspan="5" class="text-center">없습니다</td>
                         </tr>
                      </c:when>
                      <c:otherwise>
                         <c:forEach var="userCartTest" items="${userCartTestLists }" varStatus="loop">
                            <tr>
-                              <td><input type="checkbox"  name="testprice" value="${userCartTest.testNo }"/>${userCartTest.testNo }</td>
+                              <td><input type="checkbox"  name="testnos" value="${userCartTest.no }"/>${userCartTest.no }</td>
                               <td>${loop.count }</td>
-                              <td>${userCartTest.testTitle }</td>
-                              <td>${userCartTest.testPrice }</td>
-                              <td><a href="" class="btn btn-primary btn-xs">삭제하기</a></td>
+                              <td>${userCartTest.name }  >  ${userCartTest.ep }</td>
+                              <td>${userCartTest.price }</td>
+                              <td><a href="/cart/carttestdel.hta?testno=${userCartTest.no }" class="btn btn-primary btn-xs">삭제하기</a></td>
                            </tr>
                         </c:forEach>
                      </c:otherwise>
@@ -146,10 +139,10 @@
          </div>
       </div>
    <script type="text/javascript">
-      $("#lecture-table tbody :checkbox[name=lectprice]").change(function() {
+      $("#lecture-table tbody :checkbox[name=lectnos]").change(function() {
          
          var totalPrice = 0;
-         $("#lecture-table tbody :checkbox[name=lectprice]:checked").parents("tr").each(function(index, tr) {
+         $("#lecture-table tbody :checkbox[name=lectnos]:checked").parents("tr").each(function(index, tr) {
             var price = parseInt($(tr).find('td:eq(4)').text());
             totalPrice += price;
             $("#lect-total").val(totalPrice);
@@ -162,25 +155,25 @@
       $("#lecture-table thead :checkbox[name=lect-all-price]").change(function() {
          var totalPrice = 0;
          if($(this).is(":checked")){
-            $("#lecture-table tbody :checkbox[name=lectprice]").prop("checked", true);
-            $("#lecture-table tbody :checkbox[name=lectprice]:checked").parents("tr").each(function(index, tr) {
+            $("#lecture-table tbody :checkbox[name=lectnos]").prop("checked", true);
+            $("#lecture-table tbody :checkbox[name=lectnos]:checked").parents("tr").each(function(index, tr) {
                var price = parseInt($(tr).find('td:eq(4)').text());
                totalPrice += price;
             });
             $("#lect-total").val(totalPrice);
             $("#lecture-summary-price").text(totalPrice);
          }else{
-            $("#lecture-table tbody :checkbox[name=lectprice]").prop("checked", false);
+            $("#lecture-table tbody :checkbox[name=lectnos]").prop("checked", false);
             $("#lecture-summary-price").text(totalPrice);
          }
          
       })
       
    
-   $("#test-table tbody :checkbox[name=testprice]").change(function() {
+   $("#test-table tbody :checkbox[name=testnos]").change(function() {
       
       var totalPrice = 0;
-      $("#test-table tbody :checkbox[name=testprice]:checked").parents("tr").each(function(index, tr) {
+      $("#test-table tbody :checkbox[name=testnos]:checked").parents("tr").each(function(index, tr) {
          var price = parseInt($(tr).find('td:eq(3)').text());
          totalPrice += price;
       });
@@ -192,14 +185,14 @@
    $("#test-table thead :checkbox[name=test-all-price]").change(function() {
       var totalPrice = 0;
       if($(this).is(":checked")){
-         $("#test-table tbody :checkbox[name=testprice]").prop("checked", true);
-         $("#test-table tbody :checkbox[name=testprice]:checked").parents("tr").each(function(index, tr) {
+         $("#test-table tbody :checkbox[name=testnos]").prop("checked", true);
+         $("#test-table tbody :checkbox[name=testnos]:checked").parents("tr").each(function(index, tr) {
             var price = parseInt($(tr).find('td:eq(3)').text());
             totalPrice += price;
          });         
          $("#test-summary-price").text(totalPrice);
       }else{
-         $("#test-table tbody :checkbox[name=testprice]").prop("checked", false);
+         $("#test-table tbody :checkbox[name=testnos]").prop("checked", false);
          $("#test-summary-price").text(totalPrice);
       }
       

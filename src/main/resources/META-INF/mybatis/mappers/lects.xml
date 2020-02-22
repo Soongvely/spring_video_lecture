@@ -63,7 +63,7 @@
 	</select>
 	
 	<!-- 유저 번호로 유저가 구매한 수강리스트 조회 -->
-	<select id="getLectListUserByNo" parameterType="int" resultType="UserByLectDto">
+	<select id="getLectListUserByNo" parameterType="int" resultType="LessonDto">
 		SELECT
 			A.USER_NO				userNo,
 			D.LECT_TITLE			lectTitle,
@@ -120,6 +120,7 @@
 			l.lect_grade				grade,
 			l.lect_tag					tag,
 			l.lect_image_path			imagePath,
+			l.lect_sample_path			samplePath,
 			u.user_name					userName
 		from
 			lects L, users U
@@ -147,6 +148,7 @@
 			l.lect_grade				grade,
 			l.lect_tag					tag,
 			l.lect_image_path			imagePath,
+			l.lect_sample_path			samplePath,
 			u.user_name					userName,
 			u.user_image_filename		userImagePath,
 			u.user_self_introduction	userIntroduction
@@ -196,6 +198,7 @@
 		        ROW_NUMBER() over (order by create_date desc) rn   
 		       , lesson_no		no
 		       , lesson_title	lessonTitle
+		       , total_time 	totalTime
 		    from lessons
 		    natural join lesson_histories
 		    where 
@@ -205,54 +208,6 @@
 		where 
 		    rn &lt; 10
 	 </select>
-	
-	<!-- 강사가 등록한 강좌 조건별 조회 -->
-	<select id="getLectureListByCriteria" parameterType="LectureCriteria" resultType="LectureDto">
-		select *
-		from 
-			(select
-				ROW_NUMBER() over (order by lect_create_date desc) rn
-				, lect_no				no
-			    , lect_title			title	
-			    , lect_info				info
-			    , lect_price			price
-			    , lect_discount_price	discountPrice
-			    , lect_discount_rate	discountRate
-			    , lect_is_display		isDisplay
-			    , lect_is_freed			isFreed
-			    , lect_create_date		createDate
-			    , lect_grade			grade
-			    , lect_tag				tag
-			    , lect_image_path		imagePath
-			    , lect_sample_path		samplePath
-			    , cate_name				cateName	
-			    , user_no				userNo
-			    , user_name				userName
-			from 
-				lects
-			natural join users
-			natural join categories
-			where 
-				user_no = #{userNo}
-				and lect_title like '%' || #{keyword} || '%')
-		<![CDATA[
-		where rn >= #{beginIndex} 
-		and rn <= #{endIndex}    
-        ]]>		
-	</select>
-	
-	<!-- 강사가 등록한 강좌 카운트 조회 -->
-	<select id="getTeachersLectureCountByCriteria" parameterType="LectureCriteria" resultType="int">
-		select 
-			count(*)
-		from 
-			lects
-		natural join users
-		natural join categories
-		where 
-			user_no = #{userNo}
-			and lect_title like '%' || #{keyword} || '%'
-	</select>
 	
 	<!-- 강좌별 레슨 개수, 총 시간 조회 -->
 	<select id="getLessonCountAndLengthByLectureNo" parameterType="int" resultType="LessonDto">
@@ -267,44 +222,6 @@
         	lect_no = #{lectureNo})
 	</select>
 	
-	<!-- All Lecture ResultMap -->
-	<resultMap type="LectureCourseDto" id="lectureMap">
-		<association property="lecture">
-			<result column="lect_no" property="no"/>
-			<result column="user_no" property="userNo"/>
-			<result column="cate_no" property="cateNo"/>
-			<result column="lect_title" property="lectTitle"/>
-			<result column="lect_info" property="lectInfo"/>
-			<result column="lect_info_title" property="lectInfoTitle"/>
-			<result column="lect_price" property="price"/>
-			<result column="lect_discount_price" property="discountPrice"/>
-			<result column="lect_discount_rate" property="discountRate"/>
-			<result column="lect_is_freed" property="isFreed"/>
-			<result column="lect_is_display" property="isDisplay"/>
-			<result column="lect_create_date" property="lectCreateDate"/>
-			<result column="lect_image_path" property="imagePath"/>
-			<result column="lect_tag" property="tag"/>
-			<result column="lect_grade" property="grade"/>
-		</association>
-		<collection column="lect_no" property="chapters" select="getChapterByLectureNo"/>
-	</resultMap>
-
-	<resultMap type="ChapterDto" id="chapterMap">
-		<association property="chapter">
-			<result column="chapter_no" property="no"/>
-			<result column="chapter_name" property="chapterName"/>
-			<result column="lect_no" property="lectNo"/>
-		</association>
-		<collection column="chapter_no" property="lessons" select="getLessonByChpaterNo"/>
-	</resultMap>
-
-	<resultMap type="Lesson" id="lessonMap">
-		<result column="lesson_no" property="no" />
-		<result column="chapter_no" property="chapterNo" />
-		<result column="lesson_title" property="lessonTitle" />
-		<result column="lesson_video_path" property="videoPath" />
-		<result column="total_time" property="totalTime" />
-	</resultMap>
 	
 	<!-- 조건별(필터)강좌 조회 -->
 	<select id="getLectureByCriteria" parameterType="LectureCriteria" resultMap="lectureMap">
@@ -449,6 +366,47 @@
 			A.user_no = U.user_no
 			and A.lect_no = #{value}
 	</select>
+	   
+	<!-- All Lecture ResultMap -->
+	<resultMap type="LectureCourseDto" id="lectureMap">
+		<association property="lecture">
+			<result column="lect_no" property="no"/>
+			<result column="user_no" property="userNo"/>
+			<result column="cate_no" property="cateNo"/>
+			<result column="lect_title" property="lectTitle"/>
+			<result column="lect_info" property="lectInfo"/>
+			<result column="lect_info_title" property="lectInfoTitle"/>
+			<result column="lect_price" property="price"/>
+			<result column="lect_discount_price" property="discountPrice"/>
+			<result column="lect_discount_rate" property="discountRate"/>
+			<result column="lect_is_freed" property="isFreed"/>
+			<result column="lect_is_display" property="isDisplay"/>
+			<result column="lect_create_date" property="lectCreateDate"/>
+			<result column="lect_image_path" property="imagePath"/>
+			<result column="lect_sample_path" property="samplePath"/>
+			<result column="lect_tag" property="tag"/>
+			<result column="lect_grade" property="grade"/>
+		</association>
+		<collection column="lect_no" property="chapters" select="getChapterByLectureNo"/>
+	</resultMap>
+
+	<resultMap type="ChapterDto" id="chapterMap">
+		<association property="chapter">
+			<result column="chapter_no" property="no"/>
+			<result column="chapter_name" property="chapterName"/>
+			<result column="lect_no" property="lectNo"/>
+		</association>
+		<collection column="chapter_no" property="lessons" select="getLessonByChpaterNo"/>
+	</resultMap>
+
+	<resultMap type="Lesson" id="lessonMap">
+		<result column="lesson_no" property="no" />
+		<result column="chapter_no" property="chapterNo" />
+		<result column="lesson_title" property="lessonTitle" />
+		<result column="lesson_video_path" property="videoPath" />
+		<result column="total_time" property="totalTime" />
+	</resultMap>
+	
 	<!-- 강좌번호로 챕터 조회 -->
 	<select id="getChapterByLectureNo" parameterType="int" resultMap="chapterMap">
 		select 
@@ -477,6 +435,123 @@
     		chapter_no = #{value}	
     	order by
     		lesson_no asc		
+	</select>
+	
+	<!-- teacher -->
+	
+	<!-- 강사가 등록한 강좌 조건별 조회 -->
+	<select id="getLectureListByCriteria" parameterType="LectureCriteria" resultType="LectureDto">
+		select *
+		from 
+			(select
+				ROW_NUMBER() over (order by lect_create_date desc) rn
+				, lect_no				no
+			    , lect_title			title	
+			    , lect_info				info
+			    , lect_price			price
+			    , lect_discount_price	discountPrice
+			    , lect_discount_rate	discountRate
+			    , lect_is_display		isDisplay
+			    , lect_is_freed			isFreed
+			    , lect_create_date		createDate
+			    , lect_grade			grade
+			    , lect_tag				tag
+			    , lect_image_path		imagePath
+			    , lect_sample_path		samplePath
+			    , cate_name				cateName	
+			    , user_no				userNo
+			    , user_name				userName
+			from 
+				lects
+			natural join users
+			natural join categories
+			where 
+				user_no = #{userNo}
+				and lect_title like '%' || #{keyword} || '%')
+		<![CDATA[
+		where rn >= #{beginIndex} 
+		and rn <= #{endIndex}    
+        ]]>		
+	</select>
+	
+	<!-- 강사가 등록한 강좌 카운트 조회 -->
+	<select id="getTeachersLectureCountByCriteria" parameterType="LectureCriteria" resultType="int">
+		select 
+			count(*)
+		from 
+			lects
+		natural join users
+		natural join categories
+		where 
+			user_no = #{userNo}
+			and lect_title like '%' || #{keyword} || '%'
+	</select>
+	
+	<!-- 조건별 강사 수익 테이블-->
+	<select id="getTeacherIncomeByCriteria" parameterType="LectureCriteria" resultType="IncomeDto">
+		select *
+		from
+			(select    
+			    l.lect_no								 no
+			    , l.lect_title							 title
+			    , l.lect_discount_price					 discountPrice
+			    , c.cate_name							 cateName
+			    , sum(l.lect_discount_price) 			 totalIncome
+			    , sum(l.lect_discount_price * 80 / 100)  profit
+			    , sum(ol.ord_lect_amount)				 studentCnt
+			from 
+			    lects l, ord_lects o, ord_lect_infos ol, users u, categories c
+			where 
+			    l.user_no = u.user_no
+			and l.lect_no = ol.lect_no
+			and o.ord_no = ol.ord_no
+			and c.cate_no = l.cate_no
+			and u.user_no = #{userNo}
+			and l.lect_title like '%' || #{keyword} || '%'
+			<if test="startDate != null and startDate neq ''">
+				and to_char(o.ord_lect_create_date, 'yyyy-MM-dd') >= #{startDate}
+			</if>
+			<if test="endDate != null and endDate != ''">
+				and to_char(o.ord_lect_create_date, 'yyyy-MM-dd') &lt;= #{endDate}
+			</if>
+			group by 
+				l.lect_no
+				, l.lect_title
+				, l.lect_discount_price
+				, c.cate_name) 
+		order by 
+			totalIncome desc
+	</select>
+	
+	<!-- 강사의 총 수입, 총 판매 강좌 -->
+	<select id="getTeacherIncomeStatistics" parameterType="int" resultType="IncomeDto">
+		select
+			 count(l.lect_no)				totalCount	
+			, sum(l.lect_discount_price)	allTotalIncome
+		from 
+		    lects l, ord_lects o, ord_lect_infos ol, users u
+		where 
+		    l.user_no = u.user_no
+		and l.lect_no = ol.lect_no
+		and o.ord_no = ol.ord_no
+		and u.user_no = #{value}
+	</select>
+	
+	<!-- 강사 평점 구하기 -->
+	<select id="getTeacherAvgScore" parameterType="int" resultType="double">
+		select
+			avg(r.review_star) 	teacherScore
+		from 
+		    lects l, ord_lects o, ord_lect_infos ol, users u, reviews r
+		where 
+		    l.user_no = u.user_no
+		and l.lect_no = ol.lect_no
+		and o.ord_no = ol.ord_no
+		and ol.ord_lect_no = r.ord_lect_no
+		and r.ord_lect_no = ol.ord_lect_no
+		and u.user_no = #{value}
+		group by 
+			u.user_no
 	</select>
 	
 </mapper>

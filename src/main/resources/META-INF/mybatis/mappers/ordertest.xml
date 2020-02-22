@@ -41,6 +41,7 @@
 			C.ORD_TEST_TOTAL_PRICE			totalPrice,
 			C.ORD_TEST_CREATE_DATE			testCreateDate,
 			B.TEST_PRICE					testprice,
+			B.TEST_EP						ep,
 			B.TEST_NO						testNo					
 		FROM
 			USERS A, TESTS B, ORD_TESTS C, ORD_TEST_INFOS D

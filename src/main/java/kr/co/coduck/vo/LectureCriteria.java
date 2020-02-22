@@ -18,6 +18,9 @@ public class LectureCriteria {
 	private int page;
 	private int beginIndex;
 	private int endIndex;
+	private String startDate;
+	private String endDate;
+
 
 	public LectureCriteria() {}
 	
@@ -109,6 +112,22 @@ public class LectureCriteria {
 
 	public void setDiscount(int discount) {
 		this.discount = discount;
+	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
 	}
 
 	@Override

@@ -12,6 +12,7 @@ public class OrderTestDetailListDto {
 	private int totalPrice;
 	private Date testCreateDate;
 	private int testprice;
+	private String ep;
 	private int testNo;
 	
 	public OrderTestDetailListDto() {
@@ -64,6 +65,14 @@ public class OrderTestDetailListDto {
 
 	public void setTestNo(int testNo) {
 		this.testNo = testNo;
+	}
+
+	public String getEp() {
+		return ep;
+	}
+
+	public void setEp(String ep) {
+		this.ep = ep;
 	}
 	
 	

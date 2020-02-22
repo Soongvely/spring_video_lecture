@@ -55,6 +55,19 @@
 	    
 	    $(".starScore").append(emptyStar);
 	    
+    	
+	    // 샘플영상 모달
+        $(".icon_container.has-icon").on("click", function() {
+         
+         var lectNo = $("input[name=lectNo]").val();
+         var lectSamplePath = $(this).data("sample-video");
+      
+         var videoTag = "<video controls><source src='"+lectSamplePath+"' type='video/mp4'/></video>";
+         $("#video-body").html(videoTag);
+         
+         $("#modal-sample").modal('show');
+       });
+      
 	});  
 	
     

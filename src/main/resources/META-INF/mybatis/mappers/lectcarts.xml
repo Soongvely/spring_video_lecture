@@ -27,10 +27,10 @@
    
    <select id="getCartChoiceLecttByCartChoiceLectNo" parameterType="map" resultType="CartChoiceLectListDto">
      select
-			B.lect_no				as lectNo,
+			B.lect_no				as no,
 			B.lect_title			as lectTitle,
-			B.lect_price			as lectPrice,
-			B.LECT_DISCOUNT_PRICE	as lectDiscountPrice
+			B.lect_price			as price,
+			B.LECT_DISCOUNT_PRICE	as discountPrice
 		from
 			lect_carts A, lects B, USERS C
 		where

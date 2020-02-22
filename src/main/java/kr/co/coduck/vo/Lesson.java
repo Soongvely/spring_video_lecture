@@ -52,13 +52,9 @@ public class Lesson {
 	public int getTotalTime() {
 		return totalTime;
 	}
-
-	public void setTotalTime(int totalTime) {
-		this.totalTime = totalTime;
-	}
-
+	
 	public String getNewTotalTime() {
-
+		
 		int needMinutes = totalTime;
 		long hour = TimeUnit.MINUTES.toHours(needMinutes); 
 		long minutes = TimeUnit.MINUTES.toMinutes(needMinutes) - TimeUnit.HOURS.toMinutes(hour); 
@@ -66,6 +62,10 @@ public class Lesson {
 		return hour + ":" + minutes;
 	}
 	
+
+	public void setTotalTime(int totalTime) {
+		this.totalTime = totalTime;
+	}
 	@Override
 	public String toString() {
 		return "Lesson [no=" + no + ", chapterNo=" + chapterNo + ", lessonTitle=" + lessonTitle + ", videoPath="

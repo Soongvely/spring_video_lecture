@@ -1,5 +1,6 @@
 package kr.co.coduck.dto;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
@@ -88,7 +89,7 @@ public class LectureDto {
 	public int getPrice() {
 		return price;
 	}
-
+	
 	public void setPrice(int price) {
 		this.price = price;
 	}

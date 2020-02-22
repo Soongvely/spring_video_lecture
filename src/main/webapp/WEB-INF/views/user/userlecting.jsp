@@ -22,30 +22,23 @@
 	<%@ include file="../common/header.jsp"%>
 	<div class="container" style="font-size:17px; width:1440px;">
 		<div class="row">
-			<div class="col-sm-2" style="border: 1px solid red;">
-				<p>대시보드</p>
+			<div class="col-sm-2">
 				<p>내 학습</p>
-				<ul>
+				<ul style="list-style:none;">
 					<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
+					<li><a href="/test/test-list.hta">모의고사</a></li>
 					<li><a href="/question/userqueston.hta">내 질문</a></li>
-					<li>내 모의고사</li>
 				</ul>
 				<p>내 결제</p>
-				<ul>
+				<ul style="list-style:none;">
 					<li><a href="/like/likelectlist.hta">위시리스트</a></li>
 					<li><a href="/cart/userCartList.hta">장바구니</a></li>
-					<li>내 쿠폰함</li>
+					<li><a href="/user/mycouponlist.hta">내 쿠폰함</a></li>
 					<li><a href="/order/userorderlectlist.hta">구매내역</a></li>
 				</ul>
-				<p>설정</p>
-				<ul>
-					<li>프로필 설정</li>
-					<li>알림 설정</li>
-				</ul>
-				<p>내 강의/모의고사</p>
-				<ul>
-					<li>내 강의</li>
-					<li>내 모의고사</li>
+				<p>내 강의</p>
+				<ul style="list-style:none;">
+					<li id="teacher"><a href="/teacher/main.hta">내 강의</a></li>
 				</ul>
 			</div>
 
@@ -53,21 +46,32 @@
 				<span>설정 / 프로필 설정</span>
 				<h4>수강중인 강의</h4>
 				<div class="row">
-					<div class="col-md-12">
-						<form action="" class="form-inline" method="post">
+					<%-- <div class="col-md-12">
+						<form id="sort-lect-form" action="userlecting.hta" class="form-inline" method="get">
 							<div class="form-group" style="margin-right: 5px;">
 								<label>정렬기준</label>
-								<select class="form-control" name="">
-									<option>최근 공부한순</option>
-									<option>제목순</option>
+								<select class="form-control" name="sort" id="sort-lecture">
+									<option value="1" ${empty param.sort || param.sort eq '1' ? 'selected' :'' }>진행도순</option>
+									<option value="2" ${param.sort eq '2' ? 'selected' :'' }>제목순</option>
 								</select>
 							</div>
-							<div class="form-group">
-								<button type="submit" class="btn btn-primary">검색</button>
-							</div>
 						</form>
-					</div>
+					</div> --%>
 					<div class="row">
+						<c:if test="${empty userLectProcessivity }">
+							<c:forEach var="userLect" items="${userLectList }" varStatus="loop">
+								<div class="col-md-11" style="margin-top: 20px; margin-left:13px; padding-left: 0px;">
+									<img alt="" src="../../resources/images/lecture/${userLect.imagePath != null ? userLect.imagePath : '1212qwqw.GIF' }" style="float: left; width: 300px; height: 200px; margin-right: 20px;">
+									<h3>${userLect.lectTitle }</h3>
+									<p>진행도</p>
+									<progress value="0" max="10" style="width: 400px;"></progress>
+									<p>구매일자 : <fmt:formatDate value="${userLect.lectCreateDate }" pattern="yyyy.MM.dd"></fmt:formatDate></p>
+									<div class="text-right">
+										<a href="/lecture/detail/dashboard.hta?lectureNo=${userLect.lectNo }" type="submit" class="btn btn-primary">이어서 학습하기</a>
+									</div>
+								</div>
+							</c:forEach>
+						</c:if>
 					<c:choose>
 						<c:when test="${empty userLectList }">
 							<div class="col-sm-12">
@@ -86,20 +90,22 @@
 									<progress value="${userLectProcessivity.totalAccumulate }" max="${userLectProcessivity.totalTime }" style="width: 400px;"></progress>
 									<p>구매일자 : <fmt:formatDate value="${userLect.lectCreateDate }" pattern="yyyy.MM.dd"></fmt:formatDate></p>
 									<div class="text-right">
-										<button type="submit" class="btn btn-primary">이어서 학습하기</button>
+										<a href="/lecture/detail/dashboard.hta?lectureNo=${userLect.lectNo }" type="submit" class="btn btn-primary">이어서 학습하기</a>
 									</div>
 								</div>
 							</c:forEach>
 							</c:forEach>
 						</c:otherwise>
-					</c:choose>
+						</c:choose>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<script type="text/javascript">
-		
+		$("#sort-lecture").change(function() {
+			$("#sort-lect-form").submit();
+		})
 	</script>
 
 <%@ include file="../common/footer.jsp"%>

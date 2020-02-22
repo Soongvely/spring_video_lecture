@@ -7,6 +7,7 @@ import kr.co.coduck.dto.SearchTestDetailDto;
 import kr.co.coduck.dto.TestQtDto;
 import kr.co.coduck.dto.TestResultDto;
 import kr.co.coduck.dto.TestSubjResultDto;
+import kr.co.coduck.form.SearchTestFormByAdm;
 import kr.co.coduck.vo.Ep;
 import kr.co.coduck.vo.Test;
 import kr.co.coduck.vo.TestQt;
@@ -18,6 +19,8 @@ import kr.co.coduck.vo.ViewCk;
 public interface TestDao {
 	
 	List<Ep> getTestEpsByCateNo(int no);
+	
+	List<Ep> getAllTestEp();
 	
 	List<SearchTestDetailDto> searchTest(Map<String, Object> map);
 	
@@ -42,5 +45,7 @@ public interface TestDao {
 	void insertViewCk(ViewCk viewCk);
 	
 	List<TestResultDto> getTestResultDtosByTestNoNUserNo(Map<String, Object> map);
+	
+	List<SearchTestDetailDto> searchTestByAdm(SearchTestFormByAdm form);
 	
 }

@@ -1421,7 +1421,23 @@ small {
 .far.fa-heart {
 	color: #f98173;
 }
+/******************************* sample-modal *********************************/
 
+#modal-sample .modal-body {
+	padding: 0;
+	background: black;
+}
+#modal-sample video {
+	width: 100%;
+}
+
+#modal-sample .modal-content {
+	height: 708px;
+}
+#modal-sample .modal-header {
+	background: black;
+	border: none;
+}
 /* question-modal */
 .question-madal .modal-content {
 	color: #5f5f5f;
@@ -1439,8 +1455,7 @@ small {
 	border: 1px solid lightgray;
 }
 
-/*  teacher-main.css */
-
+/******************************* teacher-main.css *********************************/
 #teacher .container {
 	width: 1440px;
 }
@@ -1537,16 +1552,16 @@ small {
 	margin-bottom: -10px;
 }
 .main-body .dropdown {
-	margin-right: 50px;
-    margin-top: 20px;
+}
+.main-body.recent-lecture {
+	min-height: 500px;
 }
 .teaching-box {
 	border: 1px solid lightgrey;
 	display: inline-flex;
-    margin: 13px 5px;
-    width: 93%;
-    height: 175px;
-    margin-left: 10px;
+    margin: 8px 5px 9px 25px;
+    width: 96%;
+    height: 184px;
 }
 
 .teaching-body {
@@ -1576,7 +1591,7 @@ small {
 }
 
 .my-lecture-thumbnail {
-	width: 20%;
+	width: 21%;
 	height: 100%;
 }
 
@@ -1618,16 +1633,17 @@ a {
     text-align: end;
 }
 .info-price {
-    margin-bottom: 28px;
+    margin-bottom: 59px;
 }
 .info-price .discount {
-    font-size: 22px;
+    font-size: 23px;
 }
 .info-price .rate, .info-student {
-    font-size: 18px;
+    font-size: 19px;
 }
 .info-star {
-    font-size: 18px;
+	margin-bottom: 5px;
+    font-size: 21px;
     color: #fdcc11;
 }
 .info-wish i {
@@ -1671,6 +1687,9 @@ a {
 	display: -webkit-inline-box;
 	font-family: 'AppleSDGothicL', sans-serif;
 }
+.statistics-table {
+	min-height: 800px;
+}
 .statistics-container:nth-child(2) {
 	margin-bottom: 100px
 }
@@ -1701,7 +1720,7 @@ a {
 }
 
 .statistics-table {
-	margin-top: 50px;
+	margin-top: 23px;
 	padding: 11px 23px;
 	font-size: 19px;
 	width: 100%;
@@ -1723,7 +1742,45 @@ a {
 }
 
 .table-header div {
-	margin-bottom: 10px;
+	margin-bottom: 16px;
+}
+
+.form-income {
+    margin-top: 50px;
+    margin-bottom: 40px;
+    background: #faf5f5;
+    padding: 20px;
+    font-size: 17px;
+}
+.form-income .control-label {
+    padding: 0;
+}
+
+.form-income .form-group {
+    margin-top: 15px;
+}
+
+.form-income .control-label {
+	margin-top: 6px;
+}
+.form-control {
+    height: 35px;
+    font-size: 15px;
+}
+#resetBtn {
+    margin-right:6%;
+    padding-bottom: 5px;
+}
+
+#resetBtn button {
+    font-size:16px;
+}
+
+.form-div {
+    border-bottom: 1px solid lightgray;
+}
+#totalCount {
+	color: orange;
 }
 /* background */
   .main-headerline {

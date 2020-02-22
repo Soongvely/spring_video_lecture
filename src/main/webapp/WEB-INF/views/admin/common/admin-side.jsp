@@ -58,28 +58,28 @@
       <div class="sidebar-heading">SUB</div>
       
       <li class="nav-item">
-         <a class="nav-link" href="charts.html">
-            <i class="fas fa-user-friends"></i>
+         <a class="nav-link" href="/admin/notice.hta">
+            <i class="far fa-clipboard"></i>
          <span>공지사항</span></a>
         </li>
 
       <li class="nav-item">
          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-           <i class="fas fa-fw fa-wrench"></i>
+           <i class="far fa-clipboard"></i>
             <span>게시글 관리</span>
             </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
            <div class="bg-white py-2 collapse-inner rounded">
                <h6 class="collapse-header">게시글 관리</h6>
-               <a class="collapse-item" href="utilities-color.html">1:1 문의</a>
-               <a class="collapse-item" href="utilities-border.html">수강평</a>
-               <a class="collapse-item" href="utilities-animation.html">커뮤니티</a>
+               <a class="collapse-item" href="/admin/qna.hta">1:1 문의</a>
+               <a class="collapse-item" href="">수강평</a>
+               <a class="collapse-item" href="">커뮤니티</a>
             </div>
       </div>
         </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="">
           <i class="fas fa-fw fa-table"></i>
           <span>이벤트 관리</span></a>
       </li>

@@ -258,6 +258,16 @@
 		)
 	</insert>
 	
+	<!-- 모든 회차 조회 -->
+	<select id="getAllTestEp" resultType="Ep">
+		select 
+			test_no		testNo, 
+			test_ep		testEp	
+		from 
+			tests
+		order by 
+			2
+	</select>
 	<!-- 카테고리(시험명)번호로 시험의 다수 회차 조회 -->
 	<select id="getTestEpsByCateNo" parameterType="int" resultType="Ep">
 		select 
@@ -271,7 +281,74 @@
 			2
 	</select>
 	
-	<!-- 여러 시험 조회 -->
+	<!-- 관리자가 여러 시험 조회 -->
+	<select id="searchTestByAdm" parameterType="SearchTestFormByAdm" resultType="SearchTestDetailDto">
+		select 
+			C.cate_name				maincatename,
+			T.test_name				testname,
+			T.test_no				testno,
+			T.lect_no				lectno,
+			T.test_date				testdate,
+			T.test_ep				testep,
+			T.test_price			testprice,
+			T.test_pass_score		passscore,
+			T.test_ltd_time			testltdtime,
+			T.test_qt_cnt			testqtcnt,
+			T.test_is_display		isdisplay
+		from 
+			CATEGORIES C, CATEGORIES D, TESTS T
+		<where>
+			D.CATE_NO = T.CATE_NO
+			and C.CATE_NO = D.MAIN_CATE_NO
+			<if test="mainCateNo != -1">
+				and C.cate_no = #{mainCateNo}
+			</if>
+			<if test="cateNo != -1">
+				and D.cate_no = #{cateNo}
+			</if>
+			<if test="epName != ''">
+				and T.test_no like '%' || #{epName} || '%'
+			</if>
+			<if test="searchKeyword != ''">
+				and T.test_name	like '%' || #{searchKeyword} || '%'
+			</if>
+			<if test="period != -1">
+				<choose>
+					<when test="period == 0">
+						and to_char(T.test_date, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd')
+					</when>
+					<when test="period == 7">
+						and to_char(T.test_date, 'yyyy-mm-dd') >= to_char(sysdate-7, 'yyyy-mm-dd')
+					</when>
+					<when test="period == 30">
+						and to_char(T.test_date, 'yyyy-mm-dd') >= to_char(add_months(sysdate,-1),'yyyy-mm-dd')
+					</when>
+					<when test="period == 180">
+						and to_char(T.test_date, 'yyyy-mm-dd') >= to_char(add_months(sysdate,-6),'yyyy-mm-dd')
+					</when>
+					<when test="period == 365">
+						and to_char(T.test_date, 'yyyy-mm-dd') >= to_char(add_months(sysdate,-12),'yyyy-mm-dd')
+					</when>
+				</choose>
+			</if>
+			<choose>
+				<when test="from == '' and to != ''">
+				and T.test_date &lt;= to_date(#{to}, 'yyyy-mm-dd')
+				</when>
+				<when test="from != '' and to == ''">
+				and T.test_date >= to_date(#{from}, 'yyyy-mm-dd')
+				</when>
+				<when test="from != '' and to != ''">
+				and T.test_date >= to_date(#{from}, 'yyyy-mm-dd')
+				and T.test_date &lt;= to_date(#{to}, 'yyyy-mm-dd')
+				</when>
+			</choose>
+			
+			
+		</where>
+	</select>
+	
+	<!-- 유저가 여러 시험 조회 -->
 	<select id="searchTest" parameterType="map" resultType="SearchTestDetailDto">
 		select 
 			X.test_no				testNo, 

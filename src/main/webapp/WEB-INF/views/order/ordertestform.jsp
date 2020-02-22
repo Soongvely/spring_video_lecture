@@ -22,38 +22,41 @@
 	<%@ include file="../common/header.jsp"%>
    <div class="container" style="font-size: 17px; width: 1440px;">
       <div class="row">
-         <div class="col-sm-2" style="border: 1px solid red;">
-            <p>대시보드</p>
-            <p>내 학습</p>
-            <ul>
-               <li><a href="/user/userlecting.hta">수강중인 강의</a></li>
-               <li><a href="/question/userqueston.hta">내 질문</a></li>
-               <li>내 모의고사</li>
-            </ul>
-            <p>내 결제</p>
-            <ul>
-               <li><a href="/like/likelectlist.hta">위시리스트</a></li>
-               <li><a href="/cart/userCartList.hta">장바구니</a></li>
-               <li>내 쿠폰함</li>
-               <li><a href="/order/userorderlectlist.hta">구매내역</a></li>
-            </ul>
-            <p>설정</p>
-            <ul>
-               <li>프로필 설정</li>
-               <li>알림 설정</li>
-            </ul>
-            <p>내 강의/모의고사</p>
-            <ul>
-               <li>내 강의</li>
-               <li>내 모의고사</li>
-            </ul>
-         </div>
+         <div class="col-sm-2">
+				<p>내 학습</p>
+				<ul style="list-style:none;">
+					<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
+					<li><a href="/test/test-list.hta">모의고사</a></li>
+					<li><a href="/question/userqueston.hta">내 질문</a></li>
+				</ul>
+				<p>내 결제</p>
+				<ul style="list-style:none;">
+					<li><a href="/like/likelectlist.hta">위시리스트</a></li>
+					<li><a href="/cart/userCartList.hta">장바구니</a></li>
+					<li><a href="/user/mycouponlist.hta">내 쿠폰함</a></li>
+					<li><a href="/order/userorderlectlist.hta">구매내역</a></li>
+				</ul>
+				<p>내 강의</p>
+				<ul style="list-style:none;">
+					<li id="teacher"><a href="/teacher/main.hta">내 강의</a></li>
+				</ul>
+			</div>
 
 			<c:if test="${param.error eq 'fail' }">
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="alert alert-danger">
-							<strong>구매 실패 </strong> 계좌번호나 입력오류 이거나 이미 구매하신 시험입니다
+							<strong>구매 실패 </strong> 입력오류
+						</div>
+					</div>
+				</div>
+			</c:if>
+			
+			<c:if test="${param.error eq 'failcartno' }">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="alert alert-danger">
+							<strong>구매 실패 </strong> 입력오류
 						</div>
 					</div>
 				</div>
@@ -88,9 +91,10 @@
                            <c:otherwise>
                               <c:forEach var="userChoiceTestList" items="${userChoiceTestList }" varStatus="loop">
                                  <tr>
-                                    <td>${loop.count }<input type="text" class="form-control" name="testno" value="${userChoiceTestList.testNo }"/></td>
-                                    <td>${userChoiceTestList.testTitle }</td>
-                                    <td>${userChoiceTestList.testPrice } 원</td>
+      
+                                    <td>${loop.count }<input type="hidden" class="form-control" name="testno" value="${userChoiceTestList.no }"/></td>
+                                    <td>${userChoiceTestList.name }</td>
+                                    <td>${userChoiceTestList.price } 원</td>
                                     <td ></td>
                                  </tr>
                               </c:forEach>

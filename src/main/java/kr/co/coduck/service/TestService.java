@@ -3,12 +3,15 @@ package kr.co.coduck.service;
 import java.util.List;
 import java.util.Map;
 
+import kr.co.coduck.dto.SearchTestDetailDto;
 import kr.co.coduck.dto.SearchTestDto;
 import kr.co.coduck.dto.TestQtDto;
 import kr.co.coduck.dto.TestResultDto;
 import kr.co.coduck.dto.TestSubjResultDto;
 import kr.co.coduck.form.SearchTestForm;
+import kr.co.coduck.form.SearchTestFormByAdm;
 import kr.co.coduck.form.TestSubmitForm;
+import kr.co.coduck.vo.Ep;
 import kr.co.coduck.vo.Test;
 import kr.co.coduck.vo.TestQt;
 import kr.co.coduck.vo.TestResult;
@@ -38,5 +41,8 @@ public interface TestService {
 	
 	List<TestResultDto> getTestResultDtosByTestNoNUserNo(Map<String, Object> map);
 	
+	List<Ep> getTestEpsByCateNo(int no);
+	
+	List<Ep> getAllTestEp();
 	
 }

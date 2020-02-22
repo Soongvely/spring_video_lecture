@@ -18,41 +18,34 @@
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="alert alert-danger">
-						<strong> 위시리스트 추가 불가 </strong> 이미 추가하신 강좌입니다.
+						<strong> 위시리스트 추가 불가 </strong> 이미 추가했거나 구매하신 강의입니다.
 					</div>
 				</div>
 			</div>
 		</c:if>
 
 	<div class="row">
-		<div class="col-sm-2" style="border: 1px solid red;">
-			<p>대시보드</p>
-			<p>내 학습</p>
-			<ul>
-				<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
-				<li><a href="/question/userqueston.hta">내 질문</a></li>
-				<li>내 모의고사</li>
-			</ul>
-			<p>내 결제</p>
-			<ul>
-				<li><a href="/like/likelectlist.hta">위시리스트</a></li>
-				<li><a href="/cart/userCartList.hta">장바구니</a></li>
-				<li>내 쿠폰함</li>
-				<li><a href="/order/userorderlectlist.hta">구매내역</a></li>
-			</ul>
-			<p>설정</p>
-			<ul>
-				<li>프로필 설정</li>
-				<li>알림 설정</li>
-			</ul>
-			<p>내 강의/모의고사</p>
-			<ul>
-				<li>내 강의</li>
-				<li>내 모의고사</li>
-			</ul>
-		</div>
+		<div class="col-sm-2">
+				<p>내 학습</p>
+				<ul style="list-style:none;">
+					<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
+					<li><a href="/test/test-list.hta">모의고사</a></li>
+					<li><a href="/question/userqueston.hta">내 질문</a></li>
+				</ul>
+				<p>내 결제</p>
+				<ul style="list-style:none;">
+					<li><a href="/like/likelectlist.hta">위시리스트</a></li>
+					<li><a href="/cart/userCartList.hta">장바구니</a></li>
+					<li><a href="/user/mycouponlist.hta">내 쿠폰함</a></li>
+					<li><a href="/order/userorderlectlist.hta">구매내역</a></li>
+				</ul>
+				<p>내 강의</p>
+				<ul style="list-style:none;">
+					<li id="teacher"><a href="/teacher/main.hta">내 강의</a></li>
+				</ul>
+			</div>
 		
-		<div class="col-sm-10" style="border: 1px solid blue;">
+		<div class="col-sm-10">
 			<div class="row">
 				<div class="col-sm-12">
 					<h3>좋아요한 강의 리스트</h3>
@@ -63,13 +56,13 @@
 				<c:when test="${empty userLikeLectList }">
 					<div class="col-sm-12">
 						<div class="text-center">
-							<h3>회원님 저희 싫으시죠</h3>
+							<h3>없습니다</h3>
 						</div>
 					</div>
 				</c:when>
 				<c:otherwise>
 					<c:forEach var="userLikeLect" items="${userLikeLectList }" varStatus="loop">
-						<div class="col-sm-12" style="border: 1px solid red; margin-top: 20px;">
+						<div class="col-sm-12" style="margin-top: 20px;">
 							<div class="col-sm-3" style="margin-top: 20px;">
 							    <img src="${userLikeLect.likeLectImg != null ? userLikeLect.likeLectImg : '1212qwqw.GIF' }" style="width: 100%; height: 200px;">
 							</div>

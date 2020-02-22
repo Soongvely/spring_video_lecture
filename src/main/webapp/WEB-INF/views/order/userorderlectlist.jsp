@@ -22,32 +22,25 @@
 	<%@ include file="../common/header.jsp"%>
    <div class="container" style="font-size: 17px; width: 1440px;">
       <div class="row">
-         <div class="col-sm-2" style="border: 1px solid red;">
-            <p>대시보드</p>
-            <p>내 학습</p>
-            <ul>
-               <li><a href="/user/userlecting.hta">수강중인 강의</a></li>
-               <li><a href="/question/userqueston.hta">내 질문</a></li>
-               <li>내 모의고사</li>
-            </ul>
-            <p>내 결제</p>
-            <ul>
-               <li><a href="/like/likelectlist.hta">위시리스트</a></li>
-               <li><a href="/cart/userCartList.hta">장바구니</a></li>
-               <li>내 쿠폰함</li>
-               <li><a href="/order/userorderlectlist.hta">구매내역</a></li>
-            </ul>
-            <p>설정</p>
-            <ul>
-               <li>프로필 설정</li>
-               <li>알림 설정</li>
-            </ul>
-            <p>내 강의/모의고사</p>
-            <ul>
-               <li>내 강의</li>
-               <li>내 모의고사</li>
-            </ul>
-         </div>
+         <div class="col-sm-2">
+				<p>내 학습</p>
+				<ul style="list-style:none;">
+					<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
+					<li><a href="/test/test-list.hta">모의고사</a></li>
+					<li><a href="/question/userqueston.hta">내 질문</a></li>
+				</ul>
+				<p>내 결제</p>
+				<ul style="list-style:none;">
+					<li><a href="/like/likelectlist.hta">위시리스트</a></li>
+					<li><a href="/cart/userCartList.hta">장바구니</a></li>
+					<li><a href="/user/mycouponlist.hta">내 쿠폰함</a></li>
+					<li><a href="/order/userorderlectlist.hta">구매내역</a></li>
+				</ul>
+				<p>내 강의</p>
+				<ul style="list-style:none;">
+					<li id="teacher"><a href="/teacher/main.hta">내 강의</a></li>
+				</ul>
+			</div>
          
 			<div class="col-sm-10">
             <div class="row">
@@ -73,7 +66,7 @@
                        <c:choose>
                          <c:when test="${empty userOrderLists }">
                          	<tr>
-                         		<td colspan="6" class="text-center">고객님 돈좀 쓰세요...</td>
+                         		<td colspan="6" class="text-center">없습니다</td>
                          	</tr>
                          </c:when>
                          <c:otherwise>
@@ -111,14 +104,14 @@
                                <th>시험명</th>
                                <th>결제가격</th>
                                <th>주문일자</th>
-                               <th>응시여부</th>
+                               <th>응시하기</th>
                            </tr>
                        </thead>
                        <tbody>
                        <c:choose>
                          <c:when test="${empty userOrderTestLists }">
                          	<tr>
-                         		<td colspan="6" class="text-center">고객님 돈좀 쓰세요...</td>
+                         		<td colspan="6" class="text-center">없습니다</td>
                          	</tr>
                          </c:when>
                          <c:otherwise>
@@ -126,10 +119,11 @@
 		                         <tr>
 					                 <td>${loop.count }</td>
 					                 <td>${userOrderTestList.orderNo }</td>
-					                 <td>${userOrderTestList.testTitle }</td>
+					                 <td>${userOrderTestList.testTitle } > ${userOrderTestList.ep }</td>
 					                 <td>${userOrderTestList.testprice }</td>
 					                 <td><fmt:formatDate value="${userOrderTestList.testCreateDate }" pattern="yyyy-MM-dd"/></td>
-					                 <td><button class="btn btn-info btn-xs" data-order-no="${userOrderTestList.testNo }">응시하기</button></td>
+					                 <%-- <td><button class="btn btn-info btn-xs" data-order-no="${userOrderTestList.testNo }">응시하기</button></td> --%>
+					                 <td><a href="/test/test-list.hta" class="btn btn-info btn-xs">응시하기</a></td>
 			                     </tr>
                          	</c:forEach>
                          </c:otherwise>

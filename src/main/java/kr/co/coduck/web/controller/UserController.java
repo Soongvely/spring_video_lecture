@@ -16,10 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.coduck.dto.LessonDto;
-import kr.co.coduck.dto.UserByLectDto;
 import kr.co.coduck.form.UserRegisterForm;
+import kr.co.coduck.service.CouponService;
 import kr.co.coduck.service.LectService;
 import kr.co.coduck.service.UserService;
+import kr.co.coduck.vo.Coupon;
 import kr.co.coduck.vo.User;
 
 @Controller
@@ -29,17 +30,23 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private LectService lectService;
+	@Autowired
+	private CouponService couponService;
 	
 	private final String photoSaveDirectory = "C:\\projects\\spring_workspace\\coduck\\src\\main\\webapp\\resources\\images\\userImageFilename";
 	
 
 	@GetMapping("/userlecting.hta")
-	public String userlecting(HttpSession session, Model model) {
+	public String userlecting(HttpSession session, Model model, @RequestParam(value = "sort", required = false, defaultValue = "1") int sort) {
 		User user = (User)session.getAttribute("LU");
-		List<UserByLectDto> userLectList = lectService.getLectListUserByNo(user.getNo());
+		
+		List<LessonDto> userLectList = lectService.getLectListUserByNo(user.getNo());
+		
 		List<LessonDto> userLectProcessivity = lectService.getLectProcessivityByUserNo(user.getNo());
+		
 		model.addAttribute("userLectProcessivity", userLectProcessivity);
 		model.addAttribute("userLectList", userLectList);
+		
 		System.out.println(userLectList);
 		return "user/userlecting";
 	}
@@ -135,6 +142,14 @@ public class UserController {
 		userService.userProfilUpdate(userProfilUpDate);
 		
 		return "redirect:/home.hta";
+	}
+	
+	@GetMapping("/mycouponlist.hta")
+	public String mycouponlist(HttpSession session, Model model) {
+		User user = (User)session.getAttribute("LU");
+		List<Coupon> couponDetails = couponService.getCouponsByUserNo(user.getNo());
+		model.addAttribute("couponDetails", couponDetails);
+		return "user/mycouponlist";
 	}
 	
 }

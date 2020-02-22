@@ -15,6 +15,7 @@ import kr.co.coduck.dto.TestQtDto;
 import kr.co.coduck.dto.TestResultDto;
 import kr.co.coduck.dto.TestSubjResultDto;
 import kr.co.coduck.form.SearchTestForm;
+import kr.co.coduck.form.SearchTestFormByAdm;
 import kr.co.coduck.form.TestSubmitForm;
 import kr.co.coduck.vo.Category;
 import kr.co.coduck.vo.Ep;
@@ -190,6 +191,16 @@ public class TestServiceImpl implements TestService{
 	@Override
 	public List<TestResultDto> getTestResultDtosByTestNoNUserNo(Map<String, Object> map) {
 		return testDao.getTestResultDtosByTestNoNUserNo(map);
+	}
+
+	@Override
+	public List<Ep> getTestEpsByCateNo(int no) {
+		return testDao.getTestEpsByCateNo(no);
+	}
+	
+	@Override
+	public List<Ep> getAllTestEp() {
+		return testDao.getAllTestEp();
 	}
 	
 }

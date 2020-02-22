@@ -39,9 +39,17 @@ public class GradeCheckInterceptor extends HandlerInterceptorAdapter {
 		System.out.println("user : "+ user);
 		if(!urlInfo.getRequiredGrade().equals(user.getRole())) {
 			System.out.println("등급이 안맞음");
-          response.sendRedirect("/home.hta?error=deny");
-          //false면 컨트롤러로 요청이 안된다.
-          return false;
+			if(urlInfo.getRequiredGrade().equals("U")) {
+				System.out.println("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
+	          response.sendRedirect("/home.hta?error=deny");
+	          //false면 컨트롤러로 요청이 안된다.
+	          return false;
+	          
+			} else if (urlInfo.getRequiredGrade().equals("A")) {
+				System.out.println("AAAAAAAAAAAAAAAAAAAAAAAA");
+				response.sendRedirect("/admin/login.hta?error=deny");
+				return false;
+			}
         }
 		
 		return true;

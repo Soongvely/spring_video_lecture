@@ -23,6 +23,7 @@
 		 -->
 		<package name="kr.co.coduck.vo"/>
 		<package name="kr.co.coduck.dto"/>
+		<package name="kr.co.coduck.form"/>
 	</typeAliases>
 	
 </configuration>

@@ -85,4 +85,21 @@ public class UserServiceImpl implements UserService {
 		return userDao.getUserCntByCriteria(userCriteria);
 	}
 
+	@Override
+	public User adminLogin(String userId, String userPassword) {
+		User admin = userDao.getUserById(userId);
+		if (admin == null) {
+			return null;
+		} else if (admin.getRole() == "U") {
+			return null;
+		}
+		
+		String shaPassword = DigestUtils.sha1Hex(userPassword);
+		if (!admin.getPassword().equals(shaPassword)) {
+			return null;
+		}
+	
+		return admin;
+	}
+
 }

@@ -217,6 +217,7 @@ public class TestController {
 		return categoryService.getCatesByMainNo(mainCateNo);
 	}
 	
+	//시험 검색
 	@GetMapping("/getTestData.hta")
 	@ResponseBody
 	public SearchTestDto searchTest(SearchTestForm form, HttpSession session) {

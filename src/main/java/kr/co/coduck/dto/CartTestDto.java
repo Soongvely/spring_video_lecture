@@ -5,10 +5,11 @@ import org.apache.ibatis.type.Alias;
 @Alias("CartTestDto")
 public class CartTestDto {
 
-	private int testNo;
+	private int no;
 	private int userNo;
-	private String	testTitle;
-	private int testPrice;
+	private String	name;
+	private int price;
+	private String ep;
 	
 	public CartTestDto() {
 		
@@ -24,33 +25,53 @@ public class CartTestDto {
 		this.userNo = userNo;
 	}
 
-	public String getTestTitle() {
-		return testTitle;
-	}
 
-	public void setTestTitle(String testTitle) {
-		this.testTitle = testTitle;
-	}
 
-	public int getTestPrice() {
-		return testPrice;
-	}
-
-	public void setTestPrice(int testPrice) {
-		this.testPrice = testPrice;
+	public int getNo() {
+		return no;
 	}
 
 
 
-	public int getTestNo() {
-		return testNo;
+	public void setNo(int no) {
+		this.no = no;
 	}
 
 
 
-	public void setTestNo(int testNo) {
-		this.testNo = testNo;
+	public String getName() {
+		return name;
 	}
-	
+
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+
+	public int getPrice() {
+		return price;
+	}
+
+
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+
+
+	public String getEp() {
+		return ep;
+	}
+
+
+
+	public void setEp(String ep) {
+		this.ep = ep;
+	}
+
 	
 }

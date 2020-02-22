@@ -19,9 +19,11 @@
 	<style type="text/css">
 	.btn-date {border: 1px solid #cbc4c4;}
 	#admin-lecture .form-group {height: 50px;}
+	
 	</style>
 </head>
 <body id="page-top">
+<%@ include file="../common/tag.jsp" %>
 <div id="wrapper">
 <%@include file="common/admin-side.jsp" %>
 	<div id="content-wrapper" class="d-flex flex-column">
@@ -30,62 +32,62 @@
 			<div class="row" id="admin-lecture">
 				<h3 style="margin-left: 60px;">모의고사 관리</h3>
 				<div class="col-sm-12">
-		            <form action="#" class="form-horizontal style-form" method="get">
+		            <form action="#" class="form-horizontal style-form"  method="get" id="searchForm">
 		                <div class="form-panel"
 		                   style="background: #fff; margin: 0px 50px; padding: 33px 17px;">               
 		                    <div class="form-group col-sm-10" style="display: inline-flex;">
 		                        <label class="control-label col-sm-1">카테고리</label>
-		                        <div class="col-sm-4">
-		                            <select class="form-control">
-		                                <option>전체</option>
-		                                <option>CSS</option>
-		                                <option>HTML</option>
+		                        <div class="col-sm-2">
+		                            <select class="form-control" name="mainCateNo" id="mainCateNo" >
+		                            	<option value="-1">전체</option>
+		                            </select>
+		                        </div>                            
+		                        <div class="col-sm-2">
+		                            <select class="form-control" name="cateNo" id="cateNo">
+		                          	  <option value="-1">전체</option>
+		                            </select>
+		                        </div>                            
+		                        <div class="col-sm-2">
+		                            <select class="form-control" name="epName" id="epName">
+		                          	  <option value="">전체</option>	
 		                            </select>
 		                        </div>                            
 		                    </div>               
-		
-		                    <div class="form-group col-sm-10" style="display: inline-flex;">
-		                        <label class="col-sm-1 control-label">검색</label>
-		                        <div class="col-sm-8">
-		                            <input type="text" class="form-control" name="search-board" placeholder="검색할 키워드를 입력해주세요." style="font-size: 13px;">
-		                        </div>
-		                    </div>
-		
 <!-- script - 참고 -->
-		                    <div class="form-group col-sm-10" style="display: inline-flex;">
+		                    <div class="form-group col-sm-10" style="display: inline-flex;" >
 		                        <label class="control-label col-sm-1" style="margin-right:15px;">기간</label>
-		                        <div style="display:inline-block; float:left;">
-		                            <button type="button" class="btn btn-default btn-sm btn-date">오늘</button>
-		                            <button type="button" class="btn btn-default btn-sm btn-date">3일 이내</button>
-		                            <button type="button" class="btn btn-default btn-sm btn-date">7일 이내</button>
+		                        <div style="display:inline-block; float:left;" id="div-period">
+		                            <button type="button" class="btn btn-default btn-date" data-period="0">오늘</button>
+		                            <button type="button" class="btn btn-default btn-date" data-period="7">7일 이내</button>
+		                            <button type="button" class="btn btn-default btn-date" data-period="30">1달 이내</button>
+		                            <button type="button" class="btn btn-default btn-date" data-period="180">6개월 이내</button>
+		                            <button type="button" class="btn btn-default btn-date" data-period="365">1년 이내</button>
+		                            <input type="hidden" name="period" value="-1" id="input-period"/>
+		                            <span style="margin-left: 10px;">또는</span>
 		                        </div>
-		                        <div class="col-md-5">
-		                            <div class="input-group input-large" data-date="2014/01/01" data-date-format="yyyy/mm/dd">
-		                                <input type="date" class="form-control date1" name="from" placeholder="시작일" style="text-align:center;">
-		                                <input type="date" class="form-control date2" name="to" placeholder="종료일" style="text-align:center;">
+								
+		                        <div class="col-md-5" id="date-range">
+		                            <div class="input-group input-large" data-date-format="yyyy-mm-dd">
+		                                <input type="text" class="form-control date1" name="from" id="from" placeholder="시작일" onfocus="(this.type='date')" style="text-align:center;">
+		                                <input type="text" class="form-control date2" name="to" id="to" placeholder="종료일" onfocus="(this.type='date')" style="text-align:center;">
 		                            </div>
 		                        </div>
+		                    </div>
+		                    
+	                       <div class="form-group col-sm-10" style="display: inline-flex;">
+		                        <label class="col-sm-1 control-label">검색</label>
+		                        <div class="col-sm-3">
+		                            <input type="text" class="form-control" name="searchKeyword" id="searchKeyword" placeholder="검색할 키워드를 입력해주세요." 
+		                            style="font-size: 15px; width: 400px;"/>
+		                            <!-- <button type="button" id="button-search" class="btn btn-primary" >검색</button> -->
+		                        </div>
+		                        <div class="col-sm-5">
+		                            <button type="button" class="btn btn-default" id="button-search"><i class="fas fa-search"></i></button>
+		                    	</div>
 		                    </div>
 		
-		                    <div class="form-group col-sm-10" style="display: inline-flex;">
-		                        <label class="control-label col-md-1">승인 여부</label>
-		                        <div class="col-md-6">
-		                            <div class="radio-dk">
-		                                <label>
-		                                    <input type="radio" id="optionsRadios1" name="status" value="statusall" checked="checked"> 전체
-		                                </label>
-		                                <label>
-		                                    <input type="radio" id="optionsRadios2" name="status" value="yes"> 예
-		                                </label>
-		                                <label>
-		                                    <input type="radio" id="optionsRadios3" name="status" value="no"> 아니오
-		                                </label>
-		                            </div>
-		                            
-		                        </div>                       
-		                    </div>
 		                    <div>
-		                        <a href="/admin/test.hta" class="btn btn-warning">초기화</a>
+		                        <button class="btn btn-warning" id="button-reset">초기화</button>
 		                    </div>
 		                </div>
 		            </form>
@@ -98,45 +100,34 @@
 	           			<div class="form-group col-sm-10">   
 		                	<div class="row" style="margin-top: 10px;">
 		                   		<div class="col-sm-12">
-			                     	<table class="table" id="customersInfoTable" style="text-align: center;">
+			                     	<table class="table" id="table-test-info" style="text-align: center;">
 		                        		<colgroup>
-		                        			<col width="8%">
-		                        			<col width="11%">
-		                        			<col width="12%">
-		                        			<col width="12%">
+		                        			<col width="7%">
+		                        			<col width="*">
+		                        			<col width="13%">
 		                        			<col width="10%">
 		                        			<col width="8%">
 		                        			<col width="8%">
+		                        			<col width="8%">
 		                        			<col width="10%">
+		                        			<col width="8%">
 		                        			<col width="10%">
 		                        		</colgroup>
 										<thead>
 											<tr>
-												<th>강좌명</th>
+							                    <th>번호</th>
 							                    <th>카테고리명</th>
-							                    <th>등급</th>
-							                    <th>유저명</th>
+												<th>시험명</th>
+							                    <th>회차</th>
+							                    <th>문항수</th>
+							                    <th>제한시간</th>
 							                    <th>가격</th>
-							                    <th>신청일</th>
+							                    <th>시험일</th>
 							                    <th>공개여부</th>
-							                    <th></th>
 							                    <th></th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-						                    	<td>자바의 신</td>
-						                    	<td>JAVA</td>
-						                    	<td>고급</td>
-						                    	<td>호날두</td>
-						                    	<td>100000</td>
-						                    	<td>2020/02/05</td>
-						                    	<td>N</td>
-						                    	<td><button class="btn btn-success">승락</button>
-						                    		<button class="btn btn-danger ">거절</button>
-						                    	</td>
-						                    	<td><button class="btn btn-info">상세정보</button></td>
-						                    </tr>
 										</tbody>		
 									</table>
 								</div>
@@ -152,8 +143,8 @@
 	           			<div class="form-group col-sm-10">  
 							<div class="row">									
 								<div class="col-sm-3">
-		                    		<div class="customers_length" id="customer_length" role="status" aria-live="polite">
-		                    		총 건의 조회결과			       
+		                    		<div class="customers_length" id="search-count" role="status" aria-live="polite">
+		                    		<p>총 <span>12</span>건의 조회결과</p>			       
 		                    		</div>
 		                    	</div>
 								<div class="col-sm-9">
@@ -166,9 +157,9 @@
 			                	</div>
 							</div>
 		                </div>
-			           	<div class="row">
+			           	<div class="row" style="background-color: ">
 		           			<div class="col-sm-12" style="text-align: right; right: 275px;">
-		           				<button class="btn btn-success">엑셀</button>
+		           				<button class="btn btn-success">엑셀로 등록</button>
 		           			</div>
 			        	</div>
 		        	</div>		                
@@ -192,7 +183,158 @@
 <script src="../../../resources/js/demo/datatables-demo.js"></script>
 
 <script type="text/javascript">
+
+	
+
 	$("input[name='from']").val();
+	var formData = $("#searchForm").serialize();
+	console.log("formData : " + formData);
+	
+	//메인 및 하위 카테고리 변경 함수
+	function selectBoxChange(str, arr){
+		console.log("str", str, "arr", arr);
+		$(str).empty();
+		
+		var optRow = "";
+		optRow += "<option value='-1'>전체</option>";
+		
+		$.each(arr, function(index, item){
+			optRow += "<option value='" + item.no + "'>" + item.name + "</option>";
+		})
+		$(str).append(optRow);
+	}
+
+	//검색 결과 함수
+	function appendTableRow(result){
+		$("#table-test-info tbody").empty();
+		var dtos = result.searchTestDetailDtos;
+		console.log("dtos",  dtos);
+		$.each(dtos, function(index, item){
+			var row = "<tr>";
+			row += "<td>" + (index +1) + "</td>";
+			row += "<td>" + item.mainCateName + "</td>";
+			row += "<td>" + item.testName + "</td>";
+			row += "<td>" + item.testEp + "</td>";
+			row += "<td>" + item.testQtCnt + "</td>";
+			row += "<td>" + item.testLtdTime + "</td>";
+			row += "<td>" + item.testPrice.toLocaleString() + "원</td>";
+			row += "<td>" + (new Date(item.testDate).toLocaleDateString()) +"</td>";
+			if(item.isDisplay == 'Y'){
+				row += "<td>공개</td>";
+			} else {
+				row += "<td>비공개</td>";
+			}
+			row += "</tr>";
+			$("#table-test-info tbody").append(row);
+		})
+		$("#search-count").find("span").text(dtos.length);
+	}
+	
+	//초기화 버튼 누를 때
+	$("#button-reset").click(function(){
+		$("#searchForm :input")[0].reset();
+		
+	})
+	
+	//기간을 설정할 때
+	$("#date-range input").change(function() {
+		$("#div-period").find("button").removeClass("btn-info");
+		$("#input-period").val(-1);
+		
+		formData = $("#searchForm").serialize();
+		$.getJSON("/admin/searchTestByAdm.hta", formData, function(result){
+			appendTableRow(result);
+		})
+	})
+	
+	//날짜 버튼 누를때
+	$("#div-period").find("button").click(function(){
+		$(this).removeClass("btn-default").addClass("btn-info");
+		$(this).siblings().removeClass("btn-info");
+		$("#date-range input").val("");
+		var dataNo = $(this).data("period");
+		
+		$(this).siblings(":input").val(dataNo);
+		formData = $("#searchForm").serialize();
+		console.log("날짜", formData);
+		$.getJSON("/admin/searchTestByAdm.hta", formData, function(result){
+			appendTableRow(result);
+		})
+	})
+	
+	//검색할 때
+	$("#button-search").click(function(){
+		formData = $("#searchForm").serialize();
+		$.getJSON("/admin/searchTestByAdm.hta", formData, function(result){
+			appendTableRow(result);
+		})
+	})
+	
+	//회차 변경할 때
+	 $("#epName").change(function(){
+		formData = $("#searchForm").serialize();
+		$.getJSON("/admin/searchTestByAdm.hta", formData, function(result){
+			appendTableRow(result);
+		})
+	}) 
+	
+	//카테고리 변경될 때
+	$("#cateNo").change(function(){
+		formData = $("#searchForm").serialize();
+		console.log("formData", formData);
+		$.getJSON("/admin/searchTestByAdm.hta", formData, function(result){
+			$("#epName").empty();
+			
+			var optRow = "";
+			optRow += "<option value=''>전체</option>";
+			
+			var eps = result.eps;
+			$.each(eps, function(index, item){
+				optRow += "<option value='" + item.testEp + "'>" + item.testEp + "</option>";
+			})
+			$("#epName").append(optRow);
+			
+			appendTableRow(result);
+		})
+	})
+	
+	//메인 카테고리 변경될 때
+	$("#mainCateNo").change(function(){
+		var val = $(this).val();
+		$("#searchForm")[0].reset();
+		$(this).val(val);
+		formData = $("#searchForm").serialize();
+		console.log("formData", formData);
+		$.getJSON("/admin/searchTestByAdm.hta", formData, function(result){
+			$("#cateNo").empty();
+			
+			var optRow = "";
+			optRow += "<option value='-1'>전체</option>";
+			
+			var downCates = result.downCategories;
+			
+			selectBoxChange("#cateNo", downCates);
+			appendTableRow(result);
+		})
+	}) 
+	
+	$("#div-period > button").click(function(){
+		$("#input-period").val($(this).data("period"));
+	})
+	
+	//페이지 실행되자마자 
+	$.getJSON("/admin/searchTestByAdm.hta", formData, function(result){
+		
+		var upCates = result.upCategories;
+		//var downCates = result.downCategories;
+		/* $("#mainCateNo").empty();
+		var optRow = "";
+		optRow += "<option value='-1'>전체</option>"; */
+		
+		selectBoxChange("#mainCateNo", upCates);
+		//selectBoxChange("#cateNo", downCates);
+		appendTableRow(result);
+	})
 </script>
 </body>
 </html>

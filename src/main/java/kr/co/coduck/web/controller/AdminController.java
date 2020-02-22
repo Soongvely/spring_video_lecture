@@ -2,8 +2,6 @@ package kr.co.coduck.web.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,11 +13,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.coduck.dto.AdminLectCriteria;
 import kr.co.coduck.dto.AdminLectDto;
+import kr.co.coduck.dto.AdminLessonDto;
+import kr.co.coduck.dto.AdminQnaCriteria;
+import kr.co.coduck.dto.AdminQnaDto;
 import kr.co.coduck.service.AdminLectService;
+import kr.co.coduck.service.AdminQnaService;
 import kr.co.coduck.service.CategoryService;
 import kr.co.coduck.service.LectService;
 import kr.co.coduck.vo.Category;
-import kr.co.coduck.vo.Lect;
 import kr.co.coduck.vo.Pagination;
 
 @Controller
@@ -30,6 +31,8 @@ public class AdminController {
 	private CategoryService categoryService;
 	@Autowired
 	private AdminLectService adminLectService;
+	@Autowired
+	private AdminQnaService adminQnaService;
 	@Autowired
 	private LectService lectService;
 
@@ -43,10 +46,10 @@ public class AdminController {
 //		return "admin/lecture";
 //	}
 
-	@GetMapping("/test.hta")
-	public String test() {
-		return "admin/test";
-	}
+//	@GetMapping("/test.hta")
+//	public String test() {
+//		return "admin/test";
+//	}
 
 //	@GetMapping("/lecturecategory.hta")
 //	public List<Category> lecturecategory(Model model) throws Exception {
@@ -56,7 +59,7 @@ public class AdminController {
 
 	
 	@GetMapping("/lecture.hta") 
-	public String search(AdminLectCriteria criteria, @RequestParam(value="pageno", required = false, defaultValue = "1") int pageNo, Model model) {
+	public String lectureSearch(AdminLectCriteria criteria, @RequestParam(value="pageno", required = false, defaultValue = "1") int pageNo, Model model) {
 	 
 		int totalCnt = adminLectService.getLectCntByCriteria(criteria); 
 		Pagination pagination = new Pagination(pageNo, totalCnt, 10, 5);
@@ -64,10 +67,10 @@ public class AdminController {
 	    criteria.setBeginIndex(pagination.getBeginIndex());
 	    criteria.setEndIndex(pagination.getEndIndex()); 
 	    List<AdminLectDto> lectList = adminLectService.getLectByCriteria(criteria);
+	    
 	    List<Category> categories = categoryService.getLectureCategoryByAdmin();
-		model.addAttribute("categories", categories);
-	    
-	    
+	    model.addAttribute("categories", categories);
+  
 	    model.addAttribute("lectList", lectList ); 
 	    model.addAttribute("pagination", pagination);
 	 
@@ -85,4 +88,19 @@ public class AdminController {
 	public void denylect(@RequestParam("lectNo") int lectNo) throws Exception {
 		adminLectService.denyLect(lectNo);
 	}
+	
+	@GetMapping("/lectdetail.hta")
+	@ResponseBody
+	public List<AdminLessonDto> lectDetail(@RequestParam("lectNo") int lectNo) throws Exception {
+		
+		return adminLectService.getLessonsByLectNo(lectNo);
+	} 
+	
+	//-------------------------------------------------- 공지사항 
+	@GetMapping("/notice.hta")
+	public String notice() {
+		return "admin/notice";
+	}
+	
+	
 }
