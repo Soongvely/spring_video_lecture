@@ -13,6 +13,7 @@ public class OrderLectDetailListDto {
 	private Date lectCreateDate;
 	private int lectprice;
 	private int lectNo;
+	private String done;
 	
 	public OrderLectDetailListDto() {
 		
@@ -64,6 +65,14 @@ public class OrderLectDetailListDto {
 
 	public void setLectNo(int lectNo) {
 		this.lectNo = lectNo;
+	}
+
+	public String getDone() {
+		return done;
+	}
+
+	public void setDone(String done) {
+		this.done = done;
 	}
 	
 	

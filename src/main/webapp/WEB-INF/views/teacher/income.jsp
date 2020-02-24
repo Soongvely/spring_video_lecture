@@ -4,7 +4,6 @@
 <%@ include file="../common/head.jsp" %>
 <%@ include file="../common/header.jsp" %>
 <%@ include file="sub-bar.jsp"%>
-
 				<!-- teacher statistics start -->
                 <div class="container">
                     <div class="teacher-container">
@@ -74,14 +73,15 @@
                                 <div class="statistics-table">
                                     <table class="table table-bordered table-hover" id="incomeTable">
                                         <colgroup>
-                                            <col width="10%">
-                                            <col width="10%">
+                                            <col width="8%">
+                                            <col width="9%">
                                             <col width="*%">
                                             <col width="7%">
-                                            <col width="10%">
-                                            <col width="7%">
-                                            <col width="10%">
-                                            <col width="10%">
+                                            <col width="6%">
+                                            <col width="9%">
+                                            <col width="6%">
+                                            <col width="9%">
+                                            <col width="9%">
                                         </colgroup>
                                         <div class="table-header">
                                             <div class="col-sm-6">
@@ -95,7 +95,8 @@
                                                 <th>강좌 번호</th>
                                                 <th>카테고리</th>
                                                 <th>강좌명</th>
-                                                <th>구매자수</th>
+                                                <th>난이도</th>
+                                                <th>판매수</th>
                                                 <th>강좌가격</th>
                                                 <th>수익률</th>
                                                 <th>총수익</th>
@@ -165,7 +166,8 @@
 							html += '<td>' + item.no + '</td>';
 							html += '<td>' + item.cateName + '</td>';
 							html += '<td>' + item.title + '</td>';
-							html += '<td>' +item.studentCnt +'명</td>';
+							html += '<td>' + item.grade + '</td>';
+							html += '<td>' +item.studentCnt +'</td>';
 							html += '<td>' + item.discountPrice.toLocaleString() + '</td>';
 							html += '<td>0.8</td>';
 							html += '<td>' + item.totalIncome.toLocaleString() + '</td>';

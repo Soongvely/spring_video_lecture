@@ -13,47 +13,40 @@
                 <a class="toggle-left is-hidden-tablet"></a>
                     <aside class="lecture-nav lecture-nav-left" id="coursebarApp">
                         <div class="lecture-nav-left-header">
-                            <h5>${lecture.title }</h5>
+                            <h5 data-lecture-no="${lectureCourse.lecture.no }">${lectureCourse.lecture.lectTitle }</h5>
                             <p>
                                 <span>기간:무제한</span>
                             </p>
                             <div class="lecture-progress">
-                                <label>진도율 : ${lessonDto.viewCount }강/${lessonDto.totalCount }강 (${lessonDto.percent }%) | 시간 : ${lessonDto.totalAccumulate }분/${lessonDto.totalTime }분</label>
+                                <label>진도율 : <span id="viewCount">${lessonDto.viewCount }</span>강/${lessonDto.totalCount }강 (<span id="percent">${lessonDto.percent }</span>%) | 시간 : <span id="totalAccumulate">${lessonDto.totalAccumulate }</span>분/${lessonDto.totalTime }분</label>
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-info" role="progressbar"aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"style="width:30%">
+                                    <div id="progressBar" class="progress-bar progress-bar-info" role="progressbar"aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: ${lessonDto.percent}%">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="curriculum">
-                            <ul>
-                                <li class="list unit unit-chapter">
-                                    <span class="list-item unit-title">스프링의 기초란?</span>
+                        <c:forEach var="chapters" items="${lectureCourse.chapters }" varStatus="cstatus">
+                        	<ul>
+                            	<li class="list unit unit-chapter">
+                                    <span class="list-item unit-title">${chapters.chapter.chapterName }</span>
                                     <ul class="list unit unit-lesson">
-                                        <li class="list-item unit-lesson" data-lesson-no="${lesson.no }">
-                                            <span class="list-item lesson-title">레슨1 </span>
-                                            <span class="unit-checked-icon">
-                                                <i class="fas fa-check-circle"></i>  
-                                            </span>    
-                                        </li>
-                                        <li class="list-item unit-lesson">
-                                            <span class="list-item lesson-title">레슨2 </span>
-                                            <span class="unit-checked-icon">
-                                                <i class="fas fa-check-circle"></i>
-                                            </span>    
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="list unit unit-chapter">
-                                    <span class="list-item unit-title">스프링의 기초란?</span>
-                                </li>
-                                <li class="list unit unit-chapter">
-                                    <span class="list-item unit-title">스프링의 기초란?</span>
-                                </li>
-                                <li class="list unit unit-chapter">
-                                    <span class="list-item unit-title">스프링의 기초란?</span>
-                                </li>
+                                    <c:forEach var="lesson" items="${chapters.lessons }" varStatus="status">
+                                       <li class="list-item unit-lesson ${cstatus.index == 0 && status.index == 0 ? 'active' : ''}" data-lesson-no="${lesson.no }">
+                                           <span class="list-item lesson-title">${lesson.lessonTitle }</span>                                  
+                                           <c:forEach var="history" items="${historys }">
+	                                           <c:if test="${history.isWatched eq 'Y' }">
+		                                           <span class="unit-checked-icon">
+		                                               <i class="fas fa-check-circle"></i>
+		                                           </span>    
+	                                           </c:if>
+                                           </c:forEach>
+                                       </li>
+                                    </c:forEach>
+                                   </ul>
+                               </li>
                             </ul>
+                        </c:forEach>
                         </div>
                     </aside>
                     <div class="contents-container center">
@@ -64,10 +57,10 @@
                                 </a>
                             </div>
                             <div class="unit-title">
-                                <h3>스프링 프로젝트 생성</h3>
+                                <h3 id="lessonTitle">${firstLesson.lessonTitle }</h3>
                             </div>
                             <div class="right-buttons">
-                                <a href="../detail/dashboard.hta?lectureNo=${lecture.no }" class="btn go-out-lecture is-outlined">
+                                <a href="/lecture/detail/dashboard.hta?lectureNo=${lectureCourse.lecture.no }" class="btn go-out-lecture is-outlined">
                                     <span>
                                         <i class="glyphicon glyphicon-new-window"></i> 나가기
                                     </span>
@@ -81,7 +74,7 @@
                         </header>
                         <div class="contents-unit-body">
                             <div class="player-container">
-                               <video src="/resources/video/sample.mp4" type="video/mp4" class="lesson-video" controls></video>
+                               <video src="${firstLesson.videoPath }" autoplay="autoplay" type="video/mp4" class="lesson-video" id="player" controls></video>
                             </div>
                         </div>
                         <footer class="contents-footer-nav navbar">
@@ -92,12 +85,12 @@
                                          이전강의
                                     </span>
                                 </button>
-                                <button class="btn btn-default is-outlined">
+                                <button class="btn btn-default is-outlined before">
                                     <span class="btn-next-lesson">
                                         <i class="fas fa-check"></i>
                                     </span>
                                 </button>
-                                 <button class="btn btn-default is-outlined">
+                                 <button class="btn btn-default is-outlined after">
                                     <span class="btn-next-lesson">
                                         <i class="fas fa-step-forward"></i>
                                          다음강의
@@ -118,40 +111,21 @@
                                     <i class="glyphicon glyphicon-search"></i>
                                 </div>
                                 <div class="btn-question">
-                                    <button class="btn btn-sm btn-default">질문하기</button>
+                                    <button class="btn btn-sm btn-default btn-ask">질문하기</button>
                                 </div>
                                 <div class="question-editor-form">
-
+                                	<form id="questionForm" method="GET"> 
+		                                <textarea placeholder="내용을 입력해주세요."></textarea>
+		                                <div class="ask-form-buttons">
+			                                <button type="button" class="btn btn-xs btn-default btn-close">닫기</button>
+			                                <button type="button" class="btn btn-xs btn-info btn-submit">등록</button>
+		                                </div>
+		                            </form>
                                 </div>
                             </div>
                         </div>
                         <div class="unit-question-list">
-                            <ul>
-                                <li class="list-item-box">
-                                    <article class="list-item-question">
-                                        <figure class="left-image is-rounded">
-                                            <img class="is-rounded" src="/resources/images/logo/coduck.ico"" width="49px">
-                                        </figure>
-                                        <div class="item-title">
-                                            <strong class="contents-title">연습자료 </strong>
-                                            <span class="writer"> sungsil kim</span>
-                                        </div>
-                                        <div class="item-contents">
-                                            <div class="contents">
-                                                <p>
-                                                    연습자료는 어디서 받나요? 강의를 잘 들었지만, 연습을 해 볼 수가 없어 다 잊어버린 듯 합니다.
-                                                </p>
-                                            </div>
-                                            <div class="question-comment">
-                                                <div class="comments">
-                                                    <i class="fas fa-comment"></i>
-                                                    <span class="answer-count">0</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </li>
-                            </ul>
+                            <ul id="question-box"></ul>
                         </div>
                     </div>
             </section>
@@ -159,63 +133,232 @@
     </div>
 </body>
 <script>
+	$(function() {
+		
+		// 레슨명 클릭 시 active 효과
+	    $(".list.unit.unit-lesson li").click(function() {
+	        if ($(this).hasClass(".active")) return;
+	        $(".unit-lesson").removeClass("active");
+	        $(this).addClass("active");
+	    });
+	
+		// 강좌 코스 사이드바 슬라이드 
+	    var $sidebar = $(".lecture-nav-left");
+	    var $sidebarBtn = $(".toggle-btn-nav-left");
+	
+	    $sidebarBtn.on("click", function() {
+	        $sidebar.toggleClass('is-active');
+	        
+	        if($sidebar.hasClass('is-active')) {
+	            $('.overlay').fadeIn();
+	            $(".toggle-btn-nav-left i").removeClass("fas fa-list-ol").addClass("fas fa-times");
+	            $sidebarBtn.removeClass("none-space-left").addClass("space-left");
+	        
+	        } else {
+	            $('.overlay').fadeOut();
+	            $(".toggle-btn-nav-left i").removeClass("fas fa-times").addClass("fas fa-list-ol");
+	            $sidebarBtn.removeClass("space-left").addClass("none-space-left");
+	        }
+	    }); 
+	
+		// 질문하기 사이드바 슬라이드
+	    $questionbar = $(".lecture-nav-right");
+	
+	    $(".toggle-right").click(function() {
+	        $questionbar.removeClass("closed").addClass("opened");
+	    });
+	    $(".toggle-btn-closed").on("click", function() {
+	        $questionbar.removeClass("opened").addClass("closed");
+	    }); 
+	    
+	    // 질문 조회 ajax 실행 이벤트
+	    $(".toggle-right").on("click", function() {
+	    	searchLessonQuestion();
+	    });
+	    
+	    $("input[name=search]").on("keyup", function(e) {
+	    	if(e.keyCode == 13)
+	    		searchLessonQuestion();
+	    });
+	    
+	    // 질문하기 form 컨드롤
+	    $(".btn-ask").on("click", function() {
+		    $(".question-editor-form").css("display", 'block');
+		});
+	    $(".btn-close").on("click", function() {
+		    $(".question-editor-form").css("display", 'none');
+	    });
+	    
+	    
+	    // 질문 조회 ajax
+	    function searchLessonQuestion() {
+	
+	    	var lessonNo = $(".list-item.unit-lesson").data("lesson-no");
+	    	var keyword = $("input[name=search]").val();
+	    	
+	    	$.ajax({
+	    		url: "/lecture/api/searchLessonQuestion.hta",
+	    		type: 'GET',
+	    		contentType: "application/json",
+	    		data: {lessonNo, keyword},
+	    		success: function(result) {
+	    			$("#question-box").empty();
 
-	// 레슨명 클릭 시 active 효과
-    $(".list.unit.unit-lesson li").click(function() {
-        if ($(this).hasClass(".active")) return;
-        $(".unit-lesson").removeClass("active");
-        $(this).addClass("active");
-
-    })
-
-	// 강좌 코스 사이드바 슬라이드 
-    var $sidebar = $(".lecture-nav-left");
-    var $sidebarBtn = $(".toggle-btn-nav-left");
-
-    $sidebarBtn.on("click", function() {
-        $sidebar.toggleClass('is-active');
-        
-        if($sidebar.hasClass('is-active')) {
-            $('.overlay').fadeIn();
-            $(".toggle-btn-nav-left i").removeClass("fas fa-list-ol").addClass("fas fa-times");
-            $sidebarBtn.removeClass("none-space-left").addClass("space-left");
-        
-        } else {
-            $('.overlay').fadeOut();
-            $(".toggle-btn-nav-left i").removeClass("fas fa-times").addClass("fas fa-list-ol");
-            $sidebarBtn.removeClass("space-left").addClass("none-space-left");
-        }
-    }); 
-
-	// 질문하기 사이드바 슬라이드
-    $questionbar = $(".lecture-nav-right");
-
-    $(".toggle-right").click(function() {
-        $questionbar.removeClass("closed").addClass("opened");
-    });
-
-    $(".toggle-btn-closed").on("click", function() {
-        $questionbar.removeClass("opened").addClass("closed");
-    }); 
+	    	    	var html = '';
+	    			if (result.length) {
+		    			result.forEach(function(item, i) {
+		    				
+		    				console.log(item)
+		    				
+		    				html += '<li class="list-item-box" id="question-box-'+item.no+'">';
+		    				html += '<article class="list-item-question">';
+		    				html += '<figure class="left-image is-rounded">';
+		    				html += '<img class="is-rounded" src="' + item.user.imageFilename + '"width="49px">';
+		    				html += '</figure>';
+		    				html += '<div class="item-title">';
+		    				html += '<strong class="writer">' +item.user.id + '</strong>';
+		    				html += '<span class="create-date">' + item.createDate + '</span>';
+		    				html += '</div>';
+		    				html += '<div class="item-contents">';
+		    				html += '<div class="contents">';
+		    				html += '<p>' + item.contents + '</p>';
+		                    html += '</div>';
+		                    
+		                    if (item.isAnswered == 'Y') {
+			                    html += '<div class="question-comment">';
+			                    html += '<div class="comments">';
+			                    html += '<i class="fas fa-comment"></i>';
+			                    html += '<span class="answer-count" data-question-no="' + item.no + '"> 답글</span>';
+			                    html += '</div>';
+		                    	html += '</div>';
+		                    
+			                    html += '<div class="answer_container hidden">';
+			           		 	html += '<div class="review-answer-item">';
+	     						html += '<div class="review-answer-box">';
+	     				 		html += '<div class="answer-contents">';
+	     						html += '<div class="answer_header">';
+			                    html += '<i class="answer-logo"></i>';
+	     						html += '<strong class="writer"></strong>';
+	     						html += '<span class="answer create_date"></span>';
+	     						html += '</div>';
+	     						html += '<div class="review_answer_body"></div>';
+	     						html += '</div>';
+	    						html += '</div>';
+	    					    html += '</div>';
+	     					    html += '</div>';
+		                    }
+		                    html += '</div>';
+		                    html += '</article>';
+		                    html += '</li>';
+		    			});
+	    			} else {
+	    				html += '<p class="has-not-question">등록된 질문이 없습니다.</p>';
+	    				html += '<p class="has-not-question">궁금한 점을 질문해보세요!</p>';
+	    			}
+	    			$("#question-box").append(html);
+	    		}
+	    	});
+	    }
+	    
+	    // '답글'클릭시 답글 조회 ajax실행 이벤트
+	    $("#question-box").on("click",'.answer-count', function() {
+	    	var questionNo = $(this).data("question-no");
+	    	var html = '';
+			
+	    	$.ajax({
+	    		url: "/lecture/api/getAnswer.hta",
+	    		type: 'GET',
+	    		contentType: "application/json",
+	    		data: {questionNo},
+	    		success: function(result) {
+	    			console.log(questionNo,">>",result);
+	    			
+	    			$answer = $('#question-box-'+ questionNo).find(".answer_container");
+	    			
+	    			$answer.find(".answer-logo").addClass("glyphicon glyphicon-leaf");
+	    			$answer.find(".writer").text(result.user.id);
+					$answer.find(".create_date").text(result.createDate);
+					$answer.find(".review_answer_body").text(result.contents);
+	    		}
+	    	});
+	    });
+		
+	    // 답글버튼 toggle 
+	     $("#question-box").on("click",'.answer-count', function() {
+	    	 const no = $(this).data("question-no");
+	    	$("#question-box-"+no).find(".answer_container").toggleClass("hidden");
+	    			
+	     });
+	    
+	    // 버튼 효과 제어
+	    $(".is-outlined").mousedown(function() {
+	    	$(this).css({background:"none", color:"white"});
+		});
+	    $(".is-outlined").mouseup(function() {
+	    	$(this).css({background:"none", color:"white"});
+		});
     
-    // 강의영상 에이작스
-    $(".list-item.unit-lesson").on("click", function () {
-    	
-    	var lessonNo = $(this).data("lesson-no");
-    	
-    	$.ajax({
-    		url: "",
-    	});
-    });
-    
-    // 버튼 효과 제어
-    $(".btn-default").mousedown(function() {
-    	$(this).css({background:"none", color:"white"});
+	    /*************************  동영상 플레이어 관련 *******************************/
+		var index = 0;
+	    const video = document.getElementById("player");
+	    
+	    setInterval(function() {
+	    	if(!video.paused){
+	    		console.group("레슨group");
+	    		
+	    		console.log(index++,"레슨");
+	    		console.log("currentTime",video.currentTime);
+	    		
+	    		const lectNo = $("h5").data("lecture-no");
+	    		const lessonNo = $(".unit-lesson.active").data("lesson-no");
+	    		const lastTime = Math.floor(video.currentTime);
+	    		const data = {lectNo, lessonNo, lastTime};
+	    		
+	    		$.get("/lecture/api/updateHistory.hta", data, function(result) {
+					
+	    			$("#viewCount").text(result.viewCount);
+	    			$("#percent").text(result.percent);
+	    			$("#totalAccumulate").text(result.totalAccumulate);
+	    			$("#progressBar").css("width", result.percent +"% ");
+	    		});
+	    		
+	    		console.groupEnd();
+	    	}
+    	}, 1000);
+	    
+	    function lessonPlayer() {
+	    	
+	    	const lessonNo = $(".unit-lesson.active").data("lesson-no");
+	    	
+	    	$.ajax({
+	    		url: "/lecture/api/lessonPlayer.hta",
+	    		type: 'GET',
+	    		contentType: "application/json",
+	    		data: {lessonNo},
+	    		success: function(result) {
+	    			
+	    			var history = result.history;
+	    			var lesson = result.lesson;
+	    			
+	    			$("#lessonTitle").text(lesson.lessonTitle);
+	    			$("#player").prop("src", lesson.videoPath);
+	    			
+	    			if (history.isWatched == "Y") {
+	    				$(".unit-checked-icon").html('<i class="fas fa-check-circle"></i>');
+	    			} else {
+	    				$(".unit-checked-icon").empty();
+	    			}
+	    		}
+	    	});
+	    	
+	    }
+	    
+	    $(".list-item.unit-lesson").on("click", function() {
+	    	lessonPlayer();
+	    });
 	});
-    $(".btn-default").mouseup(function() {
-    	$(this).css({background:"none", color:"white"});
-	});
-    
+	    
+	    
     
 </script> 
 </html>

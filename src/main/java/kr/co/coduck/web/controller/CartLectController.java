@@ -22,6 +22,7 @@ import kr.co.coduck.dto.CartTestDto;
 import kr.co.coduck.service.CartLectService;
 import kr.co.coduck.service.CartTestService;
 import kr.co.coduck.service.UserService;
+import kr.co.coduck.vo.LectCart;
 import kr.co.coduck.vo.User;
 
 @Controller
@@ -69,8 +70,8 @@ public class CartLectController {
    }
    
 	
-	@GetMapping("/cartlectdel.hta") public String
-	userCartLectDel(@RequestParam("lectno") int lectNo) {
+	@GetMapping("/cartlectdel.hta")
+	public String userCartLectDel(@RequestParam("lectno") int lectNo) {
 		cartLectService.deleteCartLect(lectNo); 
 		return "redirect:/cart/userCartList.hta"; 
 	}
@@ -82,5 +83,15 @@ public class CartLectController {
 	 * @ResponseBody public String userCartLectDel(@RequestParam("lectno") int
 	 * lectNo) { cartLectService.deleteCartLect(lectNo); return "success"; }
 	 */
+	
+	@GetMapping("/addlectcart.hta")
+	public String addlectcart(HttpSession session, Model model, @RequestParam("lectNo") int lectNo) {
+		User user = (User)session.getAttribute("LU");
+		LectCart lectCart = new LectCart();
+		lectCart.setLectNo(lectNo);
+		lectCart.setUserNo(user.getNo());
+		cartLectService.insertLectCart(lectCart);
+		return "redirect:/cart/userCartList.hta";
+	}
 	   
 }

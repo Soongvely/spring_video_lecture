@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="../common/tag.jsp" %>    
+<%@ include file="../common/header.jsp"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -19,37 +19,33 @@
    <script src="/resources/js/common.js"></script>
 </head>
 <body>
-	<%@ include file="../common/header.jsp"%>
-	<div class="container" style="font-size:17px; width:1440px;">
-		<div class="row">
-			<div class="col-sm-2" style="border: 1px solid red;">
-				<p>대시보드</p>
+<div class="container" style="font-size:17px; width:1440px;">
+	<div class="row">
+		<div class="col-sm-2">
 				<p>내 학습</p>
-				<ul>
+				<ul style="list-style:none;">
 					<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
-					<li><a href="/question/userqueston.hta">내 질문</a></li>
-					<li>내 모의고사</li>
+					<li><a href="/user/mybytestlist.hta">모의고사</a></li>
+					<li><a href="/question/userqueston.hta">강의 질문</a></li>
 				</ul>
 				<p>내 결제</p>
-				<ul>
-					<li>위시리스트</li>
-					<li>장바구니</li>
-					<li>내 쿠폰함</li>
-					<li><a href="/cart/userCartList.hta">구매내역</a></li>
+				<ul style="list-style:none;">
+					<li><a href="/like/likelectlist.hta">위시리스트</a></li>
+					<li><a href="/cart/userCartList.hta">장바구니</a></li>
+					<li><a href="/user/mycouponlist.hta">내 쿠폰함</a></li>
+					<li><a href="/order/userorderlectlist.hta">구매내역</a></li>
 				</ul>
-				<p>설정</p>
-				<ul>
-					<li>프로필 설정</li>
-					<li>알림 설정</li>
+				<p>내 강의</p>
+				<ul style="list-style:none;">
+					<li id="teacher"><a href="/teacher/main.hta">내 강의</a></li>
 				</ul>
-				<p>내 강의/모의고사</p>
-				<ul>
-					<li>내 강의</li>
-					<li>내 모의고사</li>
+				<p>관리자 문의</p>
+				<ul style="list-style:none;">
+					<li id="teacher"><a href="/question/userqueston.hta">문의하기</a></li>
 				</ul>
 			</div>
-
-			<div class="col-sm-10">
+		
+		<div class="col-sm-10">
 				<span>내 학습 / 내 질문</span>
 				<h4>내 질문</h4>
 				<div class="row">
@@ -75,14 +71,14 @@
 					</div>
 				</div>
 			</div>
-		</div>
 	</div>
-	<script type="text/javascript">
-		
-	</script>
-</body>
-<%@ include file="../common/footer.jsp"%>
-</html>
+</div>
+<script type="text/javascript">
+
+</script>
+
+<%@ include file="../common/footer.jsp" %>
+
 
 
 

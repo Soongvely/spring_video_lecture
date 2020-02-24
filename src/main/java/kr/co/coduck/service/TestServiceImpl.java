@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.coduck.dao.CategoryDao;
 import kr.co.coduck.dao.TestDao;
+import kr.co.coduck.dao.UserDao;
 import kr.co.coduck.dto.SearchTestDetailDto;
 import kr.co.coduck.dto.SearchTestDto;
 import kr.co.coduck.dto.TestQtDto;
@@ -16,6 +17,7 @@ import kr.co.coduck.dto.TestResultDto;
 import kr.co.coduck.dto.TestSubjResultDto;
 import kr.co.coduck.form.SearchTestForm;
 import kr.co.coduck.form.SearchTestFormByAdm;
+import kr.co.coduck.form.TestModifyForm;
 import kr.co.coduck.form.TestSubmitForm;
 import kr.co.coduck.vo.Category;
 import kr.co.coduck.vo.Ep;
@@ -24,6 +26,7 @@ import kr.co.coduck.vo.TestQt;
 import kr.co.coduck.vo.TestResult;
 import kr.co.coduck.vo.TestSubj;
 import kr.co.coduck.vo.TestSubjResult;
+import kr.co.coduck.vo.User;
 import kr.co.coduck.vo.ViewCk;
 
 @Service
@@ -33,6 +36,23 @@ public class TestServiceImpl implements TestService{
 	private TestDao testDao;
 	@Autowired
 	private CategoryDao categoryDao;
+	@Autowired
+	private UserDao userDao;
+	
+	@Override
+	public Test getTestsTopN() {
+		return testDao.getTestsTopN();
+	}
+	
+	@Override
+	public void updateTestQt(TestModifyForm form) {
+		testDao.updateTestQt(form);
+	}
+	
+	@Override
+	public TestQt getTestQtByNo(int no) {
+		return testDao.getTestQtByNo(no);
+	}
 	
 	@Override
 	public SearchTestDto searchTest(SearchTestForm form, int userNo) {
@@ -81,19 +101,22 @@ public class TestServiceImpl implements TestService{
 	}
 
 	@Override
-	public void insertTest(Test test) {
+	public void insertTest(Test test,  List<TestQt> qts) {
 		testDao.insertTest(test);
-	}
-
-	@Override
-	public void insertTestQt(TestQt qt) {
-		testDao.insertTestQt(qt);
-		
+		for(TestQt e : qts) {
+			e.setTestNo(test.getNo());
+			testDao.insertTestQt(e);
+		}
 	}
 
 	@Override
 	public List<TestQtDto> getTestQtsDtoByNo(int testNo) {
 		return testDao.getTestQtsDtoByNo(testNo);
+	}
+	
+	@Override
+	public List<TestQtDto> getTestQtsDtosByNoNSubjNo(Map<String, Integer> map) {
+		return testDao.getTestQtsDtosByNoNSubjNo(map);
 	}
 
 	@Override
@@ -202,6 +225,33 @@ public class TestServiceImpl implements TestService{
 	public List<Ep> getAllTestEp() {
 		return testDao.getAllTestEp();
 	}
+
+	@Override
+	public void updateTest(Test test) {
+		testDao.updateTest(test);
+	}
+
+	@Override
+	public List<SearchTestDetailDto> userBySearchTestList(int userNo) {
+		User user = userDao.getUserProfilByNo(userNo);
+		List<SearchTestDetailDto> userBySearchTestList = testDao.userBySearchTestList(user.getNo());
+		return userBySearchTestList;
+	}
+
+	@Override
+	public List<String> getAllTestNameNEp() {
+		return testDao.getAllTestNameNEp();
+	}
 	
+	@Override
+	public void deleteTestByTestNo(int testNo) {
+		testDao.deleteTestByTestNo(testNo);
+	}
+	
+	@Override
+	public void deleteTestQtsByTestNo(int testNo) {
+		testDao.deleteTestQtsByTestNo(testNo);
+		
+	}
 }
 

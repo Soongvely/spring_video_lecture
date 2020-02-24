@@ -18,10 +18,12 @@ import kr.co.coduck.dto.UserByLectDto;
 import kr.co.coduck.vo.Lect;
 import kr.co.coduck.vo.LectureCriteria;
 import kr.co.coduck.vo.Lesson;
+import kr.co.coduck.vo.LessonHistory;
 import kr.co.coduck.vo.User;
 
 @Service
 public class LectServiceImpl implements LectService {
+	
 
 	@Autowired
 	private LectDao lectDao;
@@ -114,10 +116,28 @@ public class LectServiceImpl implements LectService {
 		return lectDao.getProgressPercentInDashboard(map);
 	}
 
+	@Override
+	public LectureCourseDto getLectureCourseByLecureNo(int lectureNo) {
+
+		return lectDao.getLectureCourseByLecureNo(lectureNo);
+	}
+	
 	@Override 
 	public List<IncomeDto> getTeacherIncomeByCriteria(LectureCriteria cri) {
-  
-		return lectDao.getTeacherIncomeByCriteria(cri); 
+
+		List<IncomeDto> incomeDtos = lectDao.getTeacherIncomeByCriteria(cri);
+		for (IncomeDto income : incomeDtos) {
+			if (income.getGrade().equals("1")) {
+				income.setGrade("입문");
+			} else if (income.getGrade().equals("2")) {
+				income.setGrade("초급");
+			} else if (income.getGrade().equals("3")) {
+				income.setGrade("중급");
+			} else if (income.getGrade().equals("4")) {
+				income.setGrade("활용");
+			}
+		}
+		return incomeDtos; 
 	}
   
 	@Override
@@ -137,7 +157,41 @@ public class LectServiceImpl implements LectService {
 
 		return lectDao.getLessonByRecent(map);
 	}
+	 
+	@Override
+	public LessonHistory getLessonHistoryByLessonHistory(LessonHistory lessonHistory) {
 
+		return lectDao.getLessonHistoryByLessonHistory(lessonHistory);
+	}
+	
+	@Override
+	public Lesson getLessonByLessonNo(int lessonNo) {
+
+		return lectDao.getLessonByLessonNo(lessonNo);
+	}
+	
+	@Override
+	public void insertLessonHistory(LessonHistory lessonHistory) {
+		lectDao.insertLessonHistory(lessonHistory);
+	}
+	
+	@Override
+	public void updateLessonByLessonHistory(LessonHistory lessonHistory) {
+		lectDao.updateLessonByLessonHistory(lessonHistory);
+	}
+	
+	@Override
+	public Lesson getFirstLessonByLectureNo(int lectureNo) {
+
+		return lectDao.getFirstLessonByLectureNo(lectureNo);
+	}
+	
+	@Override
+	public List<LessonHistory> getAllLessonHistoryByMap(Map<String, Object> map) {
+
+		return lectDao.getAllLessonHistoryByMap(map);
+	}
+	
 	@Override
 	public List<LessonDto> getLectProcessivityByUserNo(int userNo) {
 		User user = userDao.getUserProfilByNo(userNo);

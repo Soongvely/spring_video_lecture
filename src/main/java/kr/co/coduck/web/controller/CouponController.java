@@ -50,8 +50,6 @@ public class CouponController {
       return "redirect:/admin/coupon.hta";
    }
 
-   
-
    @PostMapping("/updatecoupon.hta")
    public String updateCouponByAdmin(CouponUpdateForm form, @RequestParam("couponno") int couponNo) throws Exception {
       Coupon coupon = couponService.getCouponByCouponNo(couponNo);

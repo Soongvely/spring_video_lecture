@@ -11,11 +11,13 @@ import kr.co.coduck.dto.LessonDto;
 import kr.co.coduck.vo.Lect;
 import kr.co.coduck.vo.LectureCriteria;
 import kr.co.coduck.vo.Lesson;
+import kr.co.coduck.vo.LessonHistory;
 
 public interface LectDao {
 
 	List<LessonDto> getLectListUserByNo(int userNo);
 
+	
 	Lect getLectByNo(int lectNo);
 
 	List<LectureDto> getLectureByCategoryNo(int cateNo);
@@ -37,11 +39,20 @@ public interface LectDao {
 	List<LessonDto> getLectProcessivityByUserNo(int userNo);
 	List<Lesson> getLessonByRecent(Map<String, Object> map);
 	
+	LectureCourseDto getLectureCourseByLecureNo(int lectureNo);
+	
 	List<IncomeDto> getTeacherIncomeByCriteria(LectureCriteria cri);
 	IncomeDto getTeacherIncomeStatistics(int userNo);
 	double getTeacherAvgScore(int userNo);
 	
 	List<Lect> getFindLectByUserNo(int userNo);
 	
+	LessonHistory getLessonHistoryByLessonHistory(LessonHistory lessonHistory);
+	Lesson getLessonByLessonNo(int lessonNo);
+	Lesson getFirstLessonByLectureNo(int lectureNo);
+	List<LessonHistory> getAllLessonHistoryByMap(Map<String, Object> map);
+	
+	void insertLessonHistory(LessonHistory lessonHistory);
+	void updateLessonByLessonHistory(LessonHistory lessonHistory);
 	
 }

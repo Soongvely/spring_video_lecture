@@ -40,26 +40,26 @@
 			, viewCount
 		from 
 			(select 
-	        	lect_no                 			<!-- 강의 번호 -->
+	        	lect_no                 				
 		        , count(*) 			 totalCount     <!-- 총 레슨 개수 -->
 		        , sum(total_time) 	 totalTime 		<!-- 총 레슨 시간 -->
 		    from 
 		    	lects
 		    natural join chapters
 	        natural join lessons
-	        group by lect_no) A 						 	<!-- 강의의 레슨 개수와 전체 레슨 시간조회 쿼리 -->
+	        group by lect_no) A 					
 		natural join 
 			(select 
-				lect_no              				<!-- 강의 번호 -->
-		    	, count(*) 				 viewCount  <!-- 수강생이 본 레슨 개수 -->
-		    	, sum(accumulate_time)   totalAccumulate   <!-- 수강생이 본 레슨들의 누적 시간 -->
+				lect_no              				
+		    	, count(*) 				 viewCount 	 		<!-- 수강생이 본 레슨 개수 -->
+		    	, sum(accumulate_time)   totalAccumulate    <!-- 수강생이 본 레슨들의 누적 시간 -->
 		    from 
 		    	lesson_histories 
 		    where 
 		    	user_no = #{value} 
 		    and is_watched = 'Y'      
 		    
-		    group by lect_no) B 					<!-- 봤던 레슨의 이력 테이블 -->
+		    group by lect_no) B 					
 	</select>
 	
 	<!-- 유저 번호로 유저가 구매한 수강리스트 조회 -->
@@ -177,11 +177,11 @@
 	    	natural join chapters
 	        natural join lessons
 	        where 
-	        	lect_no = #{lectureNo}) A 		 <!-- 강의의 레슨 개수와 전체 레슨 시간 -->
+	        	lect_no = #{lectureNo}) A 		 
 		natural join 
 			(select 
-			    count(*) 				viewCount 	 <!-- 내가 본 레슨 개수 -->
-			    , sum(accumulate_time)  totalAccumulate
+			    count(*) 				viewCount 	 	<!-- 내가 본 레슨 개수 -->
+			    , sum(accumulate_time)  totalAccumulate <!-- 내가 본 레슨의 총 누적시간 -->
 		    from 
 		    	lesson_histories 
 		    where 
@@ -405,6 +405,7 @@
 		<result column="lesson_title" property="lessonTitle" />
 		<result column="lesson_video_path" property="videoPath" />
 		<result column="total_time" property="totalTime" />
+		<result column="lesson_order" property="order" />
 	</resultMap>
 	
 	<!-- 강좌번호로 챕터 조회 -->
@@ -428,7 +429,8 @@
 			, chapter_no
 			, lesson_title
 			, lesson_video_path
-			, total_time	
+			, total_time
+			, lesson_order	
 		from 
 			 lessons  
 		where
@@ -437,7 +439,103 @@
     		lesson_no asc		
 	</select>
 	
-	<!-- teacher -->
+	<!-- ****************************** player ****************************** -->
+	
+	<!-- 강좌 플레이어 -->
+	<select id="getLectureCourseByLecureNo" parameterType="int" resultMap="lectureMap">
+		select 
+		    lect_no
+		    , lect_title
+		from lects 
+		where 
+		    lect_no = #{value}
+	</select>
+	
+	<!-- 회원번호와 레슨번호로 레슨히스토리 조회 -->
+	<select id="getLessonHistoryByLessonHistory" parameterType="LessonHistory" resultType="LessonHistory">
+		select 
+            no					no
+            , lect_no			lectNo
+			, lesson_no			lessonNo
+            , user_no			userNo
+            , is_watched		isWatched
+            , last_time			lastTime
+            , accumulate_time	accumulateTime
+            , create_date		createDate
+		from 
+			 lesson_histories 
+		where
+    		lesson_no = #{lessonNo}
+        and user_no = #{userNo}
+	</select>
+	
+	<!-- 회원번호와 강좌번호로 레슨히스토리 조회 -->
+	<select id="getAllLessonHistoryByMap" parameterType="map" resultType="LessonHistory">
+		select 
+            no					no
+            , lect_no			lectNo
+			, lesson_no			lessonNo
+            , user_no			userNo
+            , is_watched		isWatched
+		from 
+			 lesson_histories 
+		where
+    		lect_no = #{lectureNo}
+        and user_no =  #{userNo}
+	</select>
+	
+	<!-- 레슨히스토리 생성 -->
+	<insert id="insertLessonHistory" parameterType="LessonHistory">
+		insert into lesson_histories
+			(no, lect_no, lesson_no , user_no)
+		values
+			(lesson_history_seq.nextval, #{lectNo}, #{lessonNo}, #{userNo})
+	</insert>
+	
+	<!-- 회원번호와 레슨번호로 업데이트 -->
+	<update id="updateLessonByLessonHistory" parameterType="LessonHistory">
+		update
+			 lesson_histories
+		set			 
+             is_watched		=	#{isWatched}
+            , last_time		=	#{lastTime}
+            , accumulate_time =	#{accumulateTime}
+       where
+       		lesson_no = #{lessonNo}
+        and user_no = #{userNo}
+	</update>
+	
+	<!-- 레슨번호로 레슨 조회 -->
+	<select id="getLessonByLessonNo" parameterType="int" resultType="Lesson">
+		select  
+			lesson_no				no
+			, chapter_no			chapterNo
+			, lesson_title			lessonTitle
+			, lesson_video_path		videoPath
+			, total_time			totalTime
+			, lesson_order			"order"
+		from 
+			lessons
+		where
+			lesson_no = #{value}
+	</select>
+	
+	<!-- 강좌번호에 해당하는 레슨의 순서가 첫번째인 레슨 조회 -->
+	<select id="getFirstLessonByLectureNo" parameterType="int" resultType="Lesson">
+		select 
+			lesson_no				no
+			, lesson_title			lessonTitle
+			, lesson_video_path		videoPath
+			, lesson_order			"order"
+		from 
+			lessons
+		natural join lects
+		natural join chapters
+		where 
+			lect_no = #{value}
+		and lesson_order = 1
+	</select>
+	<!-- ****************************** teacher ****************************** -->
 	
 	<!-- 강사가 등록한 강좌 조건별 조회 -->
 	<select id="getLectureListByCriteria" parameterType="LectureCriteria" resultType="LectureDto">
@@ -494,6 +592,7 @@
 			(select    
 			    l.lect_no								 no
 			    , l.lect_title							 title
+			    , l.lect_grade							 grade
 			    , l.lect_discount_price					 discountPrice
 			    , c.cate_name							 cateName
 			    , sum(l.lect_discount_price) 			 totalIncome
@@ -517,6 +616,7 @@
 			group by 
 				l.lect_no
 				, l.lect_title
+				, l.lect_grade
 				, l.lect_discount_price
 				, c.cate_name) 
 		order by 
@@ -540,7 +640,7 @@
 	<!-- 강사 평점 구하기 -->
 	<select id="getTeacherAvgScore" parameterType="int" resultType="double">
 		select
-			avg(r.review_star) 	teacherScore
+			round(avg(r.review_star), 1) 	teacherScore
 		from 
 		    lects l, ord_lects o, ord_lect_infos ol, users u, reviews r
 		where 

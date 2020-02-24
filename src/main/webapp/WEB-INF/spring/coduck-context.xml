@@ -50,7 +50,10 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
 	
-	<!-- 
-		<context:property-placeholder location="classpath:/META-INF/config/application-config.properties"/>
-	-->
+	<context:property-placeholder location="classpath:/META-INF/config/application-config.properties"/>
+
+	<bean id="fileDownloadView" class="kr.co.coduck.web.view.FileDownloadView">
+	
+	</bean>
+	
 </beans>

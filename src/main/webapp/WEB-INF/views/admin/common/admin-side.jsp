@@ -33,14 +33,13 @@
        <li class="nav-item">
          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                    <i class="fas fa-chalkboard-teacher"></i>
-            <span>강좌 관리</span>
+            <span>통합 관리</span>
             </a>
            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">통합 관리</h6>
                 <a class="collapse-item" href="/admin/lecture.hta">강좌</a>
                 <a class="collapse-item" href="/admin/test.hta">모의고사</a>
-                <a class="collapse-item" href="/admin/test.hta">모의고사 등록</a>
               </div>
          </div>
       </li>

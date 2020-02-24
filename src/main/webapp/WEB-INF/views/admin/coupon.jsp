@@ -264,19 +264,19 @@
 <!-- 쿠폰(체크) 삭제하기(모달) -->
 <div class="modal fade" id="modal-check-coupon-delete" role="dialog">
 	<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">쿠폰 삭제</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-				<div class="modal-body">
-					<p>해당 쿠폰을 삭제하시겠습니까?</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" id="btn-check-coupon-delete">삭제하기</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
-				</div>
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">쿠폰 삭제</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
+			<div class="modal-body">
+				<p>해당 쿠폰을 삭제하시겠습니까?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" id="btn-check-coupon-delete">삭제하기</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
 	</div>
 </div>
 

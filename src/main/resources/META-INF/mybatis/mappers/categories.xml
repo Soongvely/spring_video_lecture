@@ -18,7 +18,7 @@
 		where 
 			main_cate_no = #{value}	
 		order 
-			by cate_no	
+			by 2	
 	</select>
 	
 	<!-- 강좌 카테고리 조회 -->
@@ -71,6 +71,8 @@
 			MAIN_CATE_NO in (select CATE_NO
 							from CATEGORIES
 							where MAIN_CATE_NO = 20000)
+		order by
+			cate_name
 	</select>
 	
 </mapper>

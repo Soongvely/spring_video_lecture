@@ -36,6 +36,7 @@ public class TeacherController {
 		 return "teacher/main";
 	 }
 	 
+	// 강사가 등록한 강좌 조건별 조회 
 	@GetMapping("/searchMyLecture")
 	@ResponseBody
 	public Map<String, Object> main(HttpSession session, LectureCriteria cri) {
@@ -82,6 +83,7 @@ public class TeacherController {
 		 return incomes; 
 	 }
 
+	// 강사 수익 조회
 	@GetMapping("/income")
 	public String income(HttpSession session, Model model) {
 		

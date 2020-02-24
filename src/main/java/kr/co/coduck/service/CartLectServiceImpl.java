@@ -10,6 +10,7 @@ import kr.co.coduck.dao.LectCartDao;
 import kr.co.coduck.dao.UserDao;
 import kr.co.coduck.dto.CartChoiceLectListDto;
 import kr.co.coduck.dto.CartLectDto;
+import kr.co.coduck.vo.LectCart;
 import kr.co.coduck.vo.User;
 
 @Service
@@ -37,6 +38,13 @@ public class CartLectServiceImpl implements CartLectService{
 	public CartChoiceLectListDto getCartChoiceLecttByCartChoiceLectNo(Map<String, Object> criteria) {
 		
 		return lectCartDao.getCartChoiceLecttByCartChoiceLectNo(criteria);
+	}
+
+	@Override
+	public void insertLectCart(LectCart lectCart) {
+		lectCartDao.insertLectCart(lectCart);
+		
+		
 	}
 	
 	

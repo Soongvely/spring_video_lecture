@@ -8,6 +8,7 @@ import kr.co.coduck.dto.TestQtDto;
 import kr.co.coduck.dto.TestResultDto;
 import kr.co.coduck.dto.TestSubjResultDto;
 import kr.co.coduck.form.SearchTestFormByAdm;
+import kr.co.coduck.form.TestModifyForm;
 import kr.co.coduck.vo.Ep;
 import kr.co.coduck.vo.Test;
 import kr.co.coduck.vo.TestQt;
@@ -17,6 +18,14 @@ import kr.co.coduck.vo.TestSubjResult;
 import kr.co.coduck.vo.ViewCk;
 
 public interface TestDao {
+	
+	Test getTestsTopN();
+	
+	void updateTestQt(TestModifyForm form);
+	
+	TestQt getTestQtByNo(int no);
+	
+	void updateTest(Test test);
 	
 	List<Ep> getTestEpsByCateNo(int no);
 	
@@ -31,6 +40,8 @@ public interface TestDao {
 	void insertTestQt(TestQt qt);
 	
 	List<TestQtDto> getTestQtsDtoByNo(int testNo);
+	
+	List<TestQtDto> getTestQtsDtosByNoNSubjNo(Map<String, Integer> map);
 	
 	List<TestSubj> getTestSubjsByTestNo(int testNo);
 	
@@ -48,4 +59,11 @@ public interface TestDao {
 	
 	List<SearchTestDetailDto> searchTestByAdm(SearchTestFormByAdm form);
 	
+	List<SearchTestDetailDto> userBySearchTestList(int userNo);
+	
+	List<String> getAllTestNameNEp();
+	
+	void deleteTestByTestNo(int testNo);
+	
+	void deleteTestQtsByTestNo(int testNo);
 }

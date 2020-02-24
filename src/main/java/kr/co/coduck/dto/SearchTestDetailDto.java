@@ -24,6 +24,10 @@ public class SearchTestDetailDto {
 	private String testDone;
 	private Double testAvg;
 	private String orderYN;
+	private Date createDate;
+	private int orderNo;
+	private Date ordTestCreateDate;
+	
 	
 	public SearchTestDetailDto() {}
 
@@ -163,20 +167,37 @@ public class SearchTestDetailDto {
 		this.lectNo = lectNo;
 	}
 
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
 	@Override
 	public String toString() {
 		return "SearchTestDetailDto [testNo=" + testNo + ", mainCateName=" + mainCateName + ", lectNo=" + lectNo
 				+ ", testEp=" + testEp + ", testName=" + testName + ", testQtCnt=" + testQtCnt + ", testPrice="
 				+ testPrice + ", passScore=" + passScore + ", testDate=" + testDate + ", testLtdTime=" + testLtdTime
 				+ ", isDisplay=" + isDisplay + ", testDone=" + testDone + ", testAvg=" + testAvg + ", orderYN="
-				+ orderYN + "]";
+				+ orderYN + ", createDate=" + createDate + "]";
 	}
 
-//	@Override
-//	public String toString() {
-//		return "SearchTestDetailDto [testNo=" + testNo + ", mainCateNo=" + mainCateNo + ", mainCateName=" + mainCateName
-//				+ ", subCateNo=" + subCateNo + ", subCateName=" + subCateName + ", testEp=" + testEp + ", testName="
-//				+ testName + ", testQtCnt=" + testQtCnt + ", testPrice=" + testPrice + ", isDisplay=" + isDisplay
-//				+ ", testDone=" + testDone + ", testAvg=" + testAvg + ", orderYN=" + orderYN + "]";
-//	}
+	public int getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(int orderNo) {
+		this.orderNo = orderNo;
+	}
+
+	public Date getOrdTestCreateDate() {
+		return ordTestCreateDate;
+	}
+
+	public void setOrdTestCreateDate(Date ordTestCreateDate) {
+		this.ordTestCreateDate = ordTestCreateDate;
+	}
+	
 }

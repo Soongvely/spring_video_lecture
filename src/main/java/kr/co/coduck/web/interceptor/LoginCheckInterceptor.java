@@ -9,6 +9,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import kr.co.coduck.dao.UrlDao;
 import kr.co.coduck.vo.UrlInfo;
+import kr.co.coduck.vo.User;
 
 public class LoginCheckInterceptor extends HandlerInterceptorAdapter{
 	
@@ -31,10 +32,15 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter{
 		
 		//로그인이 필요하면
 		HttpSession session = request.getSession();
-
+		
 		if(session.getAttribute("LU") == null) {
-			response.sendRedirect("/user/login.hta?error=required");
-			return false;
+			if (urlInfo.getRequiredGrade().equals("U")) {
+				response.sendRedirect("/user/login.hta?error=required");
+				return false;
+			} else if (urlInfo.getRequiredGrade().equals("A")) {
+				response.sendRedirect("/admin/login.hta?error=required");
+				return false;
+			}
 		} 
 		
 		return true;

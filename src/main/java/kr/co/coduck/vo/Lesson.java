@@ -6,12 +6,14 @@ import org.apache.ibatis.type.Alias;
 
 @Alias("Lesson")
 public class Lesson {
+	
 
 	private int no;
 	private int chapterNo;
 	private String lessonTitle;
 	private String videoPath;
 	private int totalTime;
+	private int order;
 	
 	public Lesson() {
 		
@@ -53,6 +55,14 @@ public class Lesson {
 		return totalTime;
 	}
 	
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
 	public String getNewTotalTime() {
 		
 		int needMinutes = totalTime;
@@ -62,14 +72,16 @@ public class Lesson {
 		return hour + ":" + minutes;
 	}
 	
-
 	public void setTotalTime(int totalTime) {
 		this.totalTime = totalTime;
 	}
+
 	@Override
 	public String toString() {
 		return "Lesson [no=" + no + ", chapterNo=" + chapterNo + ", lessonTitle=" + lessonTitle + ", videoPath="
-				+ videoPath + ", totalTime=" + totalTime + "]";
+				+ videoPath + ", totalTime=" + totalTime + ", order=" + order + "]";
 	}
+	
+	
 
 }

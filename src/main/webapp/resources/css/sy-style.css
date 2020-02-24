@@ -1492,11 +1492,11 @@ small {
 	border: 7px solid seashell;
 }
 
-.banner-title {
+.contenets-menu .banner-title {
 	margin-left: 10px;
 }
 
-.banner-comment {
+.contenets-menu .banner-comment {
 	max-width: 79%;
 	margin-top: 20px;
 }
@@ -1507,7 +1507,7 @@ small {
 	color: #29303b;
 }
 
-.banner-icon {
+.contenets-menu .banner-icon {
 	float: right;
 	display: inline-block;
 	font-size: 80px;
@@ -1515,7 +1515,7 @@ small {
 	margin-right: 10px;
 }
 
-.banner-icon img {
+.contenets-menu .banner-icon img {
 	width: 170px;
 }
 
@@ -1633,7 +1633,7 @@ a {
     text-align: end;
 }
 .info-price {
-    margin-bottom: 59px;
+    margin-bottom: 31px;
 }
 .info-price .discount {
     font-size: 23px;
@@ -1726,6 +1726,9 @@ a {
 	width: 100%;
 }
 
+#incomeTable tbody tr td:nth-child(3) {
+	text-align: left;
+}
 .statistics-table .table, .statistics-table th {
 	text-align: center;
 }

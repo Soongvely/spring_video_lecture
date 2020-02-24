@@ -5,6 +5,13 @@
   <!-- namespace 필수 설정! -->
    <mapper namespace="kr.co.coduck.dao.LectCartDao">
    
+   <insert id="insertLectCart" parameterType="LectCart">
+   	insert into lect_Carts
+   		(CART_LECT_NO, LECT_NO, USER_NO)
+   	values
+   		(lect_carts_seq.nextval, #{lectNo}, #{userNo})
+   </insert>
+   
    <select id="getCartLectListByUserNo" parameterType="int" resultType="CartLectDto">
       SELECT
          A.CART_LECT_NO    		as cartLectNo,

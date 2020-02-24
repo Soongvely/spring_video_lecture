@@ -23,6 +23,12 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 	
 	@Override
+	public List<Question> getQuestionByLessonNo(LectureCriteria cri) {
+		
+		return questionDao.getQuestionByLessonNo(cri);
+	}
+	
+	@Override
 	public Answer getAnswerByQuestionNo(int questionNo) {
 
 		return questionDao.getAnswerByQuestionNo(questionNo);

@@ -14,6 +14,13 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <style>
+	#form tbody img{
+		height: 20px;
+	}
+	
+	p {
+		font-size: 18px;
+	}
 	.xxx {
 		border: 1px solid black;
 	}
@@ -42,7 +49,7 @@
 		appearance: none;
 	}
 	
-	elect::-ms-expand {
+	select::-ms-expand {
 		display: none;
 	}
 
@@ -53,12 +60,12 @@
 <div class="container xxx">
 	<div class="row xxx" style="margin: 10px 0px 10px 0px">
 		<div class="col-sm-8">
-			<h3 style="margin-top: 12px; padding: 10px;">
-				${test.name } 필기 <span style="font-size: 20px;">(${test.ep } 기출문제)</span>
-			</h3>
+			<h2 style="margin-top: 12px; padding: 10px;">
+				${test.name } 필기 <span style="font-size: 25px;">(${test.ep } 기출문제)</span>
+			</h2>
 		</div>
 		<div class="col-sm-4">
-			<p style="margin-top: 10px; font-size: 17px; padding-left: 5px;">제한 시간 : <span id="timer"></span></p>
+			<p style="margin-top: 10px; font-size: 20px; padding-left: 5px;">제한 시간 : <span id="timer"></span></p>
 			<p>
 				<select name="subj" style="width: 300px;">
 					<c:forEach var="subj" items="${subjs}" varStatus="loop">
@@ -84,9 +91,12 @@
 							</div>
 						</div>
 					</c:if>
-					<div class="col-sm-1" data-qt-no="${qt.qtNum }" >${qt.qtNum }.</div>
+					<div class="col-sm-1" data-qt-no="${qt.qtNum }" style="font-size: 18px;">${qt.qtNum }.</div>
 					<div class="col-sm-11" style="padding-left: 5px; padding-right: 5px;" data-qt-no="${qt.qtNum }">
 						<p>${qt.contents }</p>
+						<c:if test="${qt.img != null }">
+							<p><img src="../../resources/images/test/qt-img/${qt.img}" style="width:100%" height="140px;"></p>
+						</c:if>
 						<p><a href=""><img src="/resources/images/test/marking-img/1.gif" alt="1" id="qt-${qt.qtNum }-1"/> ${qt.v1 }</a></p>
 						<p><a href=""><img src="/resources/images/test/marking-img/2.gif" alt="2" id="qt-${qt.qtNum }-2"/> ${qt.v2 }</a></p>
 						<p><a href=""><img src="/resources/images/test/marking-img/3.gif" alt="3" id="qt-${qt.qtNum }-3"/> ${qt.v3 }</a></p>
@@ -113,11 +123,11 @@
 							<table style="width: 100%;">
 								<tbody style="text-align: center;">
 									<tr>
-										<td colspan="5" style="border: 1px solid black; height: 30px;" class="mark-green">${subj.name }</td>
+										<td colspan="5" style="border: 1px solid black; height: 50px; font-size: 20px;" class="mark-green">${subj.name }</td>
 									</tr>
 									<c:forEach var="no" begin="${(subj.lv -1) * subj.qtCnt + 1}" end="${subj.lv * subj.qtCnt}">
 										<tr>
-											<td style="border: 1px solid black; width: 32px;" class="mark-green" data-qt-no="${no}"><a href="" class="zzz">${no }</a></td>
+											<td style="border: 1px solid black; width: 32px;" class="mark-green" data-qt-no="${no}"><a href="" class="zzz" style="font-size: 18px; font-weight: normal;">${no }</a></td>
 											<td style="border: 1px solid black; width: 32px;" class="mark-green mark-number">
 												<a href=""><img src="/resources/images/test/marking-img/1.gif" alt="1" id="mark-${no }-1"></a>
 											</td>
@@ -167,11 +177,6 @@
 <script type="text/javascript">
 	var passedTime = 0;
 	var isStop = false;
-	
-	var url = "/test/test-qt.jsp";
-	var option = "resizable=no, width=500, heght=500";
-	window.open(url,'test',option);
-
 
 	countdown('timer',${test.ltdTime}, 0);
 	

@@ -6,10 +6,12 @@ import org.apache.ibatis.type.Alias;
 
 @Alias("LectureCriteria")
 public class LectureCriteria {
+	
 
 	private int cateNo;
 	private int userNo;
 	private int no;
+	private int lessonNo;
 	private int[] grades;
 	private String keyword;
 	private String sort;
@@ -68,6 +70,14 @@ public class LectureCriteria {
 
 	public void setNo(int no) {
 		this.no = no;
+	}
+
+	public int getLessonNo() {
+		return lessonNo;
+	}
+
+	public void setLessonNo(int lessonNo) {
+		this.lessonNo = lessonNo;
 	}
 
 	public int getUserNo() {
@@ -132,9 +142,10 @@ public class LectureCriteria {
 
 	@Override
 	public String toString() {
-		return "LectureCriteria [cateNo=" + cateNo + ", no=" + no + ", grades=" + Arrays.toString(grades) + ", keyword="
-				+ keyword + ", sort=" + sort + ", options=" + Arrays.toString(options) + ", discount=" + discount
-				+ ", page=" + page + ", beginIndex=" + beginIndex + ", endIndex=" + endIndex + "]";
+		return "LectureCriteria [cateNo=" + cateNo + ", userNo=" + userNo + ", no=" + no + ", lessonNo=" + lessonNo
+				+ ", grades=" + Arrays.toString(grades) + ", keyword=" + keyword + ", sort=" + sort + ", options="
+				+ Arrays.toString(options) + ", discount=" + discount + ", page=" + page + ", beginIndex=" + beginIndex
+				+ ", endIndex=" + endIndex + ", startDate=" + startDate + ", endDate=" + endDate + "]";
 	}
 
 }

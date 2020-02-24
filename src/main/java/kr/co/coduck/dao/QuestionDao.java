@@ -9,6 +9,8 @@ import kr.co.coduck.vo.Question;
 public interface QuestionDao {
 
 	List<Question> getQuestionByLectureNo(LectureCriteria cri);
+	List<Question> getQuestionByLessonNo(LectureCriteria cri);
+	
 	Answer getAnswerByQuestionNo(int questionNo);
 	void insertQuestion(Question question);
 	List<Question> getQuestionByRecent(int lectureNo);

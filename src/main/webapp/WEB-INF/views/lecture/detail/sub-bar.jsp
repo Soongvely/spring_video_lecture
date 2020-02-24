@@ -49,60 +49,62 @@
                         </div>
                     </div>
                     <div class="col-sm-3">
-                        <div class="learning-btn-container">
-                            <a href="../player/player.hta?lectureNo=${lecture.no }" class="btn btn-default sy-btn-learning">학습하기</a>
-                        </div>
-                        <!-- floating btn start -->
-                        <div class="lecture-floating-btn">
-                            <div class="lecture-floating-top">
-                                <div class="lecture-price-cover">
-                                    <div class="lecture-price-section">
-                                        <div class="lecture-price">
-                                            <fmt:formatNumber value="${lecture.discountPrice }"></fmt:formatNumber>원 
-                                        	<c:if test="${lecture.discountRate > 0}">
-                                            	<del class="lecture-del-price"><fmt:formatNumber value="${lecture.price }"></fmt:formatNumber>원</del>
-                                        	</c:if>
-                                        </div>
-                                        <c:if test="${lecture.discountRate > 0}">
-	                                        <div class="lecture-price-detail">(${lecture.discountRate }% 할인)</div>
-                                        </c:if>
-                                    </div>
-                                    <div class="lecture-btn-section">
-                                        <div class="lecture-btn-cover">
-                                            <a href="/order/insertOrderLect.hta" class="btn lecture-purchase-btn">수강신청</a>
-                                        </div>
-                                        <div class="lecture-sub-btn-cover">
-                                            <button class="btn sub-btn lecture-like-btn">
-                                                <i class="far fa-heart"></i> ${counts.likeCnt } 위시
-                                            </button>
-                                            <button href="/cart/insertCartLect.hta" class="btn sub-btn lecture-cart-btn">
-                                                <i class="fas fa-shopping-cart"></i> 수강 바구니
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="lecture-floating-bottom">
-                                <div class="lecture-info-cover">
-                                    <div class="lecture-info-row">
-                                        <i class="fas fa-user-tie"></i> 지식공유자 !강사 이름!
-                                    </div>
-                                    <div class="lecture-info-row">
-                                        <i class="far fa-clock"></i> 평생 무제한 시청
-                                    </div>
-                                    <div class="lecture-info-row">
-                                        <i class="fas fa-stamp"></i> 수료증 발급 강의
-                                    </div>
-                                    <div class="lecture-info-row">
-                                       <i class="fas fa-signal"></i>수강 난이도 '활용'
-                                    </div>
-                                    <div class="lecture-info-row">
-                                       <i class="far fa-play-circle"></i>96회 수업ㆍ총 8시간 15분 수업
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- floating btn start -->
+	                        <div class="learning-btn-container">
+	                            <a href="/lecture/player/player.hta?lectureNo=${lecture.no }" class="btn btn-default sy-btn-learning">학습하기</a>
+	                        </div>
+	                        
+                        <!-- LU가 널이거나 구매를 안했을 때 -->
+                        	<!-- floating btn start -->
+	                        <div class="lecture-floating-btn">
+	                            <div class="lecture-floating-top">
+	                                <div class="lecture-price-cover">
+	                                    <div class="lecture-price-section">
+	                                        <div class="lecture-price">
+	                                            <fmt:formatNumber value="${lecture.discountPrice }"></fmt:formatNumber>원 
+	                                        	<c:if test="${lecture.discountRate > 0}">
+	                                            	<del class="lecture-del-price"><fmt:formatNumber value="${lecture.price }"></fmt:formatNumber>원</del>
+	                                        	</c:if>
+	                                        </div>
+	                                        <c:if test="${lecture.discountRate > 0}">
+		                                        <div class="lecture-price-detail">(${lecture.discountRate }% 할인)</div>
+	                                        </c:if>
+	                                    </div>
+	                                    <div class="lecture-btn-section">
+	                                        <div class="lecture-btn-cover">
+	                                            <a href="/buynow/ordernowlectform.hta?lectuerno=${lecture.no }" class="btn lecture-purchase-btn">수강신청</a>
+	                                        </div>
+	                                        <div class="lecture-sub-btn-cover">
+	                                            <button class="btn sub-btn lecture-like-btn">
+	                                                <i class="far fa-heart"></i> ${counts.likeCnt } 위시
+	                                            </button>
+	                                            <button href="/cart/insertCartLect.hta" class="btn sub-btn lecture-cart-btn">
+	                                                <a href="/cart/addlectcart.hta?lectNo=${lecture.no }"><i class="fas fa-shopping-cart"></i> 수강 바구니</a>
+	                                            </button>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                            <div class="lecture-floating-bottom">
+	                                <div class="lecture-info-cover">
+	                                    <div class="lecture-info-row">
+	                                        <i class="fas fa-user-tie"></i> 지식공유자 !강사 이름!
+	                                    </div>
+	                                    <div class="lecture-info-row">
+	                                        <i class="far fa-clock"></i> 평생 무제한 시청
+	                                    </div>
+	                                    <div class="lecture-info-row">
+	                                        <i class="fas fa-stamp"></i> 수료증 발급 강의
+	                                    </div>
+	                                    <div class="lecture-info-row">
+	                                       <i class="fas fa-signal"></i>수강 난이도 '활용'
+	                                    </div>
+	                                    <div class="lecture-info-row">
+	                                       <i class="far fa-play-circle"></i>96회 수업ㆍ총 8시간 15분 수업
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <!-- floating btn start -->
                     </div>
                 </div>
             </div>

@@ -13,6 +13,7 @@ public class OrderTestDetailListDto {
 	private Date testCreateDate;
 	private int testprice;
 	private String ep;
+	private String done;
 	private int testNo;
 	
 	public OrderTestDetailListDto() {
@@ -73,6 +74,14 @@ public class OrderTestDetailListDto {
 
 	public void setEp(String ep) {
 		this.ep = ep;
+	}
+
+	public String getDone() {
+		return done;
+	}
+
+	public void setDone(String done) {
+		this.done = done;
 	}
 	
 	

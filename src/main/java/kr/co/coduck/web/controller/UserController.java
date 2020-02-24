@@ -16,9 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.coduck.dto.LessonDto;
+import kr.co.coduck.dto.OrderTestDetailListDto;
+import kr.co.coduck.dto.SearchTestDetailDto;
+import kr.co.coduck.dto.SearchTestDto;
 import kr.co.coduck.form.UserRegisterForm;
 import kr.co.coduck.service.CouponService;
 import kr.co.coduck.service.LectService;
+import kr.co.coduck.service.OrderTestService;
+import kr.co.coduck.service.TestService;
 import kr.co.coduck.service.UserService;
 import kr.co.coduck.vo.Coupon;
 import kr.co.coduck.vo.User;
@@ -32,6 +37,10 @@ public class UserController {
 	private LectService lectService;
 	@Autowired
 	private CouponService couponService;
+	@Autowired
+	private TestService testService;
+	@Autowired
+	private OrderTestService orderTestService;
 	
 	private final String photoSaveDirectory = "C:\\projects\\spring_workspace\\coduck\\src\\main\\webapp\\resources\\images\\userImageFilename";
 	
@@ -77,6 +86,8 @@ public class UserController {
 		
 		if(user == null) {
 			return "redirect:/user/login.hta?error=fail";
+		}else if(user.getRole().equals("A")) {
+			return "admin/home";
 		}
 		session.setAttribute("LU", user);
 		return "redirect:/home.hta";
@@ -152,4 +163,14 @@ public class UserController {
 		return "user/mycouponlist";
 	}
 	
+	@GetMapping("/mybytestlist.hta")
+	public String mybytestlist(HttpSession session, Model model) {
+		User user = (User)session.getAttribute("LU");
+		List<SearchTestDetailDto> userOrderTestLists = testService.userBySearchTestList(user.getNo());
+		model.addAttribute("userOrderTestLists", userOrderTestLists);
+		return "user/mybytestlist";
+	}
+	
 }
+
+

@@ -26,7 +26,7 @@
 				<p>내 학습</p>
 				<ul style="list-style:none;">
 					<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
-					<li><a href="/test/test-list.hta">모의고사</a></li>
+					<li><a href="/user/mybytestlist.hta">모의고사</a></li>
 					<li><a href="/question/userqueston.hta">내 질문</a></li>
 				</ul>
 				<p>내 결제</p>
@@ -96,7 +96,7 @@
             </div>
             <div class="row">
                <div class="col-sm-12">
-                   <table class="table" id="my-order-history-table">
+                   <table class="table" id="my-order-test-table">
                        <thead>
                            <tr>
                                <th>순번</th>
@@ -104,14 +104,14 @@
                                <th>시험명</th>
                                <th>결제가격</th>
                                <th>주문일자</th>
-                               <th>응시하기</th>
+                               <th>내 모의고사</th>
                            </tr>
                        </thead>
                        <tbody>
                        <c:choose>
                          <c:when test="${empty userOrderTestLists }">
                          	<tr>
-                         		<td colspan="6" class="text-center">없습니다</td>
+                         		<td colspan="6" class="text-center">11없습니다</td>
                          	</tr>
                          </c:when>
                          <c:otherwise>
@@ -119,11 +119,10 @@
 		                         <tr>
 					                 <td>${loop.count }</td>
 					                 <td>${userOrderTestList.orderNo }</td>
-					                 <td>${userOrderTestList.testTitle } > ${userOrderTestList.ep }</td>
-					                 <td>${userOrderTestList.testprice }</td>
-					                 <td><fmt:formatDate value="${userOrderTestList.testCreateDate }" pattern="yyyy-MM-dd"/></td>
-					                 <%-- <td><button class="btn btn-info btn-xs" data-order-no="${userOrderTestList.testNo }">응시하기</button></td> --%>
-					                 <td><a href="/test/test-list.hta" class="btn btn-info btn-xs">응시하기</a></td>
+					                 <td>${userOrderTestList.testName } > ${userOrderTestList.testEp }</td>
+					                 <td>${userOrderTestList.testPrice }</td>
+					                 <td><fmt:formatDate value="${userOrderTestList.ordTestCreateDate }" pattern="yyyy-MM-dd"/></td>
+					                 <td><a href="/user/mybytestlist.hta" class="btn btn-info btn-xs">이동하기</a></td>
 			                     </tr>
                          	</c:forEach>
                          </c:otherwise>
@@ -166,6 +165,21 @@
       </div>
    </div>
    <script type="text/javascript">
+   /* $("#isa").click(function(event){
+	   event.preventDefault();
+	   $(this).attr("href");
+	   alert($(this).attr("href"));
+   }) */
+   
+   /* $(function() {
+		var yn = $("#isdone").text();
+		if(yn == '시험내역'){
+			$("#isa").attr("href", '/user/mybytestlist.hta');
+		}else {
+			$("#isa").attr("href", '/user/mybytestlist.hta');
+		}
+   }) */
+   
    $('#my-order-history-table button.btn-info').click(function(){
 		var no = $(this).data("order-no");
 		var $tbody = $("#modal-order-detail-table tbody").empty();

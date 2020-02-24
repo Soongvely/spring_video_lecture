@@ -1,13 +1,12 @@
 package kr.co.coduck.dto;
 
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class IncomeDto {
 
 	private int no;
 	private String title;
+	private String grade;
 	private int discountPrice;
 	private String cateName;
 	@JsonFormat(pattern = "yyyy-MM-dd")
@@ -34,6 +33,14 @@ public class IncomeDto {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
 	}
 
 	public int getDiscountPrice() {

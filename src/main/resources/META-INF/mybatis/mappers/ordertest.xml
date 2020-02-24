@@ -42,9 +42,10 @@
 			C.ORD_TEST_CREATE_DATE			testCreateDate,
 			B.TEST_PRICE					testprice,
 			B.TEST_EP						ep,
+			F.TEST_IS_DONE					done,
 			B.TEST_NO						testNo					
 		FROM
-			USERS A, TESTS B, ORD_TESTS C, ORD_TEST_INFOS D
+			USERS A, TESTS B, ORD_TESTS C, ORD_TEST_INFOS D, TEST_RESULTS F
 		WHERE
 			A.USER_NO = C.USER_NO
 		AND
@@ -53,6 +54,8 @@
 			C.USER_NO = A.USER_NO
 		AND
 			D.ORD_TEST_NO = C.ORD_TEST_NO
+		AND
+			F.USER_NO = A.USER_NO
 		AND
 			A.USER_NO = #{value}
 	</select>

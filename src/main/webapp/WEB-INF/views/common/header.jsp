@@ -7,7 +7,8 @@
 	<!-- sy.css -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 	<link href="<c:url value="/resources/css/sy-style.css" />" rel="stylesheet">    
-
+	
+	
   <div id="root">
     <nav class="navbar sy-navbar">
         <div class="nav sy-nav-container">
@@ -25,7 +26,7 @@
                 <a class="t-gray" href="/test/test-list.hta"> 모의시험</span></a>
               </li>
               <li class="main-menu">
-                <a class="t-gray" href="#"> 게시판</span></a>
+                <a class="t-gray" href="/view/viewnotice.hta"> 공지사항</span></a>
               </li>
             </ul>
 

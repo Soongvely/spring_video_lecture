@@ -26,8 +26,8 @@
 				<p>내 학습</p>
 				<ul style="list-style:none;">
 					<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
-					<li><a href="/test/test-list.hta">모의고사</a></li>
-					<li><a href="/question/userqueston.hta">내 질문</a></li>
+					<li><a href="/user/mybytestlist.hta">모의고사</a></li>
+					<li><a href="/userquestion/myquestionlist.hta">강의 질문</a></li>
 				</ul>
 				<p>내 결제</p>
 				<ul style="list-style:none;">
@@ -39,6 +39,10 @@
 				<p>내 강의</p>
 				<ul style="list-style:none;">
 					<li id="teacher"><a href="/teacher/main.hta">내 강의</a></li>
+				</ul>
+				<p>관리자 문의</p>
+				<ul style="list-style:none;">
+					<li id="teacher"><a href="/user/userqueston.hta">문의하기</a></li>
 				</ul>
 			</div>
          

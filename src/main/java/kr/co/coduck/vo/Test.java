@@ -8,6 +8,7 @@ import org.apache.ibatis.type.Alias;
 @Alias("Test")
 public class Test {
 	
+	private int rk;
 	private int no;
 	private int lectNo;
 	private Date testDate;	//시험일(년,월)
@@ -18,6 +19,9 @@ public class Test {
 	private int ltdTime;
 	private int qtCnt;
 	private int cateNo;
+	private String isDisplay;
+	private Date createDate;
+	private int totalScore;
 	
 	public Test() {}
 
@@ -101,11 +105,44 @@ public class Test {
 		this.cateNo = cateNo;
 	}
 
-	@Override
-	public String toString() {
-		return "Test [no=" + no + ", lectNo=" + lectNo + ", testDate=" + testDate + ", name=" + name + ", ep=" + ep
-				+ ", price=" + price + ", passScore=" + passScore + ", ltdTime=" + ltdTime + ", qtCnt=" + qtCnt
-				+ ", cateNo=" + cateNo + "]";
+	public Date getCreateDate() {
+		return createDate;
 	}
 
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public String getIsDisplay() {
+		return isDisplay;
+	}
+
+	public void setIsDisplay(String isDisplay) {
+		this.isDisplay = isDisplay;
+	}
+
+	public int getTotalScore() {
+		return totalScore;
+	}
+
+	public void setTotalScore(int totalScore) {
+		this.totalScore = totalScore;
+	}
+
+	public int getRk() {
+		return rk;
+	}
+
+	public void setRk(int rk) {
+		this.rk = rk;
+	}
+
+	@Override
+	public String toString() {
+		return "Test [rk=" + rk + ", no=" + no + ", lectNo=" + lectNo + ", testDate=" + testDate + ", name=" + name
+				+ ", ep=" + ep + ", price=" + price + ", passScore=" + passScore + ", ltdTime=" + ltdTime + ", qtCnt="
+				+ qtCnt + ", cateNo=" + cateNo + ", isDisplay=" + isDisplay + ", createDate=" + createDate
+				+ ", totalScore=" + totalScore + "]";
+	}
+	
 }
