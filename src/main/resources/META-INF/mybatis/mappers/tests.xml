@@ -7,25 +7,30 @@
 
 	<!-- 최신 시험 n개 가져오기 -->
 	<select id="getTestsTopN" resultType="Test">
-		select
-			rank() over(order by create_date desc) rk,
-			test_no					no,
-			lect_no					lectNo,	
-			test_date				testDate,
-			test_name				name,
-			test_ep					ep,
-			test_price				price,
-			test_pass_score			passScore,
-			test_ltd_time			ltdTime,
-			test_qt_cnt				qtCnt,
-			cate_no					cateNo,
-			test_is_display			isDisplay,
-			create_date				createDate,
-			test_total_score		totalScore
-		from 
-			tests	
-		where 
-			TEST_IS_DISPLAY = 'Y'	
+		select 	
+			X.test_no					no,
+			X.lect_no					lectNo,	
+			X.test_date					testDate,
+			X.test_name					name,
+			X.test_ep					ep,
+			X.test_price				price,
+			X.cate_no					cateNo
+		from
+			(select
+				rank() over(order by create_date desc) rk,
+				test_no	,			
+				lect_no		,		
+				test_date	,			
+				test_name	,		
+				test_ep		,			
+				test_price	,			
+				cate_no	
+			from 
+				tests	
+			where 
+				TEST_IS_DISPLAY = 'Y') X
+		WHERE	
+			X.rk &lt;= 2
 	</select>
 
 	<!-- 시험 문제 조회 -->

@@ -18,9 +18,6 @@ import kr.co.coduck.vo.Pagination;
 @RequestMapping("/admin")
 public class AdminQnaController {
 
-	// 파일을 저장할 경로 지정하기
-	private static final String SAVE_PATH = "/upload";
-	
 	@Autowired
 	private AdminQnaService adminQnaService;
 	
@@ -39,6 +36,5 @@ public class AdminQnaController {
 	
 		return "admin/qna";
 	}
-	
 	
 }

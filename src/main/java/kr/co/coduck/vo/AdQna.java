@@ -1,76 +1,73 @@
-package kr.co.coduck.dto;
-
+package kr.co.coduck.vo;
 
 import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
 
-@Alias ("AdminQnaDto")
-public class AdminQnaDto {
-
+@Alias("AdQna")
+public class AdQna {
+	
 	private int no;
+	private int userNo;
 	private String title;
 	private String content;
-	private String fileName;
 	private Date createDate;
 	private String isAnswered;
-	private int userNo;
-	private String userName;
-	private String userId;
 	
+	public AdQna() {}
+
 	public int getNo() {
 		return no;
 	}
+
 	public void setNo(int no) {
 		this.no = no;
 	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public String getContent() {
-		return content;
-	}
-	public void setContent(String content) {
-		this.content = content;
-	}
-	public String getFileName() {
-		return fileName;
-	}
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-	public Date getCreateDate() {
-		return createDate;
-	}
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-	public String getIsAnswered() {
-		return isAnswered;
-	}
-	public void setIsAnswered(String isAnswered) {
-		this.isAnswered = isAnswered;
-	}
+
 	public int getUserNo() {
 		return userNo;
 	}
+
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
-	public String getUserName() {
-		return userName;
+
+	public String getTitle() {
+		return title;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
-	public String getUserId() {
-		return userId;
+
+	public String getContent() {
+		return content;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+
+	public void setContent(String content) {
+		this.content = content;
 	}
-	
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public String getIsAnswered() {
+		return isAnswered;
+	}
+
+	public void setIsAnswered(String isAnswered) {
+		this.isAnswered = isAnswered;
+	}
+
+	@Override
+	public String toString() {
+		return "AdQna [no=" + no + ", userNo=" + userNo + ", title=" + title + ", content=" + content + ", createDate="
+				+ createDate + ", isAnswered=" + isAnswered + "]";
+	}
 }
+	

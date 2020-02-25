@@ -103,6 +103,119 @@
 			lect_no = #{value}
 	</select>
 	
+	<!-- ******************** 메인화면 강좌 조회 ******************** -->
+	
+	<!-- 인기강좌 Top 5 -->
+	<select id="TopFiveLecturesByLike" resultType="LectureDto">
+		select *
+		from 
+			(select
+            	ROW_NUMBER() over (order by NVL(likes,0) desc) rn
+             	, l.lect_no					no
+				, l.lect_title				title
+				, l.lect_price				price	
+				, l.lect_discount_price		discountPrice
+				, l.lect_discount_rate		discountRate
+				, l.lect_grade				grade
+				, l.lect_image_path			imagePath	
+				, u.user_name				userName		
+	            , NVL(likes,0) 				"like"	
+			from
+				lects L, users U, (select 
+									 lect_no
+									 , COUNT(*) as likes 
+								  from 
+								  	like_lects 
+								  group by 
+								 	lect_no) H
+			where
+				l.user_no = u.user_no
+	         	and l.lect_no = h.lect_no(+)
+	         	and l.lect_is_display = 'Y'
+	           )
+		where rn &lt;= 5  
+	</select>
+	
+	<!-- 신규 강좌 Top 4 -->
+	<select id="TopFourNewLectures" resultType="LectureDto">
+		select *
+			from (
+				select
+                    ROW_NUMBER() over (order by l.lect_create_date desc) rn
+					, l.lect_no					no
+					, l.lect_title				title
+					, l.lect_price				price	
+					, l.lect_discount_price		discountPrice
+					, l.lect_discount_rate		discountRate
+					, l.lect_grade				grade
+					, l.lect_image_path			imagePath	
+                    , l.lect_is_freed			isFreed
+					, u.user_name				userName		
+				from
+					lects L, users U
+				where
+					l.user_no = u.user_no
+					and l.lect_grade &lt; 5
+		         	and l.lect_is_display = 'Y'
+	            )
+		where rn &lt;= 4 
+	</select>
+	
+	<!-- 무료강좌 Top 5 -->
+	<select id="TopFiveFreeLectures" resultType="LectureDto">
+		select *
+			from (
+				select
+                    ROW_NUMBER() over (order by NVL(likes,0) desc) rn
+					, l.lect_no					no
+					, l.lect_title				title
+					, l.lect_grade				grade
+					, l.lect_image_path			imagePath	
+                    , l.lect_is_freed			isFreed
+					, u.user_name				userName			
+		            , NVL(likes,0) 				"like"
+				from
+					lects L, users U, (select 
+										 lect_no
+										 , COUNT(*) as likes 
+									  from 
+									  	like_lects 
+									  group by 
+									 	lect_no) H
+				where
+					l.user_no = u.user_no
+		         	and l.lect_no = h.lect_no(+)
+		         	and l.lect_is_display = 'Y'
+		         	and l.lect_is_freed = 'Y'
+	            )
+		where rn &lt;= 5 
+	</select>
+	
+	<!-- 모의고사 해설강의 Top 5 -->
+	<select id="TopFourTestLectures" resultType="LectureDto">
+		select *
+			from (
+				select
+                    ROW_NUMBER() over (order by l.lect_create_date desc) rn
+					, l.lect_no					no
+					, l.lect_title				title
+					, l.lect_price				price	
+					, l.lect_discount_price		discountPrice
+					, l.lect_discount_rate		discountRate
+					, l.lect_grade				grade
+					, l.lect_image_path			imagePath	
+                    , l.lect_is_freed			isFreed
+					, u.user_name				userName				
+				from
+					lects L, users U
+				where
+					l.user_no = u.user_no
+                    and l.lect_grade = '5'
+		         	and l.lect_is_display = 'Y'
+	            )
+		where rn &lt;= 5
+	</select>
+	
 	<!-- 카테고리번호로 강좌 리스트 조회 -->
 	<select id="getLectureByCategoryNo" parameterType="int" resultType="LectureDto">
 		select

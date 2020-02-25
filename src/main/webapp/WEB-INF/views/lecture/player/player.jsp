@@ -5,7 +5,6 @@
 
 <!-- sy.css -->
 <link href="<c:url value="/resources/css/sy-player.css" />" rel="stylesheet">   
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 
     <div id="root">
         <main id="main">
@@ -32,10 +31,10 @@
                                     <span class="list-item unit-title">${chapters.chapter.chapterName }</span>
                                     <ul class="list unit unit-lesson">
                                     <c:forEach var="lesson" items="${chapters.lessons }" varStatus="status">
-                                       <li class="list-item unit-lesson ${cstatus.index == 0 && status.index == 0 ? 'active' : ''}" data-lesson-no="${lesson.no }">
+                                       <li class="list-item unit-lesson ${cstatus.index == 0 && status.index == 0 ? 'active' : ''}" data-order="${lesson.order}" data-lesson-no="${lesson.no }">
                                            <span class="list-item lesson-title">${lesson.lessonTitle }</span>                                  
                                            <c:forEach var="history" items="${historys }">
-	                                           <c:if test="${history.isWatched eq 'Y' }">
+	                                           <c:if test="${lesson.no == history.lessonNo && history.isWatched eq 'Y' }">
 		                                           <span class="unit-checked-icon">
 		                                               <i class="fas fa-check-circle"></i>
 		                                           </span>    
@@ -79,18 +78,18 @@
                         </div>
                         <footer class="contents-footer-nav navbar">
                             <div class="footer-nav-item">
-                                <button class="btn btn-default is-outlined">
+                                <button class="btn btn-default is-outlined btn-move before">
                                     <span class="btn-before-lesson">
                                         <i class="fas fa-step-backward"></i>
                                          이전강의
                                     </span>
                                 </button>
-                                <button class="btn btn-default is-outlined before">
+                                <button class="btn btn-default is-outlined">
                                     <span class="btn-next-lesson">
                                         <i class="fas fa-check"></i>
                                     </span>
                                 </button>
-                                 <button class="btn btn-default is-outlined after">
+                                 <button class="btn btn-default is-outlined btn-move after">
                                     <span class="btn-next-lesson">
                                         <i class="fas fa-step-forward"></i>
                                          다음강의
@@ -114,7 +113,7 @@
                                     <button class="btn btn-sm btn-default btn-ask">질문하기</button>
                                 </div>
                                 <div class="question-editor-form">
-                                	<form id="questionForm" method="GET"> 
+                                	<form id="questionForm"> 	
 		                                <textarea placeholder="내용을 입력해주세요."></textarea>
 		                                <div class="ask-form-buttons">
 			                                <button type="button" class="btn btn-xs btn-default btn-close">닫기</button>
@@ -137,10 +136,32 @@
 		
 		// 레슨명 클릭 시 active 효과
 	    $(".list.unit.unit-lesson li").click(function() {
-	        if ($(this).hasClass(".active")) return;
+	        if ($(this).hasClass(".active")) 
+	        	return;
 	        $(".unit-lesson").removeClass("active");
 	        $(this).addClass("active");
+	        searchLessonQuestion();
 	    });
+		
+		// 이전강좌, 다음강좌로 이동
+		$(".btn-move").on('click', function() {
+			
+			var isBefore = $(this).hasClass("before");
+			var beforeOrder = $(".unit-lesson.active").data("order");
+			var order = isBefore ? beforeOrder - 1 : beforeOrder + 1;
+			
+			if(order && order <=$(".list-item.unit-lesson").length) {
+				$(".list-item.unit-lesson").each(function(i,item){
+					var orderNo = $(this).data("order");
+					if(order == orderNo) {
+						$(".list-item.unit-lesson").removeClass("active");
+						$(this).addClass("active");
+					}
+				});
+		        searchLessonQuestion();
+				lessonPlayer();
+			}
+		});
 	
 		// 강좌 코스 사이드바 슬라이드 
 	    var $sidebar = $(".lecture-nav-left");
@@ -189,26 +210,62 @@
 		    $(".question-editor-form").css("display", 'none');
 	    });
 	    
+	    // 질문 등록 ajax
+	    $(".btn-submit").on('click', function() {
+	    	
+	    	var lessonNo = $(".list-item.unit-lesson.active").data("lesson-no");
+		    var contents = $("#questionForm textarea").val();
+		    
+		    $.ajax({
+		    	url: "/lecture/api/addQuestion.hta",
+		    	type: 'GET',
+		    	contentType: "application.json",
+		    	data: {lessonNo:lessonNo, contents:contents},
+		    	success: function(result) {
+		    		
+		    		var html = '';
+		    		
+    				html += '<li class="list-item-box" id="question-box-'+result.no+'">';
+    				html += '<article class="list-item-question">';
+    				html += '<figure class="left-image is-rounded">';
+    				html += '<img class="is-rounded" src="' + result.user.imageFilename + '"width="49px">';
+    				html += '</figure>';
+    				html += '<div class="item-title">';
+    				html += '<strong class="writer">' +result.user.id + '</strong>';
+    				html += '<span class="create-date">' + result.createDate + '</span>';
+    				html += '</div>';
+    				html += '<div class="item-contents">';
+    				html += '<div class="contents">';
+    				html += '<p>' + result.contents + '</p>';
+                    html += '</div>';
+                    
+                    $("#question-box").append(html);
+                    $("#questionForm textarea").val('');
+                    $(".question-editor-form").css("display", 'none');
+                    
+                    searchLessonQuestion();
+		    	}
+		    });
+	    });
 	    
 	    // 질문 조회 ajax
 	    function searchLessonQuestion() {
 	
-	    	var lessonNo = $(".list-item.unit-lesson").data("lesson-no");
+	    	var lessonNo = $(".list-item.unit-lesson.active").data("lesson-no");
 	    	var keyword = $("input[name=search]").val();
 	    	
 	    	$.ajax({
 	    		url: "/lecture/api/searchLessonQuestion.hta",
 	    		type: 'GET',
 	    		contentType: "application/json",
-	    		data: {lessonNo, keyword},
+	    		data: {lessonNo:lessonNo, keyword:keyword},
 	    		success: function(result) {
 	    			$("#question-box").empty();
 
 	    	    	var html = '';
-	    			if (result.length) {
+
+	    	    	if (result.length) {
 		    			result.forEach(function(item, i) {
-		    				
-		    				console.log(item)
 		    				
 		    				html += '<li class="list-item-box" id="question-box-'+item.no+'">';
 		    				html += '<article class="list-item-question">';
@@ -271,7 +328,6 @@
 	    		contentType: "application/json",
 	    		data: {questionNo},
 	    		success: function(result) {
-	    			console.log(questionNo,">>",result);
 	    			
 	    			$answer = $('#question-box-'+ questionNo).find(".answer_container");
 	    			
@@ -320,14 +376,19 @@
 	    			$("#percent").text(result.percent);
 	    			$("#totalAccumulate").text(result.totalAccumulate);
 	    			$("#progressBar").css("width", result.percent +"% ");
+	    			
+	    			
+    				const hasClass = $(".list-item.unit-lesson.active").children().hasClass('fa-check-circle');
+	    			if(result) {
+	    				!hasClass && $(".list-item.unit-lesson.active").append('<span class="unit-checked-icon"><i class="fas fa-check-circle"></i></span>');
+	    			}
 	    		});
-	    		
 	    		console.groupEnd();
 	    	}
     	}, 1000);
 	    
-	    function lessonPlayer() {
-	    	
+	    // 강좌 플레이어 
+	    function lessonPlayer() {   	
 	    	const lessonNo = $(".unit-lesson.active").data("lesson-no");
 	    	
 	    	$.ajax({
@@ -342,12 +403,6 @@
 	    			
 	    			$("#lessonTitle").text(lesson.lessonTitle);
 	    			$("#player").prop("src", lesson.videoPath);
-	    			
-	    			if (history.isWatched == "Y") {
-	    				$(".unit-checked-icon").html('<i class="fas fa-check-circle"></i>');
-	    			} else {
-	    				$(".unit-checked-icon").empty();
-	    			}
 	    		}
 	    	});
 	    	
@@ -358,7 +413,5 @@
 	    });
 	});
 	    
-	    
-    
 </script> 
 </html>

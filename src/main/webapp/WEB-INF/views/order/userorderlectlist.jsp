@@ -23,24 +23,29 @@
    <div class="container" style="font-size: 17px; width: 1440px;">
       <div class="row">
          <div class="col-sm-2">
-				<p>내 학습</p>
-				<ul style="list-style:none;">
-					<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
-					<li><a href="/user/mybytestlist.hta">모의고사</a></li>
-					<li><a href="/question/userqueston.hta">내 질문</a></li>
-				</ul>
-				<p>내 결제</p>
-				<ul style="list-style:none;">
-					<li><a href="/like/likelectlist.hta">위시리스트</a></li>
-					<li><a href="/cart/userCartList.hta">장바구니</a></li>
-					<li><a href="/user/mycouponlist.hta">내 쿠폰함</a></li>
-					<li><a href="/order/userorderlectlist.hta">구매내역</a></li>
-				</ul>
-				<p>내 강의</p>
-				<ul style="list-style:none;">
-					<li id="teacher"><a href="/teacher/main.hta">내 강의</a></li>
-				</ul>
-			</div>
+			<p>내 학습</p>
+			<ul style="list-style: none;">
+				<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
+				<li><a href="/user/mybytestlist.hta">모의고사</a></li>
+				<li><a href="/userquestion/myquestionlist.hta">강의 질문</a></li>
+			</ul>
+			<p>내 결제</p>
+			<ul style="list-style: none;">
+				<li><a href="/like/likelectlist.hta">위시리스트</a></li>
+				<li><a href="/cart/userCartList.hta">장바구니</a></li>
+				<li><a href="/user/mycouponlist.hta">내 쿠폰함</a></li>
+				<li><a href="/order/userorderlectlist.hta">구매내역</a></li>
+			</ul>
+			<p>내 강의</p>
+			<ul style="list-style: none;">
+				<li id="teacher"><a href="/teacher/main.hta">내 강의</a></li>
+			</ul>
+			<p>관리자 문의</p>
+			<ul style="list-style: none;">
+				<li id="teacher"><a href="/user/userqueston.hta">문의하기</a></li>
+				<li><a href="/userquestion/userqnatoadmlist.hta">문의 내역 조회</a></li>
+			</ul>
+		</div>
          
 			<div class="col-sm-10">
             <div class="row">

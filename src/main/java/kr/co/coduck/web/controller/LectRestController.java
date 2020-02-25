@@ -1,11 +1,13 @@
 package kr.co.coduck.web.controller;
 
+import java.awt.Insets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +41,6 @@ public class LectRestController {
 
 	@Autowired
 	private LectService lectService;
-	
 
 	@Autowired
 	private QuestionService questionService;
@@ -102,7 +103,7 @@ public class LectRestController {
 		lessonHistory.setUserNo(user.getNo());
 
 		LessonHistory searchedLessonHistory = lectService.getLessonHistoryByLessonHistory(lessonHistory);
-log.info("레슨히스통리파라미터" + lessonHistory);
+
 		if (searchedLessonHistory == null) {
 			lectService.insertLessonHistory(lessonHistory);
 
@@ -116,7 +117,7 @@ log.info("레슨히스통리파라미터" + lessonHistory);
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("userNo", user.getNo());
 				map.put("lectureNo", searchedLessonHistory.getLectNo());
-		
+
 				return lectService.getProgressPercentInDashboard(map);
 
 			} else {
@@ -129,23 +130,42 @@ log.info("레슨히스통리파라미터" + lessonHistory);
 
 		return null;
 	}
-	
+
 	@GetMapping("/lessonPlayer")
 	public Map<String, Object> lessonPlayer(LessonHistory lessonHistory, HttpSession session) {
-		
+
 		User user = (User) session.getAttribute("LU");
 		lessonHistory.setUserNo(user.getNo());
-		
+
 		LessonHistory searchedLessonHistory = lectService.getLessonHistoryByLessonHistory(lessonHistory);
 		Lesson lesson = lectService.getLessonByLessonNo(lessonHistory.getLessonNo());
-		
-		log.info("레슨" + lesson + "\n 레슨히스토리>>>>" + searchedLessonHistory);
 
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("history", searchedLessonHistory);
 		model.put("lesson", lesson);
-		
+
 		return model;
 	}
+
+	@GetMapping("/addQuestion")
+	public Question addQuestion(@RequestParam("lessonNo") int lessonNo, @RequestParam("contents") String contents, HttpSession session) {
+		
+		Question question = new Question();
+		
+		User user = (User) session.getAttribute("LU");
+		question.setUser(user);
+		
+		Lesson lesson = new Lesson();
+		lesson.setNo(lessonNo);
+		question.setLesson(lesson);
+		question.setContents(contents);
+		
+		questionService.insertQuestion(question);
+		
+		Question searchedQuestion = questionService.getQuestionByQuestionNo(question.getNo());
+		
+		return searchedQuestion;
+	}
+
 
 }

@@ -12,6 +12,8 @@ public interface QuestionDao {
 	List<Question> getQuestionByLessonNo(LectureCriteria cri);
 	
 	Answer getAnswerByQuestionNo(int questionNo);
+	
 	void insertQuestion(Question question);
+	Question getQuestionByQuestionNo(int questionNo);
 	List<Question> getQuestionByRecent(int lectureNo);
 }

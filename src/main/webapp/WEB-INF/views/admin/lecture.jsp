@@ -181,6 +181,7 @@
 											                    	<c:when test="${lect.grade == 2}">초급</c:when>
 											                    	<c:when test="${lect.grade == 3}">중급</c:when>
 											                    	<c:when test="${lect.grade == 4}">활용</c:when>
+											                    	<c:when test="${lect.grade == 5}">기출</c:when>
 									                    		</c:choose>
 									                    	</td>
 									                    	<td>${lect.userName }(${lect.userId })</td>

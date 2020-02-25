@@ -57,7 +57,7 @@
 							<p class="p0" style="margin: 0	"><span class="span0">${qt.qtNum }.</span> ${qt.contents }</p>
 							<p class="text-right p-score" style="margin: 0">배점 : <span class="span-score">${qt.score }</span></p>
 							<p class="text-right p-ans">정답 : <span class="span-ans">${qt.ans }</span></p>
-							<c:if test="${qt.img != null }">
+							<c:if test="${not empty qt.img }">
 								<p class="p1"><img class="img1" src="../../resources/images/test/qt-img/${qt.img}" style="width:100%" height="240px;"></p>
 							</c:if>
 							<p class="p2"><img src="/resources/images/test/marking-img/1.gif" alt="1" id="qt-${qt.qtNum }-1"/> ${qt.v1 }</p>

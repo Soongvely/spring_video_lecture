@@ -2,6 +2,7 @@ package kr.co.coduck.web.controller;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -23,6 +24,8 @@ import kr.co.coduck.dto.AdminLectDto;
 import kr.co.coduck.dto.AdminLessonDto;
 import kr.co.coduck.dto.NoticeCriteria;
 import kr.co.coduck.form.NoticeAddForm;
+import kr.co.coduck.form.NoticeUpdateForm;
+import kr.co.coduck.service.AdminIncomeService;
 import kr.co.coduck.service.AdminLectService;
 import kr.co.coduck.service.AdminQnaService;
 import kr.co.coduck.service.CategoryService;
@@ -47,13 +50,38 @@ public class AdminController {
 	private LectService lectService;
 	@Autowired
 	private NoticeService noticeService;
+	@Autowired
+	private AdminIncomeService adminIncomeService;
 	
 	@Value("${notice.source.directory}")
 	// src/main/resources/META-INF/config/application-config.properties
 	private String sourceDirectory;
 
 	@GetMapping("/home.hta")
-	public String home() {
+	public String home(Model model) {
+		
+		int adminLectIncomeByDay = adminIncomeService.getLectIncomeByDay();
+   		int adminTestIncomeByDay = adminIncomeService.getTestIncomeByDay();
+   		
+   		model.addAttribute("adminLectIncomeByDay", adminLectIncomeByDay);
+   		model.addAttribute("adminTestIncomeByDay", adminTestIncomeByDay);
+   		
+   		int adminLectIncomeByThree = adminIncomeService.getLectIncomeByThree();
+   		int adminTestIncomeByThree = adminIncomeService.getTestIncomeByThree();
+   		
+   		model.addAttribute("adminLectIncomeByThree", adminLectIncomeByThree);
+   		model.addAttribute("adminTestIncomeByThree", adminTestIncomeByThree);
+   		
+   		int adminLectIncomeByWeek = adminIncomeService.getLectIncomeByWeek();
+   		int adminTestIncomeByWeek = adminIncomeService.getTestIncomeByWeek();
+   		
+   		model.addAttribute("adminLectIncomeByWeek", adminLectIncomeByWeek);
+   		model.addAttribute("adminTestIncomeByWeek", adminTestIncomeByWeek);
+   		
+   		Map<String, Object> adminIncomeRate = adminIncomeService.getIncomeRate();
+   		
+   		model.addAttribute("adminIncomeRate", adminIncomeRate);
+		
 		return "admin/home";
 	}
 
@@ -180,6 +208,26 @@ public class AdminController {
    		return "admin/noticeupdateform";
    	}
    // 공지사항 수정하기 2
+   	@PostMapping("/noticeupdate.hta")
+   	public String noticeupdate(NoticeUpdateForm form, HttpSession session) throws Exception {
+   		Notice notice = new Notice();
+   		User user = (User)session.getAttribute("LU");
+   		notice.setUserNo(user.getNo());
+   		
+   		BeanUtils.copyProperties(form, notice);
+   		
+   		MultipartFile uploadFile = form.getFileName();
+   		if (!uploadFile.isEmpty()) {
+   			String filename = uploadFile.getOriginalFilename();
+   			notice.setFileName(filename);
+   			
+   			FileCopyUtils.copy(uploadFile.getBytes(), new File(sourceDirectory, filename));
+   		}
+   		
+   		noticeService.updateNotice(notice);
+   		
+   		return "redirect:/admin/notice.hta";
+   	}
    // 공지사항 첨부파일 받기
    	@GetMapping("/download.hta")
    	public String downloadFile(@RequestParam("noticeNo") int noticeNo, Model model) throws Exception {
@@ -191,5 +239,8 @@ public class AdminController {
 	
    		return "fileDownloadView";
 	}
+   	
+  
+   
    
 }

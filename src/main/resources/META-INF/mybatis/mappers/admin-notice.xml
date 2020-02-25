@@ -46,16 +46,13 @@
 			(ad_notices_seq.nextval, #{title}, #{contents}, #{fileName}, #{userNo})
 	</insert>
 	
-	<update id="updateCouponByAdmin" parameterType="Notice">
+	<update id="updateNotice" parameterType="Notice">
 		update
 			ad_notices
 		set
-			notice_no = #{no},
 			notice_title = #{title},
 			notice_contents = #{contents},
-			notice_file_name = #{fileName},
-			notice_create_date = #{createDate},
-			notice_counts = #{counts}
+			notice_file_name = #{fileName}
 		where
 			notice_no = #{no}
 	</update>

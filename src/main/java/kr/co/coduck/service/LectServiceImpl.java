@@ -44,6 +44,30 @@ public class LectServiceImpl implements LectService {
 	}
 
 	@Override
+	public List<LectureDto> TopFiveLecturesByLike() {
+		
+		return lectDao.TopFiveLecturesByLike();
+	}
+	
+	@Override
+	public List<LectureDto> TopFiveFreeLectures() {
+
+		return lectDao.TopFiveFreeLectures();
+	}
+	
+	@Override
+	public List<LectureDto> TopFourNewLectures() {
+		
+		return lectDao.TopFourNewLectures();
+	}
+	
+	@Override
+	public List<LectureDto> TopFourTestLectures() {
+
+		return lectDao.TopFourTestLectures();
+	}
+	
+	@Override
 	public List<LectureDto> getLectureByCategoryNo(int cateNo) {
 
 		return lectDao.getLectureByCategoryNo(cateNo);

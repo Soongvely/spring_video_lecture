@@ -78,11 +78,10 @@
                                     <div class="breadcrumb">
                                         <ul> 
                                             <li>
-                                                <a href="" class="catagory_link">ALL &nbsp</a>
+                                                <a href="" class="catagory_link">IT 프로그래밍 &nbsp</a>
                                             </li>
-                                            
                                             <li>
-                                                <a href="" class="catagory_link">&nbsp Html/CSS</a>
+                                                <a href="" class="catagory_link">&nbsp</a>
                                             </li>
                                         </ul>
                                         <div class="dropdown" id="sort" style="float:right;">
@@ -229,11 +228,15 @@
 							html += '<a href="detail/description.hta?lectureNo=' + lecture.no + '" class="lecture-item-front">';
 							html += '<div class="item-image">';
 							html += '<figure class="item-image-thumbnail">';
-							html += '<img src="' + lecture.imagePath +'" class="">';
+							html += '<img src="' + lecture.imagePath +'">';
 							if (lecture.discountRate > 0) {
 								html += '<div class="lesson-item-event-card">';
-								html += '<i class=""></i>';
 								html += '<span>' + lecture.discountRate + '% 할인중</span>';
+								html += '</div>';
+							}
+							if (lecture.discountRate > 0 && lecture.isFreed == "Y") {
+								html += '<div class="lesson-item-free-card">';
+								html += '<span>Free</span>';
 								html += '</div>';
 							}
 							html += '</figure>';
@@ -255,13 +258,15 @@
 							}							
 							html += '<span class="discount_price">￦' + lecture.discountPrice.toLocaleString() +'</span>';
 							html += '</div>'
+							html += '</a>';
 							html += '<div class="item-info-bottom">';
-							html += '<div class="wish"><a href="/like/addlikelectlist.hta?lectureno=' + lecture.no + '"><i class="far fa-heart"></i></a>' + count.likeCnt +'</div>';
+							html += '<div class="wish">';
+							html += '<a href="/like/addlikelectlist.hta?lectureno=' + lecture.no + '"><i class="far fa-heart"></i>' + count.likeCnt + '</a>';
+							html += '</div>';
 							html += '<div class="teacher_name">' + count.userName + '</div>';
 							html +=	'</div>';  
 							html +=	'</div>'; 
 							html +=	'</div>';  
-							html += '</a>';
 							html +=	'</div>';  
 							html +=	'</div>';
 							

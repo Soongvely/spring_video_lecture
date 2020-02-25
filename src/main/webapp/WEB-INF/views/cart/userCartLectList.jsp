@@ -18,32 +18,30 @@
 	<%@ include file="../common/tag.jsp"%>
 	<div class="container" style="font-size:17px; width:1440px;">
 		<div class="row">
-			<div class="col-sm-2" style="border: 1px solid red;">
-				<p>대시보드</p>
-				<p>내 학습</p>
-				<ul>
-					<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
-					<li><a href="/question/userqueston.hta">내 질문</a></li>
-					<li>내 모의고사</li>
-				</ul>
-				<p>내 결제</p>
-				<ul>
-					<li>위시리스트</li>
-					<li><a href="/cart/userCartLectList.hta">장바구니</a></li>
-					<li>내 쿠폰함</li>
-					<li><a href="/user/userbylist.hta">구매내역</a></li>
-				</ul>
-				<p>설정</p>
-				<ul>
-					<li>프로필 설정</li>
-					<li>알림 설정</li>
-				</ul>
-				<p>내 강의/모의고사</p>
-				<ul>
-					<li>내 강의</li>
-					<li>내 모의고사</li>
-				</ul>
-			</div>
+			<div class="col-sm-2">
+			<p>내 학습</p>
+			<ul style="list-style: none;">
+				<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
+				<li><a href="/user/mybytestlist.hta">모의고사</a></li>
+				<li><a href="/userquestion/myquestionlist.hta">강의 질문</a></li>
+			</ul>
+			<p>내 결제</p>
+			<ul style="list-style: none;">
+				<li><a href="/like/likelectlist.hta">위시리스트</a></li>
+				<li><a href="/cart/userCartList.hta">장바구니</a></li>
+				<li><a href="/user/mycouponlist.hta">내 쿠폰함</a></li>
+				<li><a href="/order/userorderlectlist.hta">구매내역</a></li>
+			</ul>
+			<p>내 강의</p>
+			<ul style="list-style: none;">
+				<li id="teacher"><a href="/teacher/main.hta">내 강의</a></li>
+			</ul>
+			<p>관리자 문의</p>
+			<ul style="list-style: none;">
+				<li id="teacher"><a href="/user/userqueston.hta">문의하기</a></li>
+				<li><a href="/userquestion/userqnatoadmlist.hta">문의 내역 조회</a></li>
+			</ul>
+		</div>
 
 			<div class="col-sm-10">
 				<p>장바구니는 최근에 추가했던 순서로 표시됩니다.</p>

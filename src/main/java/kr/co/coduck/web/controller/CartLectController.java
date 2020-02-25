@@ -87,6 +87,12 @@ public class CartLectController {
 	@GetMapping("/addlectcart.hta")
 	public String addlectcart(HttpSession session, Model model, @RequestParam("lectNo") int lectNo) {
 		User user = (User)session.getAttribute("LU");
+		List<CartLectDto> userCartLectLists = cartLectService.getCartLectListByUserNo(user.getNo());
+		for(CartLectDto cartLectDto : userCartLectLists) {
+			if(cartLectDto.getLectNo() == lectNo) {
+				return "redirect:/lecture/main.hta";
+			}
+		}
 		LectCart lectCart = new LectCart();
 		lectCart.setLectNo(lectNo);
 		lectCart.setUserNo(user.getNo());

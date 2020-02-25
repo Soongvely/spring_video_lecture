@@ -19,7 +19,7 @@ import kr.co.coduck.vo.ViewCk;
 
 public interface TestDao {
 	
-	Test getTestsTopN();
+	List<Test> getTestsTopN();
 	
 	void updateTestQt(TestModifyForm form);
 	

@@ -18,13 +18,15 @@ public interface LectService {
 	
 
 	List<LessonDto> getLectListUserByNo(int userNo);
-
 	Lect getLectByNo(int lectNo);
 
+	List<LectureDto> TopFiveLecturesByLike();
+	List<LectureDto> TopFourNewLectures();
+	List<LectureDto> TopFiveFreeLectures();
+	List<LectureDto> TopFourTestLectures();
+	
 	List<LectureDto> getLectureByCategoryNo(int cateNo);
-
 	LectureDto getLectureByLectureNo(int lectureNo);
-
 	List<LectureDto> getLectureListByCriteria(LectureCriteria cri);
 
 	int getTeachersLectureCountByCriteria(LectureCriteria cri);

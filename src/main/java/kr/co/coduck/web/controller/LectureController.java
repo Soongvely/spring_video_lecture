@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.coduck.dto.ChapterDto;
 import kr.co.coduck.dto.LectureCourseDto;
-import kr.co.coduck.dto.LessonDto;
 import kr.co.coduck.dto.ReviewStarDto;
 import kr.co.coduck.service.CategoryService;
 import kr.co.coduck.service.LectService;
@@ -23,8 +22,6 @@ import kr.co.coduck.service.QuestionService;
 import kr.co.coduck.service.ReviewService;
 import kr.co.coduck.vo.Category;
 import kr.co.coduck.vo.LectureCriteria;
-import kr.co.coduck.vo.Lesson;
-import kr.co.coduck.vo.LessonHistory;
 import kr.co.coduck.vo.User;
 
 @Controller
@@ -36,7 +33,6 @@ public class LectureController {
 	@Autowired
 	private LectService lectservice;
 	
-
 	@Autowired
 	private ReviewService reviewService;
 
@@ -110,17 +106,11 @@ public class LectureController {
 		map.put("lectureNo", lectureNo);
 		
 		LectureCourseDto lectureCourseDto = lectservice.getLectureCourseByLecureNo(lectureNo);
-		Lesson lesson = lectservice.getFirstLessonByLectureNo(lectureNo);
 		
 		model.addAttribute("lectureCourse" ,lectureCourseDto);
 		model.addAttribute("lessonDto", lectservice.getProgressPercentInDashboard(map));
 		model.addAttribute("firstLesson", lectservice.getFirstLessonByLectureNo(lectureNo));
 		model.addAttribute("historys", lectservice.getAllLessonHistoryByMap(map));
-		
-		log.info("history" + lectservice.getAllLessonHistoryByMap(map));
-		
-		log.info("첫번째 렛ㄴ슨" + lesson);
-		
 		
 		return "lecture/player/player";
 	}
@@ -136,7 +126,6 @@ public class LectureController {
 			if (tempStar[i] == 0)
 				reviewStarAvgs.add(new ReviewStarDto(i + 1, 0, 0));
 		}
-
 		reviewStarAvgs.sort((o1, o2) -> o1.getStar() > o2.getStar() ? -1 : 1);
 
 		return reviewStarAvgs;

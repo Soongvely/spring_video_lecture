@@ -18,8 +18,18 @@
 	<link href="../../../resources/css/sb-admin-2.min.css" rel="stylesheet">	
 	
 	<style type="text/css">
+	.btn-date {border: 1px solid #cbc4c4;}
 	#qnaTable .customer-username {cursor: pointer;}
 	#qnaTable .qna-title {cursor: pointer;}
+	
+	button.page-link {
+	display: inline-block;
+	}
+	button.page-link {
+	    font-size: 20px;
+	    color: #29b3ed;
+	    font-weight: 500;
+	}
 	</style>
 </head>
 <body id="page-top">
@@ -46,8 +56,8 @@
 	                        </div>
 	                        <div class="col-md-5">
 	                            <div class="input-group input-large" id="date-search" data-date-format="yyyy-MM-dd">
-	                                <input type="date" class="form-control date1" value="" name="startDate" placeholder="시작일" style="text-align:center;">
-	                                <input type="date" class="form-control date2"  value="" name="endDate" placeholder="종료일" style="text-align:center;">
+	                              <input type="date" class="form-control date1" value="${param.startDate }" name="startDate" placeholder="시작일" style="text-align:center;">
+	                                <input type="date" class="form-control date2"  value="${param.endDate }" name="endDate" placeholder="종료일" style="text-align:center;">
 	                            </div>
 	                        </div>
 	                    </div>
@@ -57,13 +67,13 @@
 	                        <div class="col-md-6">
 	                            <div class="radio-dk" id="isanswered-search">
 	                                <label>
-	                                    <input type="radio" id="optionsRadios1" name="isAnswered" value="A" > 전체
+	                                    <input type="radio" id="optionsRadios1" name="isAnswered" value="A" value="A" ${empty param.isAnswered || param.isAnswered eq 'A' ? 'checked' :'' }> 전체
 	                                </label>
 	                                <label>
-	                                    <input type="radio" id="optionsRadios2" name="isAnswered" value="Y" > 예
+	                                    <input type="radio" id="optionsRadios2" name="isAnswered" value="Y"  value="Y" ${param.isAnswered eq 'Y' ? 'checked' :'' }> 예
 	                                </label>
 	                                <label>
-	                                    <input type="radio" id="optionsRadios3" name="isAnswered" value="N" > 아니오
+	                                    <input type="radio" id="optionsRadios3" name="isAnswered" value="N"  value="N" ${param.isAnswered eq 'N' ? 'checked' :'' }> 아니오
 	                                </label>
 	                            </div>                        
 	                        </div>                       
@@ -83,14 +93,14 @@
 								<div class="col-sm-2">
 		                    		<div>
 		                    			<select class="form-control" style="width: 200px;" name="sort" id="sort-search">
-		                    				<option value="date" >최신순</option>
-		                    				<option value="title" >제목순</option>
+		                    				<option value="date" ${param.sort eq 'date' ? 'selected' : '' }>최신순</option>
+		                    				<option value="title" ${param.sort eq 'title' ? 'selected' : '' }>제목순</option>
 		                    			</select>
 		                    		</div>
 		                    	</div>
 		                    	<div class="col-sm-7"></div>			                    	
 	                    		<div class="col-sm-2">
-									<input type="text" class="form-control" style="width:275px;" name="keyword"  value="" id="keyword-search" placeholder="검색어를 입력하세요.">
+									<input type="text" class="form-control" style="width:275px;" name="keyword"  value="${param.keyword }" id="keyword-search" placeholder="검색어를 입력하세요.">
 								</div>	                    	
 	                    		<div class="col-sm-1">
 									<button type="button" class="btn btn-default" id="find-user-btn"><i class="fas fa-search"></i></button>
@@ -114,7 +124,6 @@
 		                        			<col width="11%">
 		                        			<col width="12%">
 		                        			<col width="12%">
-		                        			<col width="10%">
 		                        			<col width="8%">
 		                        			<col width="8%">
 		                        		</colgroup>
@@ -124,30 +133,41 @@
 												<th>회원명</th>
 												<th>제목</th>
 												<th>문의날짜</th>
-												<th>답변날짜</th>
 												<th>답변상태</th>
 												<th>답변하기</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>100001</td>
-												<td><a class="customer-username">호날두(ronaldo)</a></td>
-												<td><a class="qna-title"><strong>모의고사 문제가 너무 어려워요</strong></a></td>
-												<td>2020-02-20</td>
-												<td></td>
-												<td>Y</td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>100002</td>
-												<td>kaka(kaka)</td>
-												<td>모의고사 문제가 너무 쉬운데요?</td>
-												<td>2020-02-21</td>
-												<td>2020-02-21</td>
-												<td>Y</td>
-												<td><button class="btn btn-success"><i class="far fa-comment-dots"></i></button></td>
-											</tr>
+										<c:choose>
+												<c:when test="${empty qnaList }">
+													<tr>
+														<td colspan="7" class="text-center">등록된 문의글이 없습니다.</td>
+													</tr>
+												</c:when>
+												<c:otherwise>
+													<c:forEach var="qna" items="${qnaList }">
+														<tr>
+															<td>${qna.no }</td>
+															<td>
+																<a class="qna-username" data-user-no="${qna.userNo }" 
+																	data-toggle="modal" data-target="#modal-qna-items">
+																	${qna.userName }(${qna.userId })
+																</a>
+															</td>
+															<td><a class="qna-title"><strong>${qna.title }</strong></a></td>
+															<td><span><fmt:formatDate value="${qna.createDate }" pattern="yyyy-MM-dd"/></span></td>
+															<td>${qna.isAnswered }</td>
+															<td>
+																<c:choose>
+																	<c:when test="${qna.isAnswered == 'N' }">
+																		<button class="btn btn-success"><i class="far fa-comment-dots"></i></button>
+																	</c:when>
+																</c:choose>
+															</td>
+														</tr>
+													</c:forEach>
+												</c:otherwise>
+											</c:choose>
 										</tbody>		
 									</table>
 								</div>
@@ -164,7 +184,7 @@
 							<div class="row">									
 								<div class="col-sm-3">
 		                    		<div class="qnas_length" id="qnas_length" role="status" aria-live="polite">
-		                    		총 건의 조회결과			       
+		                    		총 ${pagination.totalRows }건의 조회결과			       
 		                    		</div>
 		                    	</div>
 								<div class="col-sm-9">
@@ -172,6 +192,23 @@
 		      							<!-- 페이지네이션 -->
 		      							<ul class="pagination">		
 		      							
+		      								<c:if test="${pagination.pageNo > 1 }">
+		      									<li class="page-item">
+		      									<button type="button" class="page-link" onclick="fn_prev('${pagination.pageNo -1}')" data-page-no="${no }">이전</button>
+		      									</li>
+		      								</c:if>
+		      								
+	      									<c:forEach var="no" begin="${pagination.beginPage }" end="${pagination.endPage }">
+	      										<li>
+	      										<button type="button" class="page-link" onclick="fn_pagination('${no}')" data-page-no="${no }">${no }</button>
+	      										</li>
+	      									</c:forEach>
+		      								
+		      								<c:if test="${pagination.pageNo < pagination.totalPagesCount }">
+		      									<li>
+	      										<button type="button" class="page-link" onclick="fn_next('${pagination.pageNo +1}')" data-page-no="${no }">다음</button>
+	      										</li>
+		      								</c:if>			  
 		      									      								
 		      							</ul>	
 		                    		</div>
@@ -285,8 +322,8 @@
 				<form>
 					<input type="hidden">
 					<div class="form-group">
-						<label>답변글</label>
-						<textarea rows="5" class="form-control"></textarea>
+						<input type="text" name="title" style="width: 100%;" placeholder="제목"/>
+						<textarea rows="5" class="form-control" style="margin-top: 10px;" placeholder="내용"></textarea>
 					</div>
 					<div class="form-group">
 						<label>첨부파일</label>
@@ -352,8 +389,9 @@
 <script src="../../../resources/vendor/chart.js/Chart.min.js"></script>
 <!-- Page level custom scripts -->
 <script type="text/javascript">
+
 	// 이름을 선택하였을때 회원상세정보를 조회한다. (모달창)
-	$("#qnaTable .customer-username").click(function() {
+	$("#qnaTable .qna-username").click(function() {
 		$("#modal-customer-items").modal('show');
 	});
 	
@@ -368,9 +406,50 @@
 	});
 
 	// 검색하기
-	$("#keyword-search").click(function() {
+	$("#find-user-btn").click(function() {
 		$("#search-qna-form").submit();
 	});
+	
+	// 페이징 처리하기
+	function fn_pagination(no) {
+		
+		var url = "";
+		url += "?pageno=" + no;
+		url += "&startDate=" + $("#date-search [name=startDate]").val()
+		url += "&endDate=" + $("#date-search [name=endDate]").val()
+		url += "&enabled=" + $("#isAnswered-search :checked").val()
+		url += "&sort=" + $("#sort-search :selected").val();
+		url += "&keyword=" + $("#keyword-search").val();
+		
+		location.href = url;
+	}
+	
+	
+	function fn_next(no) {
+		
+		var url = "";
+		url += "?pageno=" + no;
+		url += "&startDate=" + $("#date-search [name=startDate]").val()
+		url += "&endDate=" + $("#date-search [name=endDate]").val()
+		url += "&enabled=" + $("#isAnswered-search :checked").val()
+		url += "&sort=" + $("#sort-search :selected").val();
+		url += "&keyword=" + $("#keyword-search").val();
+		
+		location.href = url;
+	};
+	
+	function fn_prev(no) {
+		
+		var url = "";
+		url += "?pageno=" + no;
+		url += "&startDate=" + $("#date-search [name=startDate]").val()
+		url += "&endDate=" + $("#date-search [name=endDate]").val()
+		url += "&enabled=" + $("#isAnswered-search :checked").val()
+		url += "&sort=" + $("#sort-search :selected").val();
+		url += "&keyword=" + $("#keyword-search").val();
+		
+		location.href = url;
+	};
 </script>
 </body>
 </html>

@@ -29,7 +29,6 @@
                 <a class="t-gray" href="/view/viewnotice.hta"> 공지사항</span></a>
               </li>
             </ul>
-
             <form class="navbar-form navbar-left" action="/action_page.php">
               <div class="input-group">
                 <input type="text" class="form-control search-box" placeholder="Search" name="search">
@@ -40,7 +39,6 @@
                 </div>
               </div>
             </form>    
-
 			<c:if test="${not empty LU }">
 	            	<ul class="nav navbar-nav navbar-user">
 	            		<li id="student"><a href="/lecture/main.hta">수강생</a></li>

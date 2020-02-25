@@ -55,8 +55,12 @@ public class AdminTestController {
 								@RequestParam("changedScore") int changedScore) {
 		Test test = testService.getTestByNo(testNo);
 		int totalScore = test.getTotalScore();
+		System.out.println("=======================================================");
+		System.out.println("totalScore : " + totalScore);
 		totalScore -= (score - changedScore);
+		System.out.println("totalScore : " + totalScore);
 		test.setTotalScore(totalScore);
+		testService.updateTest(test);
 		return test.getTotalScore();
 	}
 	

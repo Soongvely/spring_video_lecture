@@ -26,7 +26,7 @@ import kr.co.coduck.vo.ViewCk;
 @Transactional
 public interface TestService {
 	
-	Test getTestsTopN();
+	List<Test> getTestsTopN();
 	
 	void updateTestQt(TestModifyForm form);
 	

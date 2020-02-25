@@ -1,7 +1,10 @@
 package kr.co.coduck.web.controller;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.coduck.dto.CartChoiceLectListDto;
 import kr.co.coduck.dto.OrderLectDetailListDto;
 import kr.co.coduck.dto.OrderLectListDto;
 import kr.co.coduck.dto.OrderTestDetailListDto;

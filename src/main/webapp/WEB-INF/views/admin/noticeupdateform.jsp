@@ -21,7 +21,7 @@
 
 <div style="width: 60%; margin: auto;">
 	<form method="post" action="noticeupdate.hta" enctype="multipart/form-data">
-		<input type="hidden" name="userNo">
+		<input type="hidden" name="no" value="${notice.no }">
 		<input type="text" name="title" style="width: 40%;" placeholder="제목" value="${notice.title }">
 		<br><br> 
 		<textarea id="summernote" name="contents" >${notice.contents }</textarea><br>
@@ -30,7 +30,7 @@
 			<p>${notice.fileName }</p>
 		</div>
 		<button type="button" id="notice-list" style="float: right;">목록으로</button>
-		<button type="button" id="submit-btn" style="float: right;" onclick="goWrite(this.form)">작성하기</button>
+		<button type="button" id="submit-btn" style="float: right;" onclick="goEdit(this.form)">수정하기</button>
 		
 	</form>
 </div>
@@ -49,7 +49,7 @@
 		location.href="notice.hta"
 	})
 	
-	function goWrite(frm) {
+	function goEdit(frm) {
 	
 		var title = frm.title.value;
 		var contents = frm.contents.value;

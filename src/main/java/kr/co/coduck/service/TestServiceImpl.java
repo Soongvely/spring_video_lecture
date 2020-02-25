@@ -40,7 +40,7 @@ public class TestServiceImpl implements TestService{
 	private UserDao userDao;
 	
 	@Override
-	public Test getTestsTopN() {
+	public List<Test> getTestsTopN() {
 		return testDao.getTestsTopN();
 	}
 	

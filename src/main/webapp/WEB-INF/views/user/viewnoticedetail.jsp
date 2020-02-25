@@ -16,10 +16,20 @@
 	<div class="container" style="font-size: 17px; width: 1440px;">
 		<div class="row">
 			<div class="col-sm-12">
-				<h1>제목</h1>
-				<h1>${noticedetail.title }</h1>
-				<h2>내용</h2>
-				<p>${noticedetail.contents }</p>
+				<c:if test="${empty noticedetail.fileName }">
+					<h1 style="margin-top: 50px;">${noticedetail.title }</h1>
+					<hr/>
+					<h3>${noticedetail.contents }</h3>
+					<hr/>
+					<p style="margin-top: 90px;">첨부파일 없습니다.</p>				
+				</c:if>
+				<c:if test="${not empty noticedetail.fileName }">
+					<h1 style="margin-top: 50px;">${noticedetail.title }</h1>
+					<hr/>
+					<h3>${noticedetail.contents }</h3>
+					<hr/>
+					<a style="margin-top: 90px;" href="/admin/download.hta?noticeNo=${noticedetail.noticeNo }"><i class="far fa-file fa-3x" style="width: 200px; height: 200px;"></i></a>			
+				</c:if>
 			</div>
 		</div>
 	</div>

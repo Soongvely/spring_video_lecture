@@ -21,7 +21,6 @@
 
 <div style="width: 60%; margin: auto;">
 	<form method="post" action="noticewrite.hta" enctype="multipart/form-data">
-		<input type="hidden" name="userNo">
 		<input type="text" name="title" style="width: 40%;" placeholder="제목"/>
 		<br><br> 
 		<textarea id="summernote" name="contents"></textarea><br>

@@ -16,10 +16,13 @@ import kr.co.coduck.vo.LessonHistory;
 public interface LectDao {
 
 	List<LessonDto> getLectListUserByNo(int userNo);
-
-	
 	Lect getLectByNo(int lectNo);
 
+	List<LectureDto> TopFiveLecturesByLike();
+	List<LectureDto> TopFourNewLectures();
+	List<LectureDto> TopFiveFreeLectures();
+	List<LectureDto> TopFourTestLectures();
+	
 	List<LectureDto> getLectureByCategoryNo(int cateNo);
 	LectureDto getLectureByLectureNo(int lectureNo);
 	
@@ -54,5 +57,6 @@ public interface LectDao {
 	
 	void insertLessonHistory(LessonHistory lessonHistory);
 	void updateLessonByLessonHistory(LessonHistory lessonHistory);
+	
 	
 }

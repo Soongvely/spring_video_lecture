@@ -27,7 +27,10 @@ public class OrderTestController {
 	@Autowired
 	private OrderTestService orderTestService;
 
-	
+	@GetMapping("/ordertestform.hta")
+	public String orderTestFail() {
+		return "/order/ordertestform";
+	}
 
 	@PostMapping("/ordertests.hta")
 	public String orderLect(

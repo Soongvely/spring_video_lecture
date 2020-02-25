@@ -23,24 +23,29 @@
    <div class="container" style="font-size:17px; width:1440px;">
       <div class="row">
          <div class="col-sm-2">
-				<p>내 학습</p>
-				<ul style="list-style:none;">
-					<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
-					<li><a href="/test/test-list.hta">모의고사</a></li>
-					<li><a href="/question/userqueston.hta">내 질문</a></li>
-				</ul>
-				<p>내 결제</p>
-				<ul style="list-style:none;">
-					<li><a href="/like/likelectlist.hta">위시리스트</a></li>
-					<li><a href="/cart/userCartList.hta">장바구니</a></li>
-					<li><a href="/user/mycouponlist.hta">내 쿠폰함</a></li>
-					<li><a href="/order/userorderlectlist.hta">구매내역</a></li>
-				</ul>
-				<p>내 강의</p>
-				<ul style="list-style:none;">
-					<li id="teacher"><a href="/teacher/main.hta">내 강의</a></li>
-				</ul>
-			</div>
+			<p>내 학습</p>
+			<ul style="list-style: none;">
+				<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
+				<li><a href="/user/mybytestlist.hta">모의고사</a></li>
+				<li><a href="/userquestion/myquestionlist.hta">강의 질문</a></li>
+			</ul>
+			<p>내 결제</p>
+			<ul style="list-style: none;">
+				<li><a href="/like/likelectlist.hta">위시리스트</a></li>
+				<li><a href="/cart/userCartList.hta">장바구니</a></li>
+				<li><a href="/user/mycouponlist.hta">내 쿠폰함</a></li>
+				<li><a href="/order/userorderlectlist.hta">구매내역</a></li>
+			</ul>
+			<p>내 강의</p>
+			<ul style="list-style: none;">
+				<li id="teacher"><a href="/teacher/main.hta">내 강의</a></li>
+			</ul>
+			<p>관리자 문의</p>
+			<ul style="list-style: none;">
+				<li id="teacher"><a href="/user/userqueston.hta">문의하기</a></li>
+				<li><a href="/userquestion/userqnatoadmlist.hta">문의 내역 조회</a></li>
+			</ul>
+		</div>
 
          <div class="col-sm-10">
             <p>장바구니는 최근에 추가했던 순서로 표시됩니다.</p>
@@ -85,11 +90,12 @@
                <div class="form-group">
                   <input type="hidden" id="lect-total" name="order-lect-total-price"/>
                   <p>총 가격 : <span id="lecture-summary-price">0</span>원</p>
-                  <button type="submit" class="btn btn-primary">구매하기</button>
+                  <button type="button" class="btn btn-primary" id="btn-lect-buy">구매하기</button>
                </div>
                </form>
             </div>
          </div>
+         
          <div class="col-sm-10">
             <p>장바구니는 최근에 추가했던 순서로 표시됩니다.</p>
             <span>내 결제 / 장바구니</span>
@@ -130,7 +136,7 @@
                <div class="form-group">
                   <input type="hidden" id="test-total" name="order-test-total-price"/>
                   <p>총 가격 : <span id="test-summary-price">0</span>원</p>
-                  <button type="submit" class="btn btn-primary">구매하기</button>
+                  <button type="button" class="btn btn-primary" id="btn-test-buy">구매하기</button>
                </div>
                </form>
             </div>
@@ -139,6 +145,27 @@
          </div>
       </div>
    <script type="text/javascript">
+   		
+   		//구매하기 버튼 클릭시
+   		$("#btn-lect-buy").click(function(){
+   			var i = $("#lecture-summary-price").text();
+   			if(i == 0){
+   				alert("다시 체크해주세요");
+   			}else{
+   				$('#btn-lect-buy').attr("type", "submit");
+   			}	
+   		})
+   		
+   		//구매하기 버튼 클릭시
+   		$("#btn-test-buy").click(function(){
+   			var i = $("#test-summary-price").text();
+   			if(i == 0){
+   				alert("다시 체크해주세요");
+   			}else{
+   				$('#btn-test-buy').attr("type", "submit");
+   			}	
+   		})
+   
       $("#lecture-table tbody :checkbox[name=lectnos]").change(function() {
          
          var totalPrice = 0;
@@ -205,6 +232,7 @@
 			reload();
 		})
    })  */
+   
    </script>
 
 

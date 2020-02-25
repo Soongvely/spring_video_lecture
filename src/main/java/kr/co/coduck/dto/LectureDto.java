@@ -1,6 +1,5 @@
 package kr.co.coduck.dto;
 
-import java.text.DecimalFormat;
 import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
