@@ -4,6 +4,7 @@
 <%@ include file="../../common/head.jsp" %>
 
 <!-- sy.css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <link href="<c:url value="/resources/css/sy-player.css" />" rel="stylesheet">   
 
     <div id="root">
@@ -106,7 +107,7 @@
                             <h4>질문 게시판</h4>
                             <div class="question-editor">
                                 <div class="search search-bar search-question">
-                                    <input type="text" class="form-control search-box" name="search">
+                                    <input type="text" class="form-control search-box" name="search" autocomplete="off">
                                     <i class="glyphicon glyphicon-search"></i>
                                 </div>
                                 <div class="btn-question">

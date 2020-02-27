@@ -111,9 +111,18 @@
 	                                                            <div class="item-image">
 	                                                                <figure class="item-image-thumbnail">
 	                                                                    <img src="${likeLect.imagePath }" class="">
-	                                                                    <div class="lesson-item-event-card">
-	                                                                        <span>${likeLect.discountRate }% 할인중</span>
-	                                                                    </div>
+	                                                                    <c:choose>
+	                                                                    	<c:when test="${likeLect.discountRate > 0 && likeLect.isFreed == 'N'}">
+			                                                                    <div class="lesson-item-event-card">
+			                                                                        <span>${likeLect.discountRate }% 할인중</span>
+			                                                                    </div>
+	                                                                    	</c:when>
+	                                                                    	<c:when test="${likeLect.isFreed == 'Y' }">
+	                                                                    		 <div class="lesson-item-free-card">
+			                                                                        <span>무료 수강</span>
+			                                                                    </div>
+	                                                                    	</c:when>
+	                                                                    </c:choose>
 	                                                                </figure>
 	                                                            </div>
 	                                                        </a>
@@ -126,10 +135,28 @@
 	                                                                            <div class="star_yellow" data-star-score="${likeLect.reviewStar }"></div>
 	                                                                        </div>
 	                                                                    </div>  
-	                                                                    <div class="price column is-half">
-	                                                                        <del>₩<fmt:formatNumber value="${likeLect.price }"></fmt:formatNumber></del>
-	                                                                        <span class="discount_price">₩<fmt:formatNumber value="${likeLect.discountPrice }"></fmt:formatNumber></span>
-	                                                                    </div>
+	                                                                    <c:choose>
+	                                                                    	<c:when test="${likeLect.price >0 }">
+			                                                                    <div class="price column is-half">
+			                                                                    <c:choose>
+				                                                                    <c:when test="${likeLect.discountRate > 0 }">
+				                                                                        <del>₩<fmt:formatNumber value="${likeLect.price }"></fmt:formatNumber></del>
+			                                                                        	<span class="discount_price">₩<fmt:formatNumber value="${likeLect.discountPrice }"></fmt:formatNumber></span>
+				                                                                    </c:when>
+			                                                                    	<c:otherwise>
+			                                                                    		<br>
+			                                                                        	<span class="discount_price">₩<fmt:formatNumber value="${likeLect.discountPrice }"></fmt:formatNumber></span>
+			                                                                    	</c:otherwise>
+			                                                                    </c:choose>
+			                                                                    </div>
+	                                                                    	</c:when>
+	                                                                    	<c:otherwise>
+	                                                                    		 <div class="price column is-half">
+	                                                                    		 	<br/>	
+	                                                                    		 	<span class="discount_price">무료</span>
+	                                                                    		 </div>
+	                                                                    	</c:otherwise>
+	                                                                    </c:choose>
                                                                 	</a>
                                                                     <div class="item-info-bottom">
 	                                                                    <div class="wish">
@@ -312,17 +339,16 @@
 	                                                                <figure class="item-image-thumbnail">
 	                                                                    <img src="${testLect.imagePath }" class="">
 	                                                                    <c:choose>
-	                                                                    	<c:when test="${testLect.discountRate > 0}">
+	                                                                    	<c:when test="${testLect.discountRate > 0 && testLect.isFreed == 'N'}">
 			                                                                    <div class="lesson-item-event-card">
 			                                                                        <span>${testLect.discountRate }% 할인중</span>
 			                                                                    </div>
 	                                                                    	</c:when>
-	                                                                    	<c:when test="${testLect.isFreed eq 'Y' }">
+	                                                                    	<c:when test="${testLect.isFreed == 'Y' }">
 	                                                                    		 <div class="lesson-item-free-card">
-			                                                                        <span>Free</span>
+			                                                                        <span>무료 수강</span>
 			                                                                    </div>
 	                                                                    	</c:when>
-	                                                                    	<c:otherwise></c:otherwise>
 	                                                                    </c:choose>
 	                                                                </figure>
 	                                                            </div>
@@ -336,10 +362,29 @@
 	                                                                            <div class="star_yellow" data-star-score="${testLect.reviewStar }"></div>
 	                                                                        </div>
 	                                                                    </div>  
-	                                                                    <div class="price column is-half">
-	                                                                        <del>₩<fmt:formatNumber value="${testLect.price }"></fmt:formatNumber></del>
-	                                                                        <span class="discount_price">₩<fmt:formatNumber value="${testLect.discountPrice }"></fmt:formatNumber></span>
-	                                                                    </div>
+	                                                                    <c:choose>
+	                                                                    	<c:when test="${testLect.price > 0 }">
+			                                                                    <div class="price column is-half">
+			                                                                        <c:choose>
+			                                                                        	<c:when test="${testLect.discountRate > 0 }">
+			                                                                        		<del>₩<fmt:formatNumber value="${testLect.price }"></fmt:formatNumber></del>
+			                                                                        		<span class="discount_price">₩<fmt:formatNumber value="${testLect.discountPrice }"></fmt:formatNumber></span>
+			                                                                        	</c:when>
+			                                                                        	<c:otherwise>
+			                                                                        		</br>
+					                                                                        <span class="discount_price">₩<fmt:formatNumber value="${testLect.discountPrice }"></fmt:formatNumber></span>
+			                                                                        	</c:otherwise>
+			                                                                        </c:choose>
+			                                                                        
+			                                                                    </div>
+	                                                                    	</c:when>
+	                                                                    	<c:otherwise>
+	                                                                    		 <div class="price column is-half">
+	                                                                    		 	<br>
+				                                                                    <span class="discount_price">무료</span>
+				                                                                </div>
+	                                                                    	</c:otherwise>
+	                                                                    </c:choose>
                                                                 	</a>
                                                                     <div class="item-info-bottom">
 	                                                                    <div class="wish">

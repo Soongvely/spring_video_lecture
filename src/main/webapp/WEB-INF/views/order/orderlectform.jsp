@@ -20,7 +20,7 @@
 </head>
 <body>
 	<%@ include file="../common/header.jsp"%>
-   <div class="container" style="font-size: 17px; width: 1440px;">
+   <div class="container" style="font-size: 17px; width: 1440px; min-height: 950px; margin-top: 50px;">
 			<c:if test="${param.error eq 'fail' }">
 				<div class="row">
 					<div class="col-sm-12">
@@ -31,7 +31,7 @@
 				</div>
 			</c:if>
       <div class="row">
-         <div class="col-sm-2">
+         <div class="col-sm-2" style="height: 900px;">
 			<p>내 학습</p>
 			<ul style="list-style: none;">
 				<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
@@ -108,7 +108,7 @@
                      <div class="form-group">
                         <label class="control-label col-sm-2">계좌번호</label>
                         <div class="col-sm-3">
-                           <input type="text" class="form-control" name="bankno" />
+                           <input type="text" class="form-control" name="bankno" id="banknumber"/>
                         </div>
                      </div>
                      <%-- <div class="form-group">
@@ -128,7 +128,7 @@
                            <button type="button" id="btn-open-coupon-modal" class="btn btn-success">쿠폰 사용하기</button>
                         </div>
                         <div class="col-sm-1 col-sm-offset-1">
-                           <button type="submit" class="btn btn-primary">구매하기</button>
+                           <button type="button" class="btn btn-primary" id="btn-lect-buy">구매하기</button>
                         </div>
                      </div>
                   </form>
@@ -172,6 +172,15 @@
    <script type="text/javascript">
    var everywherePrice = 0;
    var pointPrice = 0;
+   
+   $("#btn-lect-buy").click(function() {
+	var i = $("#banknumber").val();
+	if(i == 0){
+		alert("계좌번호를 입력해주세요");
+	}else{
+	   $('#btn-lect-buy').attr("type", "submit");
+   }
+   })
    
    $(function() {
       var totalPrice = 0;
@@ -239,10 +248,8 @@
             
          })
          
-         $("#modal-my-coupons").modal("show");
-         
          $('.btn-danger').click(function() {
-            alert("취소버튼 누름");
+            //alert("취소버튼 누름");
             if($(this).text() == '취소'){
                $(this).text('쿠폰적용');
                $(this).removeClass("btn-danger").addClass("btn-primary");
@@ -250,9 +257,12 @@
                $("#lect_total_price").val(everywherePrice);
             }
          })
+         $("#modal-my-coupons").modal("show");
+         
 
       })
    })
+   
    </script>
 <%@ include file="../common/footer.jsp"%>
 

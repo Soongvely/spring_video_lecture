@@ -64,7 +64,7 @@
 				D.rn = 1
 			and
 				F.LECT_NO = D.lect_no
-			order by 2
+			order by 2, D.ORD_LECT_CREATE_DATE asc
 	</select>
 	
 	<select id="getOrderLectInfoByOrderNo" parameterType="int" resultType="OrderLectDetailListDto">

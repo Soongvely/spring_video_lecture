@@ -13,7 +13,7 @@
 </head>
 <body>
 <%@ include file="../common/header.jsp"%>
-	<div class="container" style="font-size: 17px; width: 1440px;">
+	<div class="container" style="font-size: 17px; width: 1440px; min-height: 950px; margin-top: 50px;">
 		<div class="row">
 			<div class="col-sm-12">
 				<table class="table" id="notice-detail-table">

@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.coduck.dto.UserQuestionDto;
 import kr.co.coduck.form.userQuestionToAdm;
+import kr.co.coduck.service.AdminQnaService;
 import kr.co.coduck.service.UserQuestionService;
+import kr.co.coduck.vo.AdQna;
+import kr.co.coduck.vo.Pagination;
 import kr.co.coduck.vo.User;
 
 @Controller
@@ -28,11 +31,44 @@ public class UserQuestionController {
 	@Autowired
 	private UserQuestionService userQuestionService;
 	
-	//1:1문의 내역 조회
+	@Autowired
+	private AdminQnaService adminQnaService;
+	
+	//1:1문의 상세조회
+	@GetMapping("/userQnaToAdmDetail.hta")
+	public String detailQuestionToAdm(Model model, @RequestParam("qnaNo") int qnaNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("qna", userQuestionService.getAdQnaByNo(qnaNo));
+		map.put("images", userQuestionService.getAdQnaFilesByQnaNo(qnaNo));
+		map.put("ans", adminQnaService.getAnswerByNo(qnaNo));
+		System.out.println("=====================================");
+		System.out.println("qnaNo :" + qnaNo);
+		System.out.println("images"+ userQuestionService.getAdQnaFilesByQnaNo(qnaNo));
+		model.addAttribute("map", map);
+		System.out.println("sdfdsfdsfdsfdsf"+map.get("qna"));
+		
+		return "user/userQnaToAdmDetail";
+	}
+	
+	//1:1문의 목록 조회
 	@GetMapping("/userqnatoadmlist.hta")
-	public String showQuestionListToAdm(Model model, HttpSession session) {
+	public String showQuestionListToAdm(Model model, HttpSession session,
+			@RequestParam(value = "pageno", required = false, defaultValue = "1") int pageNo) {
+		
+		Map<String, Integer> criteria = new HashMap<String, Integer>();
 		User user = (User)session.getAttribute("LU");
-		model.addAttribute("qnas", userQuestionService.getAdQnasByUserNo(user.getNo()));
+		
+		//전체 데이터 불러오기(전체데이터 개수를 pagination에 넘기기 위해)
+		int cnt = userQuestionService.getAllAdQnaCntByUserNo(user.getNo());
+		Pagination pagination = new Pagination(pageNo, cnt, 10, 5);
+		
+		criteria.put("userNo", user.getNo());
+		criteria.put("beginIndex", pagination.getBeginIndex());
+		criteria.put("endIndex", pagination.getEndIndex());
+		List<AdQna> qnas = userQuestionService.getAdQnasByCriteria(criteria);
+		
+		model.addAttribute("qnas", qnas);
+		model.addAttribute("pagination", pagination);
 		
 		return "user/userQnaToAdmList";
 	}

@@ -42,9 +42,13 @@ public class BuyNowController {
 	}
 	
 	@GetMapping("/ordernowlectform.hta")
-	public String buynowlect(HttpSession session, Model model, @RequestParam("lectno") int lectNo) {
+	public String buynowlect(HttpSession session, Model model, @RequestParam("lectuerno") int lectNo) {
+		User user = (User)session.getAttribute("LU");
 		Lect lect = lectService.getLectByNo(lectNo);
 		List<Lect> lects = new ArrayList<Lect>();
+		/*
+		 * if(user == null) { return "redirect:/user/login.hta?error=required"; }
+		 */
 		lects.add(lect);
 		model.addAttribute("userChoiceLectList", lects);
 		System.out.println(lect.getNo());

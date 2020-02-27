@@ -1,5 +1,6 @@
 package kr.co.coduck.form;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -8,7 +9,7 @@ public class userQuestionToAdm {
 
 	private String title;
 	private String content;
-	private List<MultipartFile> filedatas;
+	private List<MultipartFile> filedatas = new ArrayList<MultipartFile>();
 	
 	public userQuestionToAdm() {}
 

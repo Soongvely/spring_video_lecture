@@ -149,18 +149,17 @@
 														<tr>
 															<td>${qna.no }</td>
 															<td>
-																<a class="qna-username" data-user-no="${qna.userNo }" 
-																	data-toggle="modal" data-target="#modal-qna-items">
+																<a class="qna-username" data-user-no="${qna.userNo }">
 																	${qna.userName }(${qna.userId })
 																</a>
 															</td>
-															<td><a class="qna-title"><strong>${qna.title }</strong></a></td>
+															<td><a class="qna-title" data-qna-no="${qna.no }"><strong>${qna.title }</strong></a></td>
 															<td><span><fmt:formatDate value="${qna.createDate }" pattern="yyyy-MM-dd"/></span></td>
 															<td>${qna.isAnswered }</td>
 															<td>
 																<c:choose>
 																	<c:when test="${qna.isAnswered == 'N' }">
-																		<button class="btn btn-success"><i class="far fa-comment-dots"></i></button>
+																		<button type="button" class="btn btn-success" data-qna-no="${qna.no }"><i class="far fa-comment-dots"></i></button>
 																	</c:when>
 																</c:choose>
 															</td>
@@ -296,6 +295,7 @@
 <!-- 문의글에 답변하는 모달창 -->
 <div id="modal-qna-answer" class="modal fade" role="dialog">
 	<div class="modal-dialog modal-lg">
+		<form id="answer-form" class="well" method="post" action="addanswer.hta" enctype="multipart/form-data">
 		<div class="modal-content">
 			<div class="modal-header">
 	   			<input type="hidden" name="qnaNo">
@@ -303,39 +303,23 @@
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 			<div class="modal-body">
-				<table class="table table-hover">
-					<tr>
-						<th style="width: 15%">작성자</th>
-						<td style="width: 30%">호날두(ronaldo)</td>
-						<th style="width: 15%">문의날짜</th>
-						<td style="width: 30%">2020-02-20</td>
-					</tr>
-					<tr>
-						<th style="width: 15%">문의제목</th>
-						<td colspan="3">모의고사 어렵다고요!!!</td>
-					</tr>
-					<tr>
-						<th style="width: 15%">문의내용</th>
-						<td colspan="3">호우호우호우호우호우호우호우호우호우호우호우호우홍후옿우호우홍훙호우홍후오후오</td>
-					</tr>
+				<table class="table table-hover" id="qna-item">
 				</table>
-				<form>
-					<input type="hidden">
-					<div class="form-group">
-						<input type="text" name="title" style="width: 100%;" placeholder="제목"/>
-						<textarea rows="5" class="form-control" style="margin-top: 10px;" placeholder="내용"></textarea>
-					</div>
-					<div class="form-group">
-						<label>첨부파일</label>
-						<input type="file" class="form-control"/>
-					</div>
-				</form>
+				<div class="form-group">
+					<input type="text" name="title" style="width: 100%;" placeholder="제목"/>
+					<textarea rows="5" class="form-control" style="margin-top: 10px;" placeholder="내용" name="content"></textarea>
+				</div>
+				<div class="form-group">
+					<label>첨부파일</label>
+					<input type="file" name="fileName" class="form-control"/>
+				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success" id="qna-answer-btn">답변하기</button>
+				<button type="submit" class="btn btn-success">답변하기</button>
 				<button type="button" class="btn btn-warning" data-dismiss="modal">닫기</button>
 			</div>
 		</div>
+		</form>
 	</div>
 </div>
 
@@ -348,29 +332,30 @@
 				<h4 class="modal-title">문의글</h4>
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
-
-			<div class="media" style="margin: 25px;">
-				<div class="media-left">
-					<img src="../../../resources/images/logo/coduck.ico" class="media-object" style="width:60px">
-				</div>
-				<div class="media-body">
-					<h4 class="media-heading">호날두(ronaldo) <small><i>문의날짜 2020-02-20</i></small></h4>
-					<p>문제가 어려워요.</p>
-					<pre>문제가 너무 어렵습니다. 난이도 조절 가능하신지요?</pre>					
-				</div>
-			</div>
 			
-			<div class="media" style="margin: 25px;">
-				<div class="media-body">
-					<h4 class="media-heading">관리자 <small><i>답변날짜 2020-02-20</i></small></h4>
-					<p>시끄럽다</p>
-					<pre>그냥 풀어라</pre>
+			<div id="qna-media">
+				<div class="media" style="margin: 25px;">
+					<div class="media-left">
+						<img src="../../../resources/images/logo/coduck.ico" class="media-object" style="width:60px">
+					</div>
+					<div class="media-body">
+						<h4 class="media-heading">호날두(ronaldo) <small><i>문의날짜 2020-02-20</i></small></h4>
+						<p>문제가 어려워요.</p>
+						<pre>문제가 너무 어렵습니다. 난이도 조절 가능하신지요?</pre>					
+					</div>
 				</div>
-				<div class="media-right">
-					<img src="../../../resources/images/admin/daeilkinng.jpg"  class="media-object" style="width:60px">
+				
+				<div class="media" style="margin: 25px;">
+					<div class="media-body">
+						<h4 class="media-heading">관리자 <small><i>답변날짜 2020-02-20</i></small></h4>
+						<p>시끄럽다</p>
+						<pre>그냥 풀어라</pre>
+					</div>
+					<div class="media-right">
+						<img src="../../../resources/images/admin/daeilkinng.jpg"  class="media-object" style="width:60px">
+					</div>
 				</div>
 			</div>
-	
 			<div class="modal-footer">
 				<button type="button" class="btn btn-warning" data-dismiss="modal">닫기</button>
 			</div>
@@ -389,6 +374,48 @@
 <script src="../../../resources/vendor/chart.js/Chart.min.js"></script>
 <!-- Page level custom scripts -->
 <script type="text/javascript">
+	// 문의글 답변하기 - 답변하기 전 문의내역 조회하기 (모달창)
+	$("#qnaTable .btn").click(function() {
+		var qnaNo = $(this).data("qna-no");
+		$(".modal-header input[name='qnaNo']").val(qnaNo);
+	
+		$("#modal-qna-answer").modal('show');
+		var $list = $("#qna-item").empty();
+		
+		$.ajax({
+			url: "/admin/beforeanswer.hta",
+			type: "get",
+			data: {qnaNo:qnaNo},
+			dataType:'json',
+			success:function(result) {
+				var qna = '<tr>';
+				qna += '<th style="width: 15%">작성자</th>';
+				qna += '<td style="width: 30%">';
+				qna += result.userName+'('+result.userId+')';
+				qna += '<th style="width: 15%">문의날짜</th>';
+				qna += '<td style="width: 30%">';
+				qna += result.fmtCreateDate;
+				qna += '</td>'
+				qna += '</tr>';
+				qna += '<tr>';
+				qna += '<th style="width: 15%">문의제목</th>';
+				qna += '<td colspan="3">';
+				qna += result.title;
+				qna += '</td>';
+				qna += '</tr>';
+				qna += '<tr>';
+				qna += '<th style="width: 15%">문의내용</th>';
+				qna += '<td colspan="3">';
+				qna += result.content;
+				qna += '</td>';
+				qna += '</tr>';
+				
+				$list.append(qna);
+			}
+		})
+		
+	});
+
 
 	// 이름을 선택하였을때 회원상세정보를 조회한다. (모달창)
 	$("#qnaTable .qna-username").click(function() {
@@ -397,14 +424,48 @@
 	
 	// 문의글 제목을 클릭하였을때 (모달창)
 	$("#qnaTable .qna-title").click(function() {
+		var qnaNo = $(this).data("qna-no");
+		$(".modal-header input[name='qnaNo']").val(qnaNo);
 		$("#modal-qna").modal('show');
+		var $list = $("#qna-media").empty();
+		
+		$.ajax({
+			url: "/admin/qnadetail.hta",
+			type: "get",
+			data: {qnaNo:qnaNo},
+			dataType:'json',
+			success:function(result) {
+				var div = '<div id="qna-media">';
+				div += '<div class="media" style="margin: 25px;">';
+				div += '<div class="media-left">';
+				div += '<img src="../../../resources/images/userImageFilename/'+result.qna.userImgFile+'" class="media-object" style="width:60px">'
+				div += '</div>';
+				div += '<div class="media-body">';
+				div += '<h4 class="media-heading">';
+				div += result.qna.userName+'('+result.qna.userId+') <small><i>문의날짜 '+result.qna.fmtCreateDate+'</i></small></h4>';
+				div += '<p>'+result.qna.title+'</p>';
+				div += '<pre>'+result.qna.content+'</pre>';
+				div += '</div>';
+				div += '</div>';
+				if (result.answer != null) {
+					div += '<div class="media" style="margin: 25px;">';
+					div += '<div class="media-body">';
+					div += '<h4 class="media-heading">'+result.answer.userName+'('+result.answer.userId+') <small><i>답변날짜 '+result.answer.fmtCreateDate+'</i></small></h4>';
+					div += '<p>'+result.answer.title+'</p>';
+					div += '<pre>'+result.answer.content+'</pre>';
+					div += '</div>'
+					div += '<div class="media-right">';
+					div += '<img src="../../../resources/images/userImageFilename/'+result.answer.userImgFile+'" class="media-object" style="width:60px">'
+					div += '</div>';
+					div += '</div>';
+				}
+				div += '</div>';
+				
+				$list.append(div);
+			}
+		})
 	});
 	
-	// 문의글 답변하기
-	$("#qnaTable .fa-comment-dots").click(function() {
-		$("#modal-qna-answer").modal('show');
-	});
-
 	// 검색하기
 	$("#find-user-btn").click(function() {
 		$("#search-qna-form").submit();
@@ -421,6 +482,7 @@
 		url += "&sort=" + $("#sort-search :selected").val();
 		url += "&keyword=" + $("#keyword-search").val();
 		
+		console.log(url);
 		location.href = url;
 	}
 	

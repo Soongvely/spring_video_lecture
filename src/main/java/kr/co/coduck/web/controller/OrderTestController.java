@@ -50,7 +50,7 @@ public class OrderTestController {
 		}
 		orderTestService.insertOrderTest(user.getNo(), couponNo, testNos, testTotalPrice, bankNo);
 
-		return "redirect:/home.hta";
+		return "redirect:/order/userorderlectlist.hta";
 	}
 	
 

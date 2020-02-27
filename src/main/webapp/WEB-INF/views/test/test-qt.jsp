@@ -55,8 +55,10 @@
 
 
 </style>
+
 <%@ include file="../common/tag.jsp" %>
 <body>
+
 <div class="container xxx">
 	<div class="row xxx" style="margin: 10px 0px 10px 0px">
 		<div class="col-sm-8">
@@ -97,10 +99,10 @@
 						<c:if test="${qt.img != null }">
 							<p><img src="../../resources/images/test/qt-img/${qt.img}" style="width:100%" height="140px;"></p>
 						</c:if>
-						<p><a href=""><img src="/resources/images/test/marking-img/1.gif" alt="1" id="qt-${qt.qtNum }-1"/> ${qt.v1 }</a></p>
-						<p><a href=""><img src="/resources/images/test/marking-img/2.gif" alt="2" id="qt-${qt.qtNum }-2"/> ${qt.v2 }</a></p>
-						<p><a href=""><img src="/resources/images/test/marking-img/3.gif" alt="3" id="qt-${qt.qtNum }-3"/> ${qt.v3 }</a></p>
-						<p><a href=""><img src="/resources/images/test/marking-img/4.gif" alt="4" id="qt-${qt.qtNum }-4"/> ${qt.v4 }</a></p>
+						<p><a href=""><img class="img-replace" src="/resources/images/test/marking-img/1.gif" alt="1" id="qt-${qt.qtNum }-1"/> ${qt.v1 }</a></p>
+						<p><a href=""><img class="img-replace"  src="/resources/images/test/marking-img/2.gif" alt="2" id="qt-${qt.qtNum }-2"/> ${qt.v2 }</a></p>
+						<p><a href=""><img class="img-replace"  src="/resources/images/test/marking-img/3.gif" alt="3" id="qt-${qt.qtNum }-3"/> ${qt.v3 }</a></p>
+						<p><a href=""><img class="img-replace"  src="/resources/images/test/marking-img/4.gif" alt="4" id="qt-${qt.qtNum }-4"/> ${qt.v4 }</a></p>
 						<br/>
 					</div>
 					<c:if test="${loop.count % 5 == 3 }">
@@ -180,12 +182,29 @@
 
 	countdown('timer',${test.ltdTime}, 0);
 	
+	//새로고침 막기
+	document.onkeydown = doNotReload;
+	
+	function doNotReload(){
+	    if( (event.ctrlKey == true && (event.keyCode == 78 || event.keyCode == 82)) || (event.keyCode == 116) ) {
+	    	showAlert();
+	    	event.keyCode = 0;
+	        event.cancelBubble = true;
+	        event.returnValue = false;
+	    } 
+	}
+	
+	function showAlert(){
+    	alert("새로고침이 불가능한 페이지입니다.");
+	}
+	
 	//제출하기
 	$("#button-submit").click(function(){
 		isStop = true;
 		$("input[name='time']").val(passedTime);
 		console.log("시험시간", passedTime);
 		$("#form").submit();
+		opener.location.reload();
 	})
 	
 	//답안지의 문항번호 클릭했을 때 문제로 이동
@@ -320,7 +339,7 @@
 					return;
 				}
 				//마킹 되어 있지 않으면
-				$(this).closest("div").find("img").each(
+				$(this).closest("div").find(".img-replace").each(
 						function() {
 							var altNo = $(this).attr("alt");
 							//문제 영역 마킹 없애기
@@ -426,6 +445,7 @@
 			}
 		})
 	}
+	
 </script>
 </body>
 </html>

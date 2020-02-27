@@ -62,7 +62,7 @@
          var lectNo = $("input[name=lectNo]").val();
          var lectSamplePath = $(this).data("sample-video");
       
-         var videoTag = "<video controls><source src='"+lectSamplePath+"' type='video/mp4'/></video>";
+         var videoTag = "<video controls><source src='"+lectSamplePath+"' type='video/mp4' autoplay='autoplay'/></video>";
          $("#video-body").html(videoTag);
          
          $("#modal-sample").modal('show');

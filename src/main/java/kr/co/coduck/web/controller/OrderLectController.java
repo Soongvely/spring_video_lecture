@@ -65,7 +65,7 @@ public class OrderLectController {
 		}
 		orderLectService.insertOrderLect(user.getNo(), couponNo, lectNos, lectTotalPrice, bankNo);
 		
-		return "redirect:/home.hta";
+		return "redirect:/order/userorderlectlist.hta";
 	}
 	
 	@GetMapping("/userorderlectlist.hta")

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.coduck.dao.LectDao;
+import kr.co.coduck.dao.OrderLectDao;
 import kr.co.coduck.dao.UserDao;
 import kr.co.coduck.dto.ChapterDto;
 import kr.co.coduck.dto.IncomeDto;
@@ -228,5 +229,17 @@ public class LectServiceImpl implements LectService {
 		User user = userDao.getUserProfilByNo(userNo);
 		List<Lect> userFindLectByUserNo = lectDao.getFindLectByUserNo(user.getNo());
 		return userFindLectByUserNo;
+	}
+	
+	@Override
+	public Lect getIsPurchaseLectureByUser(Map<String, Object> map) {
+
+		return lectDao.getIsPurchaseLectureByUser(map);
+	}
+	
+	@Override
+	public void insertLecture(Lect lecture) {
+		
+		lectDao.insertLecture(lecture);
 	}
 }

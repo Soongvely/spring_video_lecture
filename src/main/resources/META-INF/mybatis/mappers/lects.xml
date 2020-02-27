@@ -5,6 +5,18 @@
   <!-- namespace 필수 설정! -->
 	<mapper namespace="kr.co.coduck.dao.LectDao">
 	
+	
+	<!--  강좌 등록 -->
+	<insert id="insertLecture" parameterType="Lect">
+		insert into lects
+			(lect_no, cate_no, user_no, lect_title, lect_info, lect_price, lect_discount_price, 
+			lect_discount_rate, lect_is_freed, lect_grade, lect_image_path, 
+			lect_info_title, lect_sample_path)
+		values
+			(lects_seq.nextval, #{cateNo}, #{userNo}, #{lectTitle}, #{lectInfo}, #{price}
+			, #{discountPrice}, #{discountRate}, #{isFreed}, #{grade}, #{imagePath}, #{lectInfoTitle}, #{samplePath})
+	</insert>
+	
 	<!-- 유저번호로 유저가 등록한 강의 조회 -->
 	<select id="getFindLectByUserNo" parameterType="int" resultType="Lect">
 		select
@@ -68,7 +80,8 @@
 			A.USER_NO				userNo,
 			D.LECT_TITLE			lectTitle,
 			B.ORD_LECT_CREATE_DATE	lectCreateDate,
-			D.LECT_NO				lectNo
+			D.LECT_NO				lectNo,
+			D.LECT_IMAGE_PATH		imagePath
 		FROM
 			Users A, Ord_lects B, Ord_lect_infos C, lects D
 		WHERE
@@ -103,6 +116,20 @@
 			lect_no = #{value}
 	</select>
 	
+	<!--  유저의 강좌 구매여부 조회 -->
+	<select id="getIsPurchaseLectureByUser" parameterType="map" resultType="Lect">
+		select 
+			lect_no		no
+			, user_no	userNo
+		from 
+			ord_lect_infos
+		natural join users
+		natural join ord_lects
+		where 
+			user_no = #{userNo}
+		and lect_no = #{lectureNo}
+	</select>
+	
 	<!-- ******************** 메인화면 강좌 조회 ******************** -->
 	
 	<!-- 인기강좌 Top 5 -->
@@ -117,6 +144,7 @@
 				, l.lect_discount_price		discountPrice
 				, l.lect_discount_rate		discountRate
 				, l.lect_grade				grade
+				, l.lect_is_freed			isFreed
 				, l.lect_image_path			imagePath	
 				, u.user_name				userName		
 	            , NVL(likes,0) 				"like"	
@@ -131,6 +159,7 @@
 			where
 				l.user_no = u.user_no
 	         	and l.lect_no = h.lect_no(+)
+	         	and l.lect_grade &lt; 5
 	         	and l.lect_is_display = 'Y'
 	           )
 		where rn &lt;= 5  
@@ -380,6 +409,7 @@
 					l.user_no = u.user_no
 		         	and l.lect_no = h.lect_no(+)
 		         	and l.lect_is_display = 'Y'
+		         	and l.lect_grade &lt; 5
 		         	and l.lect_title like '%' || #{keyword} || '%'
 		         <if test="cateNo neq 0">
 		         	and l.cate_no = #{cateNo}
@@ -421,6 +451,7 @@
 		where
 			l.user_no = u.user_no
          	and l.lect_no = h.lect_no(+)
+         	and l.lect_grade &lt; 5
          	and l.lect_is_display = 'Y'
 	        <if test="cateNo neq 0">
 	        	and l.cate_no = #{cateNo}

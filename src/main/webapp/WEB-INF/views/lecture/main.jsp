@@ -229,14 +229,13 @@
 							html += '<div class="item-image">';
 							html += '<figure class="item-image-thumbnail">';
 							html += '<img src="' + lecture.imagePath +'">';
-							if (lecture.discountRate > 0) {
+							if (lecture.discountRate > 0 && lecture.isFreed == "N") {
 								html += '<div class="lesson-item-event-card">';
 								html += '<span>' + lecture.discountRate + '% 할인중</span>';
 								html += '</div>';
-							}
-							if (lecture.discountRate > 0 && lecture.isFreed == "Y") {
+							} else if (lecture.isFreed == "Y") {
 								html += '<div class="lesson-item-free-card">';
-								html += '<span>Free</span>';
+								html += '<span>무료 강좌</span>';
 								html += '</div>';
 							}
 							html += '</figure>';
@@ -250,14 +249,21 @@
 							html += '<div class="star_yellow" data-star-score="'+ count.reviewStar +'"></div>';
 							html += '</div>';
 							html += '</div>';
-							html += '<div class="price column is-half">';
-							if (lecture.discountRate > 0) {
-								html += '<del>￦' + lecture.price.toLocaleString() + '</del><br>';
+							if (lecture.price > 0) {
+								
+								html += '<div class="price column is-half">';
+								if (lecture.discountRate > 0) {
+									html += '<del>￦' + lecture.price.toLocaleString() + '</del><br>';
+								} else {
+									html += '<br>';
+								}							
+								html += '<span class="discount_price">￦' + lecture.discountPrice.toLocaleString() +'</span>';
+								html += '</div>'
 							} else {
-								html += '<br>';
-							}							
-							html += '<span class="discount_price">￦' + lecture.discountPrice.toLocaleString() +'</span>';
-							html += '</div>'
+								html += '<div class="price column is-half">';
+                                html += '<span class="discount_price"><br/>무료</span>';
+                            	html += '</div>';
+							}
 							html += '</a>';
 							html += '<div class="item-info-bottom">';
 							html += '<div class="wish">';
@@ -269,8 +275,6 @@
 							html +=	'</div>';  
 							html +=	'</div>';  
 							html +=	'</div>';
-							
-							$(document).scrollTop(0);
 						});
 							
 						var pageText = "";

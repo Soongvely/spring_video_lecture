@@ -21,6 +21,7 @@ import kr.co.coduck.form.TestModifyForm;
 import kr.co.coduck.form.TestSubmitForm;
 import kr.co.coduck.vo.Category;
 import kr.co.coduck.vo.Ep;
+import kr.co.coduck.vo.Pagination;
 import kr.co.coduck.vo.Test;
 import kr.co.coduck.vo.TestQt;
 import kr.co.coduck.vo.TestResult;
@@ -61,9 +62,11 @@ public class TestServiceImpl implements TestService{
 		int upCateNo = form.getUpCateNo();
 		int downCateNo = form.getDownCateNo();
 		int testNo = form.getTestNo();
+		int pageNo = form.getPageNo();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("userNo", userNo);
+		map.put("form", form);
 		
 		//시험 카테고리에 속하는 상위카테고리 조회(기사, 기능사)
 		List<Category> upCategories = categoryDao.getCatesByMainCateNo(20000);
@@ -74,24 +77,32 @@ public class TestServiceImpl implements TestService{
 		if(upCateNo != 0) {
 			List<Category> downcateCategories = categoryDao.getCatesByMainCateNo(upCateNo);
 			dto.setDownCategories(downcateCategories);
-			map.put("upCateNo", upCateNo);
+			//map.put("upCateNo", upCateNo);
 		}
 			
 		//회차조회하기
 		if(downCateNo != 0) {
 			List<Ep> eps = testDao.getTestEpsByCateNo(downCateNo);
 			dto.setEps(eps);
-			map.put("downCateNo", downCateNo);
+			//map.put("downCateNo", downCateNo);
 		}
 		
 		//시험 조회하기
-		if(testNo != 0) {
-			map.put("testNo", testNo);
-		}
+//		if(testNo != 0) {
+//			map.put("testNo", testNo);
+//		}
 		
-		if(map.isEmpty()) {
-			return dto;
-		}
+//		if(map.isEmpty()) {
+//			return dto;
+//		}
+		
+		int cnt = testDao.searchTestCntByUser(map);
+		
+		Pagination pagination = new Pagination(pageNo, cnt, 10, 5);
+		dto.setPagination(pagination);
+		
+		map.put("beginIndex", pagination.getBeginIndex());
+		map.put("endIndex", pagination.getEndIndex());	
 		
 		List<SearchTestDetailDto> tests = testDao.searchTest(map);
 		System.out.println("------------------tests?---------- " + tests);

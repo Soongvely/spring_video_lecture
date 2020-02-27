@@ -8,4 +8,5 @@ import kr.co.coduck.form.SearchTestFormByAdm;
 public interface AdminTestService {
 	
 	List<SearchTestDetailDto> searchTestByAdm(SearchTestFormByAdm form);
+	int searchTestCnt(SearchTestFormByAdm form);
 }

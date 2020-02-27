@@ -19,6 +19,8 @@ import kr.co.coduck.vo.ViewCk;
 
 public interface TestDao {
 	
+	int searchTestCntByUser(Map<String, Object> map);	
+	
 	List<Test> getTestsTopN();
 	
 	void updateTestQt(TestModifyForm form);
@@ -56,6 +58,8 @@ public interface TestDao {
 	void insertViewCk(ViewCk viewCk);
 	
 	List<TestResultDto> getTestResultDtosByTestNoNUserNo(Map<String, Object> map);
+	
+	int searchTestCnt(SearchTestFormByAdm form);
 	
 	List<SearchTestDetailDto> searchTestByAdm(SearchTestFormByAdm form);
 	

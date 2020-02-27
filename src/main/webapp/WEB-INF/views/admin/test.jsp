@@ -42,6 +42,7 @@
 				<h3 style="margin-left: 60px;">모의고사 관리</h3>
 				<div class="col-sm-12">
 		            <form action="#" class="form-horizontal style-form"  method="get" id="searchForm">
+		            	<input type="hidden" name="pageNo" id="pageNo">
 		                <div class="form-panel"
 		                   style="background: #fff; margin: 0px 50px; padding: 33px 17px;">               
 		                    <div class="form-group col-sm-10" style="display: inline-flex;">
@@ -105,7 +106,22 @@
 			
 			<div class="row">
 				<div class="col-sm-12">
-	                <div class="form-panel" style="background: #fff; margin-left:50px; margin-right:50px; ">               
+	                <div class="form-panel" style="background: #fff; margin-left:50px; margin-right:50px; "> 
+	                    <div class="col-sm-12">
+                    		<div class="customers_length" id="search-count" role="status" aria-live="polite">
+                    			
+                    			<div class="row">
+	                    			<div class="col-sm-6 text-left">
+	                    				<p>총 <span id="result-count"></span>개의 조회결과가 검색되었습니다.</p>
+	                    			</div>
+	                    			<div class="col-sm-4 col-sm-offset-2 text-right">
+	                    				<button id="btn-register" type="button" class="btn btn-info">시험 등록</button>
+	                    			</div>
+                    			
+                    			</div>
+                    		</div>
+                    	</div>   
+                    	       
 	           			<div class="form-group col-sm-10">   
 		                	<div class="row" style="margin-top: 10px;">
 		                   		<div class="col-sm-12">
@@ -146,35 +162,6 @@
 				</div>
 			</div>
 				
-			<div class="row">
-				<div class="col-sm-12">
-	                <div class="form-panel" style="background: #fff; margin-left:50px; margin-right:50px; ">               
-	           			<div class="form-group col-sm-10">  
-							<div class="row">									
-								<div class="col-sm-3">
-		                    		<div class="customers_length" id="search-count" role="status" aria-live="polite">
-		                    		<p>총 <span>12</span>건의 조회결과</p>			       
-		                    		</div>
-		                    	</div>
-								<div class="col-sm-9">
-		                    		<div class="text-center">
-		      							<!-- 페이지네이션 -->
-		      							<ul class="pagination">		
-		      							      								
-		      							</ul>	
-		                    		</div>
-			                	</div>
-							</div>
-		                </div>
-			           	<div class="row" style="background-color: ">
-		           			<div class="col-sm-12" style="text-align: right; right: 275px;">
-		           				<button type="button" class="btn btn-info btn" data-toggle="modal"
-									data-target="#myModal">시험 등록</button>
-		           			</div>
-			        	</div>
-		        	</div>		                
-		   		</div>
-			</div>
 		</div>
 	</div>
 	
@@ -182,11 +169,6 @@
 		<div class="modal-dialog modal-lg">
 
 			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header" >
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">시험 등록</h4>
-				</div>
 
 				<form class="form-horizontal" id="form-register" action="/admin/addTestByExcel.hta" method="post" enctype="multipart/form-data">
 
@@ -257,6 +239,37 @@
 	  </div>
 	</div>
 	
+	<!-- 수정 폼 모달 -->
+	<div id="modal-modify" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	
+	    <!-- Modal content-->
+        <form action="/admin/modifyPrice.hta" method="post" class="form-horizontal" id="form-modify-price">
+	    <div class="modal-content">
+	   
+	      <div class="modal-body" style="margin-top: 20px; margin-bottom: 20px;">
+	        	<label class="col-sm-3 control-label">제한시간</label>
+                <div class="col-sm-3">
+                    <input type="text" name="input-timer" numberOnly id="input-timer">
+                </div>
+	        	<label class="col-sm-3 control-label">가격</label>
+                <div class="col-sm-3">
+                    <input type="text" name="modify-price" numberOnly id="input-modify">
+                </div>
+                <input type="hidden" name="testNo" id="hidden-testNo">
+	      </div>
+	      
+	      <div class="modal-footer">
+	        <button type="submit" class="btn btn-primary" id="btn-form-modify">수정</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+	      </div>
+	      
+	    </div>
+       </form>
+	
+	</div>
+	
+	</div>
 </div>
 <!-- Bootstrap core JavaScript-->
 <script src="../../../resources/vendor/jquery/jquery.min.js"></script>
@@ -272,14 +285,53 @@
 <script src="../../../resources/js/demo/datatables-demo.js"></script>
 
 <script type="text/javascript">
+	
+	$("#btn-register").click(function(){
+		$("#myModal").modal("show");
+	})
+	
 	//페이지 실행시 에이작스에 보낼 값
 	$("input[name='from']").val();
 	var formData = $("#searchForm").serialize();
 	console.log("formData : " + formData);
 	
-	//수정버튼 클릭시
+	
+	//가격 수정 폼 제출
+ 	$("#form-modify-price").submit(function(event){
+ 		event.preventDefault();
+		if(!$("#input-modify").val()){
+			alert("가격을 입력해주세요.");
+			return;
+		}
+		if(!$("#input-timer").val()){
+			alert("시간을 입력해주세요.")
+		}
+		var formData = $("#form-modify-price").serialize();
+		$.ajax({
+				type:"POST",
+				url:"/admin/modifyPrice.hta",
+				data: formData, 
+				success:function(result){
+					$("#td-price-"+result.no).text(result.price.toLocaleString() +"원");
+					$("#span-timer-"+result.no).text(result.ltdTime);
+					$("#btn-price-" + result.no).data("price", result.price);
+					$("#modal-modify").modal("hide");
+				}
+		})
+	});
+	
+	//가격 수정하기 클릭시 모달 띄우기
 	$("#table-test-info tbody").on("click", ".modify-test", function(event){
 		event.stopPropagation();
+		var price = $(this).data("price");
+		console.log("price2",price);
+		var testNo = $(this).data("testno");
+		var time = $("#span-timer-"+testNo).text();
+		
+		$("#input-modify").val(price);
+		$("#input-timer").val(time);
+		$("#hidden-testNo").val(testNo);
+		$("#modal-modify").modal("show");
 	})
 	
 	//삭제버튼 클릭시
@@ -365,7 +417,23 @@
 		})
 		$(str).append(optRow);
 	}
-
+	
+	
+	
+/* 	//페이지네이션 기능
+	$("#pagination a").click(function(event){
+		event.preventDefault();
+		var no = $(this).data("page-no");
+		$("#page-no").val(no);
+		
+		formData = $("#searchForm").serialize();
+		$.getJSON("/admin/searchTestByAdm.hta", formData, function(result){
+			appendTableRow(result);
+		})
+	}) */
+	
+	
+	
 	//검색 결과 함수
 	function appendTableRow(result){
 		$("#table-test-info tbody").empty();
@@ -377,8 +445,8 @@
 			row += "<td>" + item.mainCateName + "</td>";
 			row += "<td>" + item.testName + " - " + item.testEp + "</td>";
 			row += "<td>" + item.testQtCnt + "</td>";
-			row += "<td>" + item.testLtdTime + "분</td>";
-			row += "<td>" + item.testPrice.toLocaleString() + "원</td>";
+			row += "<td><span id='span-timer-" + item.testNo +"'>" + item.testLtdTime + "</span>분</td>";
+			row += "<td id='td-price-"+item.testNo+"'>" + item.testPrice.toLocaleString() + "원</td>";
 			row += "<td>" + (new Date(item.createDate).toLocaleDateString()) +"</td>";
 			if(item.isDisplay == 'Y'){
 				row += "<td style='color:blue;'>공개</td>";
@@ -387,11 +455,11 @@
 				row += "<td style='color:red;'>비공개</td>";
 				row += "<td><button type='button' class='btn btn-success btn-sm btn-isShow' data-testno='" + item.testNo + "'>공개하기</button></td>";
 			}
-			row += "<td><button type='button' class='btn btn-warning btn-sm modify-test'>수정</button><button style='margin-left:10px;' type='button' class='btn btn-danger btn-sm del-test'>삭제</button></td>";
+			row += "<td><button id='btn-price-" + item.testNo +"' type='button' class='btn btn-warning btn-sm modify-test' data-testno='"+ item.testNo +"' data-price='" + item.testPrice + "'>수정</button><button style='margin-left:10px;' type='button' class='btn btn-danger btn-sm del-test'>삭제</button></td>";
 			row += "</tr>";
 			$("#table-test-info tbody").append(row);
 		})
-		$("#search-count").find("span").text(dtos.length);
+		$("#result-count").text(dtos.length);
 	}
 	
 	

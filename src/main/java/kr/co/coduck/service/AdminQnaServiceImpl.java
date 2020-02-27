@@ -1,19 +1,16 @@
 package kr.co.coduck.service;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.coduck.dao.AdminQnaDao;
+import kr.co.coduck.dto.AdQnaDto;
+import kr.co.coduck.dto.AdminAnswerDto;
 import kr.co.coduck.dto.AdminQnaCriteria;
 import kr.co.coduck.dto.AdminQnaDto;
-import kr.co.coduck.form.userQuestionToAdm;
 import kr.co.coduck.vo.AdQna;
 import kr.co.coduck.vo.AdQnaFile;
 
@@ -51,4 +48,25 @@ public class AdminQnaServiceImpl implements AdminQnaService {
 	public int getQnaCntByCriteria(AdminQnaCriteria adminQnaCriteria) {
 		return adminQnaDao.getQnaCntByCriteria(adminQnaCriteria);
 	}
+
+	@Override
+	public AdminAnswerDto getAnswerByNo(int no) {
+		return adminQnaDao.getAnswerByNo(no);
+	}
+
+	@Override
+	public AdQnaDto getQnaByNo(int no) {
+		return adminQnaDao.getQnaByNo(no);
+	}
+
+	@Override
+	public void addAnswer(AdminAnswerDto adminAnswerDto) {
+		adminQnaDao.addAnswer(adminAnswerDto);
+	}
+
+	@Override
+	public void updateQna(AdQnaDto adQnaDto) {
+		adminQnaDao.updateQna(adQnaDto);
+	}
+
 }

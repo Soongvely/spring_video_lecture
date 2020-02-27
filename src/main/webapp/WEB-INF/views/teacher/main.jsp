@@ -25,7 +25,7 @@
                                             </p>    
                                         </div>
                                         <div class="banner-bottom-button">
-                                            <button class="btn btn-lg">시작하기</button>
+                                            <a href="/lecture/form/lecture-form.hta"><button class="btn btn-lg">시작하기</button></a>
                                         </div>
                                     </div>
                                 </div>

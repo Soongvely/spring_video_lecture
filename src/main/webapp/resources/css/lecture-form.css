@@ -1,5 +1,7 @@
 		
-/************** common.css  *************/
+.lecture-container {
+	text-align: center;
+}
 .main-title > h1 {
     display: inline-block;
   }
@@ -48,24 +50,39 @@
     text-align: center;
     font-size: 20px;
   }
-  
+  .sub-form {
+  	margin-top: 50px;	
+  	text-align: center;
+  } 
+   
   .sub-title {
     color: rgba(0, 0, 0, 0.25);
-    font-size: 30px;
+	font-size: 22px;
+	text-align: center;
+  }
+  
+  input[type=file] {
+  	display: inline-block;
+  }
+  
+  .sub-form.file-form h2 {
+  	margin-bottom: 20px;
+  }
+  
+  #lectureForm h2 {
+  	text-align: center;
   }
   
   .result-tab {
     width: 850px;
     height: 640px;
     border: 1px solid #afeeee;
-    margin: 0px 0px 0px 160px;
   }
   
   .result-category {
     float: left;
     color: rgba(0, 0, 0, 0.25);
     font-size: 20px;
-    margin: 20px 0px 0px 60px;
   }
   
   .result-outcome {
@@ -82,18 +99,11 @@
     width: 900px;
     height: 400px;
     border: 1px solid #afeeee;
-    margin: 40px 0px 0px 140px;
   }
   
   .view-info {
     margin: 130px 0px 0px 0px;
   }
-  
-  .far {
-    font-size: 60px;
-    color: #40e0d0;
-  }  
-
 /************** box.css  *************/
 .video-box {
     width: 480px;
@@ -113,30 +123,18 @@
   .title-inputbox {
     width: 500px;
     height: 35px;
-    margin: 0px 0px 0px 380px;
     font-size: 17px;
   }
   
   .category-select {
-    width: 400px;
+    width: 50%;
     height: 35px;
     padding: 0px 0px 0px 20px;
-    margin: 0px 0px 0px 380px;
     font-size: 17px;
   }
-  
-  .level-select-box {
-    width: 400px;
-    height: 35px;
-    padding: 0px 0px 0px 20px;
-    margin: 0px 0px 0px 380px;
-    font-size: 17px;
-    text-align: center;
-  }
-  
+
   .summary-box {
 	padding: 10px 10px 0px 19px;
-	margin: 0px 0px 0px 284px;
 	box-shadow: 0 1px 3px rgba(0, 10, 18, .1), 0 0 0 1px rgba(219, 222, 226, 0.1);
     font-size: 17px;
   }
@@ -293,6 +291,49 @@
 
   
   /************** lecture-form.css  *************/
+  #lectureForm select, #lectureForm input {
+  	width: 50%;
+    height: 50px;
+    padding: 0px 0px 0px 20px;
+    font-size: 22px;
+    text-align: center;
+    border: 6px solid rgb(254, 202, 84);
+    border-radius: 0px;
+  }
+ 
+ #lectureForm .lect-price-form {
+ 	margin-top: 50px;
+ 	text-align: center;
+ }
+ 
+ #lectureForm .lect-price-form input {
+  	width: 38%
+  }
+  
+ #lectureForm .sub-form.category select {
+ 	width: 31%
+ }
+ 
+.hidden {
+ 	display: none;
+ }
+  
+ input[type="number"]:focus, input[type="file"]:focus  {
+ 	outline: none;
+ }
+  
+ #lectureForm .price-info {
+	margin-bottom: 18px;
+ } 
+ 
+ #lectureForm .price-info.discount input {
+    height: 50px;
+    padding: 0px 0px 0px 20px;
+    font-size: 22px;
+    text-align: center;
+    border: 6px solid rgb(254, 202, 84);
+    border-radius: 0px;
+ }
   .instructor-banner {
     height: 120px;
     margin-top: 20px;
@@ -323,8 +364,9 @@
     margin-left: 10px;
     text-align: left;
     color: gray;
-    opacity: 0.7; /* Firefox */
+    opacity: 0.7; 
   }
+    /* Firefox */
   
   input[type="text"]:focus {
     outline: none;
@@ -343,7 +385,6 @@
     width: 580px; /* 원하는 너비설정 */
     padding: 0.8em 0.5em; /* 여백으로 높이 설정 */
     font-family: inherit; /* 폰트 상속 */
-    background: url("/resources/img/instructor/icon/select.png") no-repeat 95% 50%;
     border: 6px solid rgb(254, 202, 84);
     border-radius: 0px; /* iOS 둥근모서리 제거 */
     -webkit-appearance: none; /* 네이티브 외형 감추기 */

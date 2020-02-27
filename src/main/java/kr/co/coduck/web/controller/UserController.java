@@ -87,7 +87,7 @@ public class UserController {
 		if(user == null) {
 			return "redirect:/user/login.hta?error=fail";
 		}else if(user.getRole().equals("A")) {
-			return "admin/home";
+			return "redirect:/admin/home.hta";
 		}
 		session.setAttribute("LU", user);
 		return "redirect:/home.hta";
@@ -111,6 +111,8 @@ public class UserController {
 		user.setNickname(registerForm.getNickname());
 		user.setSelfInfo(registerForm.getSelfInfo());
 		user.setBankNumber(registerForm.getBanknumber());
+		//user.setEnabled(registerForm.setEnabled("Y"));
+		user.setEnabled("Y");
 		
 		MultipartFile imgfile = registerForm.getImgfile();
 		if(!imgfile.isEmpty()) {

@@ -178,6 +178,7 @@
     width: 96%;
     text-align: justify;
     margin-top: 12px;
+    padding: 8px;
 }
 .banner-comment p {
     font-size: 17px;
@@ -227,7 +228,9 @@ section .header {
 .new.info-lect, .new.info-test {
     font-size: 17px;
 }
-
+.lesson-container:last-child {
+	margin-bottom: 140px;
+}
 .new.test.info-price strong {
 	color: cadetblue;
 }

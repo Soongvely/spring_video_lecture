@@ -58,5 +58,6 @@ public interface LectDao {
 	void insertLessonHistory(LessonHistory lessonHistory);
 	void updateLessonByLessonHistory(LessonHistory lessonHistory);
 	
-	
+	Lect getIsPurchaseLectureByUser(Map<String, Object> map);
+	void insertLecture(Lect lecture);
 }

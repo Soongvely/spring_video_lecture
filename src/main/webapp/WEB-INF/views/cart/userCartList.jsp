@@ -20,9 +20,9 @@
 </head>
 <body>
 	<%@ include file="../common/header.jsp"%>
-   <div class="container" style="font-size:17px; width:1440px;">
+   <div class="container" style="font-size: 17px; width: 1440px; min-height: 950px; margin-top: 50px;">
       <div class="row">
-         <div class="col-sm-2">
+         <div class="col-sm-2" style="height: 900px;">
 			<p>내 학습</p>
 			<ul style="list-style: none;">
 				<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
@@ -74,7 +74,7 @@
                      <c:otherwise>
                         <c:forEach var="userCartLect" items="${userCartLectLists }" varStatus="loop">
                            <tr>
-                              <td><input type="checkbox"  name="lectnos" value="${userCartLect.lectNo }"/>${userCartLect.lectNo }</td>
+                              <td><input type="checkbox"  name="lectnos" value="${userCartLect.lectNo }"/></td>
                               <td>${loop.count }</td>
                               <td>${userCartLect.lectTitle }</td>
                               <td>${userCartLect.lectPrice }</td>
@@ -122,7 +122,7 @@
                      <c:otherwise>
                         <c:forEach var="userCartTest" items="${userCartTestLists }" varStatus="loop">
                            <tr>
-                              <td><input type="checkbox"  name="testnos" value="${userCartTest.no }"/>${userCartTest.no }</td>
+                              <td><input type="checkbox"  name="testnos" value="${userCartTest.no }"/></td>
                               <td>${loop.count }</td>
                               <td>${userCartTest.name }  >  ${userCartTest.ep }</td>
                               <td>${userCartTest.price }</td>
@@ -149,7 +149,7 @@
    		//구매하기 버튼 클릭시
    		$("#btn-lect-buy").click(function(){
    			var i = $("#lecture-summary-price").text();
-   			if(i == 0){
+   			if($("input:checkbox[name=lectnos]").is(":checked") == false){
    				alert("다시 체크해주세요");
    			}else{
    				$('#btn-lect-buy').attr("type", "submit");
@@ -159,7 +159,7 @@
    		//구매하기 버튼 클릭시
    		$("#btn-test-buy").click(function(){
    			var i = $("#test-summary-price").text();
-   			if(i == 0){
+   			if($("input:checkbox[name=testnos]").is(":checked") == false){
    				alert("다시 체크해주세요");
    			}else{
    				$('#btn-test-buy').attr("type", "submit");

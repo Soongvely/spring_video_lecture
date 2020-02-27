@@ -23,6 +23,23 @@ table tr {
 table thead tr td {
 	height: 40px;
 }
+		.pagination a {
+		  color: black;
+		  float: left;
+		  padding: 8px 16px;
+		  text-decoration: none;
+		}
+		
+		.pagination a.active {
+		  background-color: #4CAF50;
+		  color: white;
+		  border-radius: 5px;
+		}
+		
+		.pagination a:hover:not(.active) {
+		  background-color: #ddd;
+		  border-radius: 5px;
+		}
 
 
 
@@ -34,32 +51,38 @@ table thead tr td {
 <div class="container" style="min-height: 1100px;">
 	<br>
 	<div class="row" style="margin-top: 20px;" >
+		<form action="" method="get" id="form-search">
+		<input id="input-page-no" name="pageNo" type="hidden" value="1"/>
 		<div class="form-group row">
 			<div class="col-sm-offset-1 col-sm-3">
-				<select class="form-control" id="upCate" style="height: 45px; font-size: 20px;">
-					<option value=""  selected disabled>응시분야를 선택하세요.</option>
+				<select name="upCateNo" class="form-control" id="upCate" style="height: 45px; font-size: 20px;">
+					<option value="0"  >응시분야를 선택하세요.</option>
 				</select>
 			</div>
 			<div class="col-sm-3">
-				<select class="form-control" id="downCate" style="height: 45px; font-size: 20px;">
-					<option value=""  selected disabled>종목을 선택하세요.</option>
+				<select name="downCateNo" class="form-control" id="downCate" style="height: 45px; font-size: 20px;">
+					<option value="0" >종목을 선택하세요.</option>
 				</select>
 			</div>
 			<div class="col-sm-3">
-				<select class="ui search dropdown form-control" id="ep"  style="height: 45px; font-size: 20px;">
-					<option value=""  selected disabled>회차를 선택하세요.</option>
+				<select name="testNo" class="ui search dropdown form-control" id="ep"  style="height: 45px; font-size: 20px;">
+					<option value="0" >회차를 선택하세요.</option>
 				</select>
 			</div>
 		</div>
+		</form>
 	</div>
 	
 	<br>
 	
 	
 	<div class="row" id="div-test-list" >
+	
+		<button type="button" class="btn btn-default" id="btn-addCheckedItems-Cart" style="margin-bottom: 20px;">장바구니 담기</button>
+		
 		<form action="/cart/addTestsInCart.hta" method="get" id="form-addCart">
 			<div class="col-sm-12" style="padding: 0px;">
-				<table class="table table-bordered">
+				<table class="table table-bordered" id="table-test">
 					<colgroup>
 					    <col style=width:3%;>
 					    <col style=width:5%;>
@@ -89,7 +112,13 @@ table thead tr td {
 				</table>
 				
 				<br>
-				<button type="button" class="btn btn-default" id="btn-addCheckedItems-Cart">장바구니 담기</button>
+			</div>
+			
+			<!-- 페이지네이션 -->
+			<div class="col-sm-12 text-center">
+				<div class="pagination" id="pagination">		
+				
+				</div>	
 			</div>
 		</form>
 	</div>
@@ -127,13 +156,87 @@ table thead tr td {
 
 
 <script type="text/javascript">
-
-	$.getJSON("/test/getTestData.hta", {testNo:0}, function(result){
-		$("tbody").empty();
+	
+	var searchFormData = $("#form-search").serialize();
+	console.log(searchFormData);
+	
+	//페이지네이션
+	function setPagination(pagination){
+		$("#pagination").empty();
 		
-		var tests = result.searchTestDetailDtos;
-		addRow(tests);
+		var pageRow ="";
+		if(pagination.pageNo > 1){
+			pageRow += "<a href='' data-page-no='" + (pagination.pageNo - 1) + "'>이전</a>";
+		}
+		
+		for(var i=pagination.beginPage; i<=pagination.endPage; i++){
+			if(pagination.pageNo == i){
+				pageRow += "<a href='' data-page-no='" + i + 
+				"' class='active'>" + i + "</a>";
+			} else {
+				pageRow += "<a href='' data-page-no='" + i + 
+				"'>" + i + "</a>";
+			}
+		}
+		
+		if(pagination.pageNo < pagination.totalPagesCount){
+			pageRow += "<a href='' data-page-no='" + (pagination.pageNo + 1) + "'>다음</a>";
+		}
+		
+		$("#pagination").append(pageRow);
+	}
+	
+	//페이지네이션 클릭했을 때
+	$("#pagination").on("click", "a", function(event){
+		event.preventDefault();
+		var pageNo = $(this).data("page-no");
+		$("#input-page-no").val(pageNo);
+		
+		console.log("page-no", $("#input-page-no").val());
+			
+		var formData = $("#form-search").serialize();
+		
+		$.getJSON("/test/getTestData.hta", formData, function(result){
+			var tests = result.searchTestDetailDtos;
+			
+			$("tbody").empty();
+			$("#pagination").empty();
+			
+			addRow(tests);
+			setPagination(result.pagination);
+		})
 	})
+	
+	//페이지 로딩되자마자 실행
+	$.getJSON("/test/getTestData.hta", searchFormData, function(result){
+		var tests = result.searchTestDetailDtos;
+		var upCates = result.upCategories;
+		
+		$("tbody").empty();
+		$("#pagination").empty();
+		
+		var row = "";
+		$.each(upCates, function(index, item){
+			row += "<option value=" + item.no + ">" + item.name + "</option>";
+		})
+		$("#upCate").append(row);
+		
+		addRow(tests);
+		
+		setPagination(result.pagination);
+	})
+	
+	/* $.getJSON("/test/getTestData.hta", function(result){
+		var upCates = result.upCategories;
+		
+		var row = "";
+		$.each(upCates, function(index, item){
+			row += "<option value=" + item.no + ">" + item.name + "</option>";
+		})
+		$("#upCate").append(row);
+		
+	}) */
+
 	
 	//개별 장바구니 버튼 눌렀을 때
 	$("tbody").on("click", ".btn-warning", function(){
@@ -156,7 +259,7 @@ table thead tr td {
 	})
 	
 	//여러개 선택된 아이템을 장바구니 담을 때
-	$("#form-addCart").on("click", "#btn-addCheckedItems-Cart",	function(){
+	$("#div-test-list").on("click", "#btn-addCheckedItems-Cart",	function(){
 		if ($("tbody").find("[name=testNo]:checked").length == 0) {
 			alert("선택된 상품이 없습니다.");
 			return;
@@ -197,22 +300,31 @@ table thead tr td {
 	})
 	
 	$("#ep").change(function(){
-
+		$("#input-page-no").val(1);
+		var formData = $("#form-search").serialize();
 		var testNo = $(this).val();
-		$.getJSON("/test/getTestData.hta", {testNo:testNo}, function(result){
+		$.getJSON("/test/getTestData.hta", formData, function(result){
+			$("#check-allOrNothing").prop("checked", false);
 			$("tbody").empty();
+			$("#pagination").empty();
 			
 			var tests = result.searchTestDetailDtos;
 			addRow(tests);
+			setPagination(result.pagination);
 		})
 	})
 	
 	
 	$("#downCate").change(function(){
-		$.getJSON("/test/getTestData.hta", {downCateNo:$(this).val()}, function(result){
+		 $("#ep").val(0); 
+		$("#input-page-no").val(1);
+		var formData = $("#form-search").serialize();
+		$.getJSON("/test/getTestData.hta", formData, function(result){
+			
+			$("#check-allOrNothing").prop("checked", false);
 			$("#ep").empty();
 			
-			var option = "<option value='' selected disabled>회차를 선택하세요.</option>";
+			var option = "<option value='0'>회차를 선택하세요.</option>";
 			
 			var eps = result.eps;
 			$.each(eps, function(index, item){
@@ -221,72 +333,86 @@ table thead tr td {
 			$("#ep").append(option);
 			
 			$("tbody").empty();
+			$("#pagination").empty();
 			var tests = result.searchTestDetailDtos;
 			addRow(tests);
+			setPagination(result.pagination);
 		} )
 	})
 
 	$("#upCate").change(function(){
-		$.getJSON("/test/getTestData.hta", {upCateNo:$(this).val()}, function(result){
-			
+	 	$("#downCate").val(0);
+		$("#ep").val(0); 
+		$("#input-page-no").val(1);
+		var formData = $("#form-search").serialize();
+		
+		$.getJSON("/test/getTestData.hta", formData, function(result){
+			$("#check-allOrNothing").prop("checked", false);
 			$("#downCate").empty();
+			$("#ep").empty();
 			$("#div-test-list table tbody").empty();
+			$("#pagination").empty();
 			
-			var option = "<option value='' selected disabled>종목을 선택하세요.</option>";				
+			var option = "<option value='0'>종목을 선택하세요.</option>";				
+			var option2 = "<option value='0'>회차를 선택하세요.</option>";				
 			var downCates = result.downCategories;			
 			
 			$.each(downCates, function(index, item){
 				option += "<option value=" + item.no + ">" + item.name + "</option>";
 			})
 			$("#downCate").append(option);
+			$("#ep").append(option2);
 			
 			$("#div-test-list").css("display", "block");
 			
-			
 			var tests = result.searchTestDetailDtos;
 			addRow(tests);
+			setPagination(result.pagination);
 
 		})
 	})
 
-	$.getJSON("/test/getTestData.hta", function(result){
-		var upCates = result.upCategories;
-		
-		var row = "";
-		$.each(upCates, function(index, item){
-			row += "<option value=" + item.no + ">" + item.name + "</option>";
-		})
-		$("#upCate").append(row);
-		
-	})
 
+	//응시하기 클릭시
+	$("#table-test").on("click",".a-take-test", function(event){
+		event.preventDefault();
+		var testNo = $(this).data("test-no");
+		window.location.reload();
+		window.open("/test/takeaTest.hta?testNo=" + testNo, "시험응시페이지", "width = 900, height = 850, top = 100, left = 200, location = no");
+	})
 	
+	//ajax 테이블 행 추가
 	var addRow = function(tests){
 		var row = "";
 		$.each(tests, function(index, item){
+			var orderYN = item.orderYN;
+			var done = item.testDone;
 			row += "<tr>";
-			row += "<td><input style='height: 15px; width: 15px;' type='checkbox' name='testNo' value='" + item.testNo + "'/></td>";
-			row += "<td>" + (index+1) + "</td>";
+			if(orderYN == 'Y'){
+				row += "<td><input style='height: 15px; width: 15px;' type='checkbox' name='testNo' disabled value='" + item.testNo + "'/></td>";
+			} else {
+				row += "<td><input style='height: 15px; width: 15px;' type='checkbox' name='testNo' value='" + item.testNo + "'/></td>";
+			}
+			row += "<td>" + (item.rn) + "</td>";
 			row += "<td style='text-align: left;'>" + item.mainCateName + " > " + item.testName + "</td>";
 			row += "<td>" + item.testEp + "</td>";
 			row += "<td>" + item.testQtCnt + "</td>";
 			row += "<td>" + item.testPrice.toLocaleString() + "원</td>";
-			var orderYN = item.orderYN;
-			var done = item.testDone;
 			if(orderYN == "Y"){
 				if(done == "Y"){
 					row += "<td>구매완료</td>";
 					row += "<td>응시완료</td>";
-					row += "<td><button type='button' class='btn btn-default' id='btn-detail'>자세히보기</button></td>";
+					row += "<td><button type='button' class='btn btn-default' id='btn-detail'>간편조회</button>";
+					row += " <a href='' type='button' class='btn btn-default' id='pop-up' data-test-no='" + item.testNo +"'>자세히보기</a></td>";
 				} else {
 					row += "<td>구매완료</td>";
 					row += "<td>미응시</td>";
-					row += "<td><a href='/test/takeaTest.hta?testNo=" + item.testNo + "' class='btn btn-default'>응시하기</a></td>";
+					row += "<td><a data-test-no='" + item.testNo + "' href='' class='btn btn-default a-take-test'>응시하기</a></td>";
 				}
 			} else {
 				row += "<td>미구매</td>";
 				row += "<td>미응시</td>";
-				row += "<td><a href='/buynow/ordernowtestform.hta?testno=" + item.testNo + "' class='btn btn-primary'>바로구매</a> <button type='button' class='btn btn-warning' name='testNo' value='" + item.testNo + "'>장바구니담기</button></td>";
+				row += "<td><a href='' class='btn btn-primary'>바로구매</a> <button type='button' class='btn btn-warning' name='testNo' value='" + item.testNo + "'>장바구니담기</button></td>";
 			}
 			
 			/* if(done == 'Y'){
@@ -300,6 +426,12 @@ table thead tr td {
 		})
 		$("tbody").append(row);
 	}
+	
+	$("#form-addCart").on("click", "#pop-up", function(event){
+		event.preventDefault();
+		var testNo = $(this).data("test-no");
+		window.open("/test/test-result.hta?testNo=" + testNo, "시험응시페이지", "width = 900, height = 850, top = 100, left = 200, location = no");
+	})
 	
 	//자세히보기 클릭했을 때	
  	$("tbody").on("click", "#btn-detail", function(){

@@ -347,6 +347,24 @@
 				<h4 class="modal-title">샘플영상</h4>
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
+			<div class="modal-body" id="sample-body">
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 영상 모달화면 -->
+<div class="modal fade" id="modal-video" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content" id="modal-video-content">
+		<input type="hidden" name="lessonNo">
+			<div class="modal-header">
+				<h4 class="modal-title">영상</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
 			<div class="modal-body" id="video-body">
 				
 			</div>
@@ -377,9 +395,21 @@
 		var lectSamplePath = $(this).data("video-link");
 	
 		var videoTag = "<video autoplay><source src='"+lectSamplePath+"' type='video/mp4'/></video>";
-		$("#video-body").html(videoTag);
+		$("#sample-body").html(videoTag);
 		
 		$("#modal-sample").modal('show');
+		
+	})
+	// 영상
+	$("#modal-lecture-detail-table").on('click', '.lesson-video', function(event) {
+		event.preventDefault();
+		var lectNo = $(this).data("lesson-no");
+		var lectVideoPath = $(this).data("video-link");
+	
+		var videoTag = "<video autoplay><source src='"+lectVideoPath+"' type='video/mp4'/></video>";
+		$("#video-body").html(videoTag);
+		
+		$("#modal-video").modal('show');
 		
 	})
 	
@@ -402,9 +432,9 @@
 					tbody += "<td>"+item.chapterName+"</td>";
 					tbody += "<td><strong>"+item.lessonTitle+"</strong></td>";
 					tbody += "<td>"+item.totalTime+" 분</td>";
-					
 					if (item.lessonVideoPath != null) {
-						tbody += "<td><a href=''><i class='fas fa-play'></i></a></td>";
+						tbody += "<td><a class='lesson-video' data-lesson-no='"+item.lessonNo+"' data-video-link='"+item.lessonVideoPath+"'>";
+						tbody += "<i class='fas fa-play'></i></a></td>";
 					} else {
 						tbody += "<td>준비중</td>";
 					}

@@ -19,31 +19,32 @@
    <script src="/resources/js/common.js"></script>
 </head>
 <body>
-<div class="container" style="font-size:17px; width:1440px;">
+<div class="container" style="font-size: 17px; width: 1440px; min-height: 950px; margin-top: 50px;">
 	<div class="row">
-		<div class="col-sm-2">
-				<p>내 학습</p>
-				<ul style="list-style:none;">
-					<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
-					<li><a href="/user/mybytestlist.hta">모의고사</a></li>
-					<li><a href="/userquestion/myquestionlist.hta">강의 질문</a></li>
-				</ul>
-				<p>내 결제</p>
-				<ul style="list-style:none;">
-					<li><a href="/like/likelectlist.hta">위시리스트</a></li>
-					<li><a href="/cart/userCartList.hta">장바구니</a></li>
-					<li><a href="/user/mycouponlist.hta">내 쿠폰함</a></li>
-					<li><a href="/order/userorderlectlist.hta">구매내역</a></li>
-				</ul>
-				<p>내 강의</p>
-				<ul style="list-style:none;">
-					<li id="teacher"><a href="/teacher/main.hta">내 강의</a></li>
-				</ul>
-				<p>관리자 문의</p>
-				<ul style="list-style:none;">
-					<li id="teacher"><a href="/user/userqueston.hta">문의하기</a></li>
-				</ul>
-			</div>
+		<div class="col-sm-2" style="height: 900px;">
+			<p>내 학습</p>
+			<ul style="list-style: none;">
+				<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
+				<li><a href="/user/mybytestlist.hta">모의고사</a></li>
+				<li><a href="/userquestion/myquestionlist.hta">강의 질문</a></li>
+			</ul>
+			<p>내 결제</p>
+			<ul style="list-style: none;">
+				<li><a href="/like/likelectlist.hta">위시리스트</a></li>
+				<li><a href="/cart/userCartList.hta">장바구니</a></li>
+				<li><a href="/user/mycouponlist.hta">내 쿠폰함</a></li>
+				<li><a href="/order/userorderlectlist.hta">구매내역</a></li>
+			</ul>
+			<p>내 강의</p>
+			<ul style="list-style: none;">
+				<li id="teacher"><a href="/teacher/main.hta">내 강의</a></li>
+			</ul>
+			<p>관리자 문의</p>
+			<ul style="list-style: none;">
+				<li id="teacher"><a href="/user/userqueston.hta">문의하기</a></li>
+				<li><a href="/userquestion/userqnatoadmlist.hta">문의 내역 조회</a></li>
+			</ul>
+		</div>
 		
 		<div class="col-sm-10">
 			<span>설정 / 프로필 설정</span>
@@ -56,7 +57,8 @@
 					</div>
 					<div class="form-group text-center">
 						<h4>프로필 사진</h4>
-						<img src="../../resources/images/userImageFilename/${userProfil.imageFilename != null ? userProfil.imageFilename : 'skrwl.GIF' }" style="width: 100px; height: 100px; margin-bottom: 20px;"/>
+						<%-- <img src="../../resources/images/userImageFilename/${userProfil.imageFilename != null ? userProfil.imageFilename : 'skrwl.GIF' }" style="width: 100px; height: 100px; margin-bottom: 20px;"/> --%>
+						<img src="${userProfil.imageFilename }" style="width: 100px; height: 100px; margin-bottom: 20px;"/>
 						<input type="file" class="form-control" name="imgfile"/>
 					</div>
 					<div class="form-group">
@@ -93,8 +95,8 @@ function checkform(e) {
 		alert("비밀번호를 입력하세요");
 		return;
 	}
-	if(userPwd.length < 8 || userPwd.length > 12){
-		alert("비밀번호는 8 ~ 12글자 이내로 입력하세요");
+	if(userPwd.length < 3 || userPwd.length > 12){
+		alert("비밀번호는 3 ~ 12글자 이내로 입력하세요");
 		return;
 	}
 	

@@ -7,6 +7,7 @@ import org.apache.ibatis.type.Alias;
 @Alias("SearchTestDetailDto")
 public class SearchTestDetailDto {
 	
+	private int rn;
 	private int testNo;
 	//private int mainCateNo;
 	private String mainCateName;
@@ -175,15 +176,6 @@ public class SearchTestDetailDto {
 		this.createDate = createDate;
 	}
 
-	@Override
-	public String toString() {
-		return "SearchTestDetailDto [testNo=" + testNo + ", mainCateName=" + mainCateName + ", lectNo=" + lectNo
-				+ ", testEp=" + testEp + ", testName=" + testName + ", testQtCnt=" + testQtCnt + ", testPrice="
-				+ testPrice + ", passScore=" + passScore + ", testDate=" + testDate + ", testLtdTime=" + testLtdTime
-				+ ", isDisplay=" + isDisplay + ", testDone=" + testDone + ", testAvg=" + testAvg + ", orderYN="
-				+ orderYN + ", createDate=" + createDate + "]";
-	}
-
 	public int getOrderNo() {
 		return orderNo;
 	}
@@ -198,6 +190,24 @@ public class SearchTestDetailDto {
 
 	public void setOrdTestCreateDate(Date ordTestCreateDate) {
 		this.ordTestCreateDate = ordTestCreateDate;
+	}
+
+	public int getRn() {
+		return rn;
+	}
+
+	public void setRn(int rn) {
+		this.rn = rn;
+	}
+
+	@Override
+	public String toString() {
+		return "SearchTestDetailDto [rn=" + rn + ", testNo=" + testNo + ", mainCateName=" + mainCateName + ", lectNo="
+				+ lectNo + ", testEp=" + testEp + ", testName=" + testName + ", testQtCnt=" + testQtCnt + ", testPrice="
+				+ testPrice + ", passScore=" + passScore + ", testDate=" + testDate + ", testLtdTime=" + testLtdTime
+				+ ", isDisplay=" + isDisplay + ", testDone=" + testDone + ", testAvg=" + testAvg + ", orderYN="
+				+ orderYN + ", createDate=" + createDate + ", orderNo=" + orderNo + ", ordTestCreateDate="
+				+ ordTestCreateDate + "]";
 	}
 	
 }

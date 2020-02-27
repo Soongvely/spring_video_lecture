@@ -3,6 +3,7 @@ package kr.co.coduck.service;
 import java.util.List;
 import java.util.Map;
 
+import kr.co.coduck.dao.OrderLectDao;
 import kr.co.coduck.dto.ChapterDto;
 import kr.co.coduck.dto.IncomeDto;
 import kr.co.coduck.dto.LectureCourseDto;
@@ -65,4 +66,6 @@ public interface LectService {
 	void insertLessonHistory(LessonHistory lessonHistory);
 	void updateLessonByLessonHistory(LessonHistory lessonHistory);
 
+	Lect getIsPurchaseLectureByUser(Map<String, Object> map);
+	void insertLecture(Lect lecture);
 }

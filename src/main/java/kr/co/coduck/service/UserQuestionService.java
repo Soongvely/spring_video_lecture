@@ -12,7 +12,9 @@ import kr.co.coduck.vo.AdQnaFile;
 public interface UserQuestionService {
 	
 	List<AdQnaFile> getAdQnaFilesByQnaNo(int qnaNo);
-	List<AdQna> getAdQnasByUserNo(int userNo);
+	List<AdQna> getAdQnasByUserNo(int userNno);
+	List<AdQna> getAdQnasByCriteria(Map<String, Integer> criteria);
+	int getAllAdQnaCntByUserNo(int userNo);
 	AdQna getAdQnaByNo(int no);
 	void insertAdQnaFile(AdQnaFile file);
 	int insertAdQna(userQuestionToAdm form, int userNo) throws IOException;

@@ -69,8 +69,8 @@
 				alert("아이디를 입력하세요");
 				return;
 			}
-			if(userId.length < 6){
-				alert("아이디는 6글자 이상 입력하세요");
+			if(userId.length < 3){
+				alert("아이디는 3글자 이상 입력하세요");
 				return;
 			}
 			
@@ -80,8 +80,8 @@
 				alert("비밀번호를 입력하세요");
 				return;
 			}
-			if(userPwd.length < 8 || userPwd.length > 12){
-				alert("비밀번호는 8 ~ 12글자 이내로 입력하세요");
+			if(userPwd.length < 3 || userPwd.length > 12){
+				alert("비밀번호는 3 ~ 12글자 이내로 입력하세요");
 				return;
 			}
 			

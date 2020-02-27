@@ -5,22 +5,48 @@ import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
 
+import kr.co.coduck.utils.DateUtils;
+
 @Alias ("AdminAnswerDto")
 public class AdminAnswerDto {
 
 	private String title;
 	private String content;
 	private String fileName;
-	private Date creatDate;
+	private Date createDate;
+	private int qnaNo;
 	private int no;
-	private String qnaTitle;
-	private String qnaContent;
-	private Date qnaCreateDate;
-	private int userNo;
-	private String userName;
 	private String userId;
-	private String qnasImagesName;
+	private String userName;
+	private String userImgFile;
+	private int userNo;
 	
+	
+	
+	public int getUserNo() {
+		return userNo;
+	}
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getUserImgFile() {
+		return userImgFile;
+	}
+	public void setUserImgFile(String userImgFile) {
+		this.userImgFile = userImgFile;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -39,11 +65,17 @@ public class AdminAnswerDto {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	public Date getCreatDate() {
-		return creatDate;
+	public Date getCreateDate() {
+		return createDate;
 	}
-	public void setCreatDate(Date creatDate) {
-		this.creatDate = creatDate;
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+	public int getQnaNo() {
+		return qnaNo;
+	}
+	public void setQnaNo(int qnaNo) {
+		this.qnaNo = qnaNo;
 	}
 	public int getNo() {
 		return no;
@@ -51,48 +83,9 @@ public class AdminAnswerDto {
 	public void setNo(int no) {
 		this.no = no;
 	}
-	public String getQnaTitle() {
-		return qnaTitle;
-	}
-	public void setQnaTitle(String qnaTitle) {
-		this.qnaTitle = qnaTitle;
-	}
-	public String getQnaContent() {
-		return qnaContent;
-	}
-	public void setQnaContent(String qnaContent) {
-		this.qnaContent = qnaContent;
-	}
-	public Date getQnaCreateDate() {
-		return qnaCreateDate;
-	}
-	public void setQnaCreateDate(Date qnaCreateDate) {
-		this.qnaCreateDate = qnaCreateDate;
-	}
-	public int getUserNo() {
-		return userNo;
-	}
-	public void setUserNo(int userNo) {
-		this.userNo = userNo;
-	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-	public String getQnasImagesName() {
-		return qnasImagesName;
-	}
-	public void setQnasImagesName(String qnasImagesName) {
-		this.qnasImagesName = qnasImagesName;
-	}
 	
+	public String getFmtCreateDate() {
+		return DateUtils.dateToString(createDate);
+	}
 	
 }

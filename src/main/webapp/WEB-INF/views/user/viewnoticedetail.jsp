@@ -13,7 +13,7 @@
 </head>
 <body>
 <%@ include file="../common/header.jsp"%>
-	<div class="container" style="font-size: 17px; width: 1440px;">
+	<div class="container" style="font-size: 17px; width: 1440px; min-height: 950px; margin-top: 50px;">
 		<div class="row">
 			<div class="col-sm-12">
 				<c:if test="${empty noticedetail.fileName }">
@@ -28,7 +28,7 @@
 					<hr/>
 					<h3>${noticedetail.contents }</h3>
 					<hr/>
-					<a style="margin-top: 90px;" href="/admin/download.hta?noticeNo=${noticedetail.noticeNo }"><i class="far fa-file fa-3x" style="width: 200px; height: 200px;"></i></a>			
+					<a style="margin-top: 90px; font-size: 30px;" href="/admin/download.hta?noticeNo=${noticedetail.noticeNo }">첨부파일<i class="far fa-file fa-3x"></i></a>			
 				</c:if>
 			</div>
 		</div>

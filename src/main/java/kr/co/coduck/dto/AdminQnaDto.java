@@ -17,7 +17,15 @@ public class AdminQnaDto {
 	private int userNo;
 	private String userName;
 	private String userId;
+	private String userImgFile;
 	
+	
+	public String getUserImgFile() {
+		return userImgFile;
+	}
+	public void setUserImgFile(String userImgFile) {
+		this.userImgFile = userImgFile;
+	}
 	public int getNo() {
 		return no;
 	}

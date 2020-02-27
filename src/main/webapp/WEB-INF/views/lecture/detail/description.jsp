@@ -112,7 +112,7 @@
 	                                    <div class="review-progress_bars">
 	                                    	<c:forEach var="review" items="${reviewStarAvgs }">
 			                                    <div class="review_counting">
-		                                            <label>${review.star }점</label>
+		                                            <label style="width: 40px;">${review.star }점</label>
 		                                            <c:choose>
 	                                            		<c:when test="${review.avgStar > 0 }">
 		                                            		<progress class="progress is-link" max="100" value="${review.avgStar }"></progress>
@@ -211,17 +211,16 @@
     	$(".average_num").append(".0");
     }
     
-   /*  $(function() {
-        
+     $(function() {
         var pg = location.search.search('pg');
-        if(pg) {
+        if(pg >= 0) {
         	var name = location.search.substring(pg + 3);
         	const scrollTop = $("#" + name).offset().top - 70;
-            // animate({name:value}, 속도ms); jquery에 애니메이션 기능 함수
+             //animate({name:value}, 속도ms); jquery에 애니메이션 기능 함수
             $('html, body').animate({
                 scrollTop
             }, 600);
         }
-    }); */
+    }); 
     </script>
 <%@ include file="../../common/footer.jsp" %>

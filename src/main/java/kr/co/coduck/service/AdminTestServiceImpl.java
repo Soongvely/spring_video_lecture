@@ -16,6 +16,11 @@ public class AdminTestServiceImpl implements AdminTestService{
 	private TestDao testDao;
 	
 	@Override
+	public int searchTestCnt(SearchTestFormByAdm form) {
+		return testDao.searchTestCnt(form);
+	}
+	
+	@Override
 	public List<SearchTestDetailDto> searchTestByAdm(SearchTestFormByAdm form) {
 		return testDao.searchTestByAdm(form);
 	}

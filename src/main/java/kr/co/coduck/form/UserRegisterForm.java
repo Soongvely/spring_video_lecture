@@ -11,6 +11,7 @@ public class UserRegisterForm {
 	private String selfInfo;
 	private String email;
 	private String bankNumber;
+	private String enabled;
 	private MultipartFile imgfile;
 	
 	public UserRegisterForm() {}
@@ -77,5 +78,13 @@ public class UserRegisterForm {
 
 	public void setBanknumber(String banknumber) {
 		this.bankNumber = banknumber;
+	}
+
+	public String getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(String enabled) {
+		this.enabled = enabled;
 	}
 }

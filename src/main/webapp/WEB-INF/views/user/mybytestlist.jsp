@@ -20,31 +20,32 @@
 </head>
 <body>
 	<%@ include file="../common/header.jsp"%>
-   <div class="container" style="font-size: 17px; width: 1440px;">
+   <div class="container" style="font-size: 17px; width: 1440px; min-height: 950px; margin-top: 50px;">
       <div class="row">
-         <div class="col-sm-2">
-				<p>내 학습</p>
-				<ul style="list-style:none;">
-					<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
-					<li><a href="/user/mybytestlist.hta">모의고사</a></li>
-					<li><a href="/userquestion/myquestionlist.hta">강의 질문</a></li>
-				</ul>
-				<p>내 결제</p>
-				<ul style="list-style:none;">
-					<li><a href="/like/likelectlist.hta">위시리스트</a></li>
-					<li><a href="/cart/userCartList.hta">장바구니</a></li>
-					<li><a href="/user/mycouponlist.hta">내 쿠폰함</a></li>
-					<li><a href="/order/userorderlectlist.hta">구매내역</a></li>
-				</ul>
-				<p>내 강의</p>
-				<ul style="list-style:none;">
-					<li id="teacher"><a href="/teacher/main.hta">내 강의</a></li>
-				</ul>
-				<p>관리자 문의</p>
-				<ul style="list-style:none;">
-					<li id="teacher"><a href="/user/userqueston.hta">문의하기</a></li>
-				</ul>
-			</div>
+         <div class="col-sm-2" style="height: 900px;">
+			<p>내 학습</p>
+			<ul style="list-style: none;">
+				<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
+				<li><a href="/user/mybytestlist.hta">모의고사</a></li>
+				<li><a href="/userquestion/myquestionlist.hta">강의 질문</a></li>
+			</ul>
+			<p>내 결제</p>
+			<ul style="list-style: none;">
+				<li><a href="/like/likelectlist.hta">위시리스트</a></li>
+				<li><a href="/cart/userCartList.hta">장바구니</a></li>
+				<li><a href="/user/mycouponlist.hta">내 쿠폰함</a></li>
+				<li><a href="/order/userorderlectlist.hta">구매내역</a></li>
+			</ul>
+			<p>내 강의</p>
+			<ul style="list-style: none;">
+				<li id="teacher"><a href="/teacher/main.hta">내 강의</a></li>
+			</ul>
+			<p>관리자 문의</p>
+			<ul style="list-style: none;">
+				<li id="teacher"><a href="/user/userqueston.hta">문의하기</a></li>
+				<li><a href="/userquestion/userqnatoadmlist.hta">문의 내역 조회</a></li>
+			</ul>
+		</div>
          
 			<div class="col-sm-10">
             <div class="row">
@@ -54,7 +55,7 @@
             </div>
             <div class="row">
                <div class="col-sm-12">
-                   <table class="table" id="my-order-history-table">
+                   <table class="table" id="my-order-history-table" >
                        <thead>
                            <tr>
                                 <th>순번</th>
@@ -82,7 +83,7 @@
 							            	<button id="btn-detail" class="btn btn-info btn-xs" data-order-no="${userOrderTestList.testNo }">점수조회</button> | <a href="/test/test-result.hta?testNo=${userOrderTestList.testNo }" class="btn btn-info btn-xs">상세조회</a>
 							            </c:when>
 							            <c:when test="${userOrderTestList.testDone == 'N' }">
-					             			<a href="/test/takeaTest.hta?testNo=${userOrderTestList.testNo }" class="btn btn-info btn-xs">응시하기</a>
+					             			<a href="/test/takeaTest.hta?testNo=${userOrderTestList.testNo }" class="btn btn-info btn-xs a-take-test" data-test-no="${userOrderTestList.testNo }">응시하기</a>
 							            </c:when>
 					             	</c:choose>
 					             	</td>
@@ -129,6 +130,15 @@
 	</div>
 	
    <script type="text/javascript">
+   
+   //응시하기 클릭시
+   $("#my-order-history-table").on("click", ".a-take-test", function(){
+		event.preventDefault();
+		var testNo = $(this).data("test-no");
+		window.location.reload();
+		window.open("/test/takeaTest.hta?testNo=" + testNo, "시험응시페이지", "width = 900, height = 850, top = 100, left = 200, location = no");
+   })
+   
  	//자세히보기 클릭했을 때	
 	$("tbody").on("click", "#btn-detail", function(){
 		var testNo = $(this).data("order-no");

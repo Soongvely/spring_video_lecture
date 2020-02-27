@@ -12,6 +12,8 @@ public class SearchTestFormByAdm {
 	private int period;
 	private String from;
 	private String to;
+	private int beginIndex;
+	private int endIndex;
 	
 	public SearchTestFormByAdm() {}
 
@@ -71,9 +73,26 @@ public class SearchTestFormByAdm {
 		this.epName = epName;
 	}
 
+	public int getBeginIndex() {
+		return beginIndex;
+	}
+
+	public void setBeginIndex(int beginIndex) {
+		this.beginIndex = beginIndex;
+	}
+
+	public int getEndIndex() {
+		return endIndex;
+	}
+
+	public void setEndIndex(int endIndex) {
+		this.endIndex = endIndex;
+	}
+
 	@Override
 	public String toString() {
 		return "SearchTestFormByAdm [mainCateNo=" + mainCateNo + ", cateNo=" + cateNo + ", epName=" + epName
-				+ ", searchKeyword=" + searchKeyword + ", period=" + period + ", from=" + from + ", to=" + to + "]";
+				+ ", searchKeyword=" + searchKeyword + ", period=" + period + ", from=" + from + ", to=" + to
+				+ ", beginIndex=" + beginIndex + ", endIndex=" + endIndex + "]";
 	}
 }

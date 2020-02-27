@@ -1,8 +1,10 @@
 package kr.co.coduck.vo;
 
+import java.io.File;
 import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
+import org.springframework.web.multipart.MultipartFile;
 
 @Alias("Lect")
 public class Lect {
@@ -156,6 +158,10 @@ public class Lect {
 		this.grade = grade;
 	}
 
+	public void setFree() {
+		this.isFreed = this.price > 0 ? "N" : "Y";
+	}
+	
 	@Override
 	public String toString() {
 		return "Lect [no=" + no + ", cateNo=" + cateNo + ", userNo=" + userNo + ", lectTitle=" + lectTitle
@@ -165,7 +171,4 @@ public class Lect {
 				+ ", samplePath=" + samplePath + ", tag=" + tag + ", grade=" + grade + "]";
 	}
 
-	
-	
-	
 }

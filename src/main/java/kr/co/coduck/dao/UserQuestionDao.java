@@ -11,6 +11,8 @@ public interface UserQuestionDao {
 	
 	List<AdQnaFile> getAdQnaFilesByQnaNo(int qnaNo);
 	List<AdQna> getAdQnasByUserNo(int userNno);
+	List<AdQna> getAdQnasByCriteria(Map<String, Integer> criteria);
+	int getAllAdQnaCntByUserNo(int userNo);
 	AdQna getAdQnaByNo(int no);
 	void insertAdQnaFile(AdQnaFile file);
 	void insertAdQna(AdQna adQna);

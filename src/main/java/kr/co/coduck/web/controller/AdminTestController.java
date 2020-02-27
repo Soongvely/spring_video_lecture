@@ -31,6 +31,7 @@ import kr.co.coduck.service.AdminTestService;
 import kr.co.coduck.service.CategoryService;
 import kr.co.coduck.service.TestService;
 import kr.co.coduck.vo.Category;
+import kr.co.coduck.vo.Pagination;
 import kr.co.coduck.vo.Test;
 import kr.co.coduck.vo.TestQt;
 import kr.co.coduck.vo.TestSubj;
@@ -47,6 +48,21 @@ public class AdminTestController {
 	
 	@Autowired
 	private TestService testService;
+	
+	//가격 수정하기
+	@PostMapping("/modifyPrice.hta")
+	@ResponseBody
+	public Test modifyPrice(@RequestParam("testNo") int testNo, 
+			@RequestParam("modify-price") int price, @RequestParam("input-timer") int time ) {
+		Test test = testService.getTestByNo(testNo);
+		test.setNo(testNo);
+		test.setPrice(price);
+		test.setLtdTime(time);
+		
+		testService.updateTest(test);
+		 
+		return test;
+	}
 	
 	//총점 계산하기
 	@GetMapping("/getTotalScore.hta")
@@ -179,7 +195,7 @@ public class AdminTestController {
 	//관리자 시험 조회
 	@GetMapping("/searchTestByAdm.hta")
 	@ResponseBody
-	public SearchTestDto searchTestByAdmin(SearchTestFormByAdm form){
+	public SearchTestDto searchTestByAdmin(SearchTestFormByAdm form) {
 		System.out.println("=============================");
 		System.out.println("폼 조회 : " + form);
 		System.out.println("=============================");
@@ -198,7 +214,18 @@ public class AdminTestController {
 		} else {
 			searchTestDto.setEps(testService.getTestEpsByCateNo(form.getCateNo()));
 		}
+		//System.out.println("페이지번호 : " + pageNo);
+		
+		//int cnt = adminTestService.searchTestCnt(form);
+		//Pagination pagination = new Pagination(pageNo, cnt, 10, 5);
+		
+		//System.out.println("페이지네이션 : " + pagination);
+		
+//		form.setBeginIndex(pagination.getBeginIndex());
+//		form.setEndIndex(pagination.getEndIndex());
+		
 		searchTestDto.setSearchTestDetailDtos(adminTestService.searchTestByAdm(form));
+		//searchTestDto.setPagination(pagination);
 		
 		System.out.println("++++++++++++++++++++++++++++++++++++");
 		System.out.println("searchTestDto : " + searchTestDto);

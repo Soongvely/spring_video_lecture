@@ -17,7 +17,7 @@
 			X.cate_no					cateNo
 		from
 			(select
-				rank() over(order by create_date desc) rk,
+				ROW_NUMBER() over(order by create_date desc) rk,
 				test_no	,			
 				lect_no		,		
 				test_date	,			
@@ -405,21 +405,9 @@
 			2
 	</select>
 	
-	<!-- 관리자가 여러 시험 조회 -->
-	<select id="searchTestByAdm" parameterType="SearchTestFormByAdm" resultType="SearchTestDetailDto">
-		select 
-			C.cate_name				maincatename,
-			T.test_name				testname,
-			T.test_no				testno,
-			T.lect_no				lectno,
-			T.test_date				testdate,
-			T.test_ep				testep,
-			T.test_price			testprice,
-			T.test_pass_score		passscore,
-			T.test_ltd_time			testltdtime,
-			T.test_qt_cnt			testqtcnt,
-			T.test_is_display		isdisplay,
-			T.create_date			createDate
+	<!-- 시험 개수 조회 -->
+	<select id="searchTestCnt" parameterType="SearchTestFormByAdm" resultType="int">
+		select count(*)
 		from 
 			CATEGORIES C, CATEGORIES D, TESTS T
 		<where>
@@ -440,19 +428,19 @@
 			<if test="period != -1">
 				<choose>
 					<when test="period == 0">
-						and to_char(T.test_date, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd')
+						and to_char(T.create_date, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd')
 					</when>
 					<when test="period == 7">
-						and to_char(T.test_date, 'yyyy-mm-dd') >= to_char(sysdate-7, 'yyyy-mm-dd')
+						and to_char(T.create_date, 'yyyy-mm-dd') >= to_char(sysdate-7, 'yyyy-mm-dd')
 					</when>
 					<when test="period == 30">
-						and to_char(T.test_date, 'yyyy-mm-dd') >= to_char(add_months(sysdate,-1),'yyyy-mm-dd')
+						and to_char(T.create_date, 'yyyy-mm-dd') >= to_char(add_months(sysdate,-1),'yyyy-mm-dd')
 					</when>
 					<when test="period == 180">
-						and to_char(T.test_date, 'yyyy-mm-dd') >= to_char(add_months(sysdate,-6),'yyyy-mm-dd')
+						and to_char(T.create_date, 'yyyy-mm-dd') >= to_char(add_months(sysdate,-6),'yyyy-mm-dd')
 					</when>
 					<when test="period == 365">
-						and to_char(T.test_date, 'yyyy-mm-dd') >= to_char(add_months(sysdate,-12),'yyyy-mm-dd')
+						and to_char(T.create_date, 'yyyy-mm-dd') >= to_char(add_months(sysdate,-12),'yyyy-mm-dd')
 					</when>
 				</choose>
 			</if>
@@ -469,56 +457,151 @@
 				</when>
 			</choose>
 		</where>
-		order by
-			T.create_date desc, T.test_name, T.test_ep desc
+	</select>
+	
+	<!-- 관리자가 여러 시험 조회 -->
+	<select id="searchTestByAdm" parameterType="SearchTestFormByAdm" resultType="SearchTestDetailDto">
+			select 
+					C.cate_name				maincatename,
+					T.test_name				testname,
+					T.test_no				testno,
+					T.lect_no				lectno,
+					T.test_date				testdate,
+					T.test_ep				testep,
+					T.test_price			testprice,
+					T.test_pass_score		passscore,
+					T.test_ltd_time			testltdtime,
+					T.test_qt_cnt			testqtcnt,
+					T.test_is_display		isdisplay,
+					T.create_date			createDate
+				from 
+					CATEGORIES C, CATEGORIES D, TESTS T
+				<where>
+					D.CATE_NO = T.CATE_NO
+					and C.CATE_NO = D.MAIN_CATE_NO
+					<if test="mainCateNo != -1">
+						and C.cate_no = #{mainCateNo}
+					</if>
+					<if test="cateNo != -1">
+						and D.cate_no = #{cateNo}
+					</if>
+					<if test="epName != ''">
+						and T.test_ep like '%' || #{epName} || '%'
+					</if>
+					<if test="searchKeyword != ''">
+						and T.test_name	like '%' || #{searchKeyword} || '%'
+					</if>
+					<if test="period != -1">
+						<choose>
+							<when test="period == 0">
+								and to_char(T.create_date, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd')
+							</when>
+							<when test="period == 7">
+								and to_char(T.create_date, 'yyyy-mm-dd') >= to_char(sysdate-7, 'yyyy-mm-dd')
+							</when>
+							<when test="period == 30">
+								and to_char(T.create_date, 'yyyy-mm-dd') >= to_char(add_months(sysdate,-1),'yyyy-mm-dd')
+							</when>
+							<when test="period == 180">
+								and to_char(T.create_date, 'yyyy-mm-dd') >= to_char(add_months(sysdate,-6),'yyyy-mm-dd')
+							</when>
+							<when test="period == 365">
+								and to_char(T.create_date, 'yyyy-mm-dd') >= to_char(add_months(sysdate,-12),'yyyy-mm-dd')
+							</when>
+						</choose>
+					</if>
+					<choose>
+						<when test="from == '' and to != ''">
+						and T.create_date &lt;= to_date(#{to}, 'yyyy-mm-dd')
+						</when>
+						<when test="from != '' and to == ''">
+						and T.create_date >= to_date(#{from}, 'yyyy-mm-dd')
+						</when>
+						<when test="from != '' and to != ''">
+						and T.create_date >= to_date(#{from}, 'yyyy-mm-dd')
+						and T.create_date &lt;= to_date(#{to}, 'yyyy-mm-dd')
+						</when>
+					</choose>
+				</where>
+				order by T.create_date desc, T.test_name, T.test_ep desc
+	</select>
+	
+	<!-- 유저의 모의고사 검색 조회 개수 -->
+	<select id="searchTestCntByUser" parameterType="map" resultType="int">
+			select 
+				count(*)
+			from (
+					select B.test_no, D.cate_no main_cate_no, D.cate_name main_cate_name, C.cate_no sub_cate_no, C.cate_name sub_cate_name, 
+							B.test_ep, B.test_name , B.test_qt_cnt, B.test_price
+					from (select distinct test_no
+						  from test_results) A, tests B, categories C, Categories D
+						  where A.test_no(+) = B.test_no
+						  and B.cate_no = C.cate_no
+						  and C.main_cate_no = D.cate_no
+						  and B.test_is_display = 'Y'
+						  ) X
+			<where>
+				<if test="form.upCateNo != 0">
+					X.main_cate_no = #{form.upCateNo}
+				</if>
+				<if test="form.downCateNo != 0">
+					and X.sub_cate_no = #{form.downCateNo}
+				</if>
+				<if test="form.testNo != 0">
+					and X.test_no = #{form.testNo}
+				</if>
+			</where>
 	</select>
 	
 	<!-- 유저가 여러 시험 조회 -->
 	<select id="searchTest" parameterType="map" resultType="SearchTestDetailDto">
-		select 
-			X.test_no				testNo, 
-			X.main_cate_no			mainCateNo, 
-			X.main_cate_name		mainCateName, 
-			X.sub_cate_no			subCateNo, 
-			X.sub_cate_name			subCateName, 
-			X.test_ep				testEp, 
-			X.test_name				testName, 
-			X.test_qt_cnt			testQtCnt,
-			X.test_price			testPrice,
-			(select distinct Y.test_is_done from test_results Y where Y.test_no = X.test_no and Y.user_no = #{userNo}) testDone,
-			(select max(Y.test_result_avg) from test_results Y where Y.test_no = X.test_no and Y.user_no = #{userNo} ) testAvg,
-			nvl2((select 
-               B.test_no
-            from 
-               ord_test_infos B, ord_tests C
-            where 
-               B.ord_test_no = C.ord_test_no
-                and C.user_no = #{userNo}
-               and B.test_no = X.test_no
-            ), 'Y', 'N') orderYN 
-		from (
-				select B.test_no, D.cate_no main_cate_no, D.cate_name main_cate_name, C.cate_no sub_cate_no, C.cate_name sub_cate_name, 
-						B.test_ep, B.test_name , B.test_qt_cnt, B.test_price
-				from (select distinct test_no
-					  from test_results) A, tests B, categories C, Categories D
-					  where A.test_no(+) = B.test_no
-					  and B.cate_no = C.cate_no
-					  and C.main_cate_no = D.cate_no
-					  and B.test_is_display = 'Y'
-					  ) X
-		<where>
-			
-			<if test="upCateNo != null">
-				X.main_cate_no = #{upCateNo}
-			</if>
-			<if test="downCateNo != null">
-				and X.sub_cate_no = #{downCateNo}
-			</if>
-			<if test="testNo != null">
-				and X.test_no = #{testNo}
-			</if>
-		</where>	
-		order by X.main_cate_name, X.test_name, X.test_ep
+		select *
+		from(
+			select 
+				ROW_NUMBER() over (order by X.main_cate_name, X.sub_cate_name, X.test_ep desc) rn,
+				X.test_no				testNo, 
+				X.main_cate_no			mainCateNo, 
+				X.main_cate_name		mainCateName, 
+				X.sub_cate_no			subCateNo, 
+				X.sub_cate_name			subCateName, 
+				X.test_ep				testEp, 
+				X.test_name				testName, 
+				X.test_qt_cnt			testQtCnt,
+				X.test_price			testPrice,
+				(select distinct Y.test_is_done from test_results Y where Y.test_no = X.test_no and Y.user_no = #{userNo}) testDone,
+				(select max(Y.test_result_avg) from test_results Y where Y.test_no = X.test_no and Y.user_no = #{userNo} ) testAvg,
+				nvl2((select 
+	               B.test_no
+	            from 
+	               ord_test_infos B, ord_tests C
+	            where 
+	               B.ord_test_no = C.ord_test_no
+	                and C.user_no = #{userNo}
+	               and B.test_no = X.test_no
+	            ), 'Y', 'N') orderYN 
+			from (
+					select B.test_no, D.cate_no main_cate_no, D.cate_name main_cate_name, C.cate_no sub_cate_no, C.cate_name sub_cate_name, 
+							B.test_ep, B.test_name , B.test_qt_cnt, B.test_price
+					from (select distinct test_no
+						  from test_results) A, tests B, categories C, Categories D
+						  where A.test_no(+) = B.test_no
+						  and B.cate_no = C.cate_no
+						  and C.main_cate_no = D.cate_no
+						  and B.test_is_display = 'Y'
+						  ) X
+			<where>
+				<if test="form.upCateNo != 0">
+					X.main_cate_no = #{form.upCateNo}
+				</if>
+				<if test="form.downCateNo != 0">
+					and X.sub_cate_no = #{form.downCateNo}
+				</if>
+				<if test="form.testNo != 0">
+					and X.test_no = #{form.testNo}
+				</if>
+			</where>)	
+		where 
+			rn between #{beginIndex} and #{endIndex}
 			
 	</select>
 	

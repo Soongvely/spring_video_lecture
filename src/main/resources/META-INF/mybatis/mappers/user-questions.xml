@@ -9,8 +9,8 @@
 	<!-- 1:1 문의내역 사진조회 -->
 	<select id="getAdQnaFilesByQnaNo" parameterType="int" resultType="AdQnaFile">
 		select
-			ad_qnas_images_name,
-			admin_qna_no
+			ad_qnas_images_name		fileName,
+			admin_qna_no			AdQnaNo
 		from
 			ad_qnas_images
 		where
@@ -32,9 +32,34 @@
 			admin_qna_no = #{value}
 	</select>
 	
-	<!--  -->
-	<!-- 1:1 문의내역 상세보기(유저로 조회) -->
-	<select id="getAdQnasByUserNo" parameterType="int" resultType="AdQna">
+	<!-- 전체 데이터 개수 조회 -->
+	<select id="getAllAdQnaCntByUserNo" parameterType="int" resultType="int">
+		select count(*)
+		from ad_qnas
+		where user_no = #{value}
+	</select>
+	
+	<!-- 1:1 문의내역 보기(페이지네이션) -->
+	<select id="getAdQnasByCriteria" parameterType="map" resultType="AdQna">
+		select *	
+		from	(select 
+					ROW_NUMBER() over (order by admin_qna_create_date desc) rn,
+					admin_qna_no				no,
+					user_no						userNo,
+					admin_qna_title				title,
+					admin_qna_content			content,
+					admin_qna_create_date		createDate,
+					admin_qna_isanswered		isAnswered
+				from
+					ad_qnas
+				where
+					user_no = #{userNo}) 
+		where
+			rn between #{beginIndex} and #{endIndex}
+	</select>	
+
+	<!-- 1:1 문의내역 보기(유저로 조회) -->
+	<select id="getAdQnasByUserNo" parameterType="int" resultType="AdQna">	
 		select 
 			admin_qna_no				no,
 			user_no						userNo,
@@ -46,6 +71,8 @@
 			ad_qnas
 		where
 			user_no = #{value}
+		order by admin_qna_create_date
+			
 	</select>
 
 	<!-- 1:1 문의글 파일 첨부 저장 -->

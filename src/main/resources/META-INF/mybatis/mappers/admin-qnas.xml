@@ -4,47 +4,63 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="kr.co.coduck.dao.AdminQnaDao">
-	<!-- 1:1 문의내역 및 답변내역 확인하기 -->
-	<select id="getAdminQnaByQnaNo" parameterType="int" resultType="AdminAnswerDto">
+	<update id="updateQna" parameterType="AdQnaDto">
+		update
+			ad_qnas
+		set
+			admin_qna_isanswered = #{isAnswered}
+		where
+			admin_qna_no = #{no}
+	</update>
+
+	<insert id="addAnswer" parameterType="AdminAnswerDto">
+		insert into ad_answers
+		(admin_answer_no, admin_answer_title, admin_answer_contents, admin_answer_file_name, user_no, admin_qna_no)
+		values
+		(ad_answers_seq.nextval, #{title}, #{content}, #{fileName}, #{userNo}, #{qnaNo})		
+	</insert>	
+
+	<select id="getQnaByNo" parameterType="int" resultType="AdQnaDto">
 		select 
-			A.admin_answer_title			as title,
-			A.admin_answer_contents			as content,
-			A.admin_answer_file_name		as fileName,
-			A.admin_answer_create_date		as createDate,
-			B.admin_qna_no					as no,
-			B.admin_qna_title				as qnaTitle,
-			B.admin_qna_content				as qnaContent,
-			B.admin_qna_create_date			as qnaCreateDate,
-			B.user_no						as userNo,
-			B.user_name						as userName,
-			B.user_id						as userId,
-			B.ad_qnas_images_name			as qnasImagesName
-		from	ad_answers A,
-		(select
-			A.admin_qna_no,
-			A.admin_qna_title,
-			A.admin_qna_content,
-			A.admin_qna_create_date,
-			A.admin_qna_isanswered,
-			B.user_no,
-			B.user_name,
-			B.user_id,
-			C.ad_qnas_images_name		
+			A.admin_qna_no					no,
+			B.user_no						userNo,
+			A.admin_qna_title				title,
+			A.admin_qna_content				content,
+			A.admin_qna_create_date			createDate,
+			A.admin_qna_isanswered			isAnswered,
+			B.user_id						userId,
+			B.user_name						userName,
+			B.user_image_filename			userImgFile
 		from
-			ad_qnas A, users B, ad_qnas_images C
-		where 
-			A.user_no = B.user_no
-			and A.admin_qna_no = C.admin_qna_no) B
-			where 
-				A.admin_qna_no(+) = B.admin_qna_no
-				and B.admin_qna_no = #{value}
+			ad_qnas A, users B
+		where
+			A.admin_qna_no = #{value}
+			and A.user_no = B.user_no
 	</select>
 
+	<!-- 1:1 답변내역 조회 -->
+	<select id="getAnswerByNo" parameterType="int" resultType="AdminAnswerDto">
+		select 
+			A.admin_answer_title				as title,
+			A.admin_answer_contents				as content,
+			A.admin_answer_file_name			as fileName,
+			A.admin_answer_create_date			as createDate,
+			A.admin_qna_no						as qnaNo,
+			A.admin_answer_no					as no,
+			B.user_id							as userId,
+			B.user_name							as userName,
+			B.user_image_filename				as userImgFile
+		from
+			ad_answers A, users B
+		where
+			admin_qna_no = #{value}
+			and A.user_no = B.user_no
+	</select>
 	<!-- 1:1 문의내역 사진조회 -->
-	<select id="getAdQnaFileByQnaNo" parameterType="int" resultType="AdQnaFile">
+	<select id="getAdQnaFilesByQnaNo" parameterType="int" resultType="AdQnaFile">
 		select
-			ad_qnas_images_name,
-			admin_qna_no
+			ad_qnas_images_name			as fileName,
+			admin_qna_no				as adQnaNo
 		from
 			ad_qnas_images
 		where
@@ -81,7 +97,7 @@
 			user_no = #{value}
 	</select>
 	
-<!-- 1:1 문의글 조회하기 -->
+	<!-- 1:1 문의글 조회하기 -->
 	<select id="getQnaByCriteria" parameterType="AdminQnaCriteria" resultType="AdminQnaDto">
 	 	select 
 	 		*		
@@ -95,7 +111,7 @@
 						ROW_NUMBER() over (order by A.admin_qna_title desc) rn,
 					</when>
 					<otherwise>
-						ROW_NUMBER() over (order by A.admin_qna_isanswered desc) rn,
+						ROW_NUMBER() over (order by A.admin_qna_isanswered asc) rn,
 					</otherwise>
 				</choose>
 					A.admin_qna_no				as no,
@@ -151,6 +167,5 @@
 					and A.admin_qna_isanswered = #{isAnswered}
 				</if>			
 	</select>
-	
 	
 </mapper>

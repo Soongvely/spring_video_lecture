@@ -277,18 +277,23 @@ footer::after {
 	font-family: "AppleSDGothicNeoM00", "Malgun Gothic", sans-serif;
 }
 
-.lecture-title {
+.col-sm-9 .lecture-title {
 	padding: 0 .75rem;
-	padding-left: 4%;
+	padding-left: 1%;
 	display: flex;
 	-webkit-box-align: center;
 	color: white;
 }
 
+.lecture-container .lecture-play {
+	margin-left: 40px;
+}
+
 .lecture-title > div {
 	min-width: 480px;
 }
-	.lecture-title-header {
+
+.lecture-title-header {
 	min-height: 50px	
 }
 .lecture-title h1 {
@@ -342,6 +347,10 @@ small {
 	width: 80%;
 	margin-top: 3px;
 	margin-bottom: 30px;
+}
+
+.lecture-container .lecture-thumbnail {
+	margin-left: 40px;
 }
 
 .progress-bar {

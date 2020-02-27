@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.co.coduck.vo.Category;
 import kr.co.coduck.vo.Ep;
+import kr.co.coduck.vo.Pagination;
 
 public class SearchTestDto {
 	
@@ -11,6 +12,7 @@ public class SearchTestDto {
 	private List<Category> downCategories;
 	private List<Ep> eps;
 	private List<SearchTestDetailDto> searchTestDetailDtos;
+	private Pagination pagination;
 	
 	public SearchTestDto() {}
 
@@ -46,10 +48,18 @@ public class SearchTestDto {
 		this.searchTestDetailDtos = searchTestDetailDtos;
 	}
 
+	public Pagination getPagination() {
+		return pagination;
+	}
+
+	public void setPagination(Pagination pagination) {
+		this.pagination = pagination;
+	}
+
 	@Override
 	public String toString() {
 		return "SearchTestDto [upCategories=" + upCategories + ", downCategories=" + downCategories + ", eps=" + eps
-				+ ", searchTestDetailDtos=" + searchTestDetailDtos + "]";
+				+ ", searchTestDetailDtos=" + searchTestDetailDtos + ", pagination=" + pagination + "]";
 	}
-
+	
 }

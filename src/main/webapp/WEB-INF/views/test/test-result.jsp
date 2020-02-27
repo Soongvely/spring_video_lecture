@@ -136,16 +136,17 @@
 				
 				<p class="v font-up">입력한 답 : ${qt.ckNum }</p>
 				<p class="v font-up" style="display: block;">정답 : [  ] <button class="btn btn-default btn-sm ans-show">정답보기</button></p> 
-				<p class="v font-up" style="display: none;">정답 : [${qt.ans }] <button class="btn btn-default btn-sm ans-hide">정답감추기</button></p> 
+				<p class="v font-up" style="display: none;">정답 : [<span style=" color: blue;">${qt.ans }</span>] <button class="btn btn-default btn-sm ans-hide">정답감추기</button></p> 
 				<p class="v font-up" style="color: red;">정답률 : ${qt.trueRate }%</p>
 			</div>
 		</div>
 	</c:forEach>
 </div>
+
 <script type="text/javascript">
 
 	var cnt = 0;
-	changeTimeToString(${subjResults[0].passedTime});
+	changeTimeToString('${subjResults[0].passedTime}');
 	
 	function changeTimeToString(time){
 		var hour = parseInt(time/3600);

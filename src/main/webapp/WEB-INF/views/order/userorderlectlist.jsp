@@ -20,9 +20,9 @@
 </head>
 <body>
 	<%@ include file="../common/header.jsp"%>
-   <div class="container" style="font-size: 17px; width: 1440px;">
+   <div class="container" style="font-size: 17px; width: 1440px; min-height: 950px; margin-top: 50px;">
       <div class="row">
-         <div class="col-sm-2">
+         <div class="col-sm-2" style="height: 900px;">
 			<p>내 학습</p>
 			<ul style="list-style: none;">
 				<li><a href="/user/userlecting.hta">수강중인 강의</a></li>
@@ -116,7 +116,7 @@
                        <c:choose>
                          <c:when test="${empty userOrderTestLists }">
                          	<tr>
-                         		<td colspan="6" class="text-center">11없습니다</td>
+                         		<td colspan="6" class="text-center">없습니다</td>
                          	</tr>
                          </c:when>
                          <c:otherwise>

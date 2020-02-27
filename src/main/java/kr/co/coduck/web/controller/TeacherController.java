@@ -76,8 +76,6 @@ public class TeacherController {
 		 User teacher = (User) session.getAttribute("LU");
 		 cri.setUserNo(teacher.getNo());
 		  
-		 log.info("검색 파라미터 >> " + cri);
-		 
 		 List<IncomeDto> incomes = lectservice.getTeacherIncomeByCriteria(cri);
 		
 		 return incomes; 
@@ -90,8 +88,9 @@ public class TeacherController {
 		User teacher = (User) session.getAttribute("LU");
 		
 		IncomeDto incomeDto = lectservice.getTeacherIncomeStatistics(teacher.getNo());
-		incomeDto.setTeacherScore(lectservice.getTeacherAvgScore(teacher.getNo()));
-		
+		if (incomeDto.getTeacherScore() != 0) {
+			incomeDto.setTeacherScore(lectservice.getTeacherAvgScore(teacher.getNo()));
+		}
 		model.addAttribute("income", incomeDto);
 		return "teacher/income";
 	} 
