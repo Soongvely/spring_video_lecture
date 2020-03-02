@@ -151,12 +151,12 @@
 		    <div class="container">
 	        	<ul class="nav nav-pills" id="subNav">
 	        	<c:if test="${LU != null }">
-		            <li class="is-active dashboard"><a href="dashboard.hta?lectureNo=${lecture.no }">대시보드</a></li>
+		            <li class="dashboard"><a href="dashboard.hta?lectureNo=${lecture.no }">대시보드</a></li>
 	        	</c:if>
-		            <li class="is-active description"><a href="description.hta?lectureNo=${lecture.no }">강의소개</a></li>
+		            <li class="description"><a href="description.hta?lectureNo=${lecture.no }">강의소개</a></li>
 		            <li class='curriculum'><a href="#">교육과정</a></li>
 		            <li class='reviews'><a href="#">수강후기</a></li>
-		        	<li class='questions'><a href="question.hta?lectureNo=${lecture.no }">질문답변</a></li>
+		        	<li class='is-active questions'><a href="question.hta?lectureNo=${lecture.no }">질문답변</a></li>
 	        	</ul>
 	    	</div>
 		    <!-- LectureDetail Menu end-->

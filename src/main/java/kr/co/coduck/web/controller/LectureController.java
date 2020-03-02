@@ -44,7 +44,7 @@ public class LectureController {
 
 	@Autowired
 	private LectService lectservice;
-
+	
 	@Autowired
 	private ReviewService reviewService;
 
@@ -137,7 +137,7 @@ public class LectureController {
 			map.put("lectureNo", lectureNo);
 
 			model.addAttribute("buyer", lectservice.getIsPurchaseLectureByUser(map));
-
+			model.addAttribute("lessonDto", lectservice.getProgressPercentInDashboard(map));
 		}
 
 		return "lecture/detail/description";
@@ -176,6 +176,7 @@ public class LectureController {
 			map.put("lectureNo", lectureNo);
 
 			model.addAttribute("buyer", lectservice.getIsPurchaseLectureByUser(map));
+			model.addAttribute("lessonDto", lectservice.getProgressPercentInDashboard(map));
 		}
 		model.addAttribute("lecture", lectservice.getLectureByLectureNo(lectureNo));
 		model.addAttribute("counts", lectservice.getAllCountByLectureNo(lectureNo));
