@@ -8,14 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.coduck.dao.LectDao;
-import kr.co.coduck.dao.OrderLectDao;
 import kr.co.coduck.dao.UserDao;
 import kr.co.coduck.dto.ChapterDto;
 import kr.co.coduck.dto.IncomeDto;
 import kr.co.coduck.dto.LectureCourseDto;
 import kr.co.coduck.dto.LectureDto;
 import kr.co.coduck.dto.LessonDto;
-import kr.co.coduck.dto.UserByLectDto;
 import kr.co.coduck.vo.Lect;
 import kr.co.coduck.vo.LectureCriteria;
 import kr.co.coduck.vo.Lesson;

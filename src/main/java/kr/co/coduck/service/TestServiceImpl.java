@@ -16,7 +16,6 @@ import kr.co.coduck.dto.TestQtDto;
 import kr.co.coduck.dto.TestResultDto;
 import kr.co.coduck.dto.TestSubjResultDto;
 import kr.co.coduck.form.SearchTestForm;
-import kr.co.coduck.form.SearchTestFormByAdm;
 import kr.co.coduck.form.TestModifyForm;
 import kr.co.coduck.form.TestSubmitForm;
 import kr.co.coduck.vo.Category;
@@ -105,7 +104,6 @@ public class TestServiceImpl implements TestService{
 		map.put("endIndex", pagination.getEndIndex());	
 		
 		List<SearchTestDetailDto> tests = testDao.searchTest(map);
-		System.out.println("------------------tests?---------- " + tests);
 		dto.setSearchTestDetailDtos(tests);
 		
 		return dto;

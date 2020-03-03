@@ -27,8 +27,6 @@ public class OrderLectServiceImpl implements OrderLectService{
    @Autowired
    private CouponDao couponDao;
    @Autowired
-   private LectDao lectDao;
-   @Autowired
    private OrderLectDao orderLectDao;
    
    @Override
@@ -56,23 +54,17 @@ public class OrderLectServiceImpl implements OrderLectService{
       }
       
       int cartDeleteLectNo = 0;
-      //List<Lect> lects = new ArrayList<Lect>();
+
       for(int i = 0; i<lectNos.length; i++) {
          cartDeleteLectNo = lectNos[i];
-         //Lect lect = lectDao.getLectByNo(cartLectNo);
          
          lectCartDao.deleteCartLect(cartDeleteLectNo);
-         //lects.add(lect);
       }
       
       if (couponNo != null) {
     	  
     	  couponDao.deleteCouponBoxByCouponNo(couponNo);
       }
-      
-      /*
-       * for(Lect lect : lects) { lectCartDao.deleteCartLect(lect.getNo()); }
-       */
       
       int point = (int)(lectTotalPrice * 0.001);
       

@@ -11,7 +11,6 @@ import kr.co.coduck.dto.TestQtDto;
 import kr.co.coduck.dto.TestResultDto;
 import kr.co.coduck.dto.TestSubjResultDto;
 import kr.co.coduck.form.SearchTestForm;
-import kr.co.coduck.form.SearchTestFormByAdm;
 import kr.co.coduck.form.TestModifyForm;
 import kr.co.coduck.form.TestSubmitForm;
 import kr.co.coduck.vo.Ep;
@@ -19,8 +18,6 @@ import kr.co.coduck.vo.Test;
 import kr.co.coduck.vo.TestQt;
 import kr.co.coduck.vo.TestResult;
 import kr.co.coduck.vo.TestSubj;
-import kr.co.coduck.vo.TestSubjResult;
-import kr.co.coduck.vo.ViewCk;
 
 
 @Transactional

@@ -3,13 +3,11 @@ package kr.co.coduck.service;
 import java.util.List;
 import java.util.Map;
 
-import kr.co.coduck.dao.OrderLectDao;
 import kr.co.coduck.dto.ChapterDto;
 import kr.co.coduck.dto.IncomeDto;
 import kr.co.coduck.dto.LectureCourseDto;
 import kr.co.coduck.dto.LectureDto;
 import kr.co.coduck.dto.LessonDto;
-import kr.co.coduck.dto.UserByLectDto;
 import kr.co.coduck.vo.Lect;
 import kr.co.coduck.vo.LectureCriteria;
 import kr.co.coduck.vo.Lesson;
