@@ -10,7 +10,7 @@
 	                <!-- teacher navbar start -->
 	                <div class="container">
 	                    <ul class="nav nav-pills" id="subNav">
-	                        <li class="is-active home"><a href="#">강좌</a></li>
+	                        <li class="is-active home"><a href="/teacher/main.hta">강좌관리</a></li>
 	                        <li class="income"><a href="/teacher/income.hta">수익관리</a></li>
 	                    </ul>
 	                </div>
