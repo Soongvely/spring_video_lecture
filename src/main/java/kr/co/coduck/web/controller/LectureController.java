@@ -204,7 +204,7 @@ public class LectureController {
 		return "lecture/player/player";
 	}
 
-	// 리뷰 평균평점 계산
+	// 리뷰 평균평점 계산 그래프
 	private List<ReviewStarDto> setReviewStarAverage(List<ReviewStarDto> reviewStarAvgs) {
 
 		int[] tempStar = new int[5];

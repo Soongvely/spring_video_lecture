@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.coduck.dto.IncomeDto;
 import kr.co.coduck.dto.LectureDto;
-import kr.co.coduck.dto.LessonDto;
 import kr.co.coduck.service.LectService;
 import kr.co.coduck.vo.LectureCriteria;
 import kr.co.coduck.vo.Pagination;
@@ -48,7 +47,7 @@ public class TeacherController {
 		// Pagination
 		int totalCount = lectservice.getTeachersLectureCountByCriteria(cri);
 		
-		Pagination pagination = new Pagination(cri.getPage(), totalCount, 15, 3);
+		Pagination pagination = new Pagination(cri.getPage(), totalCount, 10, 3);
 		cri.setBeginIndex(pagination.getBeginIndex());
 		cri.setEndIndex(pagination.getEndIndex());
 		

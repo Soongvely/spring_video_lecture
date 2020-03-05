@@ -686,7 +686,7 @@
 		select *
 		from 
 			(select
-				ROW_NUMBER() over (order by lect_create_date desc) rn
+				ROW_NUMBER() over (order by lect_price desc) rn
 				, lect_no				no
 			    , lect_title			title	
 			    , lect_info				info
@@ -799,37 +799,3 @@
 	</select>
 	
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
