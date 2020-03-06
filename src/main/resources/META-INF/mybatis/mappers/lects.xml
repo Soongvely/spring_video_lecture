@@ -2,9 +2,8 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <!-- namespace 필수 설정! -->
-	<mapper namespace="kr.co.coduck.dao.LectDao">
-	
+
+<mapper namespace="kr.co.coduck.dao.LectDao">
 	
 	<!--  강좌 등록 -->
 	<insert id="insertLecture" parameterType="Lect">
@@ -20,20 +19,20 @@
 	<!-- 유저번호로 유저가 등록한 강의 조회 -->
 	<select id="getFindLectByUserNo" parameterType="int" resultType="Lect">
 		select
-			lect_no						as no,
-			cate_no						as cateNo,
-			user_no						as userNo,
-			lect_title					as lectTitle,
-			lect_info					as lectInfo,
-			lect_price					as price,
-			lect_discount_price			as discountPrice,
-			lect_discount_rate			as discountRate,
-			lect_is_freed				as isFreed,
-			lect_is_display				as isDisplay,
-			lect_create_date			as lectCreateDate,
-			lect_grade					as grade,
-			lect_tag					as tag,
-			lect_image_path				as imagePath
+			lect_no						 no,
+			cate_no						 cateNo,
+			user_no						 userNo,
+			lect_title					 lectTitle,
+			lect_info					 lectInfo,
+			lect_price					 price,
+			lect_discount_price			 discountPrice,
+			lect_discount_rate			 discountRate,
+			lect_is_freed				 isFreed,
+			lect_is_display				 isDisplay,
+			lect_create_date			 lectCreateDate,
+			lect_grade					 grade,
+			lect_tag					 tag,
+			lect_image_path				 imagePath
 		from
 			lects
 		where
@@ -76,40 +75,41 @@
 	
 	<!-- 유저 번호로 유저가 구매한 수강리스트 조회 -->
 	<select id="getLectListUserByNo" parameterType="int" resultType="LessonDto">
-		SELECT
-			A.USER_NO				userNo,
-			D.LECT_TITLE			lectTitle,
-			B.ORD_LECT_CREATE_DATE	lectCreateDate,
-			D.LECT_NO				lectNo,
-			D.LECT_IMAGE_PATH		imagePath
-		FROM
-			Users A, Ord_lects B, Ord_lect_infos C, lects D
+		select
+			a.user_no				userNo,
+			d.lect_title			lectTitle,
+			b.ord_lect_create_date	lectCreateDate,
+			d.lect_no				lectNo,
+			d.lect_image_path		imagePath
+		from
+			users a, ord_lects b, ord_lect_infos c, lects d
 		WHERE
-			A.USER_NO = B.USER_NO
-		AND
-			B.ORD_NO = C.ORD_NO
-		AND
-			C.LECT_NO = D.LECT_NO
-		AND
-			A.USER_NO = #{value}
+			a.user_no = b.user_no
+		and
+			b.ord_no = c.ord_no
+		and
+			c.lect_no = d.lect_no
+		and
+			a.user_no = #{value}
 	</select>
 	
+	<!-- 강좌번호로 강좌조회 -->
 	<select id="getLectByNo" parameterType="int" resultType="Lect">
 		select
-			lect_no						as no,
-			cate_no						as cateNo,
-			user_no						as userNo,
-			lect_title					as lectTitle,
-			lect_info					as lectInfo,
-			lect_price					as price,
-			lect_discount_price			as discountPrice,
-			lect_discount_rate			as discountRate,
-			lect_is_freed				as isFreed,
-			lect_is_display				as isDisplay,
-			lect_create_date			as lectCreateDate,
-			lect_grade					as grade,
-			lect_tag					as tag,
-			lect_image_path				as imagePath
+			lect_no						 no,
+			cate_no						 cateNo,
+			user_no						 userNo,
+			lect_title					 lectTitle,
+			lect_info					 lectInfo,
+			lect_price					 price,
+			lect_discount_price			 discountPrice,
+			lect_discount_rate			 discountRate,
+			lect_is_freed				 isFreed,
+			lect_is_display				 isDisplay,
+			lect_create_date			 lectCreateDate,
+			lect_grade					 grade,
+			lect_tag					 tag,
+			lect_image_path				 imagePath
 		from
 			lects
 		where
@@ -137,7 +137,7 @@
 		select *
 		from 
 			(select
-            	ROW_NUMBER() over (order by NVL(likes,0) desc) rn
+            	row_number() over (order by nvl(likes, 0) desc) rn
              	, l.lect_no					no
 				, l.lect_title				title
 				, l.lect_price				price	
@@ -147,7 +147,7 @@
 				, l.lect_is_freed			isFreed
 				, l.lect_image_path			imagePath	
 				, u.user_name				userName		
-	            , NVL(likes,0) 				"like"	
+	            , nvl(likes,0) 				"like"	
 			from
 				lects L, users U, (select 
 									 lect_no
@@ -170,7 +170,7 @@
 		select *
 			from (
 				select
-                    ROW_NUMBER() over (order by l.lect_create_date desc) rn
+                    row_number() over (order by l.lect_create_date desc) rn
 					, l.lect_no					no
 					, l.lect_title				title
 					, l.lect_price				price	
@@ -195,7 +195,7 @@
 		select *
 			from (
 				select
-                    ROW_NUMBER() over (order by NVL(likes,0) desc) rn
+                    row_number() over (order by NVL(likes,0) desc) rn
 					, l.lect_no					no
 					, l.lect_title				title
 					, l.lect_grade				grade
@@ -225,7 +225,7 @@
 		select *
 			from (
 				select
-                    ROW_NUMBER() over (order by l.lect_create_date desc) rn
+                    row_number() over (order by l.lect_create_date desc) rn
 					, l.lect_no					no
 					, l.lect_title				title
 					, l.lect_price				price	
@@ -337,7 +337,7 @@
 		select *
 		from
 		    (select 
-		        ROW_NUMBER() over (order by create_date desc) rn   
+		        row_number() over (order by create_date desc) rn   
 		       , lesson_no		no
 		       , lesson_title	lessonTitle
 		       , total_time 	totalTime
@@ -372,13 +372,13 @@
 				select
 				<choose>
 					<when test="sort eq 'like'">
-						ROW_NUMBER() over (order by NVL(likes,0) desc) rn,
+						row_number() over (order by nvl(likes,0) desc) rn,
 					</when>
 					<when test="sort eq 'price'">
-						ROW_NUMBER() over (order by l.lect_price desc) rn,
+						row_number() over (order by l.lect_price desc) rn,
 					</when>
 					<otherwise>
-						ROW_NUMBER() over (order by l.lect_create_date desc) rn,
+						row_number() over (order by l.lect_create_date desc) rn,
 					</otherwise>
 				</choose>
 					l.lect_no					
@@ -396,11 +396,11 @@
 					, l.lect_tag					
 					, l.lect_image_path			
 					, u.user_name					
-		            , NVL(likes,0) as "like"
+		            , nvl(likes,0) as "like"
 				from
 					lects L, users U, (select 
 										 lect_no
-										 , COUNT(*) as likes 
+										 , count(*) as likes 
 									  from 
 									  	like_lects 
 									  group by 
@@ -583,6 +583,7 @@
     		lesson_no asc		
 	</select>
 	
+	
 	<!-- ****************************** player ****************************** -->
 	
 	<!-- 강좌 플레이어 -->
@@ -679,6 +680,8 @@
 			lect_no = #{value}
 		and lesson_order = 1
 	</select>
+	
+	
 	<!-- ****************************** teacher ****************************** -->
 	
 	<!-- 강사가 등록한 강좌 조건별 조회 -->
@@ -686,7 +689,7 @@
 		select *
 		from 
 			(select
-				ROW_NUMBER() over (order by lect_price desc) rn
+				row_number() over (order by lect_create_date desc) rn
 				, lect_no				no
 			    , lect_title			title	
 			    , lect_info				info
